@@ -1,0 +1,15 @@
+licencias de sistema  de gestión e laboratorio
+
+Arlab
+
+supa base 
+
+qfbadolforuiz@gmail.com
+
+contraseña : RDF6lvPNdCZWFeAT
+
+Publishable key:sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd
+
+ Project URL: https://ebihobjrwcwtjfazcjmv.supabase.co
+
+URI :      postgresql://postgres:[YOUR-PASSWORD]@db.ebihobjrwcwtjfazcjmv.supabase.co:5432/postgres

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ar lab - Iniciar Sesión</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Turquoise Palette */
+            --primary: #0d9488;
+            /* Teal 600 */
+            --primary-light: #5eead4;
+            /* Teal 300 */
+            --primary-dark: #0f766e;
+            /* Teal 700 */
+            --bg-color: #f0fdfa;
+            /* Teal 50 */
+
+            --icon-bg: #ccfbf1;
+            /* Teal 100 */
+            --surface: rgba(255, 255, 255, 0.95);
+
+            --text-title: #334155;
+            --text-body: #475569;
+
+            --border: #e2e8f0;
+            --focus-ring: rgba(13, 148, 136, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: var(--text-body);
+        }
+
+        /* Canvas Background */
+        #networkCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-card {
+            background: var(--surface);
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            box-shadow:
+                0 20px 50px -12px rgba(13, 148, 136, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .brand-logo-img {
+            max-width: 220px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .brand-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-tagline {
+            color: #64748b;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--text-title);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon-left {
+            position: absolute;
+            left: 0.75rem;
+            width: 36px;
+            height: 36px;
+            background-color: var(--icon-bg);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary);
+            z-index: 2;
+        }
+
+        .input-icon-left svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.5;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3.75rem;
+            padding-right: 3rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--text-title);
+            transition: all 0.2s ease;
+            background: #f8fafc;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px var(--focus-ring);
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #94a3b8;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.125rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            letter-spacing: 0.01em;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(13, 148, 136, 0.3);
+        }
+
+        .support-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: var(--text-body);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            padding: 0.75rem;
+            border-radius: 12px;
+            background-color: #f1f5f9;
+        }
+
+        .support-link:hover {
+            background-color: #e2e8f0;
+            color: var(--primary-dark);
+        }
+
+        .support-icon-wrapper {
+            width: 32px;
+            height: 32px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 2px 5px rgba(37, 211, 102, 0.3);
+        }
+
+        .support-icon {
+            width: 16px;
+            height: 16px;
+            stroke-width: 2.5;
+            fill: white;
+            stroke: white;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="networkCanvas"></canvas>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="brand-header">
+                <img src="arlab_logo.png" alt="Ar lab - Gestión Integral de Laboratorios" class="brand-logo-img">
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username" class="form-label">Usuario</label>
+                    <div class="input-wrapper">
+                        <div class="input-icon-left">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <input type="text" id="username" class="form-input" placeholder="Nombre de usuario" required
+                            autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <div class="input-wrapper">
+                        <div class="input-icon-left">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                        <input type="password" id="password" class="form-input" placeholder="••••••••••••" required
+                            autocomplete="current-password">
+
+                        <button type="button" class="password-toggle" onclick="togglePassword()"
+                            aria-label="Mostrar contraseña">
+                            <svg id="eyeIcon" class="icon" viewBox="0 0 24 24">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <svg id="eyeOffIcon" class="icon" viewBox="0 0 24 24" style="display: none;">
+                                <path
+                                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                </path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Ingresar al Sistema</button>
+
+                <a href="https://wa.me/5219611062651" target="_blank" class="support-link">
+                    <div class="support-icon-wrapper">
+                        <svg viewBox="0 0 24 24" class="support-icon" style="fill: white; stroke: none;">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                    </div>
+                    Contactar Soporte Técnico
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // Supabase Configuration
+        const supabaseUrl = 'https://ebihobjrwcwtjfazcjmv.supabase.co';
+        const supabaseKey = 'sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let formulas = [];
+
+        // Chemistry formulas for the background
+        const chemistryFormulas = [
+            'H₂O', 'NaCl', 'CO₂', 'H₂SO₄', 'NaOH', 'HCl', 'NH₃', 'C₆H₁₂O₆',
+            'CaCO₃', 'Fe₂O₃', 'KMnO₄', 'CH₄', 'C₂H₅OH', 'HNO₃', 'Na₂CO₃',
+            'MgCl₂', 'Al₂O₃', 'K₂SO₄', 'CuSO₄', 'ZnO', 'Pb(NO₃)₂', 'AgNO₃',
+            'pH', 'ATP', 'DNA', 'RNA', 'O₂', 'N₂', 'Cl₂', 'H₂'
+        ];
+
+        // Formatting configuration
+        const particleCount = 50;
+        const formulaCount = 15;
+        const connectionDistance = 150;
+        const moveSpeed = 0.4;
+        const particleColor = 'rgba(13, 148, 136, 0.35)';
+        const lineColor = 'rgba(45, 212, 191, 0.2)';
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+            initFormulas();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * moveSpeed;
+                this.vy = (Math.random() - 0.5) * moveSpeed;
+                this.size = Math.random() * 2.5 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = particleColor;
+                ctx.fill();
+            }
+        }
+
+        class Formula {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.text = chemistryFormulas[Math.floor(Math.random() * chemistryFormulas.length)];
+                this.fontSize = Math.random() * 14 + 12;
+                this.opacity = Math.random() * 0.3 + 0.1;
+                this.rotation = (Math.random() - 0.5) * 0.3;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.002;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.rotation += this.rotationSpeed;
+
+                if (this.x < -50) this.x = width + 50;
+                if (this.x > width + 50) this.x = -50;
+                if (this.y < -50) this.y = height + 50;
+                if (this.y > height + 50) this.y = -50;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.font = `${this.fontSize}px 'Roboto', monospace`;
+                ctx.fillStyle = `rgba(13, 148, 136, ${this.opacity})`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.text, 0, 0);
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function initFormulas() {
+            formulas = [];
+            for (let i = 0; i < formulaCount; i++) {
+                formulas.push(new Formula());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw formulas first (background layer)
+            formulas.forEach(f => {
+                f.update();
+                f.draw();
+            });
+
+            // Draw particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Draw connections
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = lineColor;
+                        ctx.lineWidth = 1 - distance / connectionDistance;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            const eyeOffIcon = document.getElementById('eyeOffIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.style.display = 'none';
+                eyeOffIcon.style.display = 'block';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.style.display = 'block';
+                eyeOffIcon.style.display = 'none';
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const btn = document.querySelector('.submit-btn');
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const originalText = btn.innerText;
+
+            btn.innerText = 'Verificando...';
+            btn.style.opacity = '0.9';
+            btn.disabled = true;
+
+            try {
+                // Query users table
+                const { data, error } = await supabaseClient
+                    .from('usuarios')
+                    .select('*')
+                    .eq('usuario', user)
+                    .eq('password', pass)
+                    .single();
+
+                if (error) throw error;
+                if (!data) throw new Error('Usuario no encontrado');
+
+                btn.innerText = '¡Éxito!';
+                btn.style.backgroundColor = '#10b981'; // Green
+
+                setTimeout(() => {
+                    alert(`¡Bienvenido ${data.usuario}! \nRol: ${data.rol}`);
+                    // Redirect logic would go here
+                }, 500);
+
+            } catch (err) {
+                console.error(err);
+                btn.innerText = 'Error';
+                btn.style.backgroundColor = '#ef4444'; // Red
+
+                let msg = 'Credenciales incorrectas.';
+                if (err.message && err.message.includes('relation "usuarios" does not exist')) {
+                    msg = 'Error: La tabla "usuarios" no existe en Supabase. \nPor favor ejecuta el script SQL.';
+                } else if (err.code === 'PGRST116') {
+                    msg = 'Usuario o contraseña incorrectos.';
+                }
+
+                alert(msg);
+
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.style.opacity = '1';
+                    btn.disabled = false;
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+
+</html>
