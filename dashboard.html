@@ -1029,6 +1029,246 @@
             transition: transform 0.2s;
             stroke-width: 2.5;
         }
+
+        /* HOME VIEW STYLES */
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .widget-caja {
+            grid-column: span 12;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border);
+        }
+
+        .caja-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-icon.active {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .status-icon.inactive {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .caja-info h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .caja-info p {
+            margin: 0;
+            color: var(--text-light);
+        }
+
+        .caja-balance {
+            font-size: 2rem;
+            fontWeight: 700;
+            color: var(--text-dark);
+            margin-top: 0.5rem;
+        }
+
+        .widget-stat {
+            grid-column: span 3;
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            transition: transform 0.2s;
+        }
+
+        .widget-stat:hover {
+            transform: translateY(-5px);
+        }
+
+        .widget-stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #f0fdfa;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .widget-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .widget-stat-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .quick-actions {
+            grid-column: span 12;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid #99f6e4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .action-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(13, 148, 136, 0.1);
+        }
+
+        .action-card svg {
+            width: 40px;
+            height: 40px;
+            color: var(--primary-dark);
+        }
+
+        .action-card h3 {
+            color: var(--primary-dark);
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 1024px) {
+            .widget-stat {
+                grid-column: span 6;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .widget-caja {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .caja-status {
+                flex-direction: column;
+            }
+
+            .widget-stat {
+                grid-column: span 12;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* TOAST NOTIFICATIONS */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .toast {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 300px;
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border-left: 4px solid #cbd5e1;
+        }
+
+        .toast.active {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left-color: #10b981;
+        }
+
+        .toast.success svg {
+            color: #10b981;
+        }
+
+        .toast.error {
+            border-left-color: #ef4444;
+        }
+
+        .toast.error svg {
+            color: #ef4444;
+        }
+
+        .toast.info {
+            border-left-color: #3b82f6;
+        }
+
+        .toast.info svg {
+            color: #3b82f6;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+
+        .toast-message {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
     </style>
 </head>
 
@@ -1066,6 +1306,16 @@
         </a>
 
         <div class="navbar-nav">
+            <!-- Inicio -->
+            <a href="#" class="nav-item active" onclick="switchView('inicio')" id="navInicio"
+                style="margin-right: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; text-decoration: none; font-weight: 500;">
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Inicio
+            </a>
+
             <!-- Fase Pre-Analítica -->
             <div class="nav-dropdown" onclick="toggleDropdown(this)">
                 <div class="nav-dropdown-toggle">
@@ -1076,7 +1326,7 @@
                     </svg>
                 </div>
                 <div class="nav-dropdown-menu">
-                    <a href="#" class="nav-item active" data-module="citas">
+                    <a href="#" class="nav-item" onclick="switchView('citas')" id="navCitas">
                         <svg viewBox="0 0 24 24">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                             <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -1085,7 +1335,7 @@
                         </svg>
                         Gestión de Citas
                     </a>
-                    <a href="#" class="nav-item" data-module="pacientes">
+                    <a href="pacientes.html" class="nav-item">
                         <svg viewBox="0 0 24 24">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
@@ -1171,8 +1421,8 @@
                 </div>
             </div>
 
-            <!-- Sistema -->
-            <div class="nav-dropdown" onclick="toggleDropdown(this)">
+            <!-- Sistema (Solo Admin) -->
+            <div class="nav-dropdown" id="menuSistema" onclick="toggleDropdown(this)">
                 <div class="nav-dropdown-toggle">
                     <span>Sistema</span>
                     <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"
@@ -1236,513 +1486,627 @@
         </header>
 
         <div class="content-area">
-            <!-- Stats -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon primary">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
+            <!-- VISTA INICIO -->
+            <div id="viewInicio">
+                <div class="home-grid">
+                    <!-- Widget Control de Caja -->
+                    <div class="widget-caja" id="widgetCaja" style="display:none;">
+                        <div class="caja-status">
+                            <div class="status-icon" id="cajaStatusIcon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none"
+                                    stroke-width="2">
+                                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                                    <path d="M12 12v4M10 14h4" />
+                                </svg>
+                            </div>
+                            <div class="caja-info">
+                                <h2 id="cajaStatusText">Caja Cerrada</h2>
+                                <p id="cajaStatusSub">Gestión de Efectivo</p>
+                                <div class="caja-balance" id="cajaBalance">$0.00</div>
+                            </div>
+                        </div>
+                        <button class="btn" id="btnCajaAction" onclick="abrirCajaModal()">Abrir Caja</button>
                     </div>
-                    <div class="stat-info">
-                        <h3 id="statToday">0</h3>
-                        <p>Citas Hoy</p>
+
+                    <!-- Stats Widgets -->
+                    <div class="widget-stat">
+                        <div class="widget-stat-icon"><svg viewBox="0 0 24 24" width="24" height="24"
+                                stroke="currentColor" fill="none" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <line x1="19" y1="8" x2="19" y2="14"></line>
+                                <line x1="19" y1="11" x2="22" y2="11"></line>
+                            </svg></div>
+                        <div class="widget-stat-value" id="homeCitasHoy">0</div>
+                        <div class="widget-stat-label">Citas de Hoy</div>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon warning">
-                        <svg viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                    <!-- <div class="widget-stat">
+                    <div class="widget-stat-icon"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+                    <div class="widget-stat-value" id="homePacientesNuevos">0</div>
+                    <div class="widget-stat-label">Pacientes Nuevos</div>
+                </div> -->
+                    <div class="widget-stat">
+                        <div class="widget-stat-icon"><svg viewBox="0 0 24 24" width="24" height="24"
+                                stroke="currentColor" fill="none" stroke-width="2">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg></div>
+                        <div class="widget-stat-value" id="homeVentasHoy">$0.00</div>
+                        <div class="widget-stat-label">Ventas Hoy</div>
                     </div>
-                    <div class="stat-info">
-                        <h3 id="statPending">0</h3>
-                        <p>Pendientes</p>
+                    <div class="widget-stat">
+                        <div class="widget-stat-icon"><svg viewBox="0 0 24 24" width="24" height="24"
+                                stroke="currentColor" fill="none" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg></div>
+                        <div class="widget-stat-value" id="homePendientes">0</div>
+                        <div class="widget-stat-label">Resultados Pendientes</div>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon success">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="statCompleted">0</h3>
-                        <p>Completadas</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon danger">
-                        <svg viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="15" y1="9" x2="9" y2="15"></line>
-                            <line x1="9" y1="9" x2="15" y2="15"></line>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="statCancelled">0</h3>
-                        <p>Canceladas</p>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <a href="nueva_cita.html" class="action-card">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                                <line x1="12" y1="14" x2="12" y2="18"></line>
+                                <line x1="10" y1="16" x2="14" y2="16"></line>
+                            </svg>
+                            <h3>Nueva Cita</h3>
+                        </a>
+                        <a href="nueva_cita.html?mode=directo" class="action-card">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <line x1="19" y1="8" x2="19" y2="14"></line>
+                                <line x1="16" y1="11" x2="22" y2="11"></line>
+                            </svg>
+                            <h3>Registrar Paciente</h3>
+                        </a>
+                        <a href="#" class="action-card" onclick="alert('Módulo en desarrollo')">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <h3>Entrega Resultados</h3>
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Calendar and Appointments -->
-            <div class="calendar-layout">
-                <!-- Calendar -->
-                <div class="card calendar-card">
-                    <div class="card-header">
-                        <button class="calendar-nav-btn" onclick="changeMonth(-1)">
+            <!-- VISTA GESTION CITAS -->
+            <div id="viewCitas" style="display:none;">
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon primary">
                             <svg viewBox="0 0 24 24">
-                                <polyline points="15 18 9 12 15 6"></polyline>
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
                             </svg>
-                        </button>
-                        <h2 class="card-title" id="calendarMonth">Enero 2026</h2>
-                        <button class="calendar-nav-btn" onclick="changeMonth(1)">
-                            <svg viewBox="0 0 24 24">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="calendar-grid">
-                        <div class="calendar-header">
-                            <span>Dom</span>
-                            <span>Lun</span>
-                            <span>Mar</span>
-                            <span>Mié</span>
-                            <span>Jue</span>
-                            <span>Vie</span>
-                            <span>Sáb</span>
                         </div>
-                        <div class="calendar-days" id="calendarDays">
-                            <!-- Days will be generated by JS -->
+                        <div class="stat-info">
+                            <h3 id="statToday">0</h3>
+                            <p>Citas Hoy</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon warning">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="statPending">0</h3>
+                            <p>Pendientes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="statCompleted">0</h3>
+                            <p>Completadas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon danger">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="statCancelled">0</h3>
+                            <p>Canceladas</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Day Appointments -->
-                <div class="card appointments-card">
-                    <div class="card-header">
-                        <h2 class="card-title" id="selectedDateTitle">Citas de Hoy</h2>
+                <!-- Calendar and Appointments -->
+                <div class="calendar-layout">
+                    <!-- Calendar -->
+                    <div class="card calendar-card">
+                        <div class="card-header">
+                            <button class="calendar-nav-btn" onclick="changeMonth(-1)">
+                                <svg viewBox="0 0 24 24">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            </button>
+                            <h2 class="card-title" id="calendarMonth">Enero 2026</h2>
+                            <button class="calendar-nav-btn" onclick="changeMonth(1)">
+                                <svg viewBox="0 0 24 24">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="calendar-grid">
+                            <div class="calendar-header">
+                                <span>Dom</span>
+                                <span>Lun</span>
+                                <span>Mar</span>
+                                <span>Mié</span>
+                                <span>Jue</span>
+                                <span>Vie</span>
+                                <span>Sáb</span>
+                            </div>
+                            <div class="calendar-days" id="calendarDays">
+                                <!-- Days will be generated by JS -->
+                            </div>
+                        </div>
                     </div>
-                    <div class="appointments-list" id="appointmentsList">
-                        <!-- Appointments will be populated by JS -->
+
+                    <!-- Day Appointments -->
+                    <div class="card appointments-card">
+                        <div class="card-header">
+                            <h2 class="card-title" id="selectedDateTitle">Citas de Hoy</h2>
+                        </div>
+                        <div class="appointments-list" id="appointmentsList">
+                            <!-- Appointments will be populated by JS -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
 
-    <!-- New Appointment Modal -->
-    <!-- Modal moved to nueva_cita.html -->
-    <div class="modal-overlay-deprecated" id="appointmentModal_deprecated" style="display:none;">
-        <div class="modal" style="max-width: 900px; width: 95%;">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">Nueva Cita de Laboratorio</h3>
-                <button class="modal-close" onclick="closeModal()">
-                    <svg viewBox="0 0 24 24">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-            <form id="appointmentForm" onsubmit="saveAppointment(event)">
-                <div class="modal-body">
-                    <!-- Sección: Datos del Paciente -->
-                    <div style="background: #f8fafc; padding: 1rem; border-radius: 12px; margin-bottom: 1.25rem;">
-                        <h4
-                            style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                            Datos del Paciente</h4>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Primer Nombre *</label>
-                                <input type="text" class="form-input" id="primerNombre" required placeholder="Ej: Juan">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Segundo Nombre</label>
-                                <input type="text" class="form-input" id="segundoNombre" placeholder="Ej: Carlos">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Primer Apellido *</label>
-                                <input type="text" class="form-input" id="primerApellido" required
-                                    placeholder="Ej: García">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Segundo Apellido</label>
-                                <input type="text" class="form-input" id="segundoApellido" placeholder="Ej: López">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Fecha de Nacimiento *</label>
-                                <input type="date" class="form-input" id="fechaNacimiento" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Teléfono *</label>
-                                <input type="tel" class="form-input" id="patientPhone" required
-                                    placeholder="10 dígitos">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sección: Datos de la Cita -->
-                    <div style="background: #f0fdfa; padding: 1rem; border-radius: 12px; margin-bottom: 1.25rem;">
-                        <h4
-                            style="font-size: 0.85rem; color: #0d9488; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                            Datos de la Cita</h4>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Fecha de Cita *</label>
-                                <input type="date" class="form-input" id="appointmentDate" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Hora *</label>
-                                <input type="time" class="form-input" id="appointmentTime" required value="08:00">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Diagnóstico / Motivo de Consulta</label>
-                            <input type="text" class="form-input" id="diagnostico"
-                                placeholder="Ej: Chequeo general, Control de glucosa...">
-                        </div>
-                    </div>
-
-                    <!-- Sección: Estudios de Laboratorio -->
-                    <div style="background: #eff6ff; padding: 1rem; border-radius: 12px; margin-bottom: 1.25rem;">
-                        <h4
-                            style="font-size: 0.85rem; color: #2563eb; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                            Estudios Solicitados</h4>
-
-                        <div class="form-group">
-                            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
-                                <input type="text" class="form-input" id="buscarEstudio" placeholder="Buscar estudio..."
-                                    style="flex: 1;">
-                                <select class="form-select" id="filtroCategoria" style="width: 180px;">
-                                    <option value="">Todas las categorías</option>
-                                </select>
-                            </div>
-                            <div id="listaEstudios"
-                                style="max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 10px; background: white;">
-                                <!-- Estudios se cargan dinámicamente -->
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Estudios Seleccionados:</label>
-                            <div id="estudiosSeleccionados"
-                                style="display: flex; flex-wrap: wrap; gap: 0.5rem; min-height: 40px; padding: 0.5rem; background: white; border-radius: 10px; border: 1px solid #e2e8f0;">
-                                <span style="color: #94a3b8; font-size: 0.85rem;">Ningún estudio seleccionado</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sección: Médico Referente -->
-                    <div style="background: #fef3c7; padding: 1rem; border-radius: 12px; margin-bottom: 1.25rem;">
-                        <h4
-                            style="font-size: 0.85rem; color: #d97706; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                            Médico Referente</h4>
-
-                        <div class="form-group">
-                            <label class="form-label">Buscar o agregar médico</label>
-                            <input type="text" class="form-input" id="medicoReferente"
-                                placeholder="Nombre del médico que refiere al paciente..." list="listaMedicos">
-                            <datalist id="listaMedicos">
-                                <!-- Médicos se cargan dinámicamente -->
-                            </datalist>
-                            <small style="color: #64748b; font-size: 0.75rem;">Escribe el nombre del médico. Si es
-                                nuevo, se agregará al catálogo.</small>
-                        </div>
-                    </div>
-
-                    <!-- Sección: Caja / Pago -->
-                    <div
-                        style="background: #2dd4bf; background: linear-gradient(135deg, #ccfbf1 0%, #a5f3fc 100%); padding: 1.25rem; border-radius: 12px; margin-bottom: 1.25rem; border: 1px solid #99f6e4;">
-                        <h4
-                            style="font-size: 0.9rem; color: #0f766e; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem;">
-                            <svg viewBox="0 0 24 24"
-                                style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;">
-                                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-                                <line x1="2" y1="10" x2="22" y2="10"></line>
-                            </svg>
-                            Caja y Facturación
-                        </h4>
-
-                        <div style="display: flex; flex-direction: column; gap: 1rem;">
-                            <!-- Totales -->
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 1rem; border-bottom: 1px dashed #0d9488;">
-                                <div>
-                                    <div style="font-size: 0.85rem; color: #0f766e;">Total Estimado:</div>
-                                    <div style="font-size: 2rem; font-weight: 700; color: #0f766e; line-height: 1;">
-                                        $<span id="totalVenta">0.00</span>
-                                    </div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <div style="font-size: 0.8rem; color: #0d9488;">Estudios: <span
-                                            id="cantidadEstudiosVenta">0</span></div>
-                                </div>
-                            </div>
-
-                            <!-- Pago -->
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label class="form-label">Método de Pago</label>
-                                    <select class="form-select" id="metodoPago">
-                                        <option value="efectivo">Efectivo</option>
-                                        <option value="tarjeta">Tarjeta de Crédito/Débito</option>
-                                        <option value="transferencia">Transferencia</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Monto Recibido ($)</label>
-                                    <input type="number" class="form-input" id="montoPagado" placeholder="0.00"
-                                        step="0.50" oninput="calcularCambio()">
-                                </div>
-                            </div>
-
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.6); padding: 0.75rem; border-radius: 8px;">
-                                <span style="font-weight: 500; color: #0f766e;">Cambio / Devolución:</span>
-                                <span style="font-weight: 700; font-size: 1.2rem; color: #0f766e;">$<span
-                                        id="cambioVenta">0.00</span></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Notas -->
-                    <div class="form-group">
-                        <label class="form-label">Notas Adicionales</label>
-                        <textarea class="form-textarea" id="appointmentNotes"
-                            placeholder="Indicaciones especiales, ayuno requerido, etc..."
-                            style="min-height: 70px;"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" style="background: #0f766e; border-color: #0f766e;">
+        <!-- New Appointment Modal -->
+        <!-- Modal moved to nueva_cita.html -->
+        <div class="modal-overlay-deprecated" id="appointmentModal_deprecated" style="display:none;">
+            <div class="modal" style="max-width: 900px; width: 95%;">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modalTitle">Nueva Cita de Laboratorio</h3>
+                    <button class="modal-close" onclick="closeModal()">
                         <svg viewBox="0 0 24 24">
-                            <polyline points="20 6 9 17 4 12"></polyline>
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
-                        Cobrar y Generar Ticket
                     </button>
                 </div>
-            </form>
+                <form id="appointmentForm" onsubmit="saveAppointment(event)">
+                    <div class="modal-body">
+                        <!-- Sección: Datos del Paciente -->
+                        <div style="background: #f8fafc; padding: 1rem; border-radius: 12px; margin-bottom: 1.25rem;">
+                            <h4
+                                style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                Datos del Paciente</h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Primer Nombre *</label>
+                                    <input type="text" class="form-input" id="primerNombre" required
+                                        placeholder="Ej: Juan">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Segundo Nombre</label>
+                                    <input type="text" class="form-input" id="segundoNombre" placeholder="Ej: Carlos">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Primer Apellido *</label>
+                                    <input type="text" class="form-input" id="primerApellido" required
+                                        placeholder="Ej: García">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Segundo Apellido</label>
+                                    <input type="text" class="form-input" id="segundoApellido" placeholder="Ej: López">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Fecha de Nacimiento *</label>
+                                    <input type="date" class="form-input" id="fechaNacimiento" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Teléfono *</label>
+                                    <input type="tel" class="form-input" id="patientPhone" required
+                                        placeholder="10 dígitos">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sección: Datos de la Cita -->
+                        <div style="background: #f0fdfa; padding: 1rem; border-radius: 12px; margin-bottom: 1.25rem;">
+                            <h4
+                                style="font-size: 0.85rem; color: #0d9488; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                Datos de la Cita</h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Fecha de Cita *</label>
+                                    <input type="date" class="form-input" id="appointmentDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Hora *</label>
+                                    <input type="time" class="form-input" id="appointmentTime" required value="08:00">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Diagnóstico / Motivo de Consulta</label>
+                                <input type="text" class="form-input" id="diagnostico"
+                                    placeholder="Ej: Chequeo general, Control de glucosa...">
+                            </div>
+                        </div>
+
+                        <!-- Sección: Estudios de Laboratorio -->
+                        <div style="background: #eff6ff; padding: 1rem; border-radius: 12px; margin-bottom: 1.25rem;">
+                            <h4
+                                style="font-size: 0.85rem; color: #2563eb; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                Estudios Solicitados</h4>
+
+                            <div class="form-group">
+                                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <input type="text" class="form-input" id="buscarEstudio"
+                                        placeholder="Buscar estudio..." style="flex: 1;">
+                                    <select class="form-select" id="filtroCategoria" style="width: 180px;">
+                                        <option value="">Todas las categorías</option>
+                                    </select>
+                                </div>
+                                <div id="listaEstudios"
+                                    style="max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 10px; background: white;">
+                                    <!-- Estudios se cargan dinámicamente -->
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Estudios Seleccionados:</label>
+                                <div id="estudiosSeleccionados"
+                                    style="display: flex; flex-wrap: wrap; gap: 0.5rem; min-height: 40px; padding: 0.5rem; background: white; border-radius: 10px; border: 1px solid #e2e8f0;">
+                                    <span style="color: #94a3b8; font-size: 0.85rem;">Ningún estudio seleccionado</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sección: Médico Referente -->
+                        <div style="background: #fef3c7; padding: 1rem; border-radius: 12px; margin-bottom: 1.25rem;">
+                            <h4
+                                style="font-size: 0.85rem; color: #d97706; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                Médico Referente</h4>
+
+                            <div class="form-group">
+                                <label class="form-label">Buscar o agregar médico</label>
+                                <input type="text" class="form-input" id="medicoReferente"
+                                    placeholder="Nombre del médico que refiere al paciente..." list="listaMedicos">
+                                <datalist id="listaMedicos">
+                                    <!-- Médicos se cargan dinámicamente -->
+                                </datalist>
+                                <small style="color: #64748b; font-size: 0.75rem;">Escribe el nombre del médico. Si es
+                                    nuevo, se agregará al catálogo.</small>
+                            </div>
+                        </div>
+
+                        <!-- Sección: Caja / Pago -->
+                        <div
+                            style="background: #2dd4bf; background: linear-gradient(135deg, #ccfbf1 0%, #a5f3fc 100%); padding: 1.25rem; border-radius: 12px; margin-bottom: 1.25rem; border: 1px solid #99f6e4;">
+                            <h4
+                                style="font-size: 0.9rem; color: #0f766e; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem;">
+                                <svg viewBox="0 0 24 24"
+                                    style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;">
+                                    <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                                </svg>
+                                Caja y Facturación
+                            </h4>
+
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <!-- Totales -->
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 1rem; border-bottom: 1px dashed #0d9488;">
+                                    <div>
+                                        <div style="font-size: 0.85rem; color: #0f766e;">Total Estimado:</div>
+                                        <div style="font-size: 2rem; font-weight: 700; color: #0f766e; line-height: 1;">
+                                            $<span id="totalVenta">0.00</span>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 0.8rem; color: #0d9488;">Estudios: <span
+                                                id="cantidadEstudiosVenta">0</span></div>
+                                    </div>
+                                </div>
+
+                                <!-- Pago -->
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Método de Pago</label>
+                                        <select class="form-select" id="metodoPago">
+                                            <option value="efectivo">Efectivo</option>
+                                            <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+                                            <option value="transferencia">Transferencia</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Monto Recibido ($)</label>
+                                        <input type="number" class="form-input" id="montoPagado" placeholder="0.00"
+                                            step="0.50" oninput="calcularCambio()">
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.6); padding: 0.75rem; border-radius: 8px;">
+                                    <span style="font-weight: 500; color: #0f766e;">Cambio / Devolución:</span>
+                                    <span style="font-weight: 700; font-size: 1.2rem; color: #0f766e;">$<span
+                                            id="cambioVenta">0.00</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notas -->
+                        <div class="form-group">
+                            <label class="form-label">Notas Adicionales</label>
+                            <textarea class="form-textarea" id="appointmentNotes"
+                                placeholder="Indicaciones especiales, ayuno requerido, etc..."
+                                style="min-height: 70px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary"
+                            style="background: #0f766e; border-color: #0f766e;">
+                            <svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Cobrar y Generar Ticket
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <!-- Supabase SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <!-- Supabase SDK -->
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script>
-        // Supabase Configuration
-        const supabaseUrl = 'https://ebihobjrwcwtjfazcjmv.supabase.co';
-        const supabaseKey = 'sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd';
-        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+        <script>
+            // Supabase Configuration
+            const supabaseUrl = 'https://ebihobjrwcwtjfazcjmv.supabase.co';
+            const supabaseKey = 'sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd';
+            const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // State
-        let currentUser = null;
-        let allAppointments = [];
-        let editingId = null;
-        let currentMonth = new Date();
-        let selectedDate = new Date();
+            // State
+            let currentUser = null;
+            let allAppointments = [];
+            let editingId = null;
+            let currentMonth = new Date();
+            let selectedDate = new Date();
 
-        // Variables de Venta
-        let totalVenta = 0;
-        let montoPagado = 0;
-        let cambioVenta = 0;
+            // Variables de Venta
+            let totalVenta = 0;
+            let montoPagado = 0;
+            let cambioVenta = 0;
 
-        // Estudios y Médicos
-        let todosEstudios = [];
-        let todosMedicos = [];
-        let estudiosSeleccionados = [];
-        let currentLabConfig = {
-            nombre_laboratorio: 'AR LAB',
-            responsable_sanitario: 'Q.F.B. Adolfo Ruiz',
-            cedula_profesional: '1234567',
-            direccion: 'Calle Principal #123, Veracruz, Ver.',
-            telefono: '228 123 4567'
-        };
+            // Estudios y Médicos
+            let todosEstudios = [];
+            let todosMedicos = [];
+            let estudiosSeleccionados = [];
+            let cajaAbierta = null; // Estado de caja del día
+            let currentLabConfig = {
+                nombre_laboratorio: 'AR LAB',
+                responsable_sanitario: 'Q.F.B. Adolfo Ruiz',
+                cedula_profesional: '1234567',
+                direccion: 'Calle Principal #123, Veracruz, Ver.',
+                telefono: '228 123 4567'
+            };
 
-        const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', async () => {
-            checkAuth();
-            await loadLabConfig();
-            renderCalendar();
-            loadAllAppointments();
-            loadEstudios();
-            loadMedicos();
-            setupEstudioSearch();
-        });
-
-        async function loadLabConfig() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('configuracion_laboratorio')
-                    .select('*')
-                    .eq('id', 1)
-                    .single();
-
-                if (data) {
-                    currentLabConfig = data;
-                }
-            } catch (err) {
-                console.error('Error loading config:', err);
-            }
-        }
-
-        function checkAuth() {
-            const userData = localStorage.getItem('arlab_user');
-            if (!userData) {
-                currentUser = { usuario: 'Demo', rol: 'admin' };
-            } else {
-                currentUser = JSON.parse(userData);
-            }
-
-            if (currentUser) {
-                document.getElementById('userName').textContent = currentUser.usuario;
-                document.getElementById('userRole').textContent = currentUser.rol === 'admin' ? 'Administrador' : 'Operador';
-                document.getElementById('userAvatar').textContent = currentUser.usuario.charAt(0).toUpperCase();
-            }
-        }
-
-        // Calendar Functions
-        function renderCalendar() {
-            const year = currentMonth.getFullYear();
-            const month = currentMonth.getMonth();
-
-            document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
-
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const startingDay = firstDay.getDay();
-            const totalDays = lastDay.getDate();
-
-            const prevMonthLastDay = new Date(year, month, 0).getDate();
-
-            let html = '';
-            const today = new Date();
-
-            // Previous month days
-            for (let i = startingDay - 1; i >= 0; i--) {
-                const day = prevMonthLastDay - i;
-                html += `<div class="calendar-day other-month">${day}</div>`;
-            }
-
-            // Current month days
-            for (let day = 1; day <= totalDays; day++) {
-                const date = new Date(year, month, day);
-                const dateStr = formatDate(date);
-                const isToday = date.toDateString() === today.toDateString();
-                const isSelected = date.toDateString() === selectedDate.toDateString();
-                const hasAppointments = allAppointments.some(a => {
-                    const aptDate = new Date(a.fecha_hora).toDateString();
-                    return aptDate === date.toDateString();
-                });
-
-                let classes = 'calendar-day';
-                if (isToday) classes += ' today';
-                if (isSelected && !isToday) classes += ' selected';
-                if (hasAppointments) classes += ' has-appointments';
-
-                html += `<div class="${classes}" onclick="selectDate('${dateStr}')">${day}</div>`;
-            }
-
-            // Next month days
-            const remainingDays = 42 - (startingDay + totalDays);
-            for (let day = 1; day <= remainingDays; day++) {
-                html += `<div class="calendar-day other-month">${day}</div>`;
-            }
-
-            document.getElementById('calendarDays').innerHTML = html;
-        }
-
-        function changeMonth(delta) {
-            currentMonth.setMonth(currentMonth.getMonth() + delta);
-            renderCalendar();
-        }
-
-        function selectDate(dateStr) {
-            selectedDate = new Date(dateStr + 'T00:00:00');
-            renderCalendar();
-            renderAppointmentsList();
-            updateSelectedDateTitle();
-        }
-
-        function formatDate(date) {
-            return date.toISOString().split('T')[0];
-        }
-
-        function updateSelectedDateTitle() {
-            const options = { weekday: 'long', day: 'numeric', month: 'long' };
-            const formattedDate = selectedDate.toLocaleDateString('es-MX', options);
-            document.getElementById('selectedDateTitle').textContent =
-                selectedDate.toDateString() === new Date().toDateString()
-                    ? 'Citas de Hoy'
-                    : `Citas del ${formattedDate}`;
-        }
-
-        // Appointments Functions
-        async function loadAllAppointments() {
-            try {
-                const startOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
-                const endOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 2, 0);
-
-                const { data, error } = await supabaseClient
-                    .from('citas')
-                    .select('*')
-                    .gte('fecha_hora', startOfMonth.toISOString())
-                    .lte('fecha_hora', endOfMonth.toISOString())
-                    .order('fecha_hora', { ascending: true });
-
-                if (error) throw error;
-
-                allAppointments = data || [];
+            // Initialize
+            document.addEventListener('DOMContentLoaded', async () => {
+                checkAuth();
+                await loadLabConfig();
                 renderCalendar();
-                renderAppointmentsList();
-                updateStats();
-
-            } catch (err) {
-                console.error('Error loading appointments:', err);
-                allAppointments = [];
-                renderAppointmentsList();
-            }
-        }
-
-        function renderAppointmentsList() {
-            const container = document.getElementById('appointmentsList');
-            const dateStr = selectedDate.toDateString();
-
-            const dayAppointments = allAppointments.filter(a => {
-                return new Date(a.fecha_hora).toDateString() === dateStr;
+                loadAllAppointments();
+                loadEstudios();
+                loadMedicos();
+                setupEstudioSearch();
             });
 
-            if (dayAppointments.length === 0) {
-                container.innerHTML = `
+            async function loadLabConfig() {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('configuracion_laboratorio')
+                        .select('*')
+                        .eq('id', 1)
+                        .single();
+
+                    if (data) {
+                        currentLabConfig = data;
+                    }
+                } catch (err) {
+                    console.error('Error loading config:', err);
+                }
+            }
+
+            function checkAuth() {
+                const userData = localStorage.getItem('arlab_user');
+                if (!userData) {
+                    currentUser = { usuario: 'Demo', rol: 'admin' };
+                } else {
+                    currentUser = JSON.parse(userData);
+                }
+
+                if (currentUser) {
+                    document.getElementById('userName').textContent = currentUser.usuario;
+                    document.getElementById('userRole').textContent = currentUser.rol === 'admin' ? 'Administrador' : 'Operador';
+                    document.getElementById('userAvatar').textContent = currentUser.usuario.charAt(0).toUpperCase();
+
+                    // Aplicar permisos según rol
+                    applyRolePermissions();
+                }
+            }
+
+            function applyRolePermissions() {
+                const isAdmin = currentUser && currentUser.rol === 'admin';
+
+                // Menú Sistema (solo admin)
+                const menuSistema = document.getElementById('menuSistema');
+                if (menuSistema) {
+                    menuSistema.style.display = isAdmin ? 'flex' : 'none';
+                }
+
+                // Control de Caja (solo admin)
+                checkCajaStatus();
+            }
+
+            // Calendar Functions
+            function renderCalendar() {
+                const year = currentMonth.getFullYear();
+                const month = currentMonth.getMonth();
+
+                document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
+
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                const startingDay = firstDay.getDay();
+                const totalDays = lastDay.getDate();
+
+                const prevMonthLastDay = new Date(year, month, 0).getDate();
+
+                let html = '';
+                const today = new Date();
+
+                // Previous month days
+                for (let i = startingDay - 1; i >= 0; i--) {
+                    const day = prevMonthLastDay - i;
+                    html += `<div class="calendar-day other-month">${day}</div>`;
+                }
+
+                // Current month days
+                for (let day = 1; day <= totalDays; day++) {
+                    const date = new Date(year, month, day);
+                    const dateStr = formatDate(date);
+                    const isToday = date.toDateString() === today.toDateString();
+                    const isSelected = date.toDateString() === selectedDate.toDateString();
+                    const hasAppointments = allAppointments.some(a => {
+                        const aptDate = new Date(a.fecha_hora).toDateString();
+                        return aptDate === date.toDateString();
+                    });
+
+                    let classes = 'calendar-day';
+                    if (isToday) classes += ' today';
+                    if (isSelected && !isToday) classes += ' selected';
+                    if (hasAppointments) classes += ' has-appointments';
+
+                    html += `<div class="${classes}" onclick="selectDate('${dateStr}')">${day}</div>`;
+                }
+
+                // Next month days
+                const remainingDays = 42 - (startingDay + totalDays);
+                for (let day = 1; day <= remainingDays; day++) {
+                    html += `<div class="calendar-day other-month">${day}</div>`;
+                }
+
+                document.getElementById('calendarDays').innerHTML = html;
+            }
+
+            function changeMonth(delta) {
+                currentMonth.setMonth(currentMonth.getMonth() + delta);
+                renderCalendar();
+            }
+
+            function selectDate(dateStr) {
+                selectedDate = new Date(dateStr + 'T00:00:00');
+                renderCalendar();
+                renderAppointmentsList();
+                updateSelectedDateTitle();
+            }
+
+            function formatDate(date) {
+                return date.toISOString().split('T')[0];
+            }
+
+            function updateSelectedDateTitle() {
+                const options = { weekday: 'long', day: 'numeric', month: 'long' };
+                const formattedDate = selectedDate.toLocaleDateString('es-MX', options);
+                document.getElementById('selectedDateTitle').textContent =
+                    selectedDate.toDateString() === new Date().toDateString()
+                        ? 'Citas de Hoy'
+                        : `Citas del ${formattedDate}`;
+            }
+
+            // Appointments Functions
+            async function loadAllAppointments() {
+                try {
+                    const startOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+                    const endOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 2, 0);
+
+                    const { data, error } = await supabaseClient
+                        .from('citas')
+                        .select('*')
+                        .gte('fecha_hora', startOfMonth.toISOString())
+                        .lte('fecha_hora', endOfMonth.toISOString())
+                        .order('fecha_hora', { ascending: true });
+
+                    if (error) throw error;
+
+                    allAppointments = data || [];
+                    renderCalendar();
+                    renderAppointmentsList();
+                    updateStats();
+
+                } catch (err) {
+                    console.error('Error loading appointments:', err);
+                    allAppointments = [];
+                    renderAppointmentsList();
+                }
+            }
+
+            function renderAppointmentsList() {
+                const container = document.getElementById('appointmentsList');
+                const dateStr = selectedDate.toDateString();
+
+                const dayAppointments = allAppointments.filter(a => {
+                    return new Date(a.fecha_hora).toDateString() === dateStr;
+                });
+
+                if (dayAppointments.length === 0) {
+                    container.innerHTML = `
                     <div class="empty-appointments">
                         <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                         <h4>Sin citas programadas</h4>
                         <p>No hay citas para este día</p>
                     </div>
                 `;
-                return;
-            }
+                    return;
+                }
 
-            let html = '';
-            dayAppointments.forEach(apt => {
-                const time = new Date(apt.fecha_hora).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+                let html = '';
+                dayAppointments.forEach(apt => {
+                    const time = new Date(apt.fecha_hora).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
 
-                html += `
+                    html += `
                     <div class="appointment-item">
                         <div class="appointment-time">${time}</div>
                         <div class="appointment-details">
@@ -1763,353 +2127,299 @@
                         </div>
                     </div>
                 `;
-            });
+                });
 
-            container.innerHTML = html;
-        }
-
-        function updateStats() {
-            const today = new Date().toDateString();
-            const todayAppointments = allAppointments.filter(a => {
-                return new Date(a.fecha_hora).toDateString() === today;
-            });
-
-            document.getElementById('statToday').textContent = todayAppointments.length;
-            document.getElementById('statPending').textContent = todayAppointments.filter(a => a.estado === 'pendiente').length;
-            document.getElementById('statCompleted').textContent = todayAppointments.filter(a => a.estado === 'completada').length;
-            document.getElementById('statCancelled').textContent = todayAppointments.filter(a => a.estado === 'cancelada').length;
-            document.getElementById('citasCount').textContent = todayAppointments.filter(a => a.estado === 'pendiente').length;
-        }
-
-        // Modal Functions
-
-        async function saveAppointment(event) {
-            event.preventDefault();
-
-            // Validar estudios seleccionados
-            if (estudiosSeleccionados.length === 0) {
-                alert('Debe seleccionar al menos un estudio.');
-                return;
+                container.innerHTML = html;
             }
 
-            // Validar pago en Nueva Cita
-            if (!editingId && montoPagado < totalVenta) {
-                if (!confirm(`El monto pagado ($${montoPagado.toFixed(2)}) es menor al total ($${totalVenta.toFixed(2)}). ¿Desea registrar como deuda (Saldo pendiente)?`)) {
+            function updateStats() {
+                const today = new Date().toDateString();
+                const todayAppointments = allAppointments.filter(a => {
+                    return new Date(a.fecha_hora).toDateString() === today;
+                });
+
+                document.getElementById('statToday').textContent = todayAppointments.length;
+                document.getElementById('statPending').textContent = todayAppointments.filter(a => a.estado === 'pendiente').length;
+                document.getElementById('statCompleted').textContent = todayAppointments.filter(a => a.estado === 'completada').length;
+                document.getElementById('statCancelled').textContent = todayAppointments.filter(a => a.estado === 'cancelada').length;
+                document.getElementById('citasCount').textContent = todayAppointments.filter(a => a.estado === 'pendiente').length;
+            }
+
+            // Modal Functions
+
+            async function saveAppointment(event) {
+                event.preventDefault();
+
+                // Validar estudios seleccionados
+                if (estudiosSeleccionados.length === 0) {
+                    showToast('Debe seleccionar al menos un estudio.', 'error');
                     return;
                 }
-            }
 
-            const date = document.getElementById('appointmentDate').value;
-            const time = document.getElementById('appointmentTime').value;
-            const fechaHora = `${date}T${time}:00`;
-
-            const primerNombre = document.getElementById('primerNombre').value;
-            const segundoNombre = document.getElementById('segundoNombre').value || '';
-            const primerApellido = document.getElementById('primerApellido').value;
-            const segundoApellido = document.getElementById('segundoApellido').value || '';
-
-            const nombreCompleto = `${primerNombre} ${segundoNombre} ${primerApellido} ${segundoApellido}`.replace(/\s+/g, ' ').trim();
-            const medicoActual = document.getElementById('medicoReferente').value;
-
-            // Generar folio de venta simple (timestamp corto)
-            const folioVenta = Math.floor(Date.now() / 1000);
-
-            const appointmentData = {
-                paciente_nombre: nombreCompleto,
-                paciente_telefono: document.getElementById('patientPhone').value,
-                fecha_hora: fechaHora,
-                tipo_servicio: 'laboratorio',
-                notas: document.getElementById('appointmentNotes').value || null,
-                estado: 'pendiente',
-
-                // Campos extendidos
-                primer_nombre: primerNombre,
-                segundo_nombre: segundoNombre || null,
-                primer_apellido: primerApellido,
-                segundo_apellido: segundoApellido || null,
-                fecha_nacimiento: document.getElementById('fechaNacimiento').value,
-                diagnostico: document.getElementById('diagnostico').value || null,
-
-                // Campos de Pago
-                total: totalVenta,
-                subtotal: totalVenta,
-                pagado: montoPagado,
-                metodo_pago: document.getElementById('metodoPago').value,
-                folio_venta: folioVenta,
-
-                // Médico
-                medico_referente_nombre: medicoActual
-            };
-
-            try {
-                let result;
-                let citaId;
-
-                if (editingId) {
-                    result = await supabaseClient
-                        .from('citas')
-                        .update(appointmentData)
-                        .eq('id', editingId)
-                        .select();
-                    if (result.data) citaId = editingId;
-                } else {
-                    result = await supabaseClient
-                        .from('citas')
-                        .insert([appointmentData])
-                        .select();
-                    if (result.data) citaId = result.data[0].id;
-                }
-
-                if (result.error) throw result.error;
-
-                // Guardar relación de estudios
-                if (editingId) {
-                    // Limpiar anteriores para actualizar
-                    await supabaseClient.from('citas_estudios').delete().eq('cita_id', citaId);
-                }
-
-                if (estudiosSeleccionados.length > 0) {
-                    const estudiosRel = estudiosSeleccionados.map(est => ({
-                        cita_id: citaId,
-                        estudio_id: est.id
-                    }));
-
-                    const { error: relError } = await supabaseClient
-                        .from('citas_estudios')
-                        .insert(estudiosRel);
-
-                    if (relError) console.error('Error guardando estudios:', relError);
-                }
-
-                // Generar Ticket (solo nuevas citas o si se solicita explícitamente, aquí solo nuevas por flujo)
-                if (!editingId) {
-                    generateTicket(appointmentData, folioVenta);
-                }
-
-                closeModal();
-                loadAllAppointments();
-
-            } catch (err) {
-                console.error('Error saving appointment:', err);
-                alert('Error al guardar la cita: ' + err.message);
-            }
-        }
-        function openNewAppointmentModal() {
-            editingId = null;
-            document.getElementById('modalTitle').textContent = 'Nueva Cita de Laboratorio';
-            document.getElementById('appointmentForm').reset();
-
-            // Set selected date as default
-            document.getElementById('appointmentDate').value = formatDate(selectedDate);
-            document.getElementById('appointmentTime').value = '08:00';
-
-            // Reset estudios seleccionados
-            estudiosSeleccionados = [];
-            renderEstudiosSeleccionados();
-            document.getElementById('buscarEstudio').value = '';
-            document.getElementById('filtroCategoria').value = '';
-            renderEstudiosList();
-
-            document.getElementById('appointmentModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('appointmentModal').classList.remove('active');
-            editingId = null;
-        }
-
-        async function saveAppointment(event) {
-            event.preventDefault();
-
-            const date = document.getElementById('appointmentDate').value;
-            const time = document.getElementById('appointmentTime').value;
-            const fechaHora = `${date}T${time}:00`;
-
-            // Construir nombre completo
-            const primerNombre = document.getElementById('primerNombre').value;
-            const segundoNombre = document.getElementById('segundoNombre').value || '';
-            const primerApellido = document.getElementById('primerApellido').value;
-            const segundoApellido = document.getElementById('segundoApellido').value || '';
-
-            const nombreCompleto = `${primerNombre} ${segundoNombre} ${primerApellido} ${segundoApellido}`.replace(/\s+/g, ' ').trim();
-
-            const appointmentData = {
-                paciente_nombre: nombreCompleto,
-                paciente_telefono: document.getElementById('patientPhone').value,
-                fecha_hora: fechaHora,
-                tipo_servicio: 'laboratorio',
-                notas: document.getElementById('appointmentNotes').value || null,
-                estado: 'pendiente',
-                primer_nombre: primerNombre,
-                segundo_nombre: segundoNombre || null,
-                primer_apellido: primerApellido,
-                segundo_apellido: segundoApellido || null,
-                fecha_nacimiento: document.getElementById('fechaNacimiento').value,
-                diagnostico: document.getElementById('diagnostico').value || null
-            };
-
-            try {
-                let result;
-                if (editingId) {
-                    result = await supabaseClient
-                        .from('citas')
-                        .update(appointmentData)
-                        .eq('id', editingId);
-                } else {
-                    result = await supabaseClient
-                        .from('citas')
-                        .insert([appointmentData]);
-                }
-
-                if (result.error) throw result.error;
-
-                closeModal();
-                loadAllAppointments();
-                alert(editingId ? '¡Cita actualizada!' : '¡Cita registrada exitosamente!');
-
-            } catch (err) {
-                console.error('Error saving appointment:', err);
-                alert('Error al guardar la cita. Verifica la conexión con Supabase.');
-            }
-        }
-
-        async function editAppointment(id) {
-            const apt = allAppointments.find(a => a.id === id);
-            if (!apt) return;
-
-            editingId = id;
-            document.getElementById('modalTitle').textContent = 'Editar Cita';
-
-            const dateTime = new Date(apt.fecha_hora);
-            document.getElementById('patientName').value = apt.paciente_nombre;
-            document.getElementById('patientPhone').value = apt.paciente_telefono || '';
-            document.getElementById('patientEmail').value = apt.paciente_email || '';
-            document.getElementById('appointmentDate').value = formatDate(dateTime);
-            document.getElementById('appointmentTime').value = dateTime.toTimeString().substring(0, 5);
-            document.getElementById('appointmentNotes').value = apt.notas || '';
-
-            document.getElementById('appointmentModal').classList.add('active');
-        }
-
-        async function updateStatus(id, status) {
-            const labels = { 'completada': 'completar', 'cancelada': 'cancelar' };
-            if (!confirm(`¿Estás seguro de ${labels[status]} esta cita?`)) return;
-
-            try {
-                const { error } = await supabaseClient
-                    .from('citas')
-                    .update({ estado: status })
-                    .eq('id', id);
-
-                if (error) throw error;
-                loadAllAppointments();
-
-            } catch (err) {
-                console.error('Error updating status:', err);
-                alert('Error al actualizar el estado de la cita.');
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('arlab_user');
-            window.location.href = 'index.html';
-        }
-
-        // Navigation
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                const module = item.dataset.module;
-
-                // Si el item tiene un data-module, manejamos el cambio de vista interna
-                if (module) {
-                    e.preventDefault();
-                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-
-                    if (module !== 'citas') {
-                        alert('Módulo en desarrollo');
+                // Validar pago en Nueva Cita
+                if (!editingId && montoPagado < totalVenta) {
+                    if (!confirm(`El monto pagado ($${montoPagado.toFixed(2)}) es menor al total ($${totalVenta.toFixed(2)}). ¿Desea registrar como deuda (Saldo pendiente)?`)) {
+                        return;
                     }
                 }
-                // Si NO tiene data-module (como el link a configuración o comprobantes), 
-                // permitimos que el navegador siga el href normal.
-            });
-        });
 
-        // Close modal on overlay click
-        document.getElementById('appointmentModal').addEventListener('click', (e) => {
-            if (e.target.id === 'appointmentModal') {
-                closeModal();
+                const date = document.getElementById('appointmentDate').value;
+                const time = document.getElementById('appointmentTime').value;
+                const fechaHora = `${date}T${time}:00`;
+
+                const primerNombre = document.getElementById('primerNombre').value;
+                const segundoNombre = document.getElementById('segundoNombre').value || '';
+                const primerApellido = document.getElementById('primerApellido').value;
+                const segundoApellido = document.getElementById('segundoApellido').value || '';
+
+                const nombreCompleto = `${primerNombre} ${segundoNombre} ${primerApellido} ${segundoApellido}`.replace(/\s+/g, ' ').trim();
+                const medicoActual = document.getElementById('medicoReferente').value;
+
+                // Verificar y Guardar Nuevo Médico
+                if (medicoActual && !todosMedicos.some(m => m.nombre.toLowerCase() === medicoActual.toLowerCase())) {
+                    try {
+                        const { error: errorMedico } = await supabaseClient
+                            .from('medicos')
+                            .insert([{ nombre: medicoActual }]);
+
+                        if (errorMedico) {
+                            console.error('Error guardando médico:', errorMedico);
+                            // No bloqueamos, solo logueamos
+                        } else {
+                            await loadMedicos(); // Recargar lista
+                        }
+                    } catch (errMed) {
+                        console.error('Error procesando médico:', errMed);
+                    }
+                }
+
+                // Generar folio de venta simple (timestamp corto)
+                const folioVenta = Math.floor(Date.now() / 1000);
+
+                const appointmentData = {
+                    paciente_nombre: nombreCompleto,
+                    paciente_telefono: document.getElementById('patientPhone').value,
+                    fecha_hora: fechaHora,
+                    tipo_servicio: 'laboratorio',
+                    notas: document.getElementById('appointmentNotes').value || null,
+                    estado: 'pendiente',
+
+                    // Campos extendidos
+                    primer_nombre: primerNombre,
+                    segundo_nombre: segundoNombre || null,
+                    primer_apellido: primerApellido,
+                    segundo_apellido: segundoApellido || null,
+                    fecha_nacimiento: document.getElementById('fechaNacimiento').value,
+                    diagnostico: document.getElementById('diagnostico').value || null,
+
+                    // Campos de Pago
+                    total: totalVenta,
+                    subtotal: totalVenta,
+                    pagado: montoPagado,
+                    metodo_pago: document.getElementById('metodoPago').value,
+                    folio_venta: folioVenta,
+
+                    // Médico
+                    medico_referente_nombre: medicoActual
+                };
+
+                try {
+                    let result;
+                    let citaId;
+
+                    if (editingId) {
+                        result = await supabaseClient
+                            .from('citas')
+                            .update(appointmentData)
+                            .eq('id', editingId)
+                            .select();
+                        if (result.data) citaId = editingId;
+                    } else {
+                        result = await supabaseClient
+                            .from('citas')
+                            .insert([appointmentData])
+                            .select();
+                        if (result.data) citaId = result.data[0].id;
+                    }
+
+                    if (result.error) throw result.error;
+
+                    // Guardar relación de estudios
+                    if (editingId) {
+                        // Limpiar anteriores para actualizar
+                        await supabaseClient.from('citas_estudios').delete().eq('cita_id', citaId);
+                    }
+
+                    if (estudiosSeleccionados.length > 0) {
+                        const estudiosRel = estudiosSeleccionados.map(est => ({
+                            cita_id: citaId,
+                            estudio_id: est.id
+                        }));
+
+                        const { error: relError } = await supabaseClient
+                            .from('citas_estudios')
+                            .insert(estudiosRel);
+
+                        if (relError) console.error('Error guardando estudios:', relError);
+                    }
+
+                    // Generar Ticket (solo nuevas citas o si se solicita explícitamente, aquí solo nuevas por flujo)
+                    if (!editingId) {
+                        generateTicket(appointmentData, folioVenta);
+                    }
+
+                    closeModal();
+                    loadAllAppointments();
+                    showToast(editingId ? 'Cita actualizada correctamente' : 'Cita registrada exitosamente');
+
+                } catch (err) {
+                    console.error('Error saving appointment:', err);
+                    showToast('Error al guardar la cita: ' + err.message, 'error');
+                }
             }
-        });
+            function openNewAppointmentModal() {
+                editingId = null;
+                document.getElementById('modalTitle').textContent = 'Nueva Cita de Laboratorio';
+                document.getElementById('appointmentForm').reset();
 
-        // ========== ESTUDIOS Y MÉDICOS ==========
+                // Set selected date as default
+                document.getElementById('appointmentDate').value = formatDate(selectedDate);
+                document.getElementById('appointmentTime').value = '08:00';
 
-        async function loadEstudios() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('estudios_laboratorio')
-                    .select('*')
-                    .eq('activo', true)
-                    .order('categoria', { ascending: true });
-
-                if (error) throw error;
-
-                todosEstudios = data || [];
+                // Reset estudios seleccionados
+                estudiosSeleccionados = [];
+                renderEstudiosSeleccionados();
+                document.getElementById('buscarEstudio').value = '';
+                document.getElementById('filtroCategoria').value = '';
                 renderEstudiosList();
-                loadCategorias();
 
-            } catch (err) {
-                console.error('Error loading estudios:', err);
+                document.getElementById('appointmentModal').classList.add('active');
             }
-        }
 
-        async function loadMedicos() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('medicos_referentes')
-                    .select('*')
-                    .eq('activo', true)
-                    .order('nombre', { ascending: true });
-
-                if (error) throw error;
-
-                todosMedicos = data || [];
-                renderMedicosDatalist();
-
-            } catch (err) {
-                console.error('Error loading medicos:', err);
+            function closeModal() {
+                document.getElementById('appointmentModal_deprecated').style.display = 'none';
+                editingId = null;
             }
-        }
 
-        function loadCategorias() {
-            const categorias = [...new Set(todosEstudios.map(e => e.categoria))].sort();
-            const select = document.getElementById('filtroCategoria');
-            select.innerHTML = '<option value="">Todas las categorías</option>';
-            categorias.forEach(cat => {
-                select.innerHTML += `<option value="${cat}">${cat}</option>`;
+            async function updateStatus(id, status) {
+                const labels = { 'completada': 'completar', 'cancelada': 'cancelar' };
+                if (!confirm(`¿Estás seguro de ${labels[status]} esta cita?`)) return;
+
+                try {
+                    const { error } = await supabaseClient
+                        .from('citas')
+                        .update({ estado: status })
+                        .eq('id', id);
+
+                    if (error) throw error;
+                    loadAllAppointments();
+
+                } catch (err) {
+                    console.error('Error updating status:', err);
+                    alert('Error al actualizar el estado de la cita.');
+                }
+            }
+
+            function logout() {
+                localStorage.removeItem('arlab_user');
+                window.location.href = 'index.html';
+            }
+
+            // Navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const module = item.dataset.module;
+
+                    // Si el item tiene un data-module, manejamos el cambio de vista interna
+                    if (module) {
+                        e.preventDefault();
+                        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+
+                        if (module !== 'citas') {
+                            alert('Módulo en desarrollo');
+                        }
+                    }
+                    // Si NO tiene data-module (como el link a configuración o comprobantes), 
+                    // permitimos que el navegador siga el href normal.
+                });
             });
-        }
 
-        function renderEstudiosList(filtro = '', categoria = '') {
-            const container = document.getElementById('listaEstudios');
-
-            let estudiosFiltrados = todosEstudios.filter(e => {
-                const matchNombre = e.nombre.toLowerCase().includes(filtro.toLowerCase());
-                const matchCategoria = !categoria || e.categoria === categoria;
-                return matchNombre && matchCategoria;
+            // Close modal on overlay click
+            document.getElementById('appointmentModal').addEventListener('click', (e) => {
+                if (e.target.id === 'appointmentModal') {
+                    closeModal();
+                }
             });
 
-            if (estudiosFiltrados.length === 0) {
-                container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #94a3b8;">No se encontraron estudios</div>';
-                return;
+            // ========== ESTUDIOS Y MÉDICOS ==========
+
+            async function loadEstudios() {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('estudios_laboratorio')
+                        .select('*')
+                        .eq('activo', true)
+                        .order('categoria', { ascending: true });
+
+                    if (error) throw error;
+
+                    todosEstudios = data || [];
+                    renderEstudiosList();
+                    loadCategorias();
+
+                } catch (err) {
+                    console.error('Error loading estudios:', err);
+                }
             }
 
-            let html = '';
-            estudiosFiltrados.forEach(est => {
-                const isSelected = estudiosSeleccionados.some(s => s.id === est.id);
-                const precio = parseFloat(est.precio || 0).toFixed(2);
+            async function loadMedicos() {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('medicos_referentes')
+                        .select('*')
+                        .eq('activo', true)
+                        .order('nombre', { ascending: true });
 
-                html += `
+                    if (error) throw error;
+
+                    todosMedicos = data || [];
+                    renderMedicosDatalist();
+
+                } catch (err) {
+                    console.error('Error loading medicos:', err);
+                }
+            }
+
+            function loadCategorias() {
+                const categorias = [...new Set(todosEstudios.map(e => e.categoria))].sort();
+                const select = document.getElementById('filtroCategoria');
+                select.innerHTML = '<option value="">Todas las categorías</option>';
+                categorias.forEach(cat => {
+                    select.innerHTML += `<option value="${cat}">${cat}</option>`;
+                });
+            }
+
+            function renderEstudiosList(filtro = '', categoria = '') {
+                const container = document.getElementById('listaEstudios');
+
+                let estudiosFiltrados = todosEstudios.filter(e => {
+                    const matchNombre = e.nombre.toLowerCase().includes(filtro.toLowerCase());
+                    const matchCategoria = !categoria || e.categoria === categoria;
+                    return matchNombre && matchCategoria;
+                });
+
+                if (estudiosFiltrados.length === 0) {
+                    container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #94a3b8;">No se encontraron estudios</div>';
+                    return;
+                }
+
+                let html = '';
+                estudiosFiltrados.forEach(est => {
+                    const isSelected = estudiosSeleccionados.some(s => s.id === est.id);
+                    const precio = parseFloat(est.precio || 0).toFixed(2);
+
+                    html += `
                     <div class="estudio-item ${isSelected ? 'selected' : ''}" onclick="toggleEstudio('${est.id}')">
                         <div style="display: flex; flex-direction: column;">
                             <span class="estudio-nombre">${est.nombre}</span>
@@ -2122,42 +2432,42 @@
                         </div>
                     </div>
                 `;
-            });
+                });
 
-            container.innerHTML = html;
-        }
-
-        function toggleEstudio(id) {
-            const estudio = todosEstudios.find(e => e.id === id);
-            if (!estudio) return;
-
-            const index = estudiosSeleccionados.findIndex(s => s.id === id);
-            if (index > -1) {
-                estudiosSeleccionados.splice(index, 1);
-            } else {
-                estudiosSeleccionados.push(estudio);
+                container.innerHTML = html;
             }
 
-            renderEstudiosList(
-                document.getElementById('buscarEstudio').value,
-                document.getElementById('filtroCategoria').value
-            );
-            renderEstudiosSeleccionados();
-            calcularTotal();
-        }
+            function toggleEstudio(id) {
+                const estudio = todosEstudios.find(e => e.id === id);
+                if (!estudio) return;
 
-        function renderEstudiosSeleccionados() {
-            const container = document.getElementById('estudiosSeleccionados');
+                const index = estudiosSeleccionados.findIndex(s => s.id === id);
+                if (index > -1) {
+                    estudiosSeleccionados.splice(index, 1);
+                } else {
+                    estudiosSeleccionados.push(estudio);
+                }
 
-            if (estudiosSeleccionados.length === 0) {
-                container.innerHTML = '<span style="color: #94a3b8; font-size: 0.85rem;">Ningún estudio seleccionado</span>';
-                return;
+                renderEstudiosList(
+                    document.getElementById('buscarEstudio').value,
+                    document.getElementById('filtroCategoria').value
+                );
+                renderEstudiosSeleccionados();
+                calcularTotal();
             }
 
-            let html = `<div style="width: 100%;"><strong style="font-size: 0.8rem; color: #64748b;">${estudiosSeleccionados.length} estudio(s) seleccionado(s):</strong></div>`;
-            estudiosSeleccionados.forEach((est, index) => {
-                const precio = parseFloat(est.precio || 0).toFixed(2);
-                html += `
+            function renderEstudiosSeleccionados() {
+                const container = document.getElementById('estudiosSeleccionados');
+
+                if (estudiosSeleccionados.length === 0) {
+                    container.innerHTML = '<span style="color: #94a3b8; font-size: 0.85rem;">Ningún estudio seleccionado</span>';
+                    return;
+                }
+
+                let html = `<div style="width: 100%;"><strong style="font-size: 0.8rem; color: #64748b;">${estudiosSeleccionados.length} estudio(s) seleccionado(s):</strong></div>`;
+                estudiosSeleccionados.forEach((est, index) => {
+                    const precio = parseFloat(est.precio || 0).toFixed(2);
+                    html += `
                     <div class="estudio-seleccionado-item" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0.5rem 0.75rem; background: #f0fdfa; border-radius: 8px; margin-top: 0.5rem;">
                         <div style="flex: 1;">
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -2176,111 +2486,119 @@
                         </div>
                     </div>
                 `;
-            });
+                });
 
-            container.innerHTML = html;
-        }
-
-        function renderMedicosDatalist() {
-            const datalist = document.getElementById('listaMedicos');
-            datalist.innerHTML = '';
-            todosMedicos.forEach(med => {
-                datalist.innerHTML += `<option value="${med.nombre}">`;
-            });
-        }
-
-        function setupEstudioSearch() {
-            document.getElementById('buscarEstudio').addEventListener('input', (e) => {
-                renderEstudiosList(e.target.value, document.getElementById('filtroCategoria').value);
-            });
-
-            document.getElementById('filtroCategoria').addEventListener('change', (e) => {
-                renderEstudiosList(document.getElementById('buscarEstudio').value, e.target.value);
-            });
-        }
-
-        // ========== LÓGICA DE PAGO ========== //
-
-        function calcularTotal() {
-            totalVenta = estudiosSeleccionados.reduce((sum, item) => sum + parseFloat(item.precio || 0), 0);
-
-            document.getElementById('totalVenta').textContent = totalVenta.toFixed(2);
-            document.getElementById('cantidadEstudiosVenta').textContent = estudiosSeleccionados.length;
-
-            calcularCambio();
-        }
-
-        function calcularCambio() {
-            const montoInput = document.getElementById('montoPagado');
-            montoPagado = parseFloat(montoInput.value) || 0;
-
-            cambioVenta = montoPagado - totalVenta;
-
-            const cambioEl = document.getElementById('cambioVenta');
-            cambioEl.textContent = cambioVenta.toFixed(2);
-
-            if (cambioVenta < 0) {
-                cambioEl.style.color = '#ef4444'; // Rojo si falta dinero
-            } else {
-                cambioEl.style.color = '#0f766e'; // Verde si está bien
+                container.innerHTML = html;
             }
-        }
 
-        // ========== GENERAR TICKET ========== //
+            function renderMedicosDatalist() {
+                const datalist = document.getElementById('listaMedicos');
+                datalist.innerHTML = '';
+                todosMedicos.forEach(med => {
+                    datalist.innerHTML += `<option value="${med.nombre}">`;
+                });
+            }
 
-        function generateTicket(citaData, folio) {
-            const fecha = new Date().toLocaleString('es-MX');
-            const paciente = citaData.paciente_nombre;
-            const medicoStr = document.getElementById('medicoReferente').value;
-            const medico = medicoStr ? medicoStr : 'A quien corresponda';
+            function setupEstudioSearch() {
+                document.getElementById('buscarEstudio').addEventListener('input', (e) => {
+                    renderEstudiosList(e.target.value, document.getElementById('filtroCategoria').value);
+                });
 
-            const itemsHtml = estudiosSeleccionados.map(est => `
+                document.getElementById('filtroCategoria').addEventListener('change', (e) => {
+                    renderEstudiosList(document.getElementById('buscarEstudio').value, e.target.value);
+                });
+            }
+
+            // ========== LÓGICA DE PAGO ========== //
+
+            function calcularTotal() {
+                totalVenta = estudiosSeleccionados.reduce((sum, item) => sum + parseFloat(item.precio || 0), 0);
+
+                document.getElementById('totalVenta').textContent = totalVenta.toFixed(2);
+                document.getElementById('cantidadEstudiosVenta').textContent = estudiosSeleccionados.length;
+
+                calcularCambio();
+            }
+
+            function calcularCambio() {
+                const montoInput = document.getElementById('montoPagado');
+                montoPagado = parseFloat(montoInput.value) || 0;
+
+                cambioVenta = montoPagado - totalVenta;
+
+                const cambioEl = document.getElementById('cambioVenta');
+                cambioEl.textContent = cambioVenta.toFixed(2);
+
+                if (cambioVenta < 0) {
+                    cambioEl.style.color = '#ef4444'; // Rojo si falta dinero
+                } else {
+                    cambioEl.style.color = '#0f766e'; // Verde si está bien
+                }
+            }
+
+            // ========== GENERAR TICKET ========== //
+
+            function generateTicket(citaData, folio) {
+                const fecha = new Date().toLocaleString('es-MX');
+                const paciente = citaData.paciente_nombre;
+                const medicoStr = document.getElementById('medicoReferente') ? document.getElementById('medicoReferente').value : '';
+                const medico = medicoStr ? medicoStr : 'Particular / Referencia General';
+                const metodoPago = (citaData.metodo_pago || 'efectivo').toUpperCase();
+
+                // QR Code
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=Folio:${folio}|Paciente:${paciente}`;
+
+                const itemsHtml = estudiosSeleccionados.map(est => `
                 <tr>
                     <td style="padding: 5px 0;">${est.nombre}</td>
                     <td style="text-align: right;">$${parseFloat(est.precio).toFixed(2)}</td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="font-size: 10px; color: #666; padding-bottom: 5px;">
-                        <em>${est.indicaciones || 'Ayuno 8h'}</em>
+                    <td colspan="2" style="font-size: 11px; color: #000; padding-bottom: 8px; line-height: 1.2;">
+                        <strong>Indicaciones:</strong> ${est.indicaciones || 'Sin indicaciones especiales.'}
                     </td>
                 </tr>
             `).join('');
 
-            const ticketWindow = window.open('', 'PRINT', 'height=600,width=400');
+                const ticketWindow = window.open('', 'PRINT', 'height=700,width=450');
 
-            ticketWindow.document.write(`
+                ticketWindow.document.write(`
                 <html>
                 <head>
-                    <title>Ticket de Venta - Ar Lab</title>
+                    <title>Ticket #${folio} - ${currentLabConfig.nombre_laboratorio}</title>
                     <style>
-                        body { font-family: 'Courier New', monospace; font-size: 12px; max-width: 300px; margin: 0 auto; padding: 10px; }
+                        body { font-family: 'Courier New', monospace; font-size: 12px; max-width: 350px; margin: 0 auto; padding: 20px; color: #000; }
                         .header { text-align: center; margin-bottom: 20px; }
-                        .logo { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
-                        .info { margin-bottom: 15px; border-bottom: 1px dashed #000; padding-bottom: 10px; }
+                        .logo-img { max-width: 150px; margin-bottom: 10px; }
+                        .lab-name { font-size: 22px; font-weight: bold; color: #0f766e; }
+                        .info { margin-bottom: 15px; border-top: 1px dashed #000; border-bottom: 1px dashed #000; padding: 10px 0; }
                         table { width: 100%; border-collapse: collapse; }
-                        .totals { border-top: 1px dashed black; margin-top: 10px; paddingTop: 10px; }
-                        .footer { text-align: center; margin-top: 30px; font-size: 10px; border-top: 1px solid #ccc; padding-top: 10px;}
-                        .bold { font-weight: bold; }
+                        .totals { border-top: 2px solid black; margin-top: 10px; padding-top: 10px; }
+                        .qr-container { text-align: center; margin: 20px 0; }
+                        .footer { text-align: center; margin-top: 20px; font-size: 10px; border-top: 1px solid #ccc; padding-top: 10px;}
+                        @media print { .no-print { display: none; } }
                     </style>
                 </head>
                 <body>
                     <div class="header">
-                        <div class="logo">${currentLabConfig.nombre_laboratorio}</div>
-                        <div>Laboratorio Clínico</div>
+                        <img src="arlab_logo.png" class="logo-img" onerror="this.style.display='none'">
+                        <div class="lab-name">${currentLabConfig.nombre_laboratorio}</div>
+                        <div style="margin-top:5px; font-weight:bold;">LABORATORIO CLÍNICO</div>
                         <div>Folio: #${folio}</div>
                         <div>${fecha}</div>
                     </div>
                     
                     <div class="info">
-                        <strong>Pac:</strong> ${paciente}<br>
-                        <strong>Dr:</strong> ${medico}<br>
+                        <strong>PACIENTE:</strong> ${paciente}<br>
+                        <strong>MÉDICO:</strong> ${medico}<br>
+                        <strong>PAGO:</strong> ${metodoPago}
                     </div>
 
                     <table>
                         <thead>
                             <tr style="border-bottom: 1px solid black;">
-                                <th style="text-align: left;">Estudio</th>
-                                <th style="text-align: right;">$</th>
+                                <th style="text-align: left;">CONCEPTO</th>
+                                <th style="text-align: right;">IMPORTE</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -2291,23 +2609,29 @@
                     <div class="totals">
                         <table>
                             <tr>
-                                <td><strong>TOTAL:</strong></td>
+                                <td><strong>NETO A PAGAR:</strong></td>
                                 <td style="text-align: right;"><strong>$${totalVenta.toFixed(2)}</strong></td>
                             </tr>
                             <tr>
-                                <td>Pagado:</td>
+                                <td>EFECTIVO/PAGO:</td>
                                 <td style="text-align: right;">$${montoPagado.toFixed(2)}</td>
                             </tr>
                             <tr>
-                                <td>Cambio:</td>
+                                <td>CAMBIO:</td>
                                 <td style="text-align: right;">$${cambioVenta.toFixed(2)}</td>
                             </tr>
                         </table>
                     </div>
 
+                    <div class="qr-container">
+                        <img src="${qrUrl}" alt="QR Code">
+                        <div style="font-size: 9px; margin-top: 5px;">Escanea para validar folio</div>
+                    </div>
+
                     <div class="footer">
-                        <p>GRACIAS POR SU PREFERENCIA</p>
+                        <p><strong>GRACIAS POR SU CONFIANZA</strong></p>
                         <p>${currentLabConfig.responsable_sanitario}</p>
+                        <p>Céd. Prof. ${currentLabConfig.cedula_profesional}</p>
                         <p>${currentLabConfig.direccion}</p>
                         <p><strong>Tel: ${currentLabConfig.telefono}</strong></p>
                     </div>
@@ -2318,36 +2642,582 @@
                 </html>
             `);
 
-            ticketWindow.document.close();
-        }
+                ticketWindow.document.close();
+            }
 
-        function editAppointment(id) {
-            alert('La edición de citas se está migrando a la nueva interfaz. Por ahora, esta función no está disponible.');
-        }
-        // Navbar Dropdown Logic
-        function toggleDropdown(element) {
-            // Close other dropdowns
-            const allDropdowns = document.querySelectorAll('.nav-dropdown');
-            allDropdowns.forEach(dropdown => {
-                if (dropdown !== element) {
-                    dropdown.classList.remove('active');
+            function editAppointment(id) {
+                alert('La edición de citas se está migrando a la nueva interfaz. Por ahora, esta función no está disponible.');
+            }
+            // Navbar Dropdown Logic
+            function toggleDropdown(element) {
+                // Close other dropdowns
+                const allDropdowns = document.querySelectorAll('.nav-dropdown');
+                allDropdowns.forEach(dropdown => {
+                    if (dropdown !== element) {
+                        dropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current
+                element.classList.toggle('active');
+            }
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!event.target.closest('.nav-dropdown')) {
+                    const allDropdowns = document.querySelectorAll('.nav-dropdown');
+                    allDropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
                 }
             });
 
-            // Toggle current
-            element.classList.toggle('active');
-        }
+            // ==========================================
+            // FASE 1: CONTROL DE CAJA
+            // ==========================================
 
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function (event) {
-            if (!event.target.closest('.nav-dropdown')) {
-                const allDropdowns = document.querySelectorAll('.nav-dropdown');
-                allDropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
+            async function checkCajaStatus() {
+                const widget = document.getElementById('widgetCaja');
+
+                if (!currentUser || currentUser.rol !== 'admin') {
+                    if (widget) widget.style.display = 'none';
+                    return;
+                }
+
+                if (widget) widget.style.display = 'flex';
+
+                try {
+                    const today = new Date().toISOString().split('T')[0];
+                    const { data, error } = await supabaseClient
+                        .from('cierres_caja')
+                        .select('*')
+                        .eq('fecha', today)
+                        .order('created_at', { ascending: false })
+                        .limit(1);
+
+                    const statusText = document.getElementById('cajaStatusText');
+                    const statusSub = document.getElementById('cajaStatusSub');
+                    const statusIcon = document.getElementById('cajaStatusIcon');
+                    const balanceDisplay = document.getElementById('cajaBalance');
+                    const btnAction = document.getElementById('btnCajaAction');
+
+                    if (data && data.length > 0) {
+                        cajaAbierta = data[0];
+                        if (cajaAbierta.estado === 'abierta') {
+                            // Caja Abierta
+                            statusText.textContent = 'Caja Abierta';
+                            statusText.style.color = '#16a34a';
+                            statusSub.textContent = 'Operando correctamente';
+                            statusIcon.className = 'status-icon active';
+                            balanceDisplay.textContent = '$' + (cajaAbierta.fondo_inicial || 0).toFixed(2);
+
+                            btnAction.textContent = 'Cerrar Caja';
+                            btnAction.onclick = cerrarCajaModal;
+                            btnAction.style.background = '#dc2626';
+                        } else {
+                            // Caja Cerrada (Ya se cerró hoy)
+                            statusText.textContent = 'Caja Cerrada';
+                            statusText.style.color = '#dc2626';
+                            statusSub.textContent = 'Cierre realizado hoy';
+                            statusIcon.className = 'status-icon inactive';
+                            balanceDisplay.textContent = '---';
+
+                            btnAction.style.display = 'none';
+                        }
+                    } else {
+                        // Caja No Iniciada
+                        statusText.textContent = 'Caja Cerrada';
+                        statusText.style.color = '#64748b';
+                        statusSub.textContent = 'Sin apertura registrada hoy';
+                        statusIcon.className = 'status-icon inactive';
+                        balanceDisplay.textContent = '---';
+
+                        btnAction.style.display = 'block';
+                        btnAction.textContent = 'Abrir Caja';
+                        btnAction.onclick = abrirCajaModal;
+                        btnAction.style.background = '#059669';
+                    }
+
+                    // Actualizar stats globales también
+                    updateHomeStats();
+
+                } catch (err) {
+                    console.error('Error checking caja status:', err);
+                }
             }
-        });
-    </script>
+
+            async function updateHomeStats() {
+                const today = new Date().toISOString().split('T')[0];
+                const startOfDay = today + 'T00:00:00';
+                const endOfDay = today + 'T23:59:59';
+
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('citas')
+                        .select('pagado, created_at, estado')
+                        .gte('created_at', startOfDay)
+                        .lte('created_at', endOfDay);
+
+                    if (data) {
+                        const citasHoy = data.length;
+                        const ventasHoy = data.reduce((sum, c) => sum + (c.pagado || 0), 0);
+                        const pendientes = data.filter(c => c.estado === 'pendiente').length;
+
+                        document.getElementById('homeCitasHoy').textContent = citasHoy;
+                        document.getElementById('homeVentasHoy').textContent = '$' + ventasHoy.toFixed(2);
+                        document.getElementById('homePendientes').textContent = pendientes;
+                    }
+                } catch (err) {
+                    console.error('Error updating home stats:', err);
+                }
+            }
+
+            function switchView(viewName) {
+                // Hide all views
+                document.getElementById('viewInicio').style.display = 'none';
+                document.getElementById('viewCitas').style.display = 'none';
+
+                // Show selected view
+                if (viewName === 'inicio') {
+                    document.getElementById('viewInicio').style.display = 'block';
+                    document.getElementById('pageTitle').textContent = 'Inicio Dashboard';
+                } else if (viewName === 'citas') {
+                    document.getElementById('viewCitas').style.display = 'block';
+                    document.getElementById('pageTitle').textContent = 'Gestión de Citas';
+                    // Refresh calendar if needed
+                    renderCalendar();
+                }
+
+                // Update Navbar Active State
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                if (viewName === 'inicio') {
+                    document.getElementById('navInicio').classList.add('active');
+                } else if (viewName === 'citas') {
+                    document.getElementById('navCitas').classList.add('active');
+                }
+            }
+
+            function abrirCajaModal() {
+                document.getElementById('modalAbrirCaja').classList.add('active');
+            }
+
+            function cerrarModalAbrirCaja() {
+                document.getElementById('modalAbrirCaja').classList.remove('active');
+            }
+
+            async function confirmarAbrirCaja() {
+                const fondoInicial = parseFloat(document.getElementById('fondoInicial').value) || 0;
+                const today = new Date().toISOString().split('T')[0];
+
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('cierres_caja')
+                        .insert([{
+                            fecha: today,
+                            fondo_inicial: fondoInicial,
+                            operador: currentUser.usuario,
+                            estado: 'abierta'
+                        }])
+                        .select();
+
+                    if (error) throw error;
+
+                    cajaAbierta = data[0];
+                    cerrarModalAbrirCaja();
+                    checkCajaStatus();
+                    alert('Caja abierta exitosamente con fondo inicial de $' + fondoInicial.toFixed(2));
+                } catch (err) {
+                    console.error('Error abriendo caja:', err);
+                    alert('Error al abrir caja: ' + err.message);
+                }
+            }
+
+            async function cerrarCajaModal() {
+                const today = new Date().toISOString().split('T')[0];
+                const startOfDay = today + 'T00:00:00';
+                const endOfDay = today + 'T23:59:59';
+
+                try {
+                    const { data: ventas, error } = await supabaseClient
+                        .from('citas')
+                        .select('*')
+                        .gte('created_at', startOfDay)
+                        .lte('created_at', endOfDay);
+
+                    if (error) throw error;
+
+                    let totalVentas = 0, totalEfectivo = 0, totalTarjeta = 0, totalTransferencia = 0;
+                    let numVentas = ventas ? ventas.length : 0;
+
+                    if (ventas) {
+                        ventas.forEach(v => {
+                            const pagado = parseFloat(v.pagado) || 0;
+                            totalVentas += pagado;
+                            if (v.metodo_pago === 'efectivo') totalEfectivo += pagado;
+                            else if (v.metodo_pago === 'tarjeta') totalTarjeta += pagado;
+                            else if (v.metodo_pago === 'transferencia') totalTransferencia += pagado;
+                        });
+                    }
+
+                    const fondoInicial = cajaAbierta ? parseFloat(cajaAbierta.fondo_inicial) || 0 : 0;
+                    const efectivoEsperado = fondoInicial + totalEfectivo;
+
+                    document.getElementById('cierreFondoInicial').textContent = '$' + fondoInicial.toFixed(2);
+                    document.getElementById('cierreNumVentas').textContent = numVentas;
+                    document.getElementById('cierreTotalVentas').textContent = '$' + totalVentas.toFixed(2);
+                    document.getElementById('cierreEfectivo').textContent = '$' + totalEfectivo.toFixed(2);
+                    document.getElementById('cierreTarjeta').textContent = '$' + totalTarjeta.toFixed(2);
+                    document.getElementById('cierreTransferencia').textContent = '$' + totalTransferencia.toFixed(2);
+                    document.getElementById('cierreEfectivoEsperado').textContent = '$' + efectivoEsperado.toFixed(2);
+                    document.getElementById('efectivoContado').value = efectivoEsperado.toFixed(2);
+
+                    document.getElementById('modalCerrarCaja').classList.add('active');
+                    calcularDiferenciaCaja();
+                } catch (err) {
+                    console.error('Error cargando datos para cierre:', err);
+                    alert('Error al cargar datos: ' + err.message);
+                }
+            }
+
+            function cerrarModalCerrarCaja() {
+                document.getElementById('modalCerrarCaja').classList.remove('active');
+            }
+
+            function calcularDiferenciaCaja() {
+                const esperado = parseFloat(document.getElementById('cierreEfectivoEsperado').textContent.replace('$', '')) || 0;
+                const contado = parseFloat(document.getElementById('efectivoContado').value) || 0;
+                const diferencia = contado - esperado;
+
+                const difEl = document.getElementById('cierreDiferencia');
+                difEl.textContent = (diferencia >= 0 ? '+' : '') + '$' + diferencia.toFixed(2);
+                difEl.style.color = diferencia >= 0 ? '#059669' : '#dc2626';
+            }
+
+            async function confirmarCerrarCaja() {
+                const efectivoContado = parseFloat(document.getElementById('efectivoContado').value) || 0;
+                const notas = document.getElementById('cierreNotas').value;
+
+                const esperado = parseFloat(document.getElementById('cierreEfectivoEsperado').textContent.replace('$', '')) || 0;
+                const diferencia = efectivoContado - esperado;
+
+                const totalVentas = parseFloat(document.getElementById('cierreTotalVentas').textContent.replace('$', '')) || 0;
+                const totalEfectivo = parseFloat(document.getElementById('cierreEfectivo').textContent.replace('$', '')) || 0;
+                const totalTarjeta = parseFloat(document.getElementById('cierreTarjeta').textContent.replace('$', '')) || 0;
+                const totalTransferencia = parseFloat(document.getElementById('cierreTransferencia').textContent.replace('$', '')) || 0;
+
+                try {
+                    const { error } = await supabaseClient
+                        .from('cierres_caja')
+                        .update({
+                            total_ventas: totalVentas,
+                            total_efectivo: totalEfectivo,
+                            total_tarjeta: totalTarjeta,
+                            total_transferencia: totalTransferencia,
+                            efectivo_contado: efectivoContado,
+                            diferencia: diferencia,
+                            notas: notas,
+                            estado: 'cerrada',
+                            closed_at: new Date().toISOString()
+                        })
+                        .eq('id', cajaAbierta.id);
+
+                    if (error) throw error;
+
+                    cerrarModalCerrarCaja();
+                    checkCajaStatus();
+
+                    // Mostrar Resumen
+                    showResumenCierre(totalVentas, efectivoContado, diferencia);
+
+                } catch (err) {
+                    console.error('Error cerrando caja:', err);
+                    showToast('Error al cerrar caja: ' + err.message, 'error');
+                }
+            }
+
+            // MODAL RESUMEN CIERRE
+            function showResumenCierre(total, contado, diferencia) {
+                document.getElementById('resumenVentas').textContent = '$' + total.toFixed(2);
+                document.getElementById('resumenEfectivo').textContent = '$' + contado.toFixed(2);
+
+                const difElement = document.getElementById('resumenDiferencia');
+                difElement.textContent = (diferencia >= 0 ? '+' : '') + '$' + diferencia.toFixed(2);
+                difElement.style.color = diferencia >= 0 ? '#16a34a' : '#dc2626';
+
+                document.getElementById('modalResumenCierre').classList.add('active');
+            }
+
+            function cerrarResumenModal() {
+                document.getElementById('modalResumenCierre').classList.remove('active');
+            }
+            function showToast(message, type = 'success', title = '') {
+                const container = document.getElementById('toastContainer');
+
+                // Default titles
+                if (!title) {
+                    if (type === 'success') title = '¡Éxito!';
+                    else if (type === 'error') title = 'Error';
+                    else title = 'Información';
+                }
+
+                const icon = type === 'success'
+                    ? '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>'
+                    : '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.innerHTML = `
+            ${icon}
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+        `;
+
+                container.appendChild(toast);
+
+                // Trigger animation
+                requestAnimationFrame(() => {
+                    toast.classList.add('active');
+                });
+
+                // Auto remove
+                setTimeout(() => {
+                    toast.classList.remove('active');
+                    setTimeout(() => toast.remove(), 300);
+                }, 4000);
+            }
+        </script>
+        <div id="toastContainer" class="toast-container"></div>
+
+        <!-- Modal Abrir Caja -->
+        <div id="modalAbrirCaja" class="modal-overlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3 class="modal-title">Abrir Caja del Día</h3>
+                    <button class="modal-close" onclick="cerrarModalAbrirCaja()">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Fondo Inicial (Efectivo en caja)</label>
+                        <input type="number" class="form-input" id="fondoInicial" value="500" step="0.01" min="0">
+                        <small style="color: #64748b; margin-top: 0.5rem; display: block;">Ingresa la cantidad de
+                            efectivo
+                            con la que inicias el día.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="cerrarModalAbrirCaja()">Cancelar</button>
+                    <button class="btn btn-primary" onclick="confirmarAbrirCaja()" style="background: #059669;">Abrir
+                        Caja</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Cerrar Caja -->
+        <div id="modalCerrarCaja" class="modal-overlay">
+            <div class="modal" style="max-width: 550px;">
+                <div class="modal-header">
+                    <h3 class="modal-title">Cierre de Caja</h3>
+                    <button class="modal-close" onclick="cerrarModalCerrarCaja()">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div style="background: #f1f5f9; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                        <h4 style="margin-bottom: 1rem; color: #334155; font-size: 0.95rem;">Resumen del Día</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.9rem;">
+                            <div>Fondo Inicial:</div>
+                            <div style="text-align: right; font-weight: 600;" id="cierreFondoInicial">$0.00</div>
+                            <div>N° de Ventas:</div>
+                            <div style="text-align: right; font-weight: 600;" id="cierreNumVentas">0</div>
+                            <div style="border-top: 1px solid #e2e8f0; padding-top: 0.5rem;">Total Ventas:</div>
+                            <div style="text-align: right; font-weight: 700; color: #0d9488; border-top: 1px solid #e2e8f0; padding-top: 0.5rem;"
+                                id="cierreTotalVentas">$0.00</div>
+                        </div>
+                    </div>
+
+                    <div style="background: #ecfdf5; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                        <h4 style="margin-bottom: 1rem; color: #065f46; font-size: 0.95rem;">Desglose por Método de Pago
+                        </h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                            <div>Efectivo:</div>
+                            <div style="text-align: right; font-weight: 600;" id="cierreEfectivo">$0.00</div>
+                            <div>Tarjeta:</div>
+                            <div style="text-align: right; font-weight: 600;" id="cierreTarjeta">$0.00</div>
+                            <div>Transferencia:</div>
+                            <div style="text-align: right; font-weight: 600;" id="cierreTransferencia">$0.00</div>
+                        </div>
+                    </div>
+
+                    <div style="background: #fef3c7; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                        <h4 style="margin-bottom: 1rem; color: #92400e; font-size: 0.95rem;">Conteo de Efectivo</h4>
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem; margin-bottom: 1rem;">
+                            <div>Efectivo Esperado:</div>
+                            <div style="text-align: right; font-weight: 700;" id="cierreEfectivoEsperado">$0.00</div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                            <label class="form-label" style="font-size: 0.85rem;">Efectivo Contado:</label>
+                            <input type="number" class="form-input" id="efectivoContado" step="0.01" min="0"
+                                oninput="calcularDiferenciaCaja()">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                            <div style="font-weight: 600;">Diferencia:</div>
+                            <div style="text-align: right; font-weight: 700;" id="cierreDiferencia">$0.00</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Notas / Observaciones</label>
+                        <textarea class="form-textarea" id="cierreNotas" rows="2"
+                            placeholder="Opcional: anota cualquier observación del día..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="cerrarModalCerrarCaja()">Cancelar</button>
+                    <button class="btn btn-primary" onclick="confirmarCerrarCaja()"
+                        style="background: #dc2626;">Confirmar
+                        Cierre</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estilos Adicionales para Notificaciones y Modales Nuevos -->
+        <style>
+            /* TOAST NOTIFICATIONS */
+            .toast-container {
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .toast {
+                background: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                min-width: 300px;
+                transform: translateX(120%);
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                border-left: 4px solid #cbd5e1;
+            }
+
+            .toast.active {
+                transform: translateX(0);
+            }
+
+            .toast.success {
+                border-left-color: #10b981;
+            }
+
+            .toast.success svg {
+                color: #10b981;
+            }
+
+            .toast.error {
+                border-left-color: #ef4444;
+            }
+
+            .toast.error svg {
+                color: #ef4444;
+            }
+
+            .toast.info {
+                border-left-color: #3b82f6;
+            }
+
+            .toast.info svg {
+                color: #3b82f6;
+            }
+
+            .toast-content {
+                flex: 1;
+            }
+
+            .toast-title {
+                font-weight: 600;
+                font-size: 0.95rem;
+                color: #1e293b;
+                margin-bottom: 2px;
+            }
+
+            .toast-message {
+                font-size: 0.85rem;
+                color: #64748b;
+            }
+
+            /* MODAL RESUMEN */
+            #modalResumenCierre .modal {
+                animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            @keyframes popIn {
+                from {
+                    transform: scale(0.9);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+
+        <!-- Modal Resumen Cierre -->
+        <div id="modalResumenCierre" class="modal-overlay">
+            <div class="modal" style="max-width: 400px; text-align: center;">
+                <div style="margin-bottom: 1rem;">
+                    <div
+                        style="width: 60px; height: 60px; background: #dcfce7; color: #16a34a; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" fill="none"
+                            stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <h3 style="color: #166534; margin-bottom: 0.5rem; font-size: 1.25rem; font-weight: 700;">¡Caja Cerrada
+                    Exitosamente!</h3>
+                <p style="color: #64748b; margin-bottom: 1.5rem;">El corte del día se ha registrado correctamente.</p>
+
+                <div
+                    style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: left; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="color: #64748b;">Total Ventas:</span>
+                        <span id="resumenVentas" style="font-weight: 600; color: #334155;">$0.00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="color: #64748b;">Efectivo Contado:</span>
+                        <span id="resumenEfectivo" style="font-weight: 600; color: #334155;">$0.00</span>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; padding-top: 0.5rem; border-top: 1px dashed #cbd5e1; margin-top: 0.5rem;">
+                        <span style="color: #64748b;">Diferencia:</span>
+                        <span id="resumenDiferencia" style="font-weight: 700;">$0.00</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;"
+                    onclick="cerrarResumenModal()">Aceptar</button>
+            </div>
+        </div>
 </body>
 
 </html>

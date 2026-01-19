@@ -701,6 +701,14 @@
             } else {
                 try {
                     const currentUser = JSON.parse(userStr);
+
+                    // Verificar que sea administrador
+                    if (currentUser.rol !== 'admin') {
+                        alert('⛔ Acceso Denegado: Solo administradores pueden acceder a la configuración.');
+                        window.location.href = 'dashboard.html';
+                        return;
+                    }
+
                     document.getElementById('userName').textContent = currentUser.nombre || currentUser.usuario || 'Admin';
                     document.getElementById('userRole').textContent = currentUser.rol || 'Operador';
                     document.getElementById('userAvatar').textContent = (currentUser.nombre || currentUser.usuario || 'U').charAt(0).toUpperCase();
