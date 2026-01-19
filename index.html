@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ar lab - Iniciar Sesión</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -12,24 +13,13 @@
         rel="stylesheet">
     <style>
         :root {
-            /* Turquoise Palette */
+            /* Palette retained */
             --primary: #0d9488;
-            /* Teal 600 */
             --primary-light: #5eead4;
-            /* Teal 300 */
             --primary-dark: #0f766e;
-            /* Teal 700 */
-            --bg-color: #f0fdfa;
-            /* Teal 50 */
-
-            --icon-bg: #ccfbf1;
-            /* Teal 100 */
-            --surface: rgba(255, 255, 255, 0.95);
-
             --text-title: #334155;
-            --text-body: #475569;
-
-            --border: #e2e8f0;
+            --text-body: #64748b;
+            --border: #cbd5e1;
             --focus-ring: rgba(13, 148, 136, 0.2);
         }
 
@@ -41,270 +31,272 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-color);
-            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background: #ffffff;
+            height: 100vh;
+            width: 100vw;
             overflow: hidden;
-            position: relative;
-            color: var(--text-body);
+            display: flex;
         }
 
-        /* Canvas Background */
+        /* Left Side - Visual & Animation */
+        #visual-side {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(ellipse at center, #0077b6 0%, #023e8a 50%, #03045e 100%);
+            overflow: hidden;
+        }
+
         #networkCanvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
+            display: block;
         }
 
-        .login-container {
-            width: 100%;
-            max-width: 420px;
-            padding: 2rem;
+        /* Right Side - Login Form */
+        #login-side {
+            width: 450px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.05);
             position: relative;
             z-index: 10;
         }
 
-        .login-card {
-            background: var(--surface);
-            padding: 3rem 2.5rem;
-            border-radius: 20px;
-            box-shadow:
-                0 20px 50px -12px rgba(13, 148, 136, 0.15),
-                0 0 0 1px rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
+        .login-content {
+            max-width: 360px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .brand-header {
-            text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .brand-logo-img {
-            max-width: 220px;
-            height: auto;
+            height: 60px;
+            /* Adjusted size */
+            width: auto;
             display: block;
-            margin: 0 auto;
+            margin-bottom: 1rem;
         }
 
-        .brand-logo {
+        .login-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 2.75rem;
+            font-size: 2rem;
+            color: var(--text-title);
             font-weight: 700;
-            color: var(--text-title);
             margin-bottom: 0.5rem;
-            letter-spacing: -0.03em;
         }
 
-        .brand-tagline {
-            color: #64748b;
+        .login-subtitle {
+            color: var(--text-body);
             font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: 0.02em;
+            margin-bottom: 2rem;
         }
 
+        /* Form Styling - Clean Modulab Style */
         .form-group {
-            margin-bottom: 1.75rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.75rem;
-            color: var(--text-title);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-icon-left {
-            position: absolute;
-            left: 0.75rem;
-            width: 36px;
-            height: 36px;
-            background-color: var(--icon-bg);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--primary);
-            z-index: 2;
-        }
-
-        .input-icon-left svg {
-            width: 18px;
-            height: 18px;
-            stroke-width: 2.5;
+            margin-bottom: 1.5rem;
         }
 
         .form-input {
             width: 100%;
-            padding: 0.875rem 1rem 0.875rem 3.75rem;
-            padding-right: 3rem;
-            border: 2px solid var(--border);
-            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            /* Straighter edges like reference */
             font-size: 1rem;
             color: var(--text-title);
-            transition: all 0.2s ease;
-            background: #f8fafc;
+            background: #fff;
+            transition: all 0.2s;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--primary);
-            background: #ffffff;
-            box-shadow: 0 0 0 4px var(--focus-ring);
+            box-shadow: 0 0 0 3px var(--focus-ring);
         }
 
         .form-input::placeholder {
             color: #94a3b8;
         }
 
+        .forgot-password {
+            display: block;
+            text-align: right;
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 2rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Password container for toggle */
+        .password-container {
+            position: relative;
+        }
+
         .password-toggle {
             position: absolute;
-            right: 1rem;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
             background: none;
             border: none;
-            cursor: pointer;
             color: #94a3b8;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.2s;
+            cursor: pointer;
+            padding: 5px;
         }
 
         .password-toggle:hover {
             color: var(--primary);
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 1.125rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1.5rem;
-            margin-bottom: 2rem;
-            letter-spacing: 0.01em;
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+        /* Footer */
+        .login-footer {
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            padding-top: 2rem;
         }
 
-        .submit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(13, 148, 136, 0.3);
+        .brand-text {
+            color: #023e8a;
+            /* Dark blue akin to 'werfen' in reference */
+            font-weight: 700;
+            font-size: 1.2rem;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 0.25rem;
         }
 
         .support-link {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
+            margin-top: 1rem;
             color: var(--text-body);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            padding: 0.75rem;
-            border-radius: 12px;
-            background-color: #f1f5f9;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
         }
 
         .support-link:hover {
-            background-color: #e2e8f0;
-            color: var(--primary-dark);
+            background: white;
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
-        .support-icon-wrapper {
-            width: 32px;
-            height: 32px;
-            background-color: #25D366;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            box-shadow: 0 2px 5px rgba(37, 211, 102, 0.3);
-        }
+        @media (max-width: 900px) {
+            #visual-side {
+                display: none;
+            }
 
-        .support-icon {
-            width: 16px;
-            height: 16px;
-            stroke-width: 2.5;
-            fill: white;
-            stroke: white;
-        }
-
-        .icon {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
+            #login-side {
+                width: 100%;
+                padding: 2rem;
+            }
         }
     </style>
 </head>
 
 <body>
+    <!-- Visual Side (Left) -->
+    <div id="visual-side">
+        <canvas id="networkCanvas"></canvas>
+    </div>
 
-    <canvas id="networkCanvas"></canvas>
-
-    <div class="login-container">
-        <div class="login-card">
+    <!-- Login Side (Right) -->
+    <div id="login-side">
+        <div class="login-content">
             <div class="brand-header">
-                <img src="arlab_logo.png" alt="Ar lab - Gestión Integral de Laboratorios" class="brand-logo-img">
+                <!-- Using the SVG logic for logo if image fails, or keep the image -->
+                <!-- Since previous code used arlab_logo.png, we keep it but also fallback or style it -->
+                <svg viewBox="0 0 180 60" style="height: 60px; width: auto; display: block; margin-bottom: 1rem;">
+                    <defs>
+                        <linearGradient id="flaskGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#2dd4bf" />
+                            <stop offset="100%" style="stop-color:#0d9488" />
+                        </linearGradient>
+                    </defs>
+                    <g transform="translate(10,5)">
+                        <path d="M15 8 L15 22 L5 42 Q3 46 6 48 L34 48 Q37 46 35 42 L25 22 L25 8 Z"
+                            fill="url(#flaskGrad2)" stroke="#14b8a6" stroke-width="1.5" />
+                        <rect x="13" y="2" width="14" height="8" rx="2" fill="url(#flaskGrad2)" stroke="#14b8a6"
+                            stroke-width="1.5" />
+                        <path d="M8 38 Q10 35 15 36 Q20 38 25 35 Q30 33 32 38 L30 45 Q28 47 20 47 Q12 47 10 45 Z"
+                            fill="#5eead4" opacity="0.6" />
+                        <circle cx="15" cy="40" r="2" fill="white" opacity="0.7" />
+                        <circle cx="22" cy="38" r="1.5" fill="white" opacity="0.5" />
+                        <circle cx="18" cy="43" r="1" fill="white" opacity="0.6" />
+                        <text x="20" y="32" font-family="Outfit, sans-serif" font-size="12" font-weight="700"
+                            fill="white" text-anchor="middle">Ar</text>
+                    </g>
+                    <text x="60" y="38" font-family="Outfit, sans-serif" font-size="28" font-weight="700"
+                        fill="#334155">Ar</text>
+                    <text x="92" y="38" font-family="Outfit, sans-serif" font-size="28" font-weight="400"
+                        fill="#0d9488">lab</text>
+                </svg>
+                <div class="login-title">Iniciar sesión</div>
+                <div class="login-subtitle">Bienvenido a su sistema de gestión</div>
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
-                    <label for="username" class="form-label">Usuario</label>
-                    <div class="input-wrapper">
-                        <div class="input-icon-left">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                        <input type="text" id="username" class="form-input" placeholder="Nombre de usuario" required
-                            autocomplete="username">
-                    </div>
+                    <input type="text" id="username" class="form-input" placeholder="Usuario" required
+                        autocomplete="username">
                 </div>
 
                 <div class="form-group">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <div class="input-wrapper">
-                        <div class="input-icon-left">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                        </div>
-                        <input type="password" id="password" class="form-input" placeholder="••••••••••••" required
+                    <div class="password-container">
+                        <input type="password" id="password" class="form-input" placeholder="Contraseña" required
                             autocomplete="current-password">
-
                         <button type="button" class="password-toggle" onclick="togglePassword()"
                             aria-label="Mostrar contraseña">
-                            <svg id="eyeIcon" class="icon" viewBox="0 0 24 24">
+                            <svg id="eyeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none"
+                                stroke="currentColor" stroke-width="2">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                 <circle cx="12" cy="12" r="3"></circle>
                             </svg>
-                            <svg id="eyeOffIcon" class="icon" viewBox="0 0 24 24" style="display: none;">
+                            <svg id="eyeOffIcon" viewBox="0 0 24 24" width="20" height="20" fill="none"
+                                stroke="currentColor" stroke-width="2" style="display: none;">
                                 <path
                                     d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
                                 </path>
@@ -314,17 +306,24 @@
                     </div>
                 </div>
 
-                <button type="submit" class="submit-btn">Ingresar al Sistema</button>
+                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
 
-                <a href="https://wa.me/5219611062651" target="_blank" class="support-link">
-                    <div class="support-icon-wrapper">
-                        <svg viewBox="0 0 24 24" class="support-icon" style="fill: white; stroke: none;">
+                <button type="submit" class="submit-btn">Ingresar</button>
+
+                <div style="text-align: center;">
+                    <a href="https://wa.me/5219611062651" target="_blank" class="support-link">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                             <path
                                 d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                         </svg>
-                    </div>
-                    Contactar Soporte Técnico
-                </a>
+                        Contactar Soporte
+                    </a>
+                </div>
+
+                <div class="login-footer">
+                    <div class="brand-text">Ar Lab</div>
+                    <div>Copyright 2026 - Gestión de Laboratorios</div>
+                </div>
             </form>
         </div>
     </div>
@@ -339,12 +338,13 @@
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         const canvas = document.getElementById('networkCanvas');
+        const visualSide = document.getElementById('visual-side');
         const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
         let formulas = [];
 
-        // Chemistry formulas for the background
+        // Chemistry formulas
         const chemistryFormulas = [
             'H₂O', 'NaCl', 'CO₂', 'H₂SO₄', 'NaOH', 'HCl', 'NH₃', 'C₆H₁₂O₆',
             'CaCO₃', 'Fe₂O₃', 'KMnO₄', 'CH₄', 'C₂H₅OH', 'HNO₃', 'Na₂CO₃',
@@ -352,17 +352,18 @@
             'pH', 'ATP', 'DNA', 'RNA', 'O₂', 'N₂', 'Cl₂', 'H₂'
         ];
 
-        // Formatting configuration
-        const particleCount = 50;
-        const formulaCount = 15;
+        // Config
+        const particleCount = 60;
+        const formulaCount = 20;
         const connectionDistance = 150;
-        const moveSpeed = 0.4;
-        const particleColor = 'rgba(13, 148, 136, 0.35)';
-        const lineColor = 'rgba(45, 212, 191, 0.2)';
+        const moveSpeed = 0.5;
+        const particleColor = 'rgba(144, 224, 239, 0.5)';
+        const lineColor = 'rgba(72, 202, 228, 0.25)';
 
         function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            // Resize canvas to match the visual-side div, not window
+            width = canvas.width = visualSide.clientWidth;
+            height = canvas.height = visualSide.clientHeight;
             initParticles();
             initFormulas();
         }
@@ -421,7 +422,7 @@
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.rotation);
                 ctx.font = `${this.fontSize}px 'Roboto', monospace`;
-                ctx.fillStyle = `rgba(13, 148, 136, ${this.opacity})`;
+                ctx.fillStyle = `rgba(202, 240, 248, ${this.opacity})`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(this.text, 0, 0);
@@ -446,19 +447,16 @@
         function animate() {
             ctx.clearRect(0, 0, width, height);
 
-            // Draw formulas first (background layer)
             formulas.forEach(f => {
                 f.update();
                 f.draw();
             });
 
-            // Draw particles
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
 
-            // Draw connections
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -479,6 +477,7 @@
         }
 
         window.addEventListener('resize', resize);
+        // Initial resize
         resize();
         animate();
 
@@ -506,11 +505,9 @@
             const originalText = btn.innerText;
 
             btn.innerText = 'Verificando...';
-            btn.style.opacity = '0.9';
             btn.disabled = true;
 
             try {
-                // Query users table
                 const { data, error } = await supabaseClient
                     .from('usuarios')
                     .select('*')
@@ -522,31 +519,30 @@
                 if (!data) throw new Error('Usuario no encontrado');
 
                 btn.innerText = '¡Éxito!';
-                btn.style.backgroundColor = '#10b981'; // Green
+                btn.style.backgroundColor = '#10b981';
+
+                localStorage.setItem('arlab_user', JSON.stringify(data));
 
                 setTimeout(() => {
-                    alert(`¡Bienvenido ${data.usuario}! \nRol: ${data.rol}`);
-                    // Redirect logic would go here
-                }, 500);
+                    window.location.href = 'dashboard.html';
+                }, 800);
 
             } catch (err) {
                 console.error(err);
                 btn.innerText = 'Error';
-                btn.style.backgroundColor = '#ef4444'; // Red
+                btn.style.backgroundColor = '#ef4444';
 
                 let msg = 'Credenciales incorrectas.';
                 if (err.message && err.message.includes('relation "usuarios" does not exist')) {
-                    msg = 'Error: La tabla "usuarios" no existe en Supabase. \nPor favor ejecuta el script SQL.';
+                    msg = 'Tabla usuarios no existe.';
                 } else if (err.code === 'PGRST116') {
                     msg = 'Usuario o contraseña incorrectos.';
                 }
-
                 alert(msg);
 
                 setTimeout(() => {
                     btn.innerText = originalText;
                     btn.style.backgroundColor = '';
-                    btn.style.opacity = '1';
                     btn.disabled = false;
                 }, 2000);
             }

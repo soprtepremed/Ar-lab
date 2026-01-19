@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ar Lab - Nueva Cita</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Roboto:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-light: #5eead4;
+            --primary-dark: #0f766e;
+            --content-bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: transparent;
+            color: var(--text-dark);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #networkCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at center, #0077b6 0%, #023e8a 50%, #03045e 100%);
+        }
+
+        .page-header {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            background: #f1f5f9;
+            color: var(--text-dark);
+        }
+
+        .main-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .form-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .form-section:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 800;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .form-section-blue {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .form-section-teal {
+            border-left: 4px solid #0d9488;
+        }
+
+        .form-section-amber {
+            border-left: 4px solid #d97706;
+        }
+
+        .form-section-primary {
+            border-left: 4px solid var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.65rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            transition: all 0.2s;
+            background-color: #f8fafc;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+            color: var(--text-dark);
+        }
+
+        /* Payment Method Styles */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .method-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .method-card:hover {
+            border-color: var(--primary-light);
+            background: #f0fdfa;
+        }
+
+        .method-card.active {
+            border-color: var(--primary);
+            background: #f0fdfa;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+        }
+
+        .method-card svg {
+            color: #64748b;
+            transition: all 0.2s;
+        }
+
+        .method-card.active svg {
+            color: var(--primary);
+        }
+
+        .method-card span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .method-card.active span {
+            color: var(--primary-dark);
+        }
+
+        #comprobanteSection {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            margin-top: 1rem;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Study Selector Styles Updated */
+        .estudio-item {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #f1f5f9;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            transition: all 0.15s;
+            background: #f8fafc;
+            height: 100%;
+        }
+
+        .estudio-item:hover {
+            background: #f0fdfa;
+            border-color: var(--primary-light);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .estudio-item.selected {
+            background: #ccfbf1;
+            border-color: var(--primary);
+        }
+
+        .estudio-nombre {
+            font-weight: 600;
+            color: #334155;
+            display: block;
+            font-size: 0.8rem;
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+
+        .estudio-categoria-tag {
+            font-size: 0.65rem;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .estudio-precio {
+            font-weight: 700;
+            color: #0d9488;
+            font-size: 0.8rem;
+        }
+
+        .category-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .category-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .studies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        /* Custom Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.2s ease-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            background: #f0fdfa;
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-dark);
+        }
+
+        .modal-message {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-modal {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            min-width: 120px;
+        }
+
+        .btn-confirm {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-cancel {
+            background: #f1f5f9;
+            color: var(--text-light);
+        }
+
+        .btn-cancel:hover {
+            background: #e2e8f0;
+            color: var(--text-dark);
+        }
+
+        /* Doctor Modal specific */
+        .doctor-modal-content {
+            max-width: 500px !important;
+            text-align: left !important;
+        }
+
+        .doctor-modal-content .modal-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive grid */
+        @media (max-width: 900px) {
+            .studies-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .studies-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="networkCanvas"></canvas>
+    <!-- Header -->
+    <header class="page-header">
+        <div class="header-title">
+            <a href="dashboard.html" class="btn-back">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Regresar al Dashboard
+            </a>
+            <h1 style="font-size: 1.25rem;">Nueva Cita</h1>
+        </div>
+        <div id="userInfo" style="font-size: 0.9rem; color: #64748b;">
+            <!-- Usuario info if needed -->
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <form id="appointmentForm" onsubmit="saveAppointment(event)">
+
+            <!-- Datos del Paciente -->
+            <div class="form-section form-section-blue">
+                <h4 class="section-header" style="color: #1e40af;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Datos del Paciente
+                </h4>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Primer Nombre *</label>
+                        <input type="text" class="form-input" id="primerNombre" required placeholder="Ej: Juan"
+                            oninput="normalizeInput(this)" onblur="checkPacienteExistente()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Segundo Nombre</label>
+                        <input type="text" class="form-input" id="segundoNombre" placeholder="Ej: Carlos"
+                            oninput="normalizeInput(this)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Primer Apellido *</label>
+                        <input type="text" class="form-input" id="primerApellido" required placeholder="Ej: García"
+                            oninput="normalizeInput(this)" onblur="checkPacienteExistente()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Segundo Apellido</label>
+                        <input type="text" class="form-input" id="segundoApellido" placeholder="Ej: López"
+                            oninput="normalizeInput(this)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Fecha de Nacimiento *</label>
+                        <input type="date" class="form-input" id="fechaNacimiento" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Teléfono *</label>
+                        <input type="tel" class="form-input" id="patientPhone" required placeholder="10 dígitos">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selección de Estudios -->
+            <div class="form-section form-section-primary">
+                <h4 class="section-header" style="color: var(--primary-dark);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    </svg>
+                    Estudios de Laboratorio
+                </h4>
+
+                <div class="form-group">
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                        <input type="text" class="form-input" id="buscarEstudio"
+                            placeholder="Buscar estudio por nombre o código..." style="flex: 1;">
+                        <select class="form-select" id="filtroCategoria" style="width: 250px;">
+                            <option value="">Todas las categorías</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div>
+                            <label class="form-label"
+                                style="display: flex; justify-content: space-between; align-items: center;">
+                                Catálogo de Estudios
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-weight: normal;">* Click para
+                                    seleccionar/quitar</span>
+                            </label>
+                            <div id="listaEstudios"
+                                style="max-height: 500px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 1rem;">
+                                <!-- Estudios se cargan dinámicamente en 3 columnas por categoría -->
+                            </div>
+                        </div>
+
+                        <!-- Estudios Seleccionados (Resumen más compacto) -->
+                        <div>
+                            <label class="form-label">Estudios Seleccionados</label>
+                            <div id="contenidoSeleccionados"
+                                style="min-height: 60px; border: 2px dashed #cbd5e1; border-radius: 12px; background: #f1f5f9; padding: 0.75rem;">
+                                <div id="estudiosSeleccionados" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                    <div style="padding: 1rem; text-align: center; color: #94a3b8; width: 100%;">
+                                        Ningún estudio seleccionado
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Datos de la Cita -->
+            <div class="form-section form-section-teal" id="sectionDatosCita">
+                <h4 class="section-header" style="color: #0f766e;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    Datos de la Cita
+                </h4>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Fecha de Cita *</label>
+                        <input type="date" class="form-input" id="appointmentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hora *</label>
+                        <input type="time" class="form-input" id="appointmentTime" required value="08:00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Diagnóstico / Motivo de Consulta</label>
+                    <input type="text" class="form-input" id="diagnostico"
+                        placeholder="Ej: Chequeo general, Control de glucosa...">
+                </div>
+            </div>
+
+            <!-- Médico Referente -->
+            <div class="form-section form-section-amber">
+                <h4 class="section-header" style="color: #b45309;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                        <circle cx="8.5" cy="7" r="4" />
+                        <polyline points="17 11 19 13 23 9" />
+                    </svg>
+                    Médico Referente
+                </h4>
+
+                <div class="form-group">
+                    <label class="form-label">Buscar o agregar médico</label>
+                    <div style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <input type="text" class="form-input" id="medicoReferente"
+                                placeholder="Escribe el nombre del médico..." list="listaMedicos"
+                                oninput="normalizeInput(this)" value="A Quien Corresponda">
+                            <datalist id="listaMedicos">
+                                <!-- Médicos se cargan dinámicamente -->
+                            </datalist>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="nuevoMedico()"
+                            style="padding: 0.85rem 1.25rem; white-space: nowrap;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                            Nuevo
+                        </button>
+                    </div>
+                    <small style="color: #64748b; margin-top: 0.5rem; display: block;">Si el médico es nuevo, se
+                        agregará automáticamente al catálogo al guardar.</small>
+                </div>
+            </div>
+
+            <!-- Caja y Facturación -->
+            <div class="form-section" style="background: #f0fdfa; border: 2px solid #99f6e4;">
+                <h4 class="section-header" style="color: #0d9488; border-bottom-color: #99f6e4;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="12" y1="1" x2="12" y2="23" />
+                        <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                    </svg>
+                    Caja y Facturación
+                </h4>
+
+                <div style="display: flex; flex-direction: column; gap: 2rem;">
+                    <!-- Totales -->
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 1.5rem; border-bottom: 2px dashed #99f6e4;">
+                        <div style="font-size: 1.1rem; color: #0f766e;">
+                            Estudios seleccionados: <strong id="cantidadEstudiosVenta"
+                                style="font-size: 1.4rem;">0</strong>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1rem; color: #0f766e; margin-bottom: 0.5rem; font-weight: 600;">Total
+                                a Pagar</div>
+                            <div
+                                style="font-size: 3.5rem; font-weight: 800; color: #0f766e; line-height: 0.9; letter-spacing: -0.02em;">
+                                $<span id="totalVenta">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pago -->
+                    <div>
+                        <label class="form-label" style="font-size: 1rem; margin-bottom: 1rem;">Método de Pago</label>
+                        <div class="payment-methods">
+                            <div class="method-card active" onclick="selectPaymentMethod('efectivo', this)">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="2" y="6" width="20" height="12" rx="2" />
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path d="M6 12h.01M18 12h.01" />
+                                </svg>
+                                <span>Efectivo</span>
+                            </div>
+                            <div class="method-card" onclick="selectPaymentMethod('tarjeta', this)">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                                    <line x1="2" y1="10" x2="22" y2="10" />
+                                </svg>
+                                <span>Tarjeta</span>
+                            </div>
+                            <div class="method-card" onclick="selectPaymentMethod('transferencia', this)">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8v12M17 20l-4-4M17 20l4-4" />
+                                </svg>
+                                <span>Transferencia</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="montoRecibidoGroup" style="max-width: 300px;">
+                            <label class="form-label">Monto Recibido ($)</label>
+                            <input type="number" class="form-input" id="montoPagado" placeholder="0.00" step="0.50"
+                                oninput="calcularCambio()" style="font-size: 1.2rem; font-weight: 600; padding: 1rem;">
+                        </div>
+
+                        <!-- Sección Comprobante (Hidden) -->
+                        <div id="comprobanteSection">
+                            <h5
+                                style="font-size: 0.9rem; color: #0d9488; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
+                                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                </svg>
+                                Detalles del Comprobante
+                            </h5>
+                            <div class="form-group">
+                                <label class="form-label">Cargar Comprobante (Imagen)</label>
+                                <input type="file" class="form-input" id="comprobanteFile" accept="image/*">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Notas / Ref. Operación</label>
+                                    <input type="text" class="form-input" id="comprobanteNotas"
+                                        placeholder="Ej: Ticket #1234">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Comentarios Extra</label>
+                                    <input type="text" class="form-input" id="comprobanteComentarios"
+                                        placeholder="Opcional...">
+                                </div>
+                            </div>
+                            <div
+                                style="font-size: 0.8rem; color: #0f766e; background: #ccfbf1; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 600;">
+                                Operador responsable: <span id="opCargador">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="margin-top: 2rem; background: white; padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid #99f6e4; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                        <span
+                            style="font-weight: 600; color: #64748b; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;">Cambio
+                            / Devolución</span>
+                        <div style="font-weight: 800; font-size: 2.2rem; color: #0f766e; margin-top: 0.25rem;">
+                            $<span id="cambioVenta">0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notas -->
+            <div class="form-section">
+                <label class="form-label" style="font-size: 0.9rem;">Notas Adicionales</label>
+                <textarea class="form-textarea" id="appointmentNotes" placeholder="Indicaciones especiales..."
+                    style="min-height: 100px;"></textarea>
+            </div>
+
+            <!-- Actions -->
+            <div style="display: flex; justify-content: flex-end; gap: 1.5rem; margin-bottom: 4rem;">
+                <a href="dashboard.html" class="btn btn-secondary" style="padding: 1rem 2rem;">Cancelar</a>
+                <button type="submit" class="btn btn-primary"
+                    style="padding: 1.25rem 3rem; font-size: 1.2rem; box-shadow: 0 10px 15px -3px rgba(13, 148, 136, 0.3);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                    Confirmar y Generar Ticket
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <!-- Hidden Capture Container -->
+    <div id="ticketCaptureContainer" style="position: absolute; left: -9999px; top: -9999px;"></div>
+
+    <script>
+        // Supabase Configuration
+        const supabaseUrl = 'https://ebihobjrwcwtjfazcjmv.supabase.co';
+        const supabaseKey = 'sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // State
+        let todosEstudios = [];
+        let todosMedicos = [];
+        let estudiosSeleccionados = [];
+        let totalVenta = 0;
+        let montoPagado = 0;
+        let cambioVenta = 0;
+        let metodoPagoActual = 'efectivo';
+        let currentUser = null;
+        let currentLabConfig = {
+            nombre_laboratorio: 'AR LAB',
+            responsable_sanitario: 'Q.F.B. Adolfo Ruiz',
+            cedula_profesional: '1234567',
+            direccion: 'Calle Principal #123, Veracruz, Ver.',
+            telefono: '228 123 4567'
+        };
+
+        // Init
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const isDirecto = params.get('mode') === 'directo';
+
+            if (isDirecto) {
+                document.querySelector('.header-title h1').textContent = 'Registro de Paciente (Venta Directa)';
+                document.querySelector('.btn-primary').innerHTML = `
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                    Registrar y Generar Ticket
+                `;
+
+                // Deshabilitar sección de fecha/hora para venta directa
+                const sectionCita = document.getElementById('sectionDatosCita');
+                sectionCita.style.opacity = '0.7';
+                sectionCita.style.pointerEvents = 'none';
+                sectionCita.style.background = '#f1f5f9';
+                document.getElementById('appointmentDate').disabled = true;
+                document.getElementById('appointmentTime').disabled = true;
+
+                // Cambiar el título de la sección para dar claridad
+                sectionCita.querySelector('h4').innerHTML += ' <span style="font-size: 0.7rem; color: #0d9488; font-weight: normal; margin-left: 10px;">(Automático: Registro Inmediato)</span>';
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').value = today;
+
+            // Set current time for appointmentTime
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('appointmentTime').value = `${hours}:${minutes}`;
+
+            // Check auth
+            const userStr = localStorage.getItem('arlab_user');
+            if (!userStr) {
+                window.location.href = 'index.html';
+            } else {
+                try {
+                    currentUser = JSON.parse(userStr);
+                    document.getElementById('opCargador').textContent = currentUser.nombre || currentUser.usuario || 'Admin';
+                } catch (e) {
+                    currentUser = { nombre: userStr };
+                    document.getElementById('opCargador').textContent = userStr;
+                }
+            }
+
+            await loadLabConfig();
+            loadEstudios();
+            loadMedicos();
+            setupEstudioSearch();
+
+            // Animation init
+            resize();
+            animate();
+        });
+
+        // Normalizar nombres (Tipo Oración: Juan Carlos)
+        function normalizeInput(input) {
+            const cursor = input.selectionStart;
+            const value = input.value;
+            // Capitalizar la primera letra de cada palabra y el resto minúsculas
+            const normalized = value.toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase());
+
+            if (value !== normalized) {
+                input.value = normalized;
+                input.setSelectionRange(cursor, cursor);
+            }
+        }
+
+        function nuevoMedico() {
+            document.getElementById('doctorModal').classList.add('active');
+        }
+
+        function closeDoctorModal() {
+            document.getElementById('doctorModal').classList.remove('active');
+            document.getElementById('doctorForm').reset();
+        }
+
+        async function saveDoctor(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('docNombre').value;
+            const especialidad = document.getElementById('docEspecialidad').value;
+            const cedula = document.getElementById('docCedula').value;
+            const telefono = document.getElementById('docTelefono').value;
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('medicos_referentes')
+                    .insert([{
+                        nombre: nombre,
+                        especialidad: especialidad || null,
+                        cedula: cedula || null,
+                        telefono: telefono || null,
+                        activo: true
+                    }])
+                    .select();
+
+                if (error) throw error;
+
+                // Actualizar lista local e input
+                await loadMedicos();
+                document.getElementById('medicoReferente').value = nombre;
+                closeDoctorModal();
+
+                showCustomModal({
+                    title: '¡Médico Agregado!',
+                    message: `El Dr(a). ${nombre} ha sido registrado en el catálogo.`,
+                    type: 'alert'
+                });
+            } catch (err) {
+                console.error("Error saving doctor:", err);
+                alert("Error al guardar médico: " + err.message);
+            }
+        }
+
+        // Detección de Paciente Existente
+        let lastAutoFillName = "";
+
+        async function checkPacienteExistente() {
+            const pNombre = document.getElementById('primerNombre').value.trim();
+            const pApellido = document.getElementById('primerApellido').value.trim();
+
+            // Solo buscar si ambos campos principales tienen contenido suficiente
+            if (pNombre.length >= 3 && pApellido.length >= 3) {
+                const fullNameKey = `${pNombre} ${pApellido}`;
+                if (fullNameKey === lastAutoFillName) return;
+
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('citas')
+                        .select('*')
+                        .eq('primer_nombre', pNombre)
+                        .eq('primer_apellido', pApellido)
+                        .order('created_at', { ascending: false })
+                        .limit(1);
+
+                    if (data && data.length > 0) {
+                        const pac = data[0];
+
+                        showCustomModal({
+                            title: 'Paciente Registrado',
+                            message: `Se encontró un registro previo de "${pac.paciente_nombre}". ¿Deseas cargar sus datos (Fecha de Nacimiento, Teléfono, etc.) automáticamente?`,
+                            type: 'confirm',
+                            onConfirm: () => {
+                                document.getElementById('segundoNombre').value = pac.segundo_nombre || '';
+                                document.getElementById('segundoApellido').value = pac.segundo_apellido || '';
+                                document.getElementById('fechaNacimiento').value = pac.fecha_nacimiento || '';
+                                document.getElementById('patientPhone').value = pac.paciente_telefono || '';
+                                lastAutoFillName = fullNameKey;
+                            },
+                            onCancel: () => {
+                                lastAutoFillName = fullNameKey; // Evitar volver a preguntar para este mismo nombre
+                            }
+                        });
+                    }
+                } catch (err) {
+                    console.error("Error en checkPacienteExistente:", err);
+                }
+            }
+        }
+
+        async function loadLabConfig() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('configuracion_laboratorio')
+                    .select('*')
+                    .eq('id', 1)
+                    .single();
+
+                if (data) {
+                    currentLabConfig = data;
+                }
+            } catch (err) {
+                console.error('Error loading lab config:', err);
+            }
+        }
+
+        // --- Background Animation Code ---
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let formulas = [];
+
+        // Chemistry formulas
+        const chemistryFormulas = [
+            'H₂O', 'NaCl', 'CO₂', 'H₂SO₄', 'NaOH', 'HCl', 'NH₃', 'C₆H₁₂O₆',
+            'CaCO₃', 'Fe₂O₃', 'KMnO₄', 'CH₄', 'C₂H₅OH', 'HNO₃', 'Na₂CO₃',
+            'MgCl₂', 'Al₂O₃', 'K₂SO₄', 'CuSO₄', 'ZnO', 'Pb(NO₃)₂', 'AgNO₃',
+            'pH', 'ATP', 'DNA', 'RNA', 'O₂', 'N₂', 'Cl₂', 'H₂'
+        ];
+
+        // Config
+        const particleCount = 60;
+        const formulaCount = 20;
+        const connectionDistance = 150;
+        const moveSpeed = 0.5;
+        const particleColor = 'rgba(144, 224, 239, 0.5)';
+        const lineColor = 'rgba(72, 202, 228, 0.25)';
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+            initFormulas();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * moveSpeed;
+                this.vy = (Math.random() - 0.5) * moveSpeed;
+                this.size = Math.random() * 2.5 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = particleColor;
+                ctx.fill();
+            }
+        }
+
+        class Formula {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.text = chemistryFormulas[Math.floor(Math.random() * chemistryFormulas.length)];
+                this.fontSize = Math.random() * 14 + 12;
+                this.opacity = Math.random() * 0.3 + 0.1;
+                this.rotation = (Math.random() - 0.5) * 0.3;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.002;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.rotation += this.rotationSpeed;
+
+                if (this.x < -50) this.x = width + 50;
+                if (this.x > width + 50) this.x = -50;
+                if (this.y < -50) this.y = height + 50;
+                if (this.y > height + 50) this.y = -50;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.font = `${this.fontSize}px 'Roboto', monospace`;
+                ctx.fillStyle = `rgba(202, 240, 248, ${this.opacity})`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.text, 0, 0);
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function initFormulas() {
+            formulas = [];
+            for (let i = 0; i < formulaCount; i++) {
+                formulas.push(new Formula());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            formulas.forEach(f => {
+                f.update();
+                f.draw();
+            });
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = lineColor;
+                        ctx.lineWidth = 1 - distance / connectionDistance;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        // --- End Animation Code ---
+
+        async function loadEstudios() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('estudios_laboratorio')
+                    .select('*')
+                    .eq('activo', true)
+                    .order('categoria', { ascending: true });
+
+                if (error) throw error;
+                todosEstudios = data || [];
+                renderEstudiosList();
+                loadCategorias();
+            } catch (err) { console.error(err); }
+        }
+
+        async function loadMedicos() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('medicos_referentes')
+                    .select('*')
+                    .eq('activo', true)
+                    .order('nombre', { ascending: true });
+
+                if (error) throw error;
+                todosMedicos = data || [];
+                renderMedicosDatalist();
+            } catch (err) { console.error(err); }
+        }
+
+        function loadCategorias() {
+            const categorias = [...new Set(todosEstudios.map(e => e.categoria))].sort();
+            const select = document.getElementById('filtroCategoria');
+            categorias.forEach(cat => {
+                select.innerHTML += `<option value="${cat}">${cat}</option>`;
+            });
+        }
+
+        function renderEstudiosList(filtro = '', categoria = '') {
+            const container = document.getElementById('listaEstudios');
+            let estudiosFiltrados = todosEstudios.filter(e => {
+                const matchNombre = e.nombre.toLowerCase().includes(filtro.toLowerCase());
+                const matchCategoria = !categoria || e.categoria === categoria;
+                return matchNombre && matchCategoria;
+            });
+
+            if (estudiosFiltrados.length === 0) {
+                container.innerHTML = '<div style="padding: 2rem; text-align: center; color: #94a3b8;">No se encontraron estudios</div>';
+                return;
+            }
+
+            // Agrupar por categoría
+            const grupos = {};
+            estudiosFiltrados.forEach(e => {
+                if (!grupos[e.categoria]) grupos[e.categoria] = [];
+                grupos[e.categoria].push(e);
+            });
+
+            let html = '';
+
+            // Ordenar categorías alfabéticamente
+            const catKeys = Object.keys(grupos).sort();
+
+            catKeys.forEach(cat => {
+                html += `
+                    <div class="category-group">
+                        <div class="category-title">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+                            </svg>
+                            ${cat}
+                        </div>
+                        <div class="studies-grid">
+                `;
+
+                grupos[cat].forEach(est => {
+                    const isSelected = estudiosSeleccionados.some(s => s.id === est.id);
+                    const precio = parseFloat(est.precio || 0).toFixed(2);
+
+                    html += `
+                        <div class="estudio-item ${isSelected ? 'selected' : ''}" onclick="toggleEstudio('${est.id}')">
+                            <div style="flex: 1;">
+                                <span class="estudio-nombre">${est.nombre}</span>
+                                <div style="font-size: 0.65rem; color: #64748b; margin-top: 1px; line-height: 1.1;">
+                                    ${est.indicaciones ? est.indicaciones.substring(0, 40) + (est.indicaciones.length > 40 ? '...' : '') : 'Sin indicaciones'}
+                                </div>
+                            </div>
+                            <div style="text-align: right; margin-left: 0.5rem;">
+                                <div class="estudio-precio">$${precio}</div>
+                                <div style="font-size: 0.6rem; color: #94a3b8; font-family: monospace;">${est.codigo || ''}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function toggleEstudio(id) {
+            const estudio = todosEstudios.find(e => e.id === id);
+            if (!estudio) return;
+
+            const index = estudiosSeleccionados.findIndex(s => s.id === id);
+            if (index > -1) {
+                estudiosSeleccionados.splice(index, 1);
+            } else {
+                estudiosSeleccionados.push(estudio);
+            }
+
+            renderEstudiosList(
+                document.getElementById('buscarEstudio').value,
+                document.getElementById('filtroCategoria').value
+            );
+            renderEstudiosSeleccionados();
+            calcularTotal();
+        }
+
+        function renderEstudiosSeleccionados() {
+            const container = document.getElementById('estudiosSeleccionados');
+
+            if (estudiosSeleccionados.length === 0) {
+                container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #94a3b8; width: 100%;">Ningún estudio seleccionado</div>';
+                return;
+            }
+
+            let html = '';
+            estudiosSeleccionados.forEach((est, index) => {
+                const precio = parseFloat(est.precio || 0).toFixed(2);
+                html += `
+                    <div style="display: flex; align-items: center; gap: 0.5rem; background: white; padding: 0.4rem 0.75rem; border-radius: 20px; border: 1px solid var(--primary-light); font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                        <span style="font-weight: 600; color: var(--text-dark);">${est.nombre}</span>
+                        <span style="color: var(--primary-dark); font-weight: 700;">$${precio}</span>
+                        <button type="button" onclick="toggleEstudio('${est.id}')" style="background: none; border: none; color: #ef4444; cursor: pointer; display: flex; align-items: center; padding: 0; margin-left: 2px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderMedicosDatalist() {
+            const datalist = document.getElementById('listaMedicos');
+            datalist.innerHTML = '';
+            todosMedicos.forEach(med => {
+                datalist.innerHTML += `<option value="${med.nombre}">`;
+            });
+        }
+
+        function setupEstudioSearch() {
+            document.getElementById('buscarEstudio').addEventListener('input', (e) => {
+                renderEstudiosList(e.target.value, document.getElementById('filtroCategoria').value);
+            });
+            document.getElementById('filtroCategoria').addEventListener('change', (e) => {
+                renderEstudiosList(document.getElementById('buscarEstudio').value, e.target.value);
+            });
+        }
+
+        function calcularTotal() {
+            totalVenta = estudiosSeleccionados.reduce((sum, item) => sum + parseFloat(item.precio || 0), 0);
+            document.getElementById('totalVenta').textContent = totalVenta.toFixed(2);
+            document.getElementById('cantidadEstudiosVenta').textContent = estudiosSeleccionados.length;
+            calcularCambio();
+        }
+
+        function selectPaymentMethod(method, element) {
+            metodoPagoActual = method;
+
+            // UI Toggle
+            document.querySelectorAll('.method-card').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+
+            // Show/Hide Comprobante
+            const section = document.getElementById('comprobanteSection');
+            const montoGroup = document.getElementById('montoRecibidoGroup');
+            const montoInput = document.getElementById('montoPagado');
+
+            if (method === 'tarjeta' || method === 'transferencia') {
+                section.style.display = 'block';
+                montoGroup.style.display = 'none';
+                // En tarjeta/transferencia el monto pagado suele ser el total exacto
+                montoInput.value = totalVenta.toFixed(2);
+                montoPagado = totalVenta;
+            } else {
+                section.style.display = 'none';
+                montoGroup.style.display = 'block';
+                // No limpiamos el monto por si ya lo escribió, o lo dejamos en 0
+            }
+
+            calcularCambio();
+        }
+
+        function calcularCambio() {
+            const montoInput = document.getElementById('montoPagado');
+            montoPagado = parseFloat(montoInput.value) || 0;
+            cambioVenta = montoPagado - totalVenta;
+
+            const cambioEl = document.getElementById('cambioVenta');
+            cambioEl.textContent = cambioVenta.toFixed(2);
+
+            if (cambioVenta < 0) cambioEl.style.color = '#ef4444';
+            else cambioEl.style.color = '#0f766e';
+        }
+
+        function generateTicket(citaData, folio) {
+            const fecha = new Date().toLocaleString('es-MX');
+            const paciente = citaData.paciente_nombre;
+            const medicoStr = document.getElementById('medicoReferente').value;
+            const medico = medicoStr ? medicoStr : 'Particular / Referencia General';
+            const metodoPago = metodoPagoActual.toUpperCase();
+
+            // QR Code API (using QR Server)
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=Folio:${folio}|Paciente:${paciente}`;
+
+            const itemsHtml = estudiosSeleccionados.map(est => `
+                <tr>
+                    <td style="padding: 5px 0;">${est.nombre}</td>
+                    <td style="text-align: right;">$${parseFloat(est.precio).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="font-size: 11px; color: #000; padding-bottom: 8px; line-height: 1.2;">
+                        <strong>Indicaciones:</strong> ${est.indicaciones || 'Sin indicaciones especiales.'}
+                    </td>
+                </tr>
+            `).join('');
+
+            const ticketWindow = window.open('', 'PRINT', 'height=700,width=450');
+
+            ticketWindow.document.write(`
+                <html>
+                <head>
+                    <title>Ticket #${folio} - Ar Lab</title>
+                    <style>
+                        body { font-family: 'Courier New', monospace; font-size: 12px; max-width: 350px; margin: 0 auto; padding: 20px; color: #000; }
+                        .header { text-align: center; margin-bottom: 20px; }
+                        .logo-img { max-width: 150px; margin-bottom: 10px; }
+                        .lab-name { font-size: 22px; font-weight: bold; color: #0f766e; }
+                        .info { margin-bottom: 15px; border-top: 1px dashed #000; border-bottom: 1px dashed #000; padding: 10px 0; }
+                        table { width: 100%; border-collapse: collapse; }
+                        .totals { border-top: 2px solid black; margin-top: 10px; padding-top: 10px; }
+                        .qr-container { text-align: center; margin: 20px 0; }
+                        .footer { text-align: center; margin-top: 20px; font-size: 10px; border-top: 1px solid #ccc; padding-top: 10px;}
+                        @media print { .no-print { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <img src="arlab_logo.png" class="logo-img" onerror="this.style.display='none'">
+                        <div class="lab-name">${currentLabConfig.nombre_laboratorio}</div>
+                        <div style="margin-top:5px; font-weight:bold;">LABORATORIO CLÍNICO</div>
+                        <div>Folio: #${folio}</div>
+                        <div>${fecha}</div>
+                    </div>
+                    
+                    <div class="info">
+                        <strong>PACIENTE:</strong> ${paciente}<br>
+                        <strong>MÉDICO:</strong> ${medico}<br>
+                        <strong>PAGO:</strong> ${metodoPago}
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr style="border-bottom: 1px solid black;">
+                                <th style="text-align: left;">CONCEPTO</th>
+                                <th style="text-align: right;">IMPORTE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsHtml}
+                        </tbody>
+                    </table>
+
+                    <div class="totals">
+                        <table>
+                            <tr>
+                                <td><strong>NETO A PAGAR:</strong></td>
+                                <td style="text-align: right;"><strong>$${totalVenta.toFixed(2)}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>EFECTIVO/PAGO:</td>
+                                <td style="text-align: right;">$${montoPagado.toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>CAMBIO:</td>
+                                <td style="text-align: right;">$${cambioVenta.toFixed(2)}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="qr-container">
+                        <img src="${qrUrl}" alt="QR Code">
+                        <div style="font-size: 9px; margin-top: 5px;">Escanea para validar folio</div>
+                    </div>
+
+                    <div class="footer">
+                        <p><strong>GRACIAS POR SU CONFIANZA</strong></p>
+                        <p>${currentLabConfig.responsable_sanitario} - Céd. Prof. ${currentLabConfig.cedula_profesional}</p>
+                        <p>Atención: ${currentLabConfig.telefono}</p>
+                        <p>${currentLabConfig.direccion}</p>
+                    </div>
+
+                    <div class="no-print" style="margin-top: 20px; text-align: center;">
+                        <button onclick="window.print()" style="padding: 10px 20px; background: #0d9488; color: white; border: none; border-radius: 5px; cursor: pointer;">Imprimir Ticket</button>
+                    </div>
+                </body>
+                </html>
+            `);
+            ticketWindow.document.close();
+        }
+
+        async function sendWhatsAppMessage(citaData, folio) {
+            const telefono = citaData.paciente_telefono.replace(/\D/g, '');
+            if (!telefono) return;
+
+            // Mostrar aviso de que se está capturando
+            showCustomModal({
+                title: 'WhatsApp e Imagen',
+                message: 'Estamos generando una captura del ticket real. Se copiará a tu portapapeles automáticamente. Solo tendrás que "PEGAR" (Ctrl+V) en WhatsApp.',
+                type: 'alert',
+                onConfirm: async () => {
+                    await captureAndShareTicket(citaData, folio, telefono);
+                }
+            });
+        }
+
+        async function captureAndShareTicket(citaData, folio, telefono) {
+            const container = document.getElementById('ticketCaptureContainer');
+            const fecha = new Date().toLocaleString('es-MX');
+            const paciente = citaData.paciente_nombre;
+            const medicoStr = document.getElementById('medicoReferente').value;
+            const medico = medicoStr ? medicoStr : 'Particular / Referencia General';
+            const metodoPago = metodoPagoActual.toUpperCase();
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=Folio:${folio}|Paciente:${paciente}`;
+
+            const itemsHtml = estudiosSeleccionados.map(est => `
+                <div style="border-bottom: 1px dashed #ccc; padding: 10px 0;">
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 14px;">
+                        <span>${est.nombre}</span>
+                        <span>$${parseFloat(est.precio).toFixed(2)}</span>
+                    </div>
+                    <div style="font-size: 12px; color: #000; margin-top: 4px;">
+                        <strong style="text-decoration: underline;">INDICACIONES:</strong> ${est.indicaciones || 'Sin indicaciones especiales.'}
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <div id="realTicketBody" style="width: 380px; background: white; padding: 30px; font-family: 'Courier New', monospace; color: #000; border: 1px solid #eee;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 26px; font-weight: bold; color: #0f766e;">${currentLabConfig.nombre_laboratorio}</div>
+                        <div style="font-size: 14px; font-weight: bold; margin-top: 5px;">LABORATORIO CLÍNICO</div>
+                        <div style="margin-top: 10px; font-size: 13px;">Folio: #${folio} | ${fecha}</div>
+                    </div>
+                    
+                    <div style="border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 10px 0; margin-bottom: 15px; font-size: 14px; line-height: 1.5;">
+                        <strong>PACIENTE:</strong> ${paciente}<br>
+                        <strong>MÉDICO:</strong> ${medico}<br>
+                        <strong>PAGO:</strong> ${metodoPago}
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 5px;">
+                            <span>CONCEPTO</span>
+                            <span>IMPORTE</span>
+                        </div>
+                        ${itemsHtml}
+                    </div>
+
+                    <div style="border-top: 2px solid #000; padding-top: 10px; font-size: 16px;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                            <span>NETO A PAGAR:</span>
+                            <span>$${totalVenta.toFixed(2)}</span>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 25px;">
+                        <img src="${qrUrl}" style="width: 100px; height: 100px;">
+                        <div style="font-size: 10px; margin-top: 5px;">Valida tu folio aquí</div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px; font-size: 11px; border-top: 1px dashed #000; padding-top: 15px;">
+                        <div style="font-weight: bold; font-size: 13px; margin-bottom: 5px;">GRACIAS POR SU CONFIANZA</div>
+                        <div>${currentLabConfig.responsable_sanitario}</div>
+                        <div>Céd. Prof. ${currentLabConfig.cedula_profesional}</div>
+                        <div style="margin-top: 5px;">${currentLabConfig.direccion}</div>
+                    </div>
+                </div>
+            `;
+
+            // Dar un momento para que el QR cargue
+            setTimeout(async () => {
+                try {
+                    const canvas = await html2canvas(container.querySelector('#realTicketBody'), {
+                        backgroundColor: '#ffffff',
+                        scale: 2
+                    });
+
+                    canvas.toBlob(async (blob) => {
+                        try {
+                            const item = new ClipboardItem({ "image/png": blob });
+                            await navigator.clipboard.write([item]);
+
+                            // Abrir WhatsApp con un mensaje corto
+                            const mensaje = `Hola *${paciente.split(' ')[0]}*, adjunto el comprobante oficial de tu registro en *${currentLabConfig.nombre_laboratorio}*. (Pega la imagen ahora con Ctrl+V)`;
+                            const waUrl = `https://wa.me/52${telefono}?text=${encodeURIComponent(mensaje)}`;
+                            window.open(waUrl, '_blank');
+                        } catch (err) {
+                            console.error("Error copiando al portapapeles:", err);
+                            alert("No se pudo copiar la imagen automáticamente. Abre el ticket e imprímelo manualmente.");
+                        }
+                    });
+                } catch (err) {
+                    console.error("Error capturando ticket:", err);
+                }
+            }, 500);
+        }
+
+        /* Modal Functionality */
+        function showCustomModal({ title, message, type = 'alert', onConfirm, onCancel }) {
+            const overlay = document.getElementById('customModal');
+            const titleEl = overlay.querySelector('.modal-title');
+            const messageEl = overlay.querySelector('.modal-message');
+            const btnConfirm = overlay.querySelector('.btn-confirm');
+            const btnCancel = overlay.querySelector('.btn-cancel');
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            btnCancel.style.display = type === 'confirm' ? 'block' : 'none';
+            btnConfirm.textContent = type === 'confirm' ? 'Aceptar' : 'Entendido';
+
+            overlay.classList.add('active');
+
+            const close = () => {
+                overlay.classList.remove('active');
+            };
+
+            btnConfirm.onclick = () => {
+                close();
+                if (onConfirm) onConfirm();
+            };
+
+            btnCancel.onclick = () => {
+                close();
+                if (onCancel) onCancel();
+            };
+        }
+
+        async function saveAppointment(event) {
+            event.preventDefault();
+
+            if (estudiosSeleccionados.length === 0) {
+                showCustomModal({
+                    title: 'Atención',
+                    message: 'Debe seleccionar al menos un estudio para continuar.',
+                    type: 'alert'
+                });
+                return;
+            }
+
+            const proceedSaving = async () => {
+                const date = document.getElementById('appointmentDate').value;
+                const time = document.getElementById('appointmentTime').value;
+                const fechaHora = `${date}T${time}:00`;
+
+                const primerNombre = document.getElementById('primerNombre').value;
+                const segundoNombre = document.getElementById('segundoNombre').value || '';
+                const primerApellido = document.getElementById('primerApellido').value;
+                const segundoApellido = document.getElementById('segundoApellido').value || '';
+                const nombreCompleto = `${primerNombre} ${segundoNombre} ${primerApellido} ${segundoApellido}`.replace(/\s+/g, ' ').trim();
+                const medicoActual = document.getElementById('medicoReferente').value;
+                const folioVenta = Math.floor(Date.now() / 1000);
+
+                const appointmentData = {
+                    paciente_nombre: nombreCompleto,
+                    paciente_telefono: document.getElementById('patientPhone').value,
+                    fecha_hora: fechaHora,
+                    tipo_servicio: 'laboratorio',
+                    notas: document.getElementById('appointmentNotes').value || null,
+                    estado: 'pendiente',
+                    primer_nombre: primerNombre,
+                    segundo_nombre: segundoNombre || null,
+                    primer_apellido: primerApellido,
+                    segundo_apellido: segundoApellido || null,
+                    fecha_nacimiento: document.getElementById('fechaNacimiento').value,
+                    diagnostico: document.getElementById('diagnostico').value || null,
+                    total: totalVenta,
+                    subtotal: totalVenta,
+                    pagado: montoPagado,
+                    metodo_pago: metodoPagoActual,
+                    folio_venta: folioVenta,
+                    medico_referente_nombre: medicoActual,
+                    comprobante_notas: document.getElementById('comprobanteNotas').value || null,
+                    comprobante_comentarios: document.getElementById('comprobanteComentarios').value || null,
+                    operador_pago: currentUser ? (currentUser.nombre || currentUser.email) : 'S/I'
+                };
+
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('citas')
+                        .insert([appointmentData])
+                        .select();
+
+                    if (error) throw error;
+                    const citaId = data[0].id;
+
+                    const estudiosRel = estudiosSeleccionados.map(est => ({
+                        cita_id: citaId,
+                        estudio_id: est.id
+                    }));
+
+                    await supabaseClient.from('citas_estudios').insert(estudiosRel);
+
+                    // Verificar si el médico es nuevo y guardarlo en el catálogo
+                    const esMedicoNuevo = !todosMedicos.some(m => m.nombre.toLowerCase() === medicoActual.toLowerCase());
+                    if (esMedicoNuevo && medicoActual !== 'A Quien Corresponda' && medicoActual.trim() !== '') {
+                        await supabaseClient.from('medicos_referentes').insert([{
+                            nombre: medicoActual,
+                            activo: true
+                        }]);
+                    }
+
+                    // Actions after success
+                    generateTicket(appointmentData, folioVenta);
+
+                    setTimeout(() => {
+                        showCustomModal({
+                            title: '¡Cita Guardada!',
+                            message: '¿Deseas enviar la confirmación por WhatsApp al paciente?',
+                            type: 'confirm',
+                            onConfirm: () => {
+                                sendWhatsAppMessage(appointmentData, folioVenta);
+                                window.location.href = 'dashboard.html';
+                            },
+                            onCancel: () => {
+                                window.location.href = 'dashboard.html';
+                            }
+                        });
+                    }, 1000);
+
+                } catch (err) {
+                    console.error('Error saving:', err);
+                    showCustomModal({
+                        title: 'Error',
+                        message: 'No se pudo guardar la cita: ' + err.message,
+                        type: 'alert'
+                    });
+                }
+            };
+
+            if (montoPagado < totalVenta) {
+                showCustomModal({
+                    title: 'Verificación de Pago',
+                    message: `El monto pagado ($${montoPagado}) es menor al total ($${totalVenta}). ¿Deseas registrar la cita con deuda?`,
+                    type: 'confirm',
+                    onConfirm: proceedSaving
+                });
+            } else {
+                proceedSaving();
+            }
+        }
+    </script>
+
+    <!-- Custom Modal HTML -->
+    <div id="customModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4M12 8h.01" />
+                </svg>
+            </div>
+            <h3 class="modal-title">Título</h3>
+            <p class="modal-message">Mensaje de notificación.</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-modal btn-cancel">Cancelar</button>
+                <button type="button" class="btn-modal btn-confirm">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctor Modal HTML -->
+    <div id="doctorModal" class="modal-overlay">
+        <div class="modal-content doctor-modal-content">
+            <div class="modal-icon" style="background: #fff7ed; color: #f59e0b;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="8.5" cy="7" r="4" />
+                    <line x1="18" y1="8" x2="23" y2="13" />
+                    <line x1="23" y1="8" x2="18" y2="13" />
+                </svg>
+            </div>
+            <h3 class="modal-title">Agregar Nuevo Médico</h3>
+
+            <form id="doctorForm" onsubmit="saveDoctor(event)">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label class="form-label" style="font-size: 0.8rem;">Nombre Completo *</label>
+                    <input type="text" id="docNombre" class="form-input" required placeholder="Ej: Dr. Juan Pérez"
+                        oninput="normalizeInput(this)">
+                </div>
+
+                <div class="form-row" style="grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label" style="font-size: 0.8rem;">Especialidad</label>
+                        <input type="text" id="docEspecialidad" class="form-input" placeholder="Ej: Pediatría">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" style="font-size: 0.8rem;">Cédula</label>
+                        <input type="text" id="docCedula" class="form-input" placeholder="Ej: 1234567">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label class="form-label" style="font-size: 0.8rem;">Teléfono de Contacto</label>
+                    <input type="tel" id="docTelefono" class="form-input" placeholder="10 dígitos">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal btn-cancel" onclick="closeDoctorModal()">Cancelar</button>
+                    <button type="submit" class="btn-modal btn-confirm">Guardar Médico</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
