@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captura de Resultados - Ar Lab</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-dark: #0f766e;
+            --primary-light: #14b8a6;
+            --sidebar-bg: #1e293b;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* ==================== NAVBAR ==================== */
+        .navbar {
+            background: var(--sidebar-bg);
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            height: 48px;
+            width: auto;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 0.5rem;
+            height: 100%;
+            align-items: center;
+        }
+
+        .nav-dropdown {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-dropdown-toggle {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.2s;
+            user-select: none;
+            border-radius: 6px;
+        }
+
+        .nav-dropdown-toggle:hover,
+        .nav-dropdown.active .nav-dropdown-toggle {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-dropdown-toggle svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+            stroke-width: 2;
+        }
+
+        .nav-dropdown.active .nav-dropdown-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            transform: translateY(10px);
+            background: var(--sidebar-bg);
+            min-width: 220px;
+            border-radius: 8px;
+            padding: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-dropdown.active .nav-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            border-radius: 6px;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: rgba(13, 148, 136, 0.3);
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-info-text {
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-align: right;
+        }
+
+        .user-role-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.7rem;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .logout-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content {
+            margin-top: 70px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .page-title svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Filters */
+        .filters-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .filter-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .filter-select,
+        .filter-input {
+            padding: 0.625rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            min-width: 180px;
+            background: white;
+        }
+
+        .filter-select:focus,
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge.pendiente {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.en-proceso {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-badge.listo {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.validado {
+            background: #c7d2fe;
+            color: #3730a3;
+        }
+
+        .status-badge.entregado {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        /* Cards Grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .result-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .patient-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .patient-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .folio-badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .studies-list {
+            list-style: none;
+        }
+
+        .study-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .study-item:last-child {
+            border-bottom: none;
+        }
+
+        .study-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .card-footer {
+            padding: 1rem 1.25rem;
+            background: #f8fafc;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--text-dark);
+            border: 2px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: #f1f5f9;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-light);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .result-form-group {
+            margin-bottom: 1.5rem;
+            padding: 1.25rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .result-form-group h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .result-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+
+        .input-group label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            padding: 0.625rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .reference-range {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            position: sticky;
+            bottom: 0;
+            background: white;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 300px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--info);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            stroke: #cbd5e1;
+            fill: none;
+            stroke-width: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-bar {
+                flex-direction: column;
+            }
+
+            .result-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-brand">
+            <svg viewBox="0 0 180 60" class="navbar-logo">
+                <defs>
+                    <linearGradient id="flaskGradNavBar" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#2dd4bf" />
+                        <stop offset="100%" style="stop-color:#0d9488" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(10,5)">
+                    <path d="M15 8 L15 22 L5 42 Q3 46 6 48 L34 48 Q37 46 35 42 L25 22 L25 8 Z"
+                        fill="url(#flaskGradNavBar)" stroke="#14b8a6" stroke-width="1.5" />
+                    <rect x="13" y="2" width="14" height="8" rx="2" fill="url(#flaskGradNavBar)" stroke="#14b8a6"
+                        stroke-width="1.5" />
+                    <path d="M8 38 Q10 35 15 36 Q20 38 25 35 Q30 33 32 38 L30 45 Q28 47 20 47 Q12 47 10 45 Z"
+                        fill="#5eead4" opacity="0.6" />
+                    <circle cx="15" cy="40" r="2" fill="white" opacity="0.7" />
+                    <circle cx="22" cy="38" r="1.5" fill="white" opacity="0.5" />
+                    <text x="20" y="32" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="white"
+                        text-anchor="middle">Ar</text>
+                </g>
+                <text x="60" y="28" font-family="Outfit, sans-serif" font-size="22" font-weight="700"
+                    fill="white">Ar</text>
+                <text x="85" y="28" font-family="Outfit, sans-serif" font-size="22" font-weight="400"
+                    fill="#2dd4bf">lab</text>
+                <text x="60" y="45" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Gestión
+                    de Laboratorio</text>
+            </svg>
+        </a>
+
+        <div class="navbar-nav">
+            <a href="dashboard.html" class="nav-item" style="margin-right: 1rem;">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Inicio
+            </a>
+
+            <!-- Fase Pre-Analítica -->
+            <div class="nav-dropdown" onclick="toggleDropdown(this)">
+                <div class="nav-dropdown-toggle">
+                    <span>Fase Pre-Analítica</span>
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="dashboard.html" class="nav-item">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Gestión de Citas
+                    </a>
+                    <a href="pacientes.html" class="nav-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        Pacientes
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fase Analítica -->
+            <div class="nav-dropdown" onclick="toggleDropdown(this)">
+                <div class="nav-dropdown-toggle">
+                    <span>Fase Analítica</span>
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="resultados.html" class="nav-item active">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        Captura de Resultados
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fase Pos-Analítica -->
+            <div class="nav-dropdown" onclick="toggleDropdown(this)">
+                <div class="nav-dropdown-toggle">
+                    <span>Fase Pos-Analítica</span>
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="reportes.html" class="nav-item">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reportes y Analíticas
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sistema -->
+            <div class="nav-dropdown" onclick="toggleDropdown(this)">
+                <div class="nav-dropdown-toggle">
+                    <span>Sistema</span>
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="configuracion.html" class="nav-item">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg>
+                        Configuración
+                    </a>
+                </div>
+            </div>
+
+            <div class="navbar-user">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-details">
+                    <div class="user-info-text"><span id="userName">Usuario</span></div>
+                    <div class="user-role-text" id="userRole">Operador</div>
+                </div>
+                <button class="logout-btn" onclick="logout()" title="Cerrar sesión">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <h1 class="page-title">
+                <svg viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                Captura de Resultados
+            </h1>
+        </header>
+
+        <!-- Filters -->
+        <div class="filters-bar">
+            <div class="filter-group">
+                <span class="filter-label">Buscar Paciente</span>
+                <input type="text" class="filter-input" id="searchPatient" placeholder="Nombre o folio..."
+                    oninput="filterResults()">
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Estado</span>
+                <select class="filter-select" id="filterStatus" onchange="filterResults()">
+                    <option value="">Todos</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="en-proceso">En Proceso</option>
+                    <option value="listo">Listo</option>
+                    <option value="validado">Validado</option>
+                    <option value="entregado">Entregado</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Fecha</span>
+                <input type="date" class="filter-input" id="filterDate" onchange="filterResults()">
+            </div>
+        </div>
+
+        <!-- Results Grid -->
+        <div class="results-grid" id="resultsGrid">
+            <!-- Cards will be loaded here -->
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <svg viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <h3>No hay estudios pendientes</h3>
+            <p>Los estudios de las citas aparecerán aquí para capturar resultados.</p>
+        </div>
+    </main>
+
+    <!-- Modal Captura de Resultados -->
+    <div id="modalResultados" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Capturar Resultados</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic form will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveResults()">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Guardar Resultados
+                </button>
+                <button class="btn btn-success" onclick="validateResults()" id="btnValidate" style="display: none;">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Validar y Firmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://ebihobjrwcwtjfazcjmv.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViaWhvYmpyd2N3dGpmYXpjam12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0MTY4NTgsImV4cCI6MjA1Mjk5Mjg1OH0.eP_BE7patBPpXNvzXNuE7bkO9TnX5Z17ma5wOLzSJPU';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        let allCitas = [];
+        let currentCita = null;
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            loadCitasConEstudios();
+            document.getElementById('filterDate').valueAsDate = new Date();
+        });
+
+        function checkAuth() {
+            const userData = localStorage.getItem('arlab_user');
+            if (!userData) {
+                window.location.href = 'index.html';
+                return;
+            }
+            currentUser = JSON.parse(userData);
+            document.getElementById('userName').textContent = currentUser.usuario;
+            document.getElementById('userRole').textContent = currentUser.rol === 'admin' ? 'Administrador' : 'Operador';
+            document.getElementById('userAvatar').textContent = currentUser.usuario.charAt(0).toUpperCase();
+        }
+
+        function logout() {
+            localStorage.removeItem('arlab_user');
+            window.location.href = 'index.html';
+        }
+
+        function toggleDropdown(element) {
+            const allDropdowns = document.querySelectorAll('.nav-dropdown');
+            allDropdowns.forEach(dropdown => {
+                if (dropdown !== element) dropdown.classList.remove('active');
+            });
+            element.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.nav-dropdown')) {
+                document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('active'));
+            }
+        });
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'}" fill="none" stroke-width="2">
+                    ${type === 'success' ? '<polyline points="20 6 9 17 4 12"></polyline>' :
+                    type === 'error' ? '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>' :
+                        '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>'}
+                </svg>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        async function loadCitasConEstudios() {
+            try {
+                const filterDate = document.getElementById('filterDate').value;
+
+                // Get citas with their studies
+                let query = supabaseClient
+                    .from('citas')
+                    .select(`
+                        *,
+                        citas_estudios (
+                            id,
+                            estudio_id,
+                            precio,
+                            resultado,
+                            valor_resultado,
+                            estado_resultado,
+                            validado_por,
+                            fecha_validacion
+                        )
+                    `)
+                    .order('fecha_hora', { ascending: false });
+
+                if (filterDate) {
+                    query = query.gte('fecha_hora', filterDate + 'T00:00:00')
+                        .lte('fecha_hora', filterDate + 'T23:59:59');
+                }
+
+                const { data: citas, error } = await query;
+                if (error) throw error;
+
+                // Get all estudios
+                const { data: estudios } = await supabaseClient.from('estudios').select('*');
+                const estudiosMap = {};
+                estudios.forEach(e => estudiosMap[e.id] = e);
+
+                // Enrich citas with study names
+                allCitas = citas.map(cita => {
+                    cita.citas_estudios = cita.citas_estudios.map(ce => ({
+                        ...ce,
+                        estudio: estudiosMap[ce.estudio_id] || { nombre: 'Estudio desconocido' }
+                    }));
+
+                    // Calculate overall status
+                    const estados = cita.citas_estudios.map(ce => ce.estado_resultado || 'pendiente');
+                    if (estados.every(e => e === 'entregado')) cita.estado_general = 'entregado';
+                    else if (estados.every(e => e === 'validado' || e === 'entregado')) cita.estado_general = 'validado';
+                    else if (estados.every(e => e === 'listo' || e === 'validado' || e === 'entregado')) cita.estado_general = 'listo';
+                    else if (estados.some(e => e === 'en-proceso' || e === 'listo')) cita.estado_general = 'en-proceso';
+                    else cita.estado_general = 'pendiente';
+
+                    return cita;
+                });
+
+                filterResults();
+            } catch (err) {
+                console.error('Error loading citas:', err);
+                showToast('Error al cargar las citas', 'error');
+            }
+        }
+
+        function filterResults() {
+            const searchTerm = document.getElementById('searchPatient').value.toLowerCase();
+            const statusFilter = document.getElementById('filterStatus').value;
+
+            let filtered = allCitas.filter(cita => {
+                const matchSearch = !searchTerm ||
+                    cita.paciente_nombre.toLowerCase().includes(searchTerm) ||
+                    (cita.folio && cita.folio.toLowerCase().includes(searchTerm));
+
+                const matchStatus = !statusFilter || cita.estado_general === statusFilter;
+
+                return matchSearch && matchStatus;
+            });
+
+            renderResults(filtered);
+        }
+
+        function renderResults(citas) {
+            const grid = document.getElementById('resultsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (citas.length === 0) {
+                grid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            grid.innerHTML = citas.map(cita => {
+                const fecha = new Date(cita.fecha_hora).toLocaleDateString('es-MX', {
+                    day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                });
+
+                const statusLabels = {
+                    'pendiente': 'Pendiente',
+                    'en-proceso': 'En Proceso',
+                    'listo': 'Listo',
+                    'validado': 'Validado',
+                    'entregado': 'Entregado'
+                };
+
+                return `
+                    <div class="result-card">
+                        <div class="card-header">
+                            <div class="patient-info">
+                                <h3>${cita.paciente_nombre}</h3>
+                                <p>${fecha}</p>
+                            </div>
+                            <span class="folio-badge">#${cita.folio || cita.id}</span>
+                        </div>
+                        <div class="card-body">
+                            <ul class="studies-list">
+                                ${cita.citas_estudios.map(ce => `
+                                    <li class="study-item">
+                                        <span class="study-name">${ce.estudio.nombre}</span>
+                                        <span class="status-badge ${ce.estado_resultado || 'pendiente'}">${statusLabels[ce.estado_resultado] || 'Pendiente'}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" onclick="openCaptureModal(${cita.id})">
+                                <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                Capturar
+                            </button>
+                            ${cita.estado_general === 'validado' || cita.estado_general === 'entregado' ? `
+                                <button class="btn btn-success" onclick="generateReport(${cita.id})">
+                                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                    Reporte
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openCaptureModal(citaId) {
+            currentCita = allCitas.find(c => c.id === citaId);
+            if (!currentCita) return;
+
+            document.getElementById('modalTitle').textContent = `Resultados - ${currentCita.paciente_nombre}`;
+
+            // Build form
+            const formHtml = currentCita.citas_estudios.map(ce => {
+                const estudio = ce.estudio;
+                return `
+                    <div class="result-form-group" data-estudio-id="${ce.id}">
+                        <h4>${estudio.nombre}</h4>
+                        <div class="result-inputs">
+                            <div class="input-group">
+                                <label>Resultado</label>
+                                <input type="text" class="result-value" value="${ce.valor_resultado || ''}" placeholder="Ingrese resultado">
+                                <span class="reference-range">Ref: ${estudio.rango_referencia || 'No especificado'}</span>
+                            </div>
+                            <div class="input-group">
+                                <label>Estado</label>
+                                <select class="result-status">
+                                    <option value="pendiente" ${ce.estado_resultado === 'pendiente' ? 'selected' : ''}>Pendiente</option>
+                                    <option value="en-proceso" ${ce.estado_resultado === 'en-proceso' ? 'selected' : ''}>En Proceso</option>
+                                    <option value="listo" ${ce.estado_resultado === 'listo' ? 'selected' : ''}>Listo</option>
+                                </select>
+                            </div>
+                            <div class="input-group" style="grid-column: span 2;">
+                                <label>Observaciones</label>
+                                <textarea class="result-obs" rows="2" placeholder="Notas adicionales...">${ce.resultado || ''}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('modalBody').innerHTML = formHtml;
+
+            // Show validate button if user is admin and all results are listo
+            const allListo = currentCita.citas_estudios.every(ce => ce.estado_resultado === 'listo');
+            document.getElementById('btnValidate').style.display = (currentUser.rol === 'admin' && allListo) ? 'inline-flex' : 'none';
+
+            document.getElementById('modalResultados').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalResultados').classList.remove('active');
+            currentCita = null;
+        }
+
+        async function saveResults() {
+            if (!currentCita) return;
+
+            try {
+                const groups = document.querySelectorAll('.result-form-group');
+
+                for (const group of groups) {
+                    const estudioId = group.dataset.estudioId;
+                    const valor = group.querySelector('.result-value').value;
+                    const estado = group.querySelector('.result-status').value;
+                    const obs = group.querySelector('.result-obs').value;
+
+                    const { error } = await supabaseClient
+                        .from('citas_estudios')
+                        .update({
+                            valor_resultado: valor,
+                            estado_resultado: estado,
+                            resultado: obs
+                        })
+                        .eq('id', estudioId);
+
+                    if (error) throw error;
+                }
+
+                showToast('Resultados guardados correctamente', 'success');
+                closeModal();
+                loadCitasConEstudios();
+            } catch (err) {
+                console.error('Error saving results:', err);
+                showToast('Error al guardar los resultados', 'error');
+            }
+        }
+
+        async function validateResults() {
+            if (!currentCita || currentUser.rol !== 'admin') return;
+
+            try {
+                const now = new Date().toISOString();
+
+                for (const ce of currentCita.citas_estudios) {
+                    const { error } = await supabaseClient
+                        .from('citas_estudios')
+                        .update({
+                            estado_resultado: 'validado',
+                            validado_por: currentUser.usuario,
+                            fecha_validacion: now
+                        })
+                        .eq('id', ce.id);
+
+                    if (error) throw error;
+                }
+
+                showToast('Resultados validados y firmados', 'success');
+                closeModal();
+                loadCitasConEstudios();
+            } catch (err) {
+                console.error('Error validating results:', err);
+                showToast('Error al validar los resultados', 'error');
+            }
+        }
+
+        function generateReport(citaId) {
+            const cita = allCitas.find(c => c.id === citaId);
+            if (!cita) return;
+
+            // Open report page
+            window.open(`reporte.html?id=${citaId}`, '_blank');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes y Analíticas - Ar Lab</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-dark: #0f766e;
+            --primary-light: #14b8a6;
+            --sidebar-bg: #1e293b;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-main);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* Navbar - Same as other pages */
+        .navbar {
+            background: var(--sidebar-bg);
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            height: 48px;
+            width: auto;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 0.5rem;
+            height: 100%;
+            align-items: center;
+        }
+
+        .nav-dropdown {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-dropdown-toggle {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.2s;
+            user-select: none;
+            border-radius: 6px;
+        }
+
+        .nav-dropdown-toggle:hover,
+        .nav-dropdown.active .nav-dropdown-toggle {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-dropdown-toggle svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+            stroke-width: 2;
+        }
+
+        .nav-dropdown.active .nav-dropdown-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            transform: translateY(10px);
+            background: var(--sidebar-bg);
+            min-width: 220px;
+            border-radius: 8px;
+            padding: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-dropdown.active .nav-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            border-radius: 6px;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: rgba(13, 148, 136, 0.3);
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-info-text {
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-align: right;
+        }
+
+        .user-role-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.7rem;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .logout-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 70px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .page-title svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Date Range Filter */
+        .date-filter {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .date-filter input {
+            padding: 0.5rem 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .date-filter input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .stat-icon.primary {
+            background: #f0fdfa;
+            color: var(--primary);
+        }
+
+        .stat-icon.success {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .stat-icon.warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .stat-icon.danger {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .stat-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .stat-trend {
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        .stat-trend.up {
+            color: var(--success);
+        }
+
+        .stat-trend.down {
+            color: var(--danger);
+        }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .chart-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-card h3 svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Top Studies Table */
+        .top-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .top-table th {
+            text-align: left;
+            padding: 0.75rem 0;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-light);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .top-table td {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        .top-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rank-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .rank-badge.gold {
+            background: #f59e0b;
+        }
+
+        .rank-badge.silver {
+            background: #94a3b8;
+        }
+
+        .rank-badge.bronze {
+            background: #c2410c;
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .activity-icon.cita {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .activity-icon.pago {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .activity-icon.resultado {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .activity-content h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .activity-content p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-brand">
+            <svg viewBox="0 0 180 60" class="navbar-logo">
+                <defs>
+                    <linearGradient id="flaskGradNavBar" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#2dd4bf" />
+                        <stop offset="100%" style="stop-color:#0d9488" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(10,5)">
+                    <path d="M15 8 L15 22 L5 42 Q3 46 6 48 L34 48 Q37 46 35 42 L25 22 L25 8 Z"
+                        fill="url(#flaskGradNavBar)" stroke="#14b8a6" stroke-width="1.5" />
+                    <rect x="13" y="2" width="14" height="8" rx="2" fill="url(#flaskGradNavBar)" stroke="#14b8a6"
+                        stroke-width="1.5" />
+                    <path d="M8 38 Q10 35 15 36 Q20 38 25 35 Q30 33 32 38 L30 45 Q28 47 20 47 Q12 47 10 45 Z"
+                        fill="#5eead4" opacity="0.6" />
+                    <circle cx="15" cy="40" r="2" fill="white" opacity="0.7" />
+                    <circle cx="22" cy="38" r="1.5" fill="white" opacity="0.5" />
+                    <text x="20" y="32" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="white"
+                        text-anchor="middle">Ar</text>
+                </g>
+                <text x="60" y="28" font-family="Outfit, sans-serif" font-size="22" font-weight="700"
+                    fill="white">Ar</text>
+                <text x="85" y="28" font-family="Outfit, sans-serif" font-size="22" font-weight="400"
+                    fill="#2dd4bf">lab</text>
+                <text x="60" y="45" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Gestión
+                    de Laboratorio</text>
+            </svg>
+        </a>
+
+        <div class="navbar-nav">
+            <a href="dashboard.html" class="nav-item" style="margin-right: 1rem;">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Inicio
+            </a>
+
+            <!-- Fase Pre-Analítica -->
+            <div class="nav-dropdown" onclick="toggleDropdown(this)">
+                <div class="nav-dropdown-toggle">
+                    <span>Fase Pre-Analítica</span>
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="dashboard.html" class="nav-item">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Gestión de Citas
+                    </a>
+                    <a href="pacientes.html" class="nav-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        Pacientes
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fase Analítica -->
+            <div class="nav-dropdown" onclick="toggleDropdown(this)">
+                <div class="nav-dropdown-toggle">
+                    <span>Fase Analítica</span>
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="resultados.html" class="nav-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        Captura de Resultados
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fase Pos-Analítica -->
+            <div class="nav-dropdown" onclick="toggleDropdown(this)">
+                <div class="nav-dropdown-toggle">
+                    <span>Fase Pos-Analítica</span>
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="reportes.html" class="nav-item active">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reportes y Analíticas
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sistema -->
+            <div class="nav-dropdown" onclick="toggleDropdown(this)">
+                <div class="nav-dropdown-toggle">
+                    <span>Sistema</span>
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="configuracion.html" class="nav-item">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg>
+                        Configuración
+                    </a>
+                </div>
+            </div>
+
+            <div class="navbar-user">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-details">
+                    <div class="user-info-text"><span id="userName">Usuario</span></div>
+                    <div class="user-role-text" id="userRole">Operador</div>
+                </div>
+                <button class="logout-btn" onclick="logout()" title="Cerrar sesión">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <h1 class="page-title">
+                <svg viewBox="0 0 24 24">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+                Reportes y Analíticas
+            </h1>
+            <div class="date-filter">
+                <label>Desde:</label>
+                <input type="date" id="dateFrom">
+                <label>Hasta:</label>
+                <input type="date" id="dateTo">
+                <button class="btn btn-primary" onclick="loadAnalytics()">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg>
+                    Actualizar
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon primary">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalPacientes">0</h3>
+                    <p>Pacientes Atendidos</p>
+                    <span class="stat-trend up" id="trendPacientes">↑ 0% vs mes anterior</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon success">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalIngresos">$0</h3>
+                    <p>Ingresos Totales</p>
+                    <span class="stat-trend up" id="trendIngresos">↑ 0% vs mes anterior</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon warning">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalEstudios">0</h3>
+                    <p>Estudios Realizados</p>
+                    <span class="stat-trend up" id="trendEstudios">↑ 0% vs mes anterior</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon danger">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3 id="pendientes">0</h3>
+                    <p>Resultados Pendientes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>
+                    <svg viewBox="0 0 24 24">
+                        <line x1="12" y1="20" x2="12" y2="10"></line>
+                        <line x1="18" y1="20" x2="18" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="16"></line>
+                    </svg>
+                    Ventas por Día
+                </h3>
+                <div class="chart-container">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                        <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                    </svg>
+                    Métodos de Pago
+                </h3>
+                <div class="chart-container">
+                    <canvas id="paymentChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                    Estudios Más Solicitados
+                </h3>
+                <table class="top-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Estudio</th>
+                            <th>Cantidad</th>
+                            <th>Ingresos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topStudiesTable">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="chart-card">
+                <h3>
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    Actividad Reciente
+                </h3>
+                <ul class="activity-list" id="activityList">
+                    <!-- Dynamic content -->
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://ebihobjrwcwtjfazcjmv.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViaWhvYmpyd2N3dGpmYXpjam12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0MTY4NTgsImV4cCI6MjA1Mjk5Mjg1OH0.eP_BE7patBPpXNvzXNuE7bkO9TnX5Z17ma5wOLzSJPU';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        let salesChart = null;
+        let paymentChart = null;
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            setDefaultDates();
+            loadAnalytics();
+        });
+
+        function checkAuth() {
+            const userData = localStorage.getItem('arlab_user');
+            if (!userData) {
+                window.location.href = 'index.html';
+                return;
+            }
+            currentUser = JSON.parse(userData);
+            document.getElementById('userName').textContent = currentUser.usuario;
+            document.getElementById('userRole').textContent = currentUser.rol === 'admin' ? 'Administrador' : 'Operador';
+            document.getElementById('userAvatar').textContent = currentUser.usuario.charAt(0).toUpperCase();
+        }
+
+        function logout() {
+            localStorage.removeItem('arlab_user');
+            window.location.href = 'index.html';
+        }
+
+        function toggleDropdown(element) {
+            const allDropdowns = document.querySelectorAll('.nav-dropdown');
+            allDropdowns.forEach(dropdown => {
+                if (dropdown !== element) dropdown.classList.remove('active');
+            });
+            element.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.nav-dropdown')) {
+                document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('active'));
+            }
+        });
+
+        function setDefaultDates() {
+            const today = new Date();
+            const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+
+            document.getElementById('dateFrom').valueAsDate = firstDay;
+            document.getElementById('dateTo').valueAsDate = today;
+        }
+
+        async function loadAnalytics() {
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+
+            try {
+                // Load citas for the date range
+                const { data: citas, error } = await supabaseClient
+                    .from('citas')
+                    .select('*, citas_estudios(*)')
+                    .gte('fecha_hora', dateFrom + 'T00:00:00')
+                    .lte('fecha_hora', dateTo + 'T23:59:59')
+                    .order('fecha_hora', { ascending: true });
+
+                if (error) throw error;
+
+                // Calculate stats
+                const uniquePatients = new Set(citas.map(c => c.paciente_nombre)).size;
+                const totalIngresos = citas.reduce((sum, c) => sum + (c.pagado || 0), 0);
+                const totalEstudios = citas.reduce((sum, c) => sum + (c.citas_estudios?.length || 0), 0);
+                const pendientes = citas.filter(c =>
+                    c.citas_estudios?.some(ce => !ce.estado_resultado || ce.estado_resultado === 'pendiente')
+                ).length;
+
+                document.getElementById('totalPacientes').textContent = uniquePatients;
+                document.getElementById('totalIngresos').textContent = '$' + totalIngresos.toLocaleString('es-MX');
+                document.getElementById('totalEstudios').textContent = totalEstudios;
+                document.getElementById('pendientes').textContent = pendientes;
+
+                // Build sales chart data
+                const salesByDay = {};
+                citas.forEach(cita => {
+                    const day = cita.fecha_hora.split('T')[0];
+                    salesByDay[day] = (salesByDay[day] || 0) + (cita.pagado || 0);
+                });
+
+                renderSalesChart(salesByDay);
+
+                // Build payment methods chart
+                const paymentMethods = {};
+                citas.forEach(cita => {
+                    const method = cita.metodo_pago || 'efectivo';
+                    paymentMethods[method] = (paymentMethods[method] || 0) + 1;
+                });
+
+                renderPaymentChart(paymentMethods);
+
+                // Top studies
+                await loadTopStudies(dateFrom, dateTo);
+
+                // Recent activity
+                renderRecentActivity(citas.slice(-5).reverse());
+
+            } catch (err) {
+                console.error('Error loading analytics:', err);
+            }
+        }
+
+        function renderSalesChart(data) {
+            const ctx = document.getElementById('salesChart').getContext('2d');
+
+            if (salesChart) salesChart.destroy();
+
+            const labels = Object.keys(data).map(d => {
+                const date = new Date(d + 'T12:00:00');
+                return date.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' });
+            });
+            const values = Object.values(data);
+
+            salesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Ventas ($)',
+                        data: values,
+                        backgroundColor: 'rgba(13, 148, 136, 0.8)',
+                        borderColor: '#0d9488',
+                        borderWidth: 1,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => '$' + value.toLocaleString()
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderPaymentChart(data) {
+            const ctx = document.getElementById('paymentChart').getContext('2d');
+
+            if (paymentChart) paymentChart.destroy();
+
+            const labels = {
+                'efectivo': 'Efectivo',
+                'tarjeta': 'Tarjeta',
+                'transferencia': 'Transferencia'
+            };
+
+            paymentChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(data).map(k => labels[k] || k),
+                    datasets: [{
+                        data: Object.values(data),
+                        backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        async function loadTopStudies(dateFrom, dateTo) {
+            try {
+                const { data: citasEstudios, error } = await supabaseClient
+                    .from('citas_estudios')
+                    .select(`
+                        estudio_id,
+                        precio,
+                        citas!inner(fecha_hora)
+                    `)
+                    .gte('citas.fecha_hora', dateFrom + 'T00:00:00')
+                    .lte('citas.fecha_hora', dateTo + 'T23:59:59');
+
+                if (error) throw error;
+
+                // Get study names
+                const { data: estudios } = await supabaseClient.from('estudios').select('id, nombre');
+                const estudiosMap = {};
+                estudios?.forEach(e => estudiosMap[e.id] = e.nombre);
+
+                // Aggregate by study
+                const studyStats = {};
+                citasEstudios.forEach(ce => {
+                    if (!studyStats[ce.estudio_id]) {
+                        studyStats[ce.estudio_id] = { count: 0, total: 0 };
+                    }
+                    studyStats[ce.estudio_id].count++;
+                    studyStats[ce.estudio_id].total += ce.precio || 0;
+                });
+
+                // Sort and get top 5
+                const topStudies = Object.entries(studyStats)
+                    .sort((a, b) => b[1].count - a[1].count)
+                    .slice(0, 5);
+
+                const tableHtml = topStudies.map(([id, stats], index) => {
+                    const rankClasses = ['gold', 'silver', 'bronze', '', ''];
+                    return `
+                        <tr>
+                            <td><span class="rank-badge ${rankClasses[index]}">${index + 1}</span></td>
+                            <td>${estudiosMap[id] || 'Estudio ' + id}</td>
+                            <td>${stats.count}</td>
+                            <td>$${stats.total.toLocaleString('es-MX')}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                document.getElementById('topStudiesTable').innerHTML = tableHtml || '<tr><td colspan="4">Sin datos</td></tr>';
+
+            } catch (err) {
+                console.error('Error loading top studies:', err);
+            }
+        }
+
+        function renderRecentActivity(citas) {
+            const activityHtml = citas.map(cita => {
+                const date = new Date(cita.fecha_hora);
+                const timeAgo = getTimeAgo(date);
+
+                return `
+                    <li class="activity-item">
+                        <div class="activity-icon cita">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        </div>
+                        <div class="activity-content">
+                            <h4>${cita.paciente_nombre}</h4>
+                            <p>${cita.citas_estudios?.length || 0} estudio(s) - $${(cita.total || 0).toLocaleString()} • ${timeAgo}</p>
+                        </div>
+                    </li>
+                `;
+            }).join('');
+
+            document.getElementById('activityList').innerHTML = activityHtml || '<li>Sin actividad reciente</li>';
+        }
+
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+
+            if (seconds < 60) return 'hace unos segundos';
+            if (seconds < 3600) return `hace ${Math.floor(seconds / 60)} min`;
+            if (seconds < 86400) return `hace ${Math.floor(seconds / 3600)} horas`;
+            return `hace ${Math.floor(seconds / 86400)} días`;
+        }
+    </script>
+</body>
+
+</html>

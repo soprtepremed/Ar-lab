@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Resultados - Ar Lab</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .btn-primary {
+            background: #0d9488;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f766e;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #1e293b;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-outline:hover {
+            border-color: #0d9488;
+            color: #0d9488;
+        }
+
+        /* Report Container */
+        .report-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .report-page {
+            padding: 40px;
+            min-height: 1100px;
+        }
+
+        /* Header */
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 3px solid #0d9488;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .lab-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .lab-logo img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .lab-logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2dd4bf 0%, #0d9488 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .lab-info h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: #0d9488;
+            margin-bottom: 4px;
+        }
+
+        .lab-info p {
+            font-size: 0.8rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        .report-info {
+            text-align: right;
+        }
+
+        .report-info .folio {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0d9488;
+            margin-bottom: 5px;
+        }
+
+        .report-info p {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* Patient Info Section */
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #0d9488;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .patient-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .patient-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .patient-field label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .patient-field span {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        /* Results Table */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .results-table th {
+            background: #f8fafc;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .results-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .study-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .result-value {
+            font-weight: 700;
+            color: #0d9488;
+        }
+
+        .result-value.high {
+            color: #ef4444;
+        }
+
+        .result-value.low {
+            color: #f59e0b;
+        }
+
+        .reference-range {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .observations {
+            font-size: 0.85rem;
+            color: #475569;
+            font-style: italic;
+        }
+
+        /* Signatures Section */
+        .signatures-section {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .signature-box {
+            text-align: center;
+        }
+
+        .signature-line {
+            border-top: 2px solid #1e293b;
+            margin-bottom: 8px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .signature-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+
+        .signature-title {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .signature-cedula {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        /* Footer */
+        .report-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .report-footer p {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .report-footer .disclaimer {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-style: italic;
+            max-width: 600px;
+            margin: 10px auto 0;
+        }
+
+        .qr-code {
+            width: 80px;
+            height: 80px;
+            margin: 10px auto;
+        }
+
+        /* Watermark for validated reports */
+        .validated-stamp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(16, 185, 129, 0.1);
+            text-transform: uppercase;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .controls {
+                display: none;
+            }
+
+            .report-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .report-page {
+                padding: 20px;
+                min-height: auto;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            color: #64748b;
+        }
+
+        .loading svg {
+            width: 48px;
+            height: 48px;
+            animation: spin 1s linear infinite;
+            stroke: #0d9488;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <button class="btn btn-primary" onclick="window.print()">
+            <svg viewBox="0 0 24 24">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            Imprimir
+        </button>
+        <button class="btn btn-success" onclick="shareWhatsApp()">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                </path>
+            </svg>
+            Enviar por WhatsApp
+        </button>
+        <a href="resultados.html" class="btn btn-outline">
+            <svg viewBox="0 0 24 24">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Volver
+        </a>
+    </div>
+
+    <div class="report-container" id="reportContainer">
+        <div class="loading" id="loadingState">
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+            </svg>
+            <p>Cargando reporte...</p>
+        </div>
+        <div class="report-page" id="reportContent" style="display: none;">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://ebihobjrwcwtjfazcjmv.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViaWhvYmpyd2N3dGpmYXpjam12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0MTY4NTgsImV4cCI6MjA1Mjk5Mjg1OH0.eP_BE7patBPpXNvzXNuE7bkO9TnX5Z17ma5wOLzSJPU';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        let currentCita = null;
+        let labConfig = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const citaId = urlParams.get('id');
+
+            if (citaId) {
+                loadReport(citaId);
+            } else {
+                document.getElementById('loadingState').innerHTML = '<p>Error: No se especificó el ID de la cita</p>';
+            }
+        });
+
+        async function loadReport(citaId) {
+            try {
+                // Load lab config
+                const { data: config } = await supabaseClient.from('configuracion').select('*').single();
+                labConfig = config || {
+                    nombre_laboratorio: 'Ar Lab',
+                    responsable_sanitario: 'Q.C. Responsable',
+                    cedula_profesional: '0000000',
+                    direccion: 'Dirección del laboratorio',
+                    telefono: '000-000-0000'
+                };
+
+                // Load cita with studies
+                const { data: cita, error } = await supabaseClient
+                    .from('citas')
+                    .select(`
+                        *,
+                        citas_estudios (
+                            id,
+                            estudio_id,
+                            precio,
+                            valor_resultado,
+                            estado_resultado,
+                            resultado,
+                            validado_por,
+                            fecha_validacion
+                        )
+                    `)
+                    .eq('id', citaId)
+                    .single();
+
+                if (error) throw error;
+                if (!cita) throw new Error('Cita no encontrada');
+
+                currentCita = cita;
+
+                // Get study names and ranges
+                const { data: estudios } = await supabaseClient.from('estudios').select('*');
+                const estudiosMap = {};
+                estudios?.forEach(e => estudiosMap[e.id] = e);
+
+                // Enrich with study info
+                cita.citas_estudios = cita.citas_estudios.map(ce => ({
+                    ...ce,
+                    estudio: estudiosMap[ce.estudio_id] || { nombre: 'Estudio', rango_referencia: '-' }
+                }));
+
+                renderReport(cita);
+
+            } catch (err) {
+                console.error('Error loading report:', err);
+                document.getElementById('loadingState').innerHTML = `<p>Error: ${err.message}</p>`;
+            }
+        }
+
+        function renderReport(cita) {
+            const fecha = new Date(cita.fecha_hora).toLocaleDateString('es-MX', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+
+            const fechaValidacion = cita.citas_estudios[0]?.fecha_validacion
+                ? new Date(cita.citas_estudios[0].fecha_validacion).toLocaleDateString('es-MX', {
+                    day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                })
+                : '-';
+
+            const validadoPor = cita.citas_estudios[0]?.validado_por || '-';
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=Folio:${cita.folio || cita.id}|Paciente:${cita.paciente_nombre}`;
+
+            const resultsHtml = cita.citas_estudios.map(ce => {
+                const estudio = ce.estudio;
+                let valueClass = '';
+                // TODO: Compare with reference range to add high/low class
+
+                return `
+                    <tr>
+                        <td class="study-name">${estudio.nombre}</td>
+                        <td class="result-value ${valueClass}">${ce.valor_resultado || '-'}</td>
+                        <td class="reference-range">${estudio.rango_referencia || '-'}</td>
+                        <td class="observations">${ce.resultado || '-'}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            const isValidated = cita.citas_estudios.every(ce => ce.estado_resultado === 'validado' || ce.estado_resultado === 'entregado');
+
+            document.getElementById('reportContent').innerHTML = `
+                ${isValidated ? '<div class="validated-stamp">VALIDADO</div>' : ''}
+                
+                <div class="report-header">
+                    <div class="lab-logo">
+                        <div class="lab-logo-placeholder">Ar</div>
+                        <div class="lab-info">
+                            <h1>${labConfig.nombre_laboratorio}</h1>
+                            <p>Laboratorio Clínico</p>
+                            <p>${labConfig.direccion}</p>
+                            <p>Tel: ${labConfig.telefono}</p>
+                        </div>
+                    </div>
+                    <div class="report-info">
+                        <div class="folio">Folio: #${cita.folio || cita.id}</div>
+                        <p>Fecha: ${fecha}</p>
+                        <p>Hora: ${new Date(cita.fecha_hora).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' })}</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Datos del Paciente</h2>
+                    <div class="patient-grid">
+                        <div class="patient-field">
+                            <label>Nombre Completo</label>
+                            <span>${cita.paciente_nombre}</span>
+                        </div>
+                        <div class="patient-field">
+                            <label>Teléfono</label>
+                            <span>${cita.paciente_telefono || '-'}</span>
+                        </div>
+                        <div class="patient-field">
+                            <label>Edad</label>
+                            <span>${cita.paciente_edad || '-'} ${cita.paciente_edad ? 'años' : ''}</span>
+                        </div>
+                        <div class="patient-field">
+                            <label>Sexo</label>
+                            <span>${cita.paciente_sexo === 'M' ? 'Masculino' : cita.paciente_sexo === 'F' ? 'Femenino' : '-'}</span>
+                        </div>
+                        <div class="patient-field">
+                            <label>Médico Referente</label>
+                            <span>${cita.medico_referente || 'Particular'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Resultados de Laboratorio</h2>
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Estudio</th>
+                                <th>Resultado</th>
+                                <th>Valores de Referencia</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${resultsHtml}
+                        </tbody>
+                    </table>
+                </div>
+
+                ${isValidated ? `
+                <div class="signatures-section">
+                    <div class="signature-box">
+                        <div class="signature-line"></div>
+                        <div class="signature-name">${labConfig.responsable_sanitario}</div>
+                        <div class="signature-title">Responsable Sanitario</div>
+                        <div class="signature-cedula">Céd. Prof. ${labConfig.cedula_profesional}</div>
+                    </div>
+                    <div class="signature-box">
+                        <div class="signature-line"></div>
+                        <div class="signature-name">${validadoPor}</div>
+                        <div class="signature-title">Validó Resultados</div>
+                        <div class="signature-cedula">${fechaValidacion}</div>
+                    </div>
+                </div>
+                ` : `
+                <div style="text-align: center; padding: 2rem; background: #fef3c7; border-radius: 12px; margin-top: 2rem;">
+                    <p style="color: #92400e; font-weight: 600;">⚠️ RESULTADOS PENDIENTES DE VALIDACIÓN</p>
+                    <p style="color: #a16207; font-size: 0.85rem;">Este reporte aún no ha sido validado por el responsable sanitario.</p>
+                </div>
+                `}
+
+                <div class="report-footer">
+                    <img src="${qrUrl}" alt="QR Code" class="qr-code">
+                    <p><strong>${labConfig.nombre_laboratorio}</strong></p>
+                    <p>${labConfig.direccion} | Tel: ${labConfig.telefono}</p>
+                    <p class="disclaimer">
+                        Este documento es un resultado de laboratorio clínico. Los valores de referencia pueden variar según la edad, sexo y metodología utilizada. 
+                        Los resultados deben ser interpretados por un profesional de la salud.
+                    </p>
+                </div>
+            `;
+
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('reportContent').style.display = 'block';
+        }
+
+        function shareWhatsApp() {
+            if (!currentCita) return;
+
+            const phone = currentCita.paciente_telefono?.replace(/\D/g, '');
+            const message = encodeURIComponent(
+                `🧪 *${labConfig?.nombre_laboratorio || 'Ar Lab'}*\n\n` +
+                `Hola ${currentCita.paciente_nombre},\n\n` +
+                `Sus resultados de laboratorio ya están listos.\n` +
+                `📋 Folio: #${currentCita.folio || currentCita.id}\n\n` +
+                `Puede pasar a recogerlos o solicitar el envío digital.\n\n` +
+                `¡Gracias por su confianza!`
+            );
+
+            const whatsappUrl = phone
+                ? `https://wa.me/52${phone}?text=${message}`
+                : `https://wa.me/?text=${message}`;
+
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+
+</html>
