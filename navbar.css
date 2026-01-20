@@ -1,0 +1,237 @@
+/* Navbar (Top Navigation) - Unified Style */
+.navbar {
+    width: 100%;
+    background: #1e293b;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    font-family: 'Outfit', sans-serif;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.navbar-logo {
+    height: 40px;
+    width: auto;
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 0.25rem;
+    height: 100%;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+}
+
+/* Dropdown Styles */
+.nav-dropdown {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-dropdown-toggle {
+    color: #ffaa00;
+    /* Neon Orange */
+    text-shadow: 0 0 2px rgba(255, 170, 0, 0.3);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.6rem;
+    transition: all 0.2s;
+    user-select: none;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.nav-dropdown-toggle:hover,
+.nav-dropdown.active .nav-dropdown-toggle {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-dropdown-toggle svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s;
+    stroke-width: 2.5;
+}
+
+.nav-dropdown.active .nav-dropdown-toggle svg {
+    transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: #1e293b;
+    min-width: 200px;
+    border-radius: 8px;
+    padding: 0.4rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-dropdown.active .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.8rem;
+    color: #ffaa00;
+    /* Neon Orange */
+    text-shadow: 0 0 2px rgba(255, 170, 0, 0.3);
+    /* Subtle neon glow */
+
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border-radius: 6px;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.nav-item.active {
+    background: rgba(13, 148, 136, 0.3);
+    color: #5eead4;
+    font-weight: 500;
+}
+
+.nav-item svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+/* User Profile in Navbar */
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #0d9488;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info-text {
+    color: white;
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 1.2;
+}
+
+.user-role-text {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.65rem;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.logout-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.logout-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+body {
+    padding-top: 60px !important;
+}
+
+.main-content {
+    margin-top: 0 !important;
+}
+
+#navInicio {
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+@media (max-width: 1100px) {
+    .navbar-logo text:not(.brand-name) {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .nav-dropdown-toggle span {
+        display: none;
+    }
+
+    .nav-dropdown-toggle {
+        padding: 0.4rem;
+    }
+}

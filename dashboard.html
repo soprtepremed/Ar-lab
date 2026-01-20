@@ -1565,7 +1565,11 @@
                             </svg>
                             <h3>Registrar Paciente</h3>
                         </a>
+<<<<<<< Updated upstream
                         <a href="#" class="action-card" onclick="alert('Módulo en desarrollo')">
+=======
+                        <a href="#" class="action-card" onclick="switchView('pos_analitica'); return false;">
+>>>>>>> Stashed changes
                             <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                 <polyline points="14 2 14 8 20 8"></polyline>
@@ -1575,6 +1579,365 @@
                             </svg>
                             <h3>Entrega Resultados</h3>
                         </a>
+                    </div>
+                </div>
+            </div>
+
+<<<<<<< Updated upstream
+=======
+            <!-- VISTA LISTA DE PACIENTES DEL DÍA (SALA DE ESPERA) -->
+            <div id="viewAnalitica" style="display:none;">
+                <div class="card" style="width: 100%; overflow: hidden; margin-bottom: 2rem;">
+                    <div class="card-header"
+                        style="background: #f0fdfa; border-bottom: 1px solid var(--primary-light); display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="background: white; padding: 8px; border-radius: 8px; color: var(--primary);">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none"
+                                    stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="card-title" style="color: #0f766e;">Fase Pre-Analítica: Sala de Espera</h2>
+                                <div style="font-size: 0.85rem; color: #64748b;">Lista de pacientes verificados y listos
+                                    para toma</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <input type="date" id="workListDate" class="form-input"
+                                style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Roboto', sans-serif; color: #334155;"
+                                onchange="loadWorkList()">
+                        </div>
+
+                        <div style="text-align: right;">
+                            <span id="workListCount"
+                                style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">0</span>
+                            <span style="font-size: 0.8rem; display: block; color: var(--text-light);">En Espera</span>
+                            <button onclick="loadWorkList()"
+                                style="background:none; border:none; color: var(--primary); font-size: 0.75rem; cursor: pointer; text-decoration: underline;">Actualizar</button>
+                        </div>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table class="appointments-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%;">Folio</th>
+                                    <th style="width: 20%;">Paciente</th>
+                                    <th style="width: 42%;">Estudios</th>
+                                    <th style="width: 8%;">Estado</th>
+                                    <th style="width: 20%;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="workListTableBody"></tbody>
+                        </table>
+                        <div id="noWorkListMessage" class="empty-state" style="display: none; padding: 4rem 2rem;">
+                            <div
+                                style="background: #f1f5f9; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                                <svg viewBox="0 0 24 24"
+                                    style="width: 40px; height: 40px; color: #94a3b8; stroke: currentColor; fill: none; stroke-width: 2;">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                            </div>
+                            <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 0.5rem;">Sala de Espera Vacía
+                            </h3>
+                            <p style="font-size: 0.9rem; color: #64748b;">No hay pacientes verificados esperando turno.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA FASE POS-ANALÍTICA (RESULTADOS LISTOS) -->
+            <div id="viewPosAnalitica" style="display:none;">
+                <div class="card" style="width: 100%; overflow: hidden; margin-bottom: 2rem;">
+                    <div class="card-header"
+                        style="background: #f0fdfa; border-bottom: 1px solid var(--primary-light); display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="background: white; padding: 8px; border-radius: 8px; color: #1e40af;">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none"
+                                    stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="card-title" style="color: #0f766e;">Fase Pos-Analítica: Entrega de Resultados
+                                </h2>
+                                <div style="font-size: 0.85rem; color: #64748b;">Pacientes con estudios validados y
+                                    listos para impresión</div>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="text" id="searchPosAnalitica" placeholder="Buscar paciente..."
+                                class="form-input"
+                                style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 8px;"
+                                oninput="loadPosAnalitica()">
+                        </div>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table class="appointments-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%;">Folio</th>
+                                    <th style="width: 30%;">Paciente</th>
+                                    <th style="width: 35%;">Estudios Validados</th>
+                                    <th style="width: 15%;">Estado</th>
+                                    <th style="width: 10%;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="posAnaliticaTableBody">
+                                <!-- JS Populate -->
+                            </tbody>
+                        </table>
+                        <div id="noPosAnaliticaMessage" class="empty-state" style="display: none; padding: 4rem 2rem;">
+                            <div
+                                style="background: #f1f5f9; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                                <svg viewBox="0 0 24 24"
+                                    style="width: 40px; height: 40px; color: #94a3b8; stroke: currentColor; fill: none; stroke-width: 2;">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                            </div>
+                            <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 0.5rem;">Sin Resultados
+                                Pendientes de Entrega</h3>
+                            <p style="font-size: 0.9rem; color: #64748b;">Valide resultados en la Fase Analítica para
+                                verlos aquí.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA COTIZACIONES -->
+            <div id="viewCotizaciones" style="display:none;">
+                <div class="card" style="width: 100%; overflow: hidden; margin-bottom: 2rem;">
+
+                    <!-- Header with Tabs -->
+                    <div class="card-header"
+                        style="background: #f0fdfa; border-bottom: 1px solid var(--primary-light); padding-bottom: 0;">
+                        <div
+                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 1rem 0 1rem; margin-bottom: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div
+                                    style="background: white; padding: 8px; border-radius: 8px; color: var(--primary);">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none"
+                                        stroke-width="2">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 class="card-title" style="color: #0f766e;">Cotizador de Servicios</h2>
+                                    <div style="font-size: 0.85rem; color: #64748b;">Generación y seguimiento de
+                                        presupuestos</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabs -->
+                        <div style="display: flex; gap: 2rem; padding: 0 1.5rem;">
+                            <button onclick="switchCotizacionTab('nuevo')" id="tabCotNuevo" class="tab-btn active"
+                                style="padding: 10px 0; border: none; background: none; font-weight: 600; color: #0f766e; border-bottom: 2px solid #0f766e; cursor: pointer; transition: all 0.2s;">Nueva
+                                Cotización</button>
+                            <button onclick="switchCotizacionTab('historial')" id="tabCotHistorial" class="tab-btn"
+                                style="padding: 10px 0; border: none; background: none; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s;">Historial
+                                de Cotizaciones</button>
+                        </div>
+                    </div>
+
+                    <!-- TAB 1: NUEVA COTIZACION -->
+                    <div id="cotizadorNuevo"
+                        style="display: grid; grid-template-columns: 350px 1fr; gap: 0; min-height: 500px;">
+                        <!-- Left Panel: Search & Controls -->
+                        <div style="background: #f8fafc; padding: 1.5rem; border-right: 1px solid #e2e8f0;">
+                            <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+                                <button class="btn btn-secondary btn-sm" onclick="limpiarCotizador()">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M3 6h18"></path>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg>
+                                    Limpiar
+                                </button>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label class="form-label">Nombre del Interesado (Opcional)</label>
+                                <input type="text" id="cotPaciente" class="form-input" placeholder="Ej: Juan Pérez">
+                            </div>
+
+                            <div class="form-group" style="position: relative;">
+                                <label class="form-label">Agregar Estudio</label>
+                                <div style="position:relative;">
+                                    <input type="text" id="cotBuscarEstudio" class="form-input"
+                                        placeholder="Buscar estudio..." autocomplete="off">
+                                    <div id="cotResultadosBusqueda"
+                                        style="display:none; position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #cbd5e1; border-radius: 8px; max-height: 300px; overflow-y: auto; z-index: 50; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                                    </div>
+                                </div>
+                                <small style="color:#64748b; margin-top:5px; display:block;">Busque por nombre o
+                                    código</small>
+                            </div>
+
+                            <div style="background: #e0f2fe; padding: 1rem; border-radius: 8px; margin-top: 2rem;">
+                                <h4 style="margin:0 0 0.5rem 0; color: #0369a1; font-size: 0.9rem;">Resumen Rápido</h4>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span style="color: #334155; font-size: 0.85rem;">Estudios:</span>
+                                    <strong style="color: #0f172a;" id="cotTotalCount">0</strong>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; font-size: 1.1rem; border-top: 1px solid #bae6fd; padding-top: 5px; margin-top: 5px;">
+                                    <span style="color: #0369a1; font-weight: 600;">Total:</span>
+                                    <strong style="color: #0284c7;">$<span id="cotTotalAmount">0.00</span></strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: List -->
+                        <div style="background: white; display: flex; flex-direction: column;">
+                            <div style="overflow-x: auto; flex: 1;">
+                                <table class="appointments-table">
+                                    <thead style="position: sticky; top: 0; background: white; z-index: 10;">
+                                        <tr>
+                                            <th style="width: 15%;">Código</th>
+                                            <th style="width: 50%;">Estudio</th>
+                                            <th style="width: 20%; text-align: right;">Precio</th>
+                                            <th style="width: 15%; text-align: center;">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cotTableBody">
+                                        <tr>
+                                            <td colspan="4" style="text-align:center; padding: 2rem; color: #94a3b8;">
+                                                Agregue estudios para cotizar</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Bottom Actions -->
+                            <div
+                                style="padding: 1.5rem; border-top: 1px solid #e2e8f0; background: #fff; text-align: right;">
+                                <button class="btn btn-primary" onclick="imprimirTicketCotizacion()"
+                                    style="font-size: 1rem; padding: 12px 24px;">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                        <path
+                                            d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
+                                        </path>
+                                        <rect x="6" y="14" width="12" height="8"></rect>
+                                    </svg>
+                                    Imprimir y Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: HISTORIAL -->
+                    <div id="cotizadorHistorial" style="display: none; padding: 1.5rem;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <input type="text" id="searchCotHistorial" class="search-input"
+                                placeholder="Buscar por nombre de paciente..." onkeyup="filterCotizacionesHistory()"
+                                style="width: 300px;">
+                            <button class="btn btn-secondary" onclick="loadCotizacionesHistory()">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M23 4v6h-6"></path>
+                                    <path d="M1 20v-6h6"></path>
+                                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15">
+                                    </path>
+                                </svg>
+                                Actualizar
+                            </button>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table class="appointments-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Paciente / Interesado</th>
+                                        <th>Estudios</th>
+                                        <th>Total</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cotHistorialTableBody">
+                                    <tr>
+                                        <td colspan="5" style="text-align:center; padding: 1rem;">Cargando...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- VISTA FASE ANALITICA -->
+            <div id="viewProcesoAnalitico" style="display:none;">
+                <div class="card" style="width: 100%; overflow: hidden;">
+
+                    <div id="analiticaContainer" style="padding: 1.5rem;">
+                        <div style="text-align: center; padding: 2rem; color: #64748b;">Cargando muestras...</div>
+                    </div>
+                </div>
+            </div>
+
+>>>>>>> Stashed changes
+            <!-- VISTA GESTION CITAS -->
+            <div id="viewCapturaResultados" style="display:none;">
+                <div class="card" style="width: 100%; overflow: hidden; margin-bottom: 2rem;">
+                    <!-- Cabecera de Captura -->
+                    <div class="card-header"
+                        style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <button onclick="cerrarCapturaResultados()"
+                                    style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px; cursor: pointer; color: #64748b;">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none"
+                                        stroke-width="2">
+                                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                                        <polyline points="12 19 5 12 12 5"></polyline>
+                                    </svg>
+                                </button>
+                                <h2 class="card-title" style="margin: 0; font-size: 1.5rem; color: #0f172a;">Captura de
+                                    Resultados</h2>
+                            </div>
+                            <div id="capturaPacienteInfo"
+                                style="margin-top: 5px; color: #64748b; font-size: 0.95rem; margin-left: 48px;">
+                                <!-- Info del paciente dinámica -->
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <!-- Botones de Acción -->
+                            <button class="btn btn-secondary" onclick="cerrarCapturaResultados()">Cancelar</button>
+                            <button class="btn btn-primary" onclick="validarYPublicarResultados()"
+                                style="background: #0f766e; border-color: #0f766e; gap: 8px;">
+                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none"
+                                    stroke-width="2">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                    <polyline points="7 3 7 8 15 8"></polyline>
+                                </svg>
+                                Validar y Guardar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor del Formulario Dinámico -->
+                    <div id="capturaFormContainer" style="padding: 2rem; background: #fafafa; min-height: 400px;">
+                        <!-- Aquí se inyectan las tablas/campos por área -->
                     </div>
                 </div>
             </div>
@@ -2990,8 +3353,36 @@
         </script>
         <div id="toastContainer" class="toast-container"></div>
 
+<<<<<<< Updated upstream
         <!-- Modal Abrir Caja -->
         <div id="modalAbrirCaja" class="modal-overlay">
+=======
+                    <div
+                        style="display: flex; align-items: center; gap: 10px; background: white; padding: 6px 12px; border-radius: 8px; border: 1px solid #cbd5e1; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                        <input type="date" id="analiticaDate" onchange="loadFaseAnalitica()"
+                            style="border: none; outline: none; font-family: 'Inter', sans-serif; font-weight: 500; color: #334155; font-size: 0.9rem; background: transparent;">
+                    </div>
+                    <p
+                        style="margin: 0; color: #1e40af; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span>El QR se detectarÃ¡ automÃ¡ticamente</span>
+                    </p>
+                </div>
+
+                <button onclick="cerrarModalEscanearQR()" class="btn btn-secondary"
+                    style="width: 100%; margin-top: 1rem; justify-content: center;">Cancelar</button>
+            </div>
+        </div>
+        </div>
+
+        <!-- Modal Generico -->
+        <div id="genericModal" class="modal-overlay">
+>>>>>>> Stashed changes
             <div class="modal">
                 <div class="modal-header">
                     <h3 class="modal-title">Abrir Caja del Día</h3>
@@ -3218,6 +3609,119 @@
                     onclick="cerrarResumenModal()">Aceptar</button>
             </div>
         </div>
+<<<<<<< Updated upstream
+=======
+
+        <!-- Modal Confirmar Resultados -->
+        <div class="modal-overlay" id="modalConfirmarResultados">
+            <div class="modal" style="max-width: 450px;">
+                <div class="modal-header"
+                    style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div
+                            style="width: 42px; height: 42px; background: #e0f2fe; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #0284c7;">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none"
+                                stroke-width="2">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                <polyline points="7 3 7 8 15 8"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: #0f172a; font-size: 1.1rem; font-weight: 700;">Validar y
+                                Publicar</h3>
+                            <p style="margin: 2px 0 0 0; color: #64748b; font-size: 0.8rem;">Confirmación de resultados
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body" style="padding: 1.5rem;">
+                    <p style="color: #334155; font-size: 1rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                        ¿Desea validar y publicar <strong id="confResultadosCount" style="color:#0f172a;">0
+                            resultados</strong>?
+                        <br><br>
+                        <span style="font-size: 0.9rem; color: #64748b;">
+                            Esto enviará los resultados para su firma y entrega al paciente. Asegúrese de que todos los
+                            valores son correctos.
+                        </span>
+                    </p>
+
+                    <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                        <button onclick="cerrarModalConfirmarResultados()"
+                            style="padding: 10px 20px; border-radius: 8px; border: 1px solid #cbd5e1; background: white; color: #475569; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                            Cancelar
+                        </button>
+                        <button id="btnConfirmarResultados" onclick="ejecutarGuardadoResultados()"
+                            style="padding: 10px 24px; border-radius: 8px; border: none; background: #0f766e; color: white; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(15, 118, 110, 0.2); display: flex; align-items: center; gap: 8px;">
+                            <span>Confirmar y Guardar</span>
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none"
+                                stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JsBarcode -->
+        <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+        <!-- Modal Imprimir Etiquetas -->
+        <div class="modal-overlay" id="modalImprimirEtiquetas" style="z-index: 99999;">
+            <div class="modal-content"
+                style="max-width: 800px; width: 95%; background: white; max-height: 90vh; display: flex; flex-direction: column;">
+                <div class="modal-icon">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+                        <path d="M6 9V2h12v7"></path>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                </div>
+                <h3 class="modal-title" style="text-align: center;">Etiquetas de Muestras</h3>
+                <p class="modal-message" style="text-align: center;">Imprima las etiquetas para los tubos requeridos.
+                </p>
+
+                <div id="labelsContainer"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin: 2rem 0; padding: 1rem; overflow-y: auto; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <!-- Labels will be injected here -->
+                </div>
+
+                <div class="modal-actions"
+                    style="margin-top: auto; padding: 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: center; gap: 1rem;">
+                    <button onclick="cerrarModalEtiquetas()"
+                        style="padding: 12px 28px; border-radius: 10px; border: 1px solid #cbd5e1; background: white; color: #64748b; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        Cerrar
+                    </button>
+                    <button onclick="imprimirEtiquetas()"
+                        style="padding: 12px 32px; border-radius: 10px; border: none; background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: white; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                            <rect x="6" y="14" width="12" height="8"></rect>
+                        </svg>
+                        Imprimir Etiquetas
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/dashboard-init.js"></script>
+        <script src="js/dashboard-modals.js"></script>
+        <script src="js/dashboard-qr.js"></script>
+        <script src="js/dashboard-caja.js"></script>
+        <script src="js/dashboard-worklist-v2.js"></script>
+        <script src="js/dashboard-analitica.js?v=4"></script>
+        <script src="js/dashboard-main.js"></script>
+        <script src="js/dashboard-cotizaciones.js"></script>
+>>>>>>> Stashed changes
 </body>
 
 </html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ar lab - Iniciar Sesión</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-light: #5eead4;
+            --primary-dark: #0f766e;
+            --text-title: #334155;
+            --text-body: #64748b;
+            --border: #cbd5e1;
+            --focus-ring: rgba(13, 148, 136, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #ffffff;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Left Side - Visual & Animation */
+        #visual-side {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(ellipse at center, #1e293b 0%, #020617 80%, #000000 100%);
+            /* Deep Space Black */
+            overflow: hidden;
+        }
+
+        #networkCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Right Side - Login Form */
+        #login-side {
+            width: 450px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-content {
+            max-width: 360px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .brand-header {
+            margin-bottom: 3rem;
+        }
+
+        .brand-logo-img {
+            height: 60px;
+            width: auto;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .login-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            color: var(--text-title);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-body);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            color: var(--text-title);
+            background: #fff;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 2rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+
+        .login-footer {
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            padding-top: 2rem;
+        }
+
+        .brand-text {
+            color: #023e8a;
+            font-weight: 700;
+            font-size: 1.2rem;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 0.25rem;
+        }
+
+        .support-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .support-link:hover {
+            background: white;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        @media (max-width: 900px) {
+            #visual-side {
+                display: none;
+            }
+
+            #login-side {
+                width: 100%;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Visual Side (Left) -->
+    <div id="visual-side">
+        <canvas id="networkCanvas"></canvas>
+    </div>
+
+    <!-- Login Side (Right) -->
+    <div id="login-side">
+        <div class="login-content">
+            <div class="brand-header">
+                <svg viewBox="0 0 180 60" style="height: 60px; width: auto; display: block; margin-bottom: 1rem;">
+                    <defs>
+                        <linearGradient id="flaskGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#2dd4bf" />
+                            <stop offset="100%" style="stop-color:#0d9488" />
+                        </linearGradient>
+                    </defs>
+                    <g transform="translate(10,5)">
+                        <path d="M15 8 L15 22 L5 42 Q3 46 6 48 L34 48 Q37 46 35 42 L25 22 L25 8 Z"
+                            fill="url(#flaskGrad2)" stroke="#14b8a6" stroke-width="1.5" />
+                        <rect x="13" y="2" width="14" height="8" rx="2" fill="url(#flaskGrad2)" stroke="#14b8a6"
+                            stroke-width="1.5" />
+                        <path d="M8 38 Q10 35 15 36 Q20 38 25 35 Q30 33 32 38 L30 45 Q28 47 20 47 Q12 47 10 45 Z"
+                            fill="#5eead4" opacity="0.6" />
+                        <circle cx="15" cy="40" r="2" fill="white" opacity="0.7" />
+                        <circle cx="22" cy="38" r="1.5" fill="white" opacity="0.5" />
+                        <circle cx="18" cy="43" r="1" fill="white" opacity="0.6" />
+                        <text x="20" y="32" font-family="Outfit, sans-serif" font-size="12" font-weight="700"
+                            fill="white" text-anchor="middle">Ar</text>
+                    </g>
+                    <text x="60" y="38" font-family="Outfit, sans-serif" font-size="28" font-weight="700"
+                        fill="#334155">Ar</text>
+                    <text x="92" y="38" font-family="Outfit, sans-serif" font-size="28" font-weight="400"
+                        fill="#0d9488">lab</text>
+                </svg>
+                <div class="login-title">Iniciar sesión</div>
+                <div class="login-subtitle">Bienvenido a su sistema de gestión</div>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <input type="text" id="username" class="form-input" placeholder="Usuario" required
+                        autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <div class="password-container">
+                        <input type="password" id="password" class="form-input" placeholder="Contraseña" required
+                            autocomplete="current-password">
+                        <button type="button" class="password-toggle" onclick="togglePassword()"
+                            aria-label="Mostrar contraseña">
+                            <svg id="eyeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <svg id="eyeOffIcon" viewBox="0 0 24 24" width="20" height="20" fill="none"
+                                stroke="currentColor" stroke-width="2" style="display: none;">
+                                <path
+                                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                </path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+
+                <button type="submit" class="submit-btn">Ingresar</button>
+
+                <div style="text-align: center;">
+                    <a href="https://wa.me/5219611062651" target="_blank" class="support-link">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        Contactar Soporte
+                    </a>
+                </div>
+
+                <div class="login-footer">
+                    <div class="brand-text">Ar Lab</div>
+                    <div>Copyright 2026 - Gestión de Laboratorios</div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // Supabase Configuration
+        const supabaseUrl = 'https://ebihobjrwcwtjfazcjmv.supabase.co';
+        const supabaseKey = 'sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const canvas = document.getElementById('networkCanvas');
+        const visualSide = document.getElementById('visual-side');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let formulas = [];
+
+        // Chemistry formulas
+        const chemistryFormulas = [
+            'H₂O', 'NaCl', 'CO₂', 'H₂SO₄', 'NaOH', 'HCl', 'NH₃', 'C₆H₁₂O₆',
+            'CaCO₃', 'Fe₂O₃', 'KMnO₄', 'CH₄', 'C₂H₅OH', 'HNO₃', 'Na₂CO₃',
+            'MgCl₂', 'Al₂O₃', 'K₂SO₄', 'CuSO₄', 'ZnO', 'Pb(NO₃)₂', 'AgNO₃',
+            'pH', 'ATP', 'DNA', 'RNA', 'O₂', 'N₂', 'Cl₂', 'H₂'
+        ];
+
+        // Config Tron Space
+        const particleCount = 100;
+        const formulaCount = 60;
+        const connectionDistance = 140;
+        const moveSpeed = 0.4;
+
+        // Neon Palette
+        const colors = ['#ffaa00', '#06b6d4', '#22d3ee', '#fbad18'];
+
+        function resize() {
+            // Resize canvas to match the visual-side div
+            width = canvas.width = visualSide.clientWidth;
+            height = canvas.height = visualSide.clientHeight;
+            initParticles();
+            initFormulas();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * moveSpeed;
+                this.vy = (Math.random() - 0.5) * moveSpeed;
+                this.size = Math.random() * 2 + 1;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 4;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        class Formula {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.text = chemistryFormulas[Math.floor(Math.random() * chemistryFormulas.length)];
+                this.fontSize = Math.random() * 16 + 10;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.rotation = (Math.random() - 0.5) * 0.5;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.003;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.rotation += this.rotationSpeed;
+                if (this.x < -50) this.x = width + 50;
+                if (this.x > width + 50) this.x = -50;
+                if (this.y < -50) this.y = height + 50;
+                if (this.y > height + 50) this.y = -50;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.font = `bold ${this.fontSize}px 'Outfit', monospace`;
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = this.color;
+                ctx.fillText(this.text, 0, 0);
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function initFormulas() {
+            formulas = [];
+            for (let i = 0; i < formulaCount; i++) {
+                formulas.push(new Formula());
+            }
+        }
+
+        // Mouse Interaction
+        let mouse = { x: null, y: null };
+
+        canvas.addEventListener('mousemove', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = event.clientX - rect.left;
+            mouse.y = event.clientY - rect.top;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        function animate() {
+            ctx.fillStyle = 'rgba(2, 6, 23, 0.2)'; // Trail Effect
+            ctx.fillRect(0, 0, width, height);
+
+            formulas.forEach(f => { f.update(); f.draw(); });
+            particles.forEach(p => { p.update(); p.draw(); });
+
+            // Connections
+            for (let i = 0; i < particles.length; i++) {
+                // Particles to Particles
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = '#06b6d4';
+                        ctx.lineWidth = (1 - distance / connectionDistance) * 0.5;
+                        ctx.globalAlpha = 0.3;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                        ctx.globalAlpha = 1.0;
+                    }
+                }
+
+                // Mouse Interaction
+                if (mouse.x != null) {
+                    const dx = particles[i].x - mouse.x;
+                    const dy = particles[i].y - mouse.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 200) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = '#ffaa00';
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(mouse.x, mouse.y);
+                        ctx.lineTo(particles[i].x, particles[i].y);
+                        ctx.stroke();
+
+                        // Pull effect
+                        particles[i].x -= dx * 0.01;
+                        particles[i].y -= dy * 0.01;
+                    }
+                }
+            }
+
+            // Draw Mouse
+            if (mouse.x != null) {
+                ctx.beginPath();
+                ctx.arc(mouse.x, mouse.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffaa00';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#ffaa00';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            const eyeOffIcon = document.getElementById('eyeOffIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.style.display = 'none';
+                eyeOffIcon.style.display = 'block';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.style.display = 'block';
+                eyeOffIcon.style.display = 'none';
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const btn = document.querySelector('.submit-btn');
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const originalText = btn.innerText;
+
+            btn.innerText = 'Verificando...';
+            btn.disabled = true;
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('usuarios')
+                    .select('*')
+                    .eq('usuario', user)
+                    .eq('password', pass)
+                    .single();
+
+                if (error) throw error;
+                if (!data) throw new Error('Usuario no encontrado');
+
+                btn.innerText = '¡Éxito!';
+                btn.style.backgroundColor = '#10b981';
+
+                localStorage.setItem('arlab_user', JSON.stringify(data));
+
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 800);
+
+            } catch (err) {
+                console.error(err);
+                btn.innerText = 'Error';
+                btn.style.backgroundColor = '#ef4444';
+
+                let msg = 'Credenciales incorrectas.';
+                if (err.message && err.message.includes('relation "usuarios" does not exist')) {
+                    msg = 'Tabla usuarios no existe.';
+                } else if (err.code === 'PGRST116') {
+                    msg = 'Usuario o contraseña incorrectos.';
+                }
+                alert(msg);
+
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.disabled = false;
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+
+</html>
