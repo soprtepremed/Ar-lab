@@ -2,9 +2,7 @@
 .navbar {
     width: 100%;
     background: #1e293b;
-    /* --sidebar-bg */
     height: 60px;
-    /* Further reduced height from 70px */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -27,19 +25,16 @@
 
 .navbar-logo {
     height: 40px;
-    /* Reduced from 48px/50px */
     width: auto;
 }
 
 .navbar-nav {
     display: flex;
     gap: 0.25rem;
-    /* Reduced gap */
     height: 100%;
     align-items: center;
     flex: 1;
     justify-content: center;
-    /* Center the nav items */
 }
 
 /* Dropdown Styles */
@@ -51,10 +46,11 @@
 }
 
 .nav-dropdown-toggle {
-    color: rgba(255, 255, 255, 0.8);
+    color: #ffaa00;
+    /* Neon Orange */
+    text-shadow: 0 0 2px rgba(255, 170, 0, 0.3);
     font-weight: 500;
-    font-size: 0.8rem;
-    /* Reduced from 0.9rem */
+    font-size: 0.9rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -86,7 +82,6 @@
 .nav-dropdown-menu {
     position: absolute;
     top: 55px;
-    /* Offset for 60px navbar */
     left: 50%;
     transform: translateX(-50%) translateY(10px);
     background: #1e293b;
@@ -114,11 +109,14 @@
     align-items: center;
     gap: 0.6rem;
     padding: 0.6rem 0.8rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: #ffaa00;
+    /* Neon Orange */
+    text-shadow: 0 0 2px rgba(255, 170, 0, 0.3);
+    /* Subtle neon glow */
+
     text-decoration: none;
     font-weight: 400;
-    font-size: 0.8rem;
-    /* Reduced from 0.9rem */
+    font-size: 0.9rem;
     transition: all 0.2s ease;
     white-space: nowrap;
     border-radius: 6px;
@@ -132,7 +130,6 @@
 .nav-item.active {
     background: rgba(13, 148, 136, 0.3);
     color: #5eead4;
-    /* --primary-light */
     font-weight: 500;
 }
 
@@ -160,7 +157,6 @@
     height: 32px;
     border-radius: 50%;
     background: #0d9488;
-    /* --primary */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -209,25 +205,21 @@
     stroke-width: 2;
 }
 
-/* Global layout adjustment */
 body {
     padding-top: 60px !important;
-    /* Navbar height */
 }
 
 .main-content {
     margin-top: 0 !important;
 }
 
-/* Specific button for "Inicio" to match dropdown look */
 #navInicio {
     padding: 0.4rem 0.6rem;
     border-radius: 6px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 500;
 }
 
-/* Responsive adjustments */
 @media (max-width: 1100px) {
     .navbar-logo text:not(.brand-name) {
         display: none;

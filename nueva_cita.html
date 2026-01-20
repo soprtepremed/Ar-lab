@@ -1721,6 +1721,74 @@
                 proceedSaving();
             }
         }
+
+        /* --- LOGIC TO LOAD PENDING QUOTATION --- */
+        async function checkPendingQuotation() {
+            const dataStr = sessionStorage.getItem('pendingQuotation');
+            if (!dataStr) return;
+
+            console.log("Found pending quotation data...", dataStr);
+
+            try {
+                const data = JSON.parse(dataStr);
+                // Clear it so it doesn't reappear on reload unless desired
+                // sessionStorage.removeItem('pendingQuotation'); 
+
+                // 1. Fill Patient (Basic heuristic)
+                if (data.nombre) {
+                    const parts = data.nombre.trim().split(/\s+/);
+                    if (parts.length > 0) document.getElementById('primerNombre').value = parts[0];
+                    if (parts.length > 1) document.getElementById('primerApellido').value = parts[1];
+                    if (parts.length > 2) document.getElementById('segundoApellido').value = parts.slice(2).join(' '); // A bit rough but works
+
+                    document.getElementById('primerNombre').dispatchEvent(new Event('input'));
+                }
+
+                // 2. Fill Studies
+                let attempts = 0;
+                const maxAttempts = 50; // 10 seconds max
+
+                const waitForEstudios = setInterval(() => {
+                    attempts++;
+                    if (typeof todosEstudios !== 'undefined' && todosEstudios.length > 0) {
+                        clearInterval(waitForEstudios);
+                        processPendingStudies(data.estudios);
+                        sessionStorage.removeItem('pendingQuotation'); // Remove after successful load
+                    } else if (attempts > maxAttempts) {
+                        clearInterval(waitForEstudios);
+                        console.warn("Timeout waiting for studies to load for quotation");
+                    }
+                }, 200);
+
+            } catch (e) {
+                console.error("Error creating appointment from quote", e);
+            }
+        }
+
+        function processPendingStudies(quotedStudies) {
+            if (!quotedStudies || !Array.isArray(quotedStudies)) return;
+
+            // Clear current selection just in case
+            estudiosSeleccionados = [];
+            renderEstudiosSeleccionados();
+
+            quotedStudies.forEach(qs => {
+                const full = todosEstudios.find(e => e.id === qs.id || e.nombre === qs.nombre);
+                if (full) {
+                    toggleEstudio(full.id);
+                }
+            });
+
+            showCustomModal({
+                title: 'Cotización Cargada',
+                message: 'Se han cargado los datos de la cotización seleccionada.',
+                type: 'alert'
+            });
+        }
+
+        // Initialize check
+        document.addEventListener('DOMContentLoaded', checkPendingQuotation);
+
     </script>
 
     <!-- Custom Modal HTML -->

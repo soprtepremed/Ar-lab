@@ -808,9 +808,10 @@ function generateTicket(citaData, folio) {
 
 // UI NAVIGATION HELPERS
 // UI NAVIGATION HELPERS
+// UI NAVIGATION HELPERS
 function switchView(viewName) {
     // Lista explícita de IDs de vistas
-    const allViews = ['viewInicio', 'viewCitas', 'viewPacientes', 'viewResultados', 'viewConfiguracion', 'viewAnalitica', 'viewProcesoAnalitico'];
+    const allViews = ['viewInicio', 'viewCitas', 'viewPacientes', 'viewResultados', 'viewConfiguracion', 'viewAnalitica', 'viewProcesoAnalitico', 'viewCotizaciones', 'viewPosAnalitica'];
 
     // 1. Ocultar todas las vistas primero
     allViews.forEach(id => {
@@ -825,10 +826,11 @@ function switchView(viewName) {
     // Handle special case where 'analitica' refers to pre-analytical waiting room
     let targetId = 'view' + normalized.charAt(0).toUpperCase() + normalized.slice(1);
 
-    // Special handling for underscore names if needed, but since we use 'viewProcesoAnalitico' (camelCase in HTML ID) vs 'proceso_analitico' (snake_case in URL param), 
-    // the automated conversion 'viewProceso_analitico' won't match 'viewProcesoAnalitico'.
+    // Special handling for underscore names if needed
     if (normalized === 'proceso_analitico') {
         targetId = 'viewProcesoAnalitico';
+    } else if (normalized === 'pos_analitica') {
+        targetId = 'viewPosAnalitica';
     }
 
     // 3. Mostrar la vista destino
@@ -844,7 +846,9 @@ function switchView(viewName) {
             'resultados': 'Resultados de Estudios',
             'configuracion': 'Configuración del Sistema',
             'analitica': 'Fase Pre-Analítica - Sala de Espera',
-            'proceso_analitico': 'Fase Analítica - Procesamiento de Muestras'
+            'proceso_analitico': 'Fase Analítica - Procesamiento de Muestras',
+            'cotizaciones': 'Cotizador de Servicios',
+            'pos_analitica': 'Fase Pos-Analítica - Entrega de Resultados'
         };
         const titleEl = document.getElementById('pageTitle');
         if (titleEl) {
@@ -854,7 +858,7 @@ function switchView(viewName) {
         // Controlar visibilidad de botones de acción (Nuevo Paciente, Nueva Cita)
         const topBarActions = document.querySelector('.top-bar-actions');
         if (topBarActions) {
-            if (normalized === 'analitica' || normalized === 'proceso_analitico') {
+            if (normalized === 'analitica' || normalized === 'proceso_analitico' || normalized === 'cotizaciones' || normalized === 'pos_analitica') {
                 topBarActions.style.display = 'none';
             } else {
                 topBarActions.style.display = 'flex';
@@ -866,7 +870,12 @@ function switchView(viewName) {
             loadWorkList();
         } else if (normalized === 'proceso_analitico') {
             loadFaseAnalitica();
+        } else if (normalized === 'cotizaciones') {
+            if (typeof initCotizadorView === 'function') initCotizadorView();
+        } else if (normalized === 'pos_analitica') {
+            if (typeof loadPosAnalitica === 'function') loadPosAnalitica();
         }
+
 
     } else {
         console.warn('View not found:', viewName, targetId);

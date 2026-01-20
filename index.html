@@ -13,7 +13,6 @@
         rel="stylesheet">
     <style>
         :root {
-            /* Palette retained */
             --primary: #0d9488;
             --primary-light: #5eead4;
             --primary-dark: #0f766e;
@@ -42,7 +41,8 @@
         #visual-side {
             flex: 1;
             position: relative;
-            background: radial-gradient(ellipse at center, #0077b6 0%, #023e8a 50%, #03045e 100%);
+            background: radial-gradient(ellipse at center, #1e293b 0%, #020617 80%, #000000 100%);
+            /* Deep Space Black */
             overflow: hidden;
         }
 
@@ -80,7 +80,6 @@
 
         .brand-logo-img {
             height: 60px;
-            /* Adjusted size */
             width: auto;
             display: block;
             margin-bottom: 1rem;
@@ -100,7 +99,7 @@
             margin-bottom: 2rem;
         }
 
-        /* Form Styling - Clean Modulab Style */
+        /* Form Styling */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -110,7 +109,6 @@
             padding: 0.9rem 1rem;
             border: 1px solid var(--border);
             border-radius: 6px;
-            /* Straighter edges like reference */
             font-size: 1rem;
             color: var(--text-title);
             background: #fff;
@@ -164,7 +162,6 @@
             cursor: not-allowed;
         }
 
-        /* Password container for toggle */
         .password-container {
             position: relative;
         }
@@ -185,7 +182,6 @@
             color: var(--primary);
         }
 
-        /* Footer */
         .login-footer {
             margin-top: auto;
             text-align: center;
@@ -196,7 +192,6 @@
 
         .brand-text {
             color: #023e8a;
-            /* Dark blue akin to 'werfen' in reference */
             font-weight: 700;
             font-size: 1.2rem;
             font-family: 'Outfit', sans-serif;
@@ -247,8 +242,6 @@
     <div id="login-side">
         <div class="login-content">
             <div class="brand-header">
-                <!-- Using the SVG logic for logo if image fails, or keep the image -->
-                <!-- Since previous code used arlab_logo.png, we keep it but also fallback or style it -->
                 <svg viewBox="0 0 180 60" style="height: 60px; width: auto; display: block; margin-bottom: 1rem;">
                     <defs>
                         <linearGradient id="flaskGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -352,16 +345,17 @@
             'pH', 'ATP', 'DNA', 'RNA', 'O₂', 'N₂', 'Cl₂', 'H₂'
         ];
 
-        // Config
-        const particleCount = 60;
-        const formulaCount = 20;
-        const connectionDistance = 150;
-        const moveSpeed = 0.5;
-        const particleColor = 'rgba(144, 224, 239, 0.5)';
-        const lineColor = 'rgba(72, 202, 228, 0.25)';
+        // Config Tron Space
+        const particleCount = 100;
+        const formulaCount = 60;
+        const connectionDistance = 140;
+        const moveSpeed = 0.4;
+
+        // Neon Palette
+        const colors = ['#ffaa00', '#06b6d4', '#22d3ee', '#fbad18'];
 
         function resize() {
-            // Resize canvas to match the visual-side div, not window
+            // Resize canvas to match the visual-side div
             width = canvas.width = visualSide.clientWidth;
             height = canvas.height = visualSide.clientHeight;
             initParticles();
@@ -374,13 +368,13 @@
                 this.y = Math.random() * height;
                 this.vx = (Math.random() - 0.5) * moveSpeed;
                 this.vy = (Math.random() - 0.5) * moveSpeed;
-                this.size = Math.random() * 2.5 + 1;
+                this.size = Math.random() * 2 + 1;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
             }
 
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
             }
@@ -388,8 +382,11 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = particleColor;
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 4;
+                ctx.shadowColor = this.color;
                 ctx.fill();
+                ctx.shadowBlur = 0;
             }
         }
 
@@ -397,20 +394,20 @@
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
                 this.text = chemistryFormulas[Math.floor(Math.random() * chemistryFormulas.length)];
-                this.fontSize = Math.random() * 14 + 12;
-                this.opacity = Math.random() * 0.3 + 0.1;
-                this.rotation = (Math.random() - 0.5) * 0.3;
-                this.rotationSpeed = (Math.random() - 0.5) * 0.002;
+                this.fontSize = Math.random() * 16 + 10;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.rotation = (Math.random() - 0.5) * 0.5;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.003;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
             }
 
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
                 this.rotation += this.rotationSpeed;
-
                 if (this.x < -50) this.x = width + 50;
                 if (this.x > width + 50) this.x = -50;
                 if (this.y < -50) this.y = height + 50;
@@ -421,10 +418,13 @@
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.rotation);
-                ctx.font = `${this.fontSize}px 'Roboto', monospace`;
-                ctx.fillStyle = `rgba(202, 240, 248, ${this.opacity})`;
+                ctx.font = `bold ${this.fontSize}px 'Outfit', monospace`;
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = this.color;
                 ctx.fillText(this.text, 0, 0);
                 ctx.restore();
             }
@@ -444,20 +444,30 @@
             }
         }
 
+        // Mouse Interaction
+        let mouse = { x: null, y: null };
+
+        canvas.addEventListener('mousemove', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = event.clientX - rect.left;
+            mouse.y = event.clientY - rect.top;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
         function animate() {
-            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(2, 6, 23, 0.2)'; // Trail Effect
+            ctx.fillRect(0, 0, width, height);
 
-            formulas.forEach(f => {
-                f.update();
-                f.draw();
-            });
+            formulas.forEach(f => { f.update(); f.draw(); });
+            particles.forEach(p => { p.update(); p.draw(); });
 
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
+            // Connections
             for (let i = 0; i < particles.length; i++) {
+                // Particles to Particles
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
@@ -465,19 +475,52 @@
 
                     if (distance < connectionDistance) {
                         ctx.beginPath();
-                        ctx.strokeStyle = lineColor;
-                        ctx.lineWidth = 1 - distance / connectionDistance;
+                        ctx.strokeStyle = '#06b6d4';
+                        ctx.lineWidth = (1 - distance / connectionDistance) * 0.5;
+                        ctx.globalAlpha = 0.3;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
+                        ctx.globalAlpha = 1.0;
+                    }
+                }
+
+                // Mouse Interaction
+                if (mouse.x != null) {
+                    const dx = particles[i].x - mouse.x;
+                    const dy = particles[i].y - mouse.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 200) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = '#ffaa00';
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(mouse.x, mouse.y);
+                        ctx.lineTo(particles[i].x, particles[i].y);
+                        ctx.stroke();
+
+                        // Pull effect
+                        particles[i].x -= dx * 0.01;
+                        particles[i].y -= dy * 0.01;
                     }
                 }
             }
+
+            // Draw Mouse
+            if (mouse.x != null) {
+                ctx.beginPath();
+                ctx.arc(mouse.x, mouse.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffaa00';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#ffaa00';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
             requestAnimationFrame(animate);
         }
 
         window.addEventListener('resize', resize);
-        // Initial resize
         resize();
         animate();
 
