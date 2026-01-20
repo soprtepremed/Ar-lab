@@ -9,6 +9,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="navbar.css">
+    <script src="navbar.js" defer></script>
     <style>
         :root {
             --primary: #0d9488;
@@ -39,185 +41,6 @@
             color: var(--text-dark);
         }
 
-        /* ==================== NAVBAR ==================== */
-        .navbar {
-            background: var(--sidebar-bg);
-            padding: 0 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 70px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .navbar-logo {
-            height: 50px;
-            width: auto;
-        }
-
-        .navbar-nav {
-            display: flex;
-            gap: 0.5rem;
-            height: 100%;
-            align-items: center;
-        }
-
-        .nav-dropdown {
-            position: relative;
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-dropdown-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1rem;
-            color: #cbd5e1;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .nav-dropdown-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .nav-dropdown-toggle svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.2s;
-        }
-
-        .nav-dropdown.active .nav-dropdown-toggle svg {
-            transform: rotate(180deg);
-        }
-
-        .nav-dropdown-menu {
-            position: absolute;
-            top: 60px;
-            left: 0;
-            transform: translateY(10px);
-            background: var(--sidebar-bg);
-            min-width: 220px;
-            border-radius: 8px;
-            padding: 0.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
-        }
-
-        .nav-dropdown.active .nav-dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-weight: 400;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            border-radius: 6px;
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .nav-item.active {
-            background: rgba(13, 148, 136, 0.3);
-            color: var(--primary-light);
-            font-weight: 500;
-        }
-
-        .nav-item svg {
-            width: 18px;
-            height: 18px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-        }
-
-        .navbar-user {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-left: 1.5rem;
-            padding-left: 1.5rem;
-            border-left: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .user-info-text {
-            color: white;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .user-role-text {
-            color: #99f6e4;
-            font-size: 0.75rem;
-        }
-
-        .logout-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .logout-btn svg {
-            width: 20px;
-            height: 20px;
-            stroke: #fecaca;
-            fill: none;
-            stroke-width: 2;
-        }
 
         /* ==================== MAIN CONTENT ==================== */
         .main-content {
@@ -296,33 +119,33 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
+            gap: 1.25rem;
             margin-bottom: 2rem;
         }
 
         .stat-card {
             background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 1.25rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border: 1px solid var(--border);
         }
 
         .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .stat-icon svg {
-            width: 24px;
-            height: 24px;
+            width: 18px;
+            height: 18px;
             stroke: currentColor;
             fill: none;
             stroke-width: 2;
@@ -344,79 +167,118 @@
         }
 
         .stat-info h3 {
-            font-size: 1.75rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--text-dark);
+            line-height: 1.2;
         }
 
         .stat-info p {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-light);
         }
 
-        /* Patients Table */
+        /* Table Layout & Spacing */
         .table-container {
             background: white;
             border-radius: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border: 1px solid var(--border);
             overflow: hidden;
+            margin-top: 1.5rem;
         }
 
         .table-header {
             padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .table-header h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-dark);
+            border-bottom: 2px solid #f1f5f9;
+            background: #ffffff;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-        }
-
-        thead {
-            background: #f8fafc;
+            table-layout: fixed;
         }
 
         th {
             text-align: left;
-            padding: 1rem 1.5rem;
+            padding: 1rem 1.25rem;
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-light);
-            font-weight: 600;
+            font-weight: 700;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
         }
 
         td {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid var(--border);
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid #f1f5f9;
             font-size: 0.9rem;
+            vertical-align: middle;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
         }
 
         tr:hover {
-            background: #f8fafc;
+            background: #fdfdfd;
         }
 
+        /* Column Widths */
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 30%;
+        }
+
+        /* Paciente */
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 22%;
+        }
+
+        /* Contacto */
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 18%;
+        }
+
+        /* Última Visita */
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 18%;
+        }
+
+        /* Expediente */
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 12%;
+            text-align: center;
+        }
+
+        /* Acciones */
+
+        /* Patient Table UI Components */
         .patient-name {
             font-weight: 600;
             color: var(--text-dark);
+            font-size: 0.95rem;
         }
 
         .patient-phone {
             color: var(--text-light);
+            font-size: 0.85rem;
+            font-family: monospace;
         }
 
         .badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             padding: 0.25rem 0.75rem;
             border-radius: 50px;
             font-size: 0.75rem;
@@ -424,338 +286,201 @@
         }
 
         .badge.success {
-            background: #dcfce7;
+            background: #f0fdf4;
             color: #166534;
+            border: 1px solid #bbf7d0;
         }
 
         .action-btn {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 8px;
-            border: none;
-            background: #f1f5f9;
+            border: 1px solid var(--border);
+            background: white;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
+            color: var(--text-light);
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-1px);
         }
 
         .action-btn svg {
             width: 16px;
             height: 16px;
-            stroke: var(--text-light);
+            stroke: currentColor;
             fill: none;
             stroke-width: 2;
         }
 
-        .action-btn:hover {
-            background: var(--primary);
+        .patient-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .action-btn:hover svg {
-            stroke: white;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-light);
-        }
-
-        .empty-state svg {
-            width: 64px;
-            height: 64px;
-            stroke: #cbd5e1;
-            fill: none;
-            stroke-width: 1.5;
-            margin-bottom: 1rem;
-        }
-
-        .empty-state h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
+        .patient-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: #f0fdfa;
+            color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
+            font-weight: 700;
+            font-size: 0.75rem;
+            border: 1px solid #ccfbf1;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            padding: 0.3rem 0.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s;
         }
 
-        .modal {
+        .whatsapp-btn:hover {
+            background: #128c7e;
+            transform: translateY(-1px);
+        }
+
+        .whatsapp-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* Folder UI */
+        .folder-header {
+            background: #f8fafc;
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .folder-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .visit-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .visit-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .visit-card {
             background: white;
-            border-radius: 20px;
-            max-width: 700px;
-            width: 95%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: transform 0.2s;
         }
 
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
+        .visit-card::before {
+            content: '';
+            position: absolute;
+            left: -1.75rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #f0fdfa;
+        }
+
+        .visit-card:hover {
+            transform: translateX(5px);
+            border-color: var(--primary-light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .visit-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            margin-bottom: 0.75rem;
         }
 
-        .modal-title {
-            font-size: 1.25rem;
+        .visit-date {
             font-weight: 700;
             color: var(--text-dark);
         }
 
-        .modal-close {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: none;
-            background: #f1f5f9;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-close svg {
-            width: 18px;
-            height: 18px;
-            stroke: var(--text-light);
-            fill: none;
-            stroke-width: 2;
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .historial-item {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 1rem 1.25rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary);
-        }
-
-        .historial-date {
-            font-size: 0.8rem;
+        .visit-id {
+            font-size: 0.75rem;
             color: var(--text-light);
-            margin-bottom: 0.5rem;
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
         }
 
-        .historial-total {
-            font-weight: 700;
-            color: var(--primary-dark);
+        .visit-details {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
         }
 
-        @media (max-width: 1024px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .detail-item {
+            display: flex;
+            flex-direction: column;
         }
 
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+        .detail-label {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-            .search-bar {
-                flex-direction: column;
-            }
-
-            .navbar-nav {
-                display: none;
-            }
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-dark);
         }
     </style>
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="dashboard.html" class="navbar-brand">
-            <svg viewBox="0 0 180 60" class="navbar-logo">
-                <defs>
-                    <linearGradient id="flaskGradNavBar" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#2dd4bf" />
-                        <stop offset="100%" style="stop-color:#0d9488" />
-                    </linearGradient>
-                </defs>
-                <g transform="translate(10,5)">
-                    <path d="M15 8 L15 22 L5 42 Q3 46 6 48 L34 48 Q37 46 35 42 L25 22 L25 8 Z"
-                        fill="url(#flaskGradNavBar)" stroke="#14b8a6" stroke-width="1.5" />
-                    <rect x="13" y="2" width="14" height="8" rx="2" fill="url(#flaskGradNavBar)" stroke="#14b8a6"
-                        stroke-width="1.5" />
-                    <path d="M8 38 Q10 35 15 36 Q20 38 25 35 Q30 33 32 38 L30 45 Q28 47 20 47 Q12 47 10 45 Z"
-                        fill="#5eead4" opacity="0.6" />
-                    <circle cx="15" cy="40" r="2" fill="white" opacity="0.7" />
-                    <circle cx="22" cy="38" r="1.5" fill="white" opacity="0.5" />
-                    <text x="20" y="32" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="white"
-                        text-anchor="middle">Ar</text>
-                </g>
-                <text x="60" y="28" font-family="Outfit, sans-serif" font-size="22" font-weight="700"
-                    fill="white">Ar</text>
-                <text x="85" y="28" font-family="Outfit, sans-serif" font-size="22" font-weight="400"
-                    fill="#2dd4bf">lab</text>
-                <text x="60" y="45" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Gestión
-                    de Laboratorio</text>
-            </svg>
-        </a>
-
-        <div class="navbar-nav">
-            <a href="dashboard.html" class="nav-item" style="margin-right: 1rem;">
-                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                Inicio
-            </a>
-
-            <!-- Fase Pre-Analítica -->
-            <div class="nav-dropdown" onclick="toggleDropdown(this)">
-                <div class="nav-dropdown-toggle">
-                    <span>Fase Pre-Analítica</span>
-                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="nav-dropdown-menu">
-                    <a href="dashboard.html" class="nav-item">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                        Gestión de Citas
-                    </a>
-                    <a href="pacientes.html" class="nav-item active">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                        </svg>
-                        Pacientes
-                    </a>
-                </div>
-            </div>
-
-            <!-- Fase Analítica -->
-            <div class="nav-dropdown" onclick="toggleDropdown(this)">
-                <div class="nav-dropdown-toggle">
-                    <span>Fase Analítica</span>
-                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="nav-dropdown-menu">
-                    <a href="#" class="nav-item">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                        </svg>
-                        Resultados
-                    </a>
-                </div>
-            </div>
-
-            <!-- Fase Pos-Analítica -->
-            <div class="nav-dropdown" onclick="toggleDropdown(this)">
-                <div class="nav-dropdown-toggle">
-                    <span>Fase Pos-Analítica</span>
-                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="nav-dropdown-menu">
-                    <a href="#" class="nav-item">
-                        <svg viewBox="0 0 24 24">
-                            <line x1="18" y1="20" x2="18" y2="10"></line>
-                            <line x1="12" y1="20" x2="12" y2="4"></line>
-                            <line x1="6" y1="20" x2="6" y2="14"></line>
-                        </svg>
-                        Reportes
-                    </a>
-                </div>
-            </div>
-
-            <!-- Sección -->
-            <div class="nav-dropdown" onclick="toggleDropdown(this)">
-                <div class="nav-dropdown-toggle">
-                    <span>Sección</span>
-                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="nav-dropdown-menu">
-                    <a href="comprobantes.html" class="nav-item">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="2" y1="10" x2="22" y2="10"></line>
-                        </svg>
-                        Comprobantes
-                    </a>
-                </div>
-            </div>
-
-            <!-- Sistema -->
-            <div class="nav-dropdown" onclick="toggleDropdown(this)">
-                <div class="nav-dropdown-toggle">
-                    <span>Sistema</span>
-                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="nav-dropdown-menu">
-                    <a href="configuracion.html" class="nav-item">
-                        <svg viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="3"></circle>
-                            <path
-                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                            </path>
-                        </svg>
-                        Configuración
-                    </a>
-                </div>
-            </div>
-
-            <div class="navbar-user">
-                <div class="user-avatar" id="userAvatar">U</div>
-                <div class="user-details">
-                    <div class="user-info-text"><span id="userName">Usuario</span></div>
-                    <div class="user-role-text" id="userRole">Operador</div>
-                </div>
-                <button class="logout-btn" onclick="logout()" title="Cerrar sesión">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <polyline points="16 17 21 12 16 7"></polyline>
-                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
+    <!-- Navbar Container -->
+    <div id="navbar-container"></div>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -850,9 +575,9 @@
                 <thead>
                     <tr>
                         <th>Paciente</th>
-                        <th>Teléfono</th>
+                        <th>Contacto</th>
                         <th>Última Visita</th>
-                        <th>Total Visitas</th>
+                        <th>Expediente</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -871,9 +596,9 @@
 
     <!-- Modal Historial -->
     <div id="modalHistorial" class="modal-overlay">
-        <div class="modal">
+        <div class="modal" style="max-width: 800px;">
             <div class="modal-header">
-                <h3 class="modal-title" id="modalPacienteNombre">Historial del Paciente</h3>
+                <h3 class="modal-title">Expediente Clínico</h3>
                 <button class="modal-close" onclick="cerrarModal()">
                     <svg viewBox="0 0 24 24">
                         <line x1="18" y1="6" x2="6" y2="18" />
@@ -881,7 +606,9 @@
                     </svg>
                 </button>
             </div>
-            <div class="modal-body" id="modalHistorialBody"></div>
+            <div class="modal-body" id="modalHistorialBody">
+                <!-- Data injected here -->
+            </div>
         </div>
     </div>
 
@@ -896,40 +623,14 @@
         let currentUser = null;
 
         document.addEventListener('DOMContentLoaded', () => {
-            checkAuth();
-            loadPacientes();
-            loadStats();
-        });
-
-        function checkAuth() {
             const userData = localStorage.getItem('arlab_user');
             if (!userData) {
                 window.location.href = 'index.html';
                 return;
             }
             currentUser = JSON.parse(userData);
-            document.getElementById('userName').textContent = currentUser.usuario;
-            document.getElementById('userRole').textContent = currentUser.rol === 'admin' ? 'Administrador' : 'Operador';
-            document.getElementById('userAvatar').textContent = currentUser.usuario.charAt(0).toUpperCase();
-        }
-
-        function logout() {
-            localStorage.removeItem('arlab_user');
-            window.location.href = 'index.html';
-        }
-
-        function toggleDropdown(element) {
-            const allDropdowns = document.querySelectorAll('.nav-dropdown');
-            allDropdowns.forEach(dropdown => {
-                if (dropdown !== element) dropdown.classList.remove('active');
-            });
-            element.classList.toggle('active');
-        }
-
-        document.addEventListener('click', function (event) {
-            if (!event.target.closest('.nav-dropdown')) {
-                document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('active'));
-            }
+            loadPacientes();
+            loadStats();
         });
 
         async function loadPacientes() {
@@ -944,18 +645,25 @@
 
                 const pacientesMap = {};
                 data.forEach(cita => {
-                    const nombre = cita.paciente_nombre;
-                    if (!pacientesMap[nombre]) {
-                        pacientesMap[nombre] = {
-                            nombre: nombre,
+                    // Normalizamos el nombre para agrupar (sin importar mayúsculas/minúsculas)
+                    const nombreNormal = (cita.paciente_nombre || 'Sin Nombre').trim().toLowerCase();
+
+                    if (!pacientesMap[nombreNormal]) {
+                        pacientesMap[nombreNormal] = {
+                            nombre: cita.paciente_nombre.trim(), // Guardamos el nombre "bonito"
                             telefono: cita.paciente_telefono,
                             ultimaVisita: cita.fecha_hora,
                             visitas: 0,
                             citas: []
                         };
                     }
-                    pacientesMap[nombre].visitas++;
-                    pacientesMap[nombre].citas.push(cita);
+                    pacientesMap[nombreNormal].visitas++;
+                    pacientesMap[nombreNormal].citas.push(cita);
+
+                    // Asegurar que guardamos la visita más reciente como referencia de fecha
+                    if (new Date(cita.fecha_hora) > new Date(pacientesMap[nombreNormal].ultimaVisita)) {
+                        pacientesMap[nombreNormal].ultimaVisita = cita.fecha_hora;
+                    }
                 });
 
                 allPacientes = Object.values(pacientesMap);
@@ -985,15 +693,36 @@
             emptyState.style.display = 'none';
             tbody.innerHTML = pacientes.map(p => {
                 const fechaUltima = new Date(p.ultimaVisita).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+                const initials = p.nombre.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+                // Limpiar teléfono para WhatsApp
+                const cleanPhone = p.telefono ? p.telefono.replace(/\D/g, '') : '';
+                const waLink = cleanPhone ? `https://wa.me/52${cleanPhone}` : '#';
+
                 return `
                     <tr>
-                        <td><div class="patient-name">${p.nombre}</div></td>
-                        <td class="patient-phone">${p.telefono || 'Sin teléfono'}</td>
+                        <td>
+                            <div class="patient-cell">
+                                <div class="patient-avatar">${initials}</div>
+                                <div class="patient-name">${p.nombre}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                <span class="patient-phone">${p.telefono || 'Sin teléfono'}</span>
+                                ${p.telefono ? `
+                                    <a href="${waLink}" target="_blank" class="whatsapp-btn">
+                                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                        WhatsApp
+                                    </a>
+                                ` : ''}
+                            </div>
+                        </td>
                         <td>${fechaUltima}</td>
                         <td><span class="badge success">${p.visitas} visita(s)</span></td>
                         <td>
-                            <button class="action-btn" onclick="verHistorial('${p.nombre.replace(/'/g, "\\'")}')" title="Ver Historial">
-                                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <button class="action-btn" onclick="verHistorial('${p.nombre.replace(/'/g, "\\'")}')" title="Ver Expediente">
+                                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                             </button>
                         </td>
                     </tr>
@@ -1021,18 +750,50 @@
         function verHistorial(nombrePaciente) {
             const paciente = allPacientes.find(p => p.nombre === nombrePaciente);
             if (!paciente) return;
-            document.getElementById('modalPacienteNombre').textContent = `Historial: ${nombrePaciente}`;
-            const historialHtml = paciente.citas.map(cita => {
+
+            const initials = paciente.nombre.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+            let modalContent = `
+                <div class="folder-header">
+                    <div class="folder-avatar">${initials}</div>
+                    <div>
+                        <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">${paciente.nombre}</h2>
+                        <p style="color: var(--text-light);">${paciente.telefono || 'Sin teléfono'} • ${paciente.visitas} visitas totales</p>
+                    </div>
+                </div>
+                <div class="visit-timeline">
+            `;
+
+            modalContent += paciente.citas.map(cita => {
                 const fecha = new Date(cita.fecha_hora).toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
                 const hora = new Date(cita.fecha_hora).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
                 return `
-                    <div class="historial-item">
-                        <div class="historial-date">${fecha} - ${hora}</div>
-                        <div class="historial-total">Total: $${(cita.total || 0).toFixed(2)}</div>
+                    <div class="visit-card">
+                        <div class="visit-header">
+                            <div class="visit-date">${fecha}</div>
+                            <div class="visit-id">Folio: #${cita.id.toString().padStart(5, '0')}</div>
+                        </div>
+                        <div class="visit-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Hora</span>
+                                <span class="detail-value">${hora}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Importe</span>
+                                <span class="detail-value">$${(cita.total || 0).toFixed(2)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Capturado por</span>
+                                <span class="detail-value">Sistema Arlab</span>
+                            </div>
+                        </div>
                     </div>
                 `;
             }).join('');
-            document.getElementById('modalHistorialBody').innerHTML = historialHtml || '<p>Sin historial disponible.</p>';
+
+            modalContent += '</div>';
+
+            document.getElementById('modalHistorialBody').innerHTML = modalContent;
             document.getElementById('modalHistorial').classList.add('active');
         }
 
@@ -1040,6 +801,9 @@
 
         document.getElementById('searchInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') loadPacientes(); });
     </script>
+</body>
+
+</html>
 </body>
 
 </html>
