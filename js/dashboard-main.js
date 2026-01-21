@@ -940,3 +940,57 @@ if ('speechSynthesis' in window) {
         window.speechSynthesis.getVoices();
     };
 }
+
+// ==========================================
+// FILTRO SALA DE ESPERA (búsqueda sin tildes)
+// ==========================================
+
+// Función para normalizar texto (quitar tildes y convertir a minúsculas)
+function normalizarTexto(texto) {
+    if (!texto) return '';
+    return texto
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, ''); // Elimina diacríticos (tildes, acentos)
+}
+
+// Variable para almacenar los datos originales de la worklist
+let workListDataOriginal = [];
+
+// Función de filtrado para Sala de Espera
+function filterSalaEspera(searchTerm) {
+    const tbody = document.getElementById('workListTableBody');
+    if (!tbody) return;
+
+    const rows = tbody.querySelectorAll('tr');
+    const searchNormalized = normalizarTexto(searchTerm);
+
+    if (!searchTerm || searchTerm.trim() === '') {
+        // Mostrar todas las filas
+        rows.forEach(row => {
+            row.style.display = '';
+        });
+        return;
+    }
+
+    rows.forEach(row => {
+        // Buscar en todas las celdas de la fila
+        const textoFila = normalizarTexto(row.textContent);
+
+        if (textoFila.includes(searchNormalized)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    // Actualizar contador visible
+    const visibleRows = tbody.querySelectorAll('tr:not([style*="display: none"])');
+    const countEl = document.getElementById('workListCount');
+    if (countEl) {
+        const totalRows = tbody.querySelectorAll('tr').length;
+        if (searchTerm.trim() !== '') {
+            countEl.textContent = `${visibleRows.length}/${totalRows}`;
+        }
+    }
+}
