@@ -1149,7 +1149,84 @@
                 todosEstudios = data || [];
                 renderEstudiosList();
                 loadCategorias();
+
+                // Verificar si viene de una cotización pendiente
+                checkPendingQuotation();
             } catch (err) { console.error(err); }
+        }
+
+        // Función para precargar datos de cotización
+        function checkPendingQuotation() {
+            try {
+                const pendingQuotationStr = sessionStorage.getItem('pendingQuotation');
+                if (!pendingQuotationStr) return;
+
+                const quotation = JSON.parse(pendingQuotationStr);
+                console.log('Cargando cotización pendiente:', quotation);
+
+                // Precargar nombre del paciente
+                if (quotation.nombre) {
+                    const nombreParts = quotation.nombre.trim().split(' ');
+                    if (nombreParts.length >= 1) {
+                        document.getElementById('primerNombre').value = nombreParts[0] || '';
+                    }
+                    if (nombreParts.length >= 2) {
+                        document.getElementById('segundoNombre').value = nombreParts[1] || '';
+                    }
+                    if (nombreParts.length >= 3) {
+                        document.getElementById('primerApellido').value = nombreParts[2] || '';
+                    }
+                    if (nombreParts.length >= 4) {
+                        document.getElementById('segundoApellido').value = nombreParts.slice(3).join(' ') || '';
+                    }
+                    // Si solo hay 2 partes, probablemente es nombre + apellido
+                    if (nombreParts.length === 2) {
+                        document.getElementById('primerApellido').value = nombreParts[1];
+                        document.getElementById('segundoNombre').value = '';
+                    }
+                }
+
+                // Precargar estudios
+                if (Array.isArray(quotation.estudios) && quotation.estudios.length > 0) {
+                    quotation.estudios.forEach(estCot => {
+                        // Buscar el estudio en el catálogo por ID o por nombre
+                        let estudio = todosEstudios.find(e => e.id === estCot.id);
+                        if (!estudio) {
+                            estudio = todosEstudios.find(e => e.nombre === estCot.nombre);
+                        }
+                        if (estudio && !estudiosSeleccionados.some(s => s.id === estudio.id)) {
+                            estudiosSeleccionados.push(estudio);
+                        }
+                    });
+
+                    // Actualizar vistas
+                    renderEstudiosList();
+                    renderEstudiosSeleccionados();
+                    calcularTotal();
+                }
+
+                // Cambiar título si viene de cotización
+                if (quotation.fromCotizacion) {
+                    const pageTitle = document.getElementById('pageTitle');
+                    if (pageTitle) {
+                        const svg = pageTitle.querySelector('svg').outerHTML;
+                        pageTitle.innerHTML = `${svg} Registro desde Cotización`;
+                    }
+
+                    // Mostrar notificación
+                    showCustomModal({
+                        title: 'Datos Precargados',
+                        message: `Se han cargado los datos de la cotización de "${quotation.nombre}" con ${quotation.estudios?.length || 0} estudio(s). Complete los datos faltantes y confirme el registro.`,
+                        type: 'alert'
+                    });
+                }
+
+                // Limpiar sessionStorage para evitar recargar en futuras visitas
+                sessionStorage.removeItem('pendingQuotation');
+
+            } catch (err) {
+                console.error('Error cargando cotización pendiente:', err);
+            }
         }
 
         async function loadMedicos() {

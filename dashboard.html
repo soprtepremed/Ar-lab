@@ -425,7 +425,116 @@
                     </div>
                 </div>
 
+
             </div>
+
+            <!-- ========== VISTA COTIZACIONES ========== -->
+            <div id="viewCotizaciones" style="display:none;">
+                <!-- Tabs -->
+                <div style="display: flex; gap: 0; margin-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0;">
+                    <button id="tabCotNuevo" onclick="switchCotizacionTab('nuevo')" class="active"
+                        style="padding: 1rem 2rem; border: none; background: transparent; font-weight: 600; font-size: 0.95rem; cursor: pointer; border-bottom: 3px solid #0f766e; color: #0f766e; margin-bottom: -2px;">
+                        Nueva Cotización
+                    </button>
+                    <button id="tabCotHistorial" onclick="switchCotizacionTab('historial')"
+                        style="padding: 1rem 2rem; border: none; background: transparent; font-weight: 600; font-size: 0.95rem; cursor: pointer; color: #64748b; border-bottom: 3px solid transparent; margin-bottom: -2px;">
+                        Historial
+                    </button>
+                </div>
+
+                <!-- Tab: Nueva Cotización -->
+                <div id="cotizadorNuevo" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <!-- Panel Izquierdo -->
+                    <div class="card" style="padding: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: #0f766e; margin-bottom: 1.5rem;">Datos del Cliente</h3>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label class="form-label">Nombre del Cliente</label>
+                            <input type="text" id="cotPaciente" class="form-input" placeholder="Ej: María García López">
+                        </div>
+                        <h3 style="font-size: 1.1rem; color: #0f766e; margin-bottom: 1rem;">Buscar Estudios</h3>
+                        <div style="position: relative;">
+                            <input type="text" id="cotBuscarEstudio" class="form-input"
+                                placeholder="Escriba para buscar...">
+                            <div id="cotResultadosBusqueda"
+                                style="position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #e2e8f0; border-radius: 10px; max-height: 300px; overflow-y: auto; z-index: 100; display: none; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Panel Derecho -->
+                    <div class="card" style="padding: 1.5rem; display: flex; flex-direction: column;">
+                        <h3 style="font-size: 1.1rem; color: #0f766e; margin-bottom: 1rem;">Estudios a Cotizar <span
+                                id="cotTotalCount"
+                                style="background: #0d9488; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.8rem;">0</span>
+                        </h3>
+                        <div
+                            style="flex: 1; overflow-y: auto; max-height: 300px; border: 1px solid #e2e8f0; border-radius: 10px;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f8fafc;">
+                                        <th style="padding: 12px; text-align: left;">Código</th>
+                                        <th style="padding: 12px;">Estudio</th>
+                                        <th style="padding: 12px; text-align: right;">Precio</th>
+                                        <th style="padding: 12px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cotTableBody">
+                                    <tr>
+                                        <td colspan="4" style="text-align:center; padding: 2rem; color: #94a3b8;">
+                                            Agregue estudios</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div
+                            style="margin-top: 1.5rem; background: linear-gradient(135deg, #0d9488, #0f766e); padding: 1.25rem; border-radius: 12px; color: white; text-align: center;">
+                            <div style="font-size: 0.85rem; opacity: 0.9;">TOTAL COTIZADO</div>
+                            <div style="font-size: 2.5rem; font-weight: 700;">$<span id="cotTotalAmount">0.00</span>
+                            </div>
+                            <div style="font-size: 0.75rem; opacity: 0.8;">Válido por 15 días</div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                            <button onclick="limpiarCotizador()" class="btn btn-secondary"
+                                style="flex: 1; justify-content: center;">Limpiar</button>
+                            <button onclick="generarCotizacion()" class="btn btn-primary"
+                                style="flex: 2; justify-content: center; background: #0d9488;">Generar
+                                Cotización</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Historial -->
+                <div id="cotizadorHistorial" style="display: none;">
+                    <div class="card" style="padding: 1.5rem;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.1rem; color: #0f172a; margin: 0;">Cotizaciones Generadas</h3>
+                            <input type="text" id="searchCotHistorial" class="form-input" placeholder="Buscar..."
+                                oninput="filterCotizacionesHistory()" style="width: 300px;">
+                        </div>
+                        <div style="overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 10px;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f8fafc;">
+                                        <th style="padding: 12px;">Fecha</th>
+                                        <th style="padding: 12px;">Cliente</th>
+                                        <th style="padding: 12px;">Estudios</th>
+                                        <th style="padding: 12px;">Total</th>
+                                        <th style="padding: 12px;">Estado</th>
+                                        <th style="padding: 12px;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cotHistorialTableBody">
+                                    <tr>
+                                        <td colspan="6" style="text-align:center; padding: 2rem; color: #94a3b8;">
+                                            Cargando...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- New Appointment Modal -->
@@ -1103,6 +1212,7 @@
         <script src="js/dashboard-caja.js"></script>
         <script src="js/dashboard-worklist-v2.js"></script>
         <script src="js/dashboard-analitica.js"></script>
+        <script src="js/dashboard-cotizaciones.js"></script>
         <script src="js/dashboard-main.js"></script>
 </body>
 
