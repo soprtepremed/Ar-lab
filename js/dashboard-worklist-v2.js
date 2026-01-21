@@ -113,8 +113,9 @@ async function loadWorkList() {
 
                 // Calcular Edad
                 let edadStr = 'N/A';
-                if (apt.paciente_fecha_nacimiento) {
-                    const birthDate = new Date(apt.paciente_fecha_nacimiento);
+                const fechaNacRaw = apt.fecha_nacimiento || apt.paciente_fecha_nacimiento;
+                if (fechaNacRaw) {
+                    const birthDate = new Date(fechaNacRaw);
                     const ageDifMs = Date.now() - birthDate.getTime();
                     const ageDate = new Date(ageDifMs);
                     const age = Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -166,13 +167,29 @@ async function loadWorkList() {
                         </div>
                     </td>
                     <td>
-                        <div style="font-weight: 600; color: #0f172a; font-size: 0.85rem; line-height: 1.2;">${apt.paciente_nombre}</div>
-                        <div style="font-size: 0.7rem; color: #64748b; margin-top: 2px; display: flex; align-items: center; gap: 10px;">
-                            <span style="display: inline-flex; align-items: center; gap: 3px;">
+                        <div style="font-weight: 600; color: #0f172a; font-size: 0.85rem; line-height: 1.2; display: flex; align-items: center; flex-wrap: wrap;">
+                            ${apt.paciente_nombre}
+                            ${(() => {
+                        if (!apt.paciente_sexo) return '';
+                        const s = apt.paciente_sexo.toLowerCase();
+                        if (s === 'masculino' || s === 'm') return `<span style="font-size: 0.7rem; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 6px; margin-left: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 2px;">♂ MASC</span>`;
+                        if (s === 'femenino' || s === 'f') return `<span style="font-size: 0.7rem; background: #fce7f3; color: #db2777; padding: 2px 6px; border-radius: 6px; margin-left: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 2px;">♀ FEM</span>`;
+                        return `<span style="font-size: 0.7rem; background: #f1f5f9; color: #64748b; padding: 2px 6px; border-radius: 6px; margin-left: 8px; font-weight: 600;">${apt.paciente_sexo}</span>`;
+                    })()}
+                        </div>
+                        <div style="font-size: 0.7rem; color: #64748b; margin-top: 4px; display: flex; align-items: center; gap: 10px;">
+                            <span style="display: inline-flex; align-items: center; gap: 3px;" title="Fecha de Nacimiento">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                ${apt.paciente_fecha_nacimiento || 'N/A'}
+                                ${(() => {
+                        const rawDate = apt.fecha_nacimiento || apt.paciente_fecha_nacimiento;
+                        if (!rawDate) return 'N/A';
+                        const parts = rawDate.split('T')[0].split('-');
+                        if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                        return rawDate;
+                    })()} 
+                                <span style="color: var(--primary); font-weight: 600;">(${edadStr})</span>
                             </span>
-                            <span style="display: inline-flex; align-items: center; gap: 3px;">
+                            <span style="display: inline-flex; align-items: center; gap: 3px;" title="Teléfono">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                 ${apt.paciente_telefono || '--'}
                             </span>
@@ -242,7 +259,7 @@ async function verificarMuestra(citaId) {
 
             // Chip estudio - color based on status
             const span = document.createElement('span');
-            if (estado === 'tomada') {
+            if (estado === 'tomado') {
                 span.style.cssText = 'background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 16px; font-size: 0.85rem; font-weight: 600; border: 1px solid #86efac; display: inline-block; text-decoration: line-through;';
                 span.textContent = est.nombre + ' ✓';
             } else {
@@ -255,7 +272,7 @@ async function verificarMuestra(citaId) {
             if (est.tubo_recipiente) {
                 const tubosRaw = est.tubo_recipiente.split(',');
                 tubosRaw.forEach(t => {
-                    if (estado === 'tomada') {
+                    if (estado === 'tomado') {
                         tubosTomadosSet.add(t.trim());
                     } else {
                         tubosPendientesSet.add(t.trim());
@@ -378,7 +395,7 @@ async function ejecutarConfirmacionMuestra() {
                 }
 
                 // Update citas_estudios
-                const nuevoEstado = muestraRecibida ? 'tomada' : 'pendiente';
+                const nuevoEstado = muestraRecibida ? 'tomado' : 'pendiente';
                 await supabaseClient
                     .from('citas_estudios')
                     .update({ estado_muestra: nuevoEstado })
@@ -515,19 +532,19 @@ function mostrarModalEtiquetas(cita) {
         // [Tube | Studies Codes]
 
         contentDiv.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: baseline; width: 100%;">
-                <div style="font-weight: 700; font-size: 10px; text-transform: uppercase; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: black; max-width: 75%;">
-                    ${cita.paciente_nombre.substring(0, 25)}
+            <div style="position: relative; width: 100%; min-height: 28px; margin-bottom: 2px;">
+                <div style="font-weight: 700; font-size: 10px; text-transform: uppercase; text-align: left; word-wrap: break-word; color: black; padding-right: 60px; line-height: 1.1;">
+                    ${cita.paciente_nombre}
                 </div>
-                <div style="font-size: 8px; font-weight: 500; color: #333; white-space: nowrap;">
+                <div style="position: absolute; top: 0; right: 0; font-size: 8px; font-weight: 700; color: black; background: white; padding-left: 2px;">
                     ${dobStr}
                 </div>
             </div>
-            <svg id="barcode-${tubeIndex}" style="width: 100%; height: 38px;"></svg>
-            <div style="font-size: 13px; font-weight: 800; width: 100%; text-align: center; letter-spacing: 2px; color: black; background: #e5e5e5; padding: 1px 0; border-radius: 2px;">
+            <svg id="barcode-${tubeIndex}" style="width: 100%; height: 35px;"></svg>
+            <div style="font-size: 13px; font-weight: 800; width: 100%; text-align: center; letter-spacing: 2px; color: black; background: #e5e5e5; padding: 1px 0; border-radius: 2px; line-height: 1;">
                 ${tubeCode}
             </div>
-            <div style="font-size: 9px; font-weight: 600; width: 100%; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: black;">
+            <div style="font-size: 9px; font-weight: 700; width: 100%; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: black; margin-top: 2px;">
                 ${tubeAbbrev} | ${studyCodesStr}
             </div>
         `;
@@ -564,37 +581,102 @@ function cerrarModalEtiquetas() {
 function imprimirEtiquetas() {
     const container = document.getElementById('labelsContainer');
 
-    // Create print window
-    const win = window.open('', '', 'height=600,width=800');
+    const win = window.open('', '', 'height=400,width=600');
     win.document.write('<html><head><title>Imprimir Etiquetas</title>');
     win.document.write(`
         <style>
-            body { font-family: sans-serif; margin: 0; padding: 0; }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { 
+                background: white;
+                font-family: 'Consolas', monospace;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
             @page {
-                size: 50mm 25mm; /* Standard Lab Label */
+                size: 50mm 25mm;
                 margin: 0;
             }
+
             .label-wrapper { 
                 width: 50mm;
                 height: 25mm;
                 page-break-after: always;
                 display: flex;
-                align-items: center;
-                justify-content: center;
+                flex-direction: column;
+                padding: 1.5mm 2mm;
+                background: white;
                 overflow: hidden;
             }
-            .label-content { 
+
+            .label-header {
+                position: relative;
                 width: 100%;
-                height: 100%;
+                min-height: 7mm; /* Espacio para hasta 2 líneas de nombre */
+                margin-bottom: 0.5mm;
+            }
+
+            .patient-name {
+                font-size: 8pt;
+                font-weight: 700;
+                text-transform: uppercase;
+                display: block;
+                width: 100%;
+                line-height: 1.1;
+                word-wrap: break-word;
+                color: #000;
+                padding-right: 18mm; /* Espacio reservado para la fecha a la derecha */
+            }
+
+            .patient-dob {
+                position: absolute;
+                top: 0;
+                right: 0;
+                font-size: 7.5pt;
+                font-weight: 700;
+                color: #000;
+                background: white;
+                padding-left: 2px;
+            }
+
+            .barcode-area {
+                width: 100%;
+                height: 8mm; /* Reducido ligeramente para dar espacio al nombre */
                 display: flex;
-                flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                transform: scale(0.65); /* Scale to fit content nicely */
+                margin: 0.5mm 0;
             }
-            /* Hide border in print */
-            .print-content {
-                border: none !important;
+
+            .barcode-svg {
+                width: 100%;
+                height: 100%;
+            }
+
+            .folio-box {
+                font-size: 11pt;
+                font-weight: 800;
+                text-align: center;
+                background: #000;
+                color: #fff;
+                width: 100%;
+                padding: 0.3mm 0;
+                border: 0.5mm solid #000;
+                letter-spacing: 0.5mm;
+                line-height: 1;
+            }
+
+            .label-info {
+                font-size: 7pt;
+                font-weight: 700;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-top: 0.5mm;
+            }
+
+            @media print {
+                body { margin: 0; }
             }
         </style>
     `);
@@ -602,17 +684,52 @@ function imprimirEtiquetas() {
 
     const labels = container.querySelectorAll('.print-content');
     labels.forEach(lbl => {
-        win.document.write('<div class="label-wrapper"><div class="label-content">');
-        win.document.write(lbl.innerHTML);
-        win.document.write('</div></div>');
+        // Extraer datos para reconstruir con dimensiones exactas
+        const name = lbl.querySelector('.patient-name')?.innerText || lbl.querySelector('div[style*="font-weight: 700"]')?.innerText;
+        const dobArr = (lbl.querySelector('.patient-dob')?.innerText || lbl.querySelector('div[style*="font-size: 8px"]')?.innerText).split('/');
+        // Asegurar formato de fecha corto si es necesario, pero mantener el del label original
+        const dob = dobArr.join('/');
+
+        const folio = lbl.querySelector('.folio-box')?.innerText.trim() || lbl.querySelector('div[style*="font-size: 13px"]')?.innerText.trim();
+        const info = lbl.querySelector('.label-info')?.innerText || lbl.querySelector('div[style*="font-size: 9px"]')?.innerText;
+
+        win.document.write(`
+            <div class="label-wrapper">
+                <div class="label-header">
+                    <span class="patient-name">${name}</span>
+                    <span class="patient-dob">${dob}</span>
+                </div>
+                <div class="barcode-area">
+                    <svg class="print-barcode" data-code="${folio}"></svg>
+                </div>
+                <div class="folio-box">${folio}</div>
+                <div class="label-info">${info}</div>
+            </div>
+        `);
     });
 
-    win.document.write('</body></html>');
+    win.document.write(`
+        <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+        <script>
+            window.onload = function() {
+                const barcodes = document.querySelectorAll('.print-barcode');
+                barcodes.forEach(bc => {
+                    JsBarcode(bc, bc.getAttribute('data-code'), {
+                        format: "CODE128",
+                        lineColor: "#000",
+                        width: 2,
+                        height: 35,
+                        displayValue: false,
+                        margin: 0
+                    });
+                });
+                
+                setTimeout(() => {
+                    window.print();
+                    window.close();
+                }, 400);
+            };
+        </script>
+    </body></html>`);
     win.document.close();
-    win.focus();
-
-    setTimeout(() => {
-        win.print();
-        win.close();
-    }, 500);
 }

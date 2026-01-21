@@ -40,7 +40,7 @@
         }
 
         body {
-            background-color: var(--bg-body);
+            background-color: #f8fafc;
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
@@ -58,10 +58,8 @@
             background: radial-gradient(ellipse at center, #0077b6 0%, #023e8a 50%, #03045e 100%);
         }
 
-
-        /* Main Content */
         .container {
-            max-width: 800px;
+            max-width: 1100px;
             margin: 2rem auto 3rem;
             width: 95%;
             animation: fadeIn 0.5s ease-out;
@@ -82,7 +80,7 @@
         }
 
         .config-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 24px;
             padding: 2.5rem;
@@ -99,20 +97,17 @@
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
             color: #1e293b;
-            /* Dark Slate for contrast */
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
         }
 
         .header p {
             color: #64748b;
-            /* Medium Slate */
             font-size: 1rem;
         }
 
         .alert-info {
             background: rgba(16, 185, 129, 0.1);
-            /* Transparent green */
             border: 1px solid rgba(16, 185, 129, 0.3);
             padding: 1.25rem;
             border-radius: 12px;
@@ -131,7 +126,6 @@
         .alert-info p {
             font-size: 0.9rem;
             color: #065f46;
-            /* Dark Green for readability */
             line-height: 1.5;
         }
 
@@ -150,7 +144,6 @@
             font-size: 0.9rem;
             font-weight: 600;
             color: #334155;
-            /* Dark Slate labels */
             margin-bottom: 0.5rem;
         }
 
@@ -220,15 +213,174 @@
             transform: translateY(-2px);
         }
 
-        .btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none !important;
+        /* Tabs */
+        .config-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: none;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 8px;
+        }
+
+        .tab-btn:hover {
+            background: #f1f5f9;
+            color: var(--text-dark);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .config-section {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .config-section.active {
+            display: block;
+        }
+
+        /* Studies Table */
+        .studies-table-container {
+            margin-top: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .studies-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .studies-table th {
+            background: #f8fafc;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .studies-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border);
+            color: #1e293b;
+        }
+
+        .studies-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .studies-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge-warning {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            background: #f1f5f9;
+            transform: translateY(-1px);
+        }
+
+        .btn-icon-primary {
+            color: var(--primary);
+        }
+
+        .btn-icon-primary:hover {
+            border-color: var(--primary);
+            background: #f0fdfa;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Modal Compact */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content-lg {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .frequent-star {
+            cursor: pointer;
+            color: #cbd5e1;
+            transition: color 0.2s;
+        }
+
+        .frequent-star.active {
+            color: #f59e0b;
         }
 
         @media (max-width: 640px) {
             .form-row {
                 grid-template-columns: 1fr;
+            }
+
+            .container {
+                max-width: 100%;
             }
         }
     </style>
@@ -240,11 +392,11 @@
     <!-- Avatar Container -->
     <div id="navbar-container"></div>
 
-    <div class="container">
+    <div class="container" style="max-width: 1100px;">
         <div class="config-card">
             <div class="header">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h1>Configuración General</h1>
+                    <h1>Configuración</h1>
                     <a href="dashboard.html" class="btn btn-secondary">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2.5">
@@ -254,61 +406,164 @@
                         Inicio
                     </a>
                 </div>
-                <p>Gestiona la información oficial de tu laboratorio clínico</p>
+                <p>Gestiona la información de tu laboratorio y catálogo de estudios</p>
             </div>
 
-            <div class="alert-info">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 16v-4M12 8h.01" />
-                </svg>
-                <p>
-                    <strong>Aviso:</strong> Los datos ingresados a continuación se utilizarán para la generación
-                    automática
-                    de tickets de venta, resultados de laboratorio y comunicaciones oficiales con los pacientes.
-                </p>
+            <!-- Tabs Nav -->
+            <div class="config-tabs">
+                <button class="tab-btn active" onclick="switchTab('general')">Información General</button>
+                <button class="tab-btn" onclick="switchTab('estudios')">Gestión de Estudios</button>
             </div>
 
-            <form id="configForm" onsubmit="saveConfig(event)">
-                <div class="form-group">
-                    <label class="form-label">Nombre del Laboratorio</label>
-                    <input type="text" id="confNombre" class="form-input" placeholder="Ej: AR LAB" required>
+            <!-- Tab: General -->
+            <div id="tab-general" class="config-section active">
+                <div class="alert-info">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 16v-4M12 8h.01" />
+                    </svg>
+                    <p>
+                        <strong>Aviso:</strong> Los datos ingresados a continuación se utilizarán para la generación
+                        automática
+                        de tickets de venta y resultados de laboratorio.
+                    </p>
+                </div>
+                <form id="configForm" onsubmit="saveConfig(event)">
+                    <div class="form-group">
+                        <label class="form-label">Nombre del Laboratorio</label>
+                        <input type="text" id="confNombre" class="form-input" placeholder="Ej: AR LAB" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Responsable Sanitario</label>
+                            <input type="text" id="confResponsable" class="form-input"
+                                placeholder="Ej: Q.F.B. Adolfo Ruiz" required oninput="normalizeInput(this)">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cédula Profesional</label>
+                            <input type="text" id="confCedula" class="form-input" placeholder="Ej: 1234567" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Dirección del Establecimiento</label>
+                        <textarea id="confDireccion" class="form-textarea"
+                            placeholder="Calle, Número, Colonia, Ciudad, Estado" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Teléfono / WhatsApp de Atención</label>
+                        <input type="text" id="confTelefono" class="form-input" placeholder="Ej: 228 123 4567" required>
+                    </div>
+                    <div class="actions">
+                        <button type="submit" id="saveBtn" class="btn btn-primary">
+                            Guardar Información General
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tab: Estudios -->
+            <div id="tab-estudios" class="config-section">
+                <div class="search-bar">
+                    <input type="text" id="searchEstudio" class="form-input" placeholder="Buscar por nombre o código..."
+                        oninput="filterEstudios()">
+                    <select id="filterCat" class="form-input" style="width: 250px;" onchange="filterEstudios()">
+                        <option value="">Todas las categorías</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="openEstudioModal()">Nuevo Estudio</button>
                 </div>
 
+                <div class="studies-table-container">
+                    <table class="studies-table">
+                        <thead>
+                            <tr>
+                                <th width="50">Fav</th>
+                                <th width="100">Código</th>
+                                <th>Nombre</th>
+                                <th width="150">Categoría</th>
+                                <th width="100">Precio</th>
+                                <th width="80">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="estudiosTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 2rem;">Cargando catálogo...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Estudio -->
+    <div id="estudioModal" class="modal">
+        <div class="modal-content-lg">
+            <h2 id="modalTitle" style="margin-bottom: 1.5rem; font-family: 'Outfit';">Editar Estudio</h2>
+            <form id="estudioForm" onsubmit="saveEstudio(event)">
+                <input type="hidden" id="estId">
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label">Responsable Sanitario</label>
-                        <input type="text" id="confResponsable" class="form-input" placeholder="Ej: Q.F.B. Adolfo Ruiz"
-                            required oninput="normalizeInput(this)">
+                        <label class="form-label">Código</label>
+                        <input type="text" id="estCodigo" class="form-input" placeholder="Ej: HEM">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Cédula Profesional</label>
-                        <input type="text" id="confCedula" class="form-input" placeholder="Ej: 1234567" required>
+                        <label class="form-label">Nombre del Estudio *</label>
+                        <input type="text" id="estNombre" class="form-input" required>
                     </div>
                 </div>
-
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Categoría *</label>
+                        <input type="text" id="estCategoria" class="form-input" list="catList" required>
+                        <datalist id="catList"></datalist>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Precio ($) *</label>
+                        <input type="number" id="estPrecio" class="form-input" step="0.01" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Tipo de Muestra</label>
+                        <input type="text" id="estMuestra" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Metodología</label>
+                        <input type="text" id="estMetodo" class="form-input">
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label class="form-label">Dirección del Establecimiento</label>
-                    <textarea id="confDireccion" class="form-textarea"
-                        placeholder="Calle, Número, Colonia, Ciudad, Estado" required></textarea>
+                    <label class="form-label">Indicaciones / Contenido</label>
+                    <textarea id="estIndicaciones" class="form-textarea" rows="2"></textarea>
+                </div>
+                <div
+                    style="margin-bottom: 1.5rem; display: flex; gap: 2rem; border: 1px solid var(--border); padding: 1rem; border-radius: 12px;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="estFrecuente"> 🌟 Más Solicitado
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="estPerfil" onchange="togglePerfilSection()"> 📋 Es un Perfil
+                        (Paquete)
+                    </label>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Teléfono / WhatsApp de Atención</label>
-                    <input type="text" id="confTelefono" class="form-input" placeholder="Ej: 228 123 4567" required>
+                <div id="perfilSection"
+                    style="display: none; margin-bottom: 1.5rem; background: #f8fafc; padding: 1rem; border-radius: 12px;">
+                    <label class="form-label">Componentes del Perfil</label>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <input type="text" id="buscComp" class="form-input" placeholder="Buscar componente..."
+                            list="compData">
+                        <datalist id="compData"></datalist>
+                        <button type="button" class="btn btn-primary" style="padding: 0 1rem;"
+                            onclick="addComp()">+</button>
+                    </div>
+                    <div id="compList" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
                 </div>
 
                 <div class="actions">
-                    <a href="dashboard.html" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" id="saveBtn" class="btn btn-primary">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2.5">
-                            <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
-                            <polyline points="17 21 17 13 7 13 7 21" />
-                            <polyline points="7 3 7 8 15 8" />
-                        </svg>
-                        Guardar Cambios
-                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEstudioModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="saveEstBtn">Guardar Estudio</button>
                 </div>
             </form>
         </div>
@@ -322,9 +577,13 @@
         const supabaseKey = 'sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+        let todosEstudios = [];
+        let componentesPerfil = [];
+
         document.addEventListener('DOMContentLoaded', () => {
             loadConfig();
             initAnimation();
+            loadEstudios();
 
             // Check auth
             const userStr = localStorage.getItem('arlab_user');
@@ -333,7 +592,6 @@
             } else {
                 try {
                     const currentUser = JSON.parse(userStr);
-                    // Verificar que sea administrador
                     if (currentUser.rol !== 'admin') {
                         alert('⛔ Acceso Denegado: Solo administradores pueden acceder a la configuración.');
                         window.location.href = 'dashboard.html';
@@ -344,6 +602,16 @@
                 }
             }
         });
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.config-section').forEach(s => s.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+
+            if (tab === 'estudios') loadEstudios();
+        }
 
         // Normalizar nombres (Tipo Oración: Juan Carlos)
         function normalizeInput(input) {
@@ -359,59 +627,225 @@
         }
 
 
-        async function loadConfig() {
+        async function loadEstudios() {
             try {
                 const { data, error } = await supabaseClient
-                    .from('configuracion_laboratorio')
+                    .from('estudios_laboratorio')
                     .select('*')
-                    .eq('id', 1)
-                    .single();
+                    .order('nombre', { ascending: true });
 
                 if (error) throw error;
-
-                if (data) {
-                    document.getElementById('confNombre').value = data.nombre_laboratorio || '';
-                    document.getElementById('confResponsable').value = data.responsable_sanitario || '';
-                    document.getElementById('confCedula').value = data.cedula_profesional || '';
-                    document.getElementById('confDireccion').value = data.direccion || '';
-                    document.getElementById('confTelefono').value = data.telefono || '';
-                }
+                todosEstudios = data || [];
+                renderTable(todosEstudios);
+                renderCategories();
             } catch (err) {
-                console.error('Error loading config:', err);
-                alert('No se pudo cargar la configuración.');
+                console.error('Error loading estudios:', err);
             }
         }
 
-        async function saveConfig(event) {
-            event.preventDefault();
-            const btn = document.getElementById('saveBtn');
-            btn.disabled = true;
-            btn.innerHTML = 'Guardando...';
+        function renderTable(data) {
+            const tbody = document.getElementById('estudiosTableBody');
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No se encontraron estudios</td></tr>';
+                return;
+            }
 
-            const configData = {
-                nombre_laboratorio: document.getElementById('confNombre').value,
-                responsable_sanitario: document.getElementById('confResponsable').value,
-                cedula_profesional: document.getElementById('confCedula').value,
-                direccion: document.getElementById('confDireccion').value,
-                telefono: document.getElementById('confTelefono').value
+            tbody.innerHTML = data.map(est => `
+                <tr>
+                    <td style="text-align: center;">
+                        <span class="frequent-star ${est.es_frecuente ? 'active' : ''}" onclick="toggleFrequent('${est.id}', ${est.es_frecuente})">
+                            ★
+                        </span>
+                    </td>
+                    <td style="font-family: monospace;">${est.codigo || '---'}</td>
+                    <td>
+                        <div style="font-weight: 600;">${est.nombre}</div>
+                        ${est.es_perfil ? '<span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size: 0.65rem;">PERFIL</span>' : ''}
+                    </td>
+                    <td><span class="status-badge status-badge-warning">${est.categoria}</span></td>
+                    <td style="font-weight: 700;">$${parseFloat(est.precio || 0).toFixed(2)}</td>
+                    <td>
+                        <button class="btn-icon btn-icon-primary" onclick="openEstudioModal('${est.id}')" title="Editar">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderCategories() {
+            const cats = [...new Set(todosEstudios.map(e => e.categoria))].sort();
+            const filterSelect = document.getElementById('filterCat');
+            const catList = document.getElementById('catList');
+
+            filterSelect.innerHTML = '<option value="">Todas las categorías</option>' +
+                cats.map(c => `<option value="${c}">${c}</option>`).join('');
+
+            catList.innerHTML = cats.map(c => `<option value="${c}">`).join('');
+        }
+
+        function filterEstudios() {
+            const search = document.getElementById('searchEstudio').value.toLowerCase();
+            const cat = document.getElementById('filterCat').value;
+
+            const filtered = todosEstudios.filter(e => {
+                const matchSearch = e.nombre.toLowerCase().includes(search) || (e.codigo && e.codigo.toLowerCase().includes(search));
+                const matchCat = !cat || e.categoria === cat;
+                return matchSearch && matchCat;
+            });
+            renderTable(filtered);
+        }
+
+        async function toggleFrequent(id, current) {
+            try {
+                const { error } = await supabaseClient
+                    .from('estudios_laboratorio')
+                    .update({ es_frecuente: !current })
+                    .eq('id', id);
+                if (error) throw error;
+                loadEstudios();
+            } catch (err) { console.error(err); }
+        }
+
+        async function openEstudioModal(id = null) {
+            const modal = document.getElementById('estudioModal');
+            const form = document.getElementById('estudioForm');
+            form.reset();
+            document.getElementById('estId').value = id || '';
+            document.getElementById('modalTitle').innerText = id ? 'Editar Estudio' : 'Nuevo Estudio';
+            componentesPerfil = [];
+            renderCompList();
+
+            if (id) {
+                const est = todosEstudios.find(e => e.id === id);
+                if (est) {
+                    document.getElementById('estCodigo').value = est.codigo || '';
+                    document.getElementById('estNombre').value = est.nombre || '';
+                    document.getElementById('estCategoria').value = est.categoria || '';
+                    document.getElementById('estPrecio').value = est.precio || 0;
+                    document.getElementById('estMuestra').value = est.tipo_muestra || '';
+                    document.getElementById('estMetodo').value = est.metodologia || '';
+                    document.getElementById('estIndicaciones').value = est.indicaciones || '';
+                    document.getElementById('estFrecuente').checked = est.es_frecuente || false;
+                    document.getElementById('estPerfil').checked = est.es_perfil || false;
+
+                    if (est.es_perfil) {
+                        togglePerfilSection(true);
+                        // Cargar componentes
+                        const { data } = await supabaseClient
+                            .from('estudio_componentes')
+                            .select('componente_id, estudios_laboratorio(id, nombre)')
+                            .eq('perfil_id', id);
+
+                        if (data) {
+                            componentesPerfil = data.map(d => ({
+                                id: d.estudios_laboratorio.id,
+                                nombre: d.estudios_laboratorio.nombre
+                            }));
+                            renderCompList();
+                        }
+                    } else {
+                        togglePerfilSection(false);
+                    }
+                }
+            } else {
+                togglePerfilSection(false);
+            }
+
+            // Datalist for components
+            document.getElementById('compData').innerHTML = todosEstudios
+                .filter(e => !e.es_perfil)
+                .map(e => `<option value="${e.nombre}">`).join('');
+
+            modal.style.display = 'flex';
+        }
+
+        function closeEstudioModal() {
+            document.getElementById('estudioModal').style.display = 'none';
+        }
+
+        function togglePerfilSection(show = null) {
+            const section = document.getElementById('perfilSection');
+            const isChecked = document.getElementById('estPerfil').checked;
+            section.style.display = (show !== null ? show : isChecked) ? 'block' : 'none';
+        }
+
+        function addComp() {
+            const val = document.getElementById('buscComp').value;
+            const item = todosEstudios.find(e => e.nombre === val);
+            if (item && !componentesPerfil.find(c => c.id === item.id)) {
+                componentesPerfil.push({ id: item.id, nombre: item.nombre });
+                renderCompList();
+                document.getElementById('buscComp').value = '';
+            }
+        }
+
+        function removeComp(id) {
+            componentesPerfil = componentesPerfil.filter(c => c.id !== id);
+            renderCompList();
+        }
+
+        function renderCompList() {
+            const container = document.getElementById('compList');
+            container.innerHTML = componentesPerfil.map(c => `
+                <div style="background:#e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; display: flex; align-items: center; gap: 5px;">
+                    ${c.nombre}
+                    <span style="cursor:pointer; font-weight:bold;" onclick="removeComp('${c.id}')">&times;</span>
+                </div>
+            `).join('');
+        }
+
+        async function saveEstudio(event) {
+            event.preventDefault();
+            const saveBtn = document.getElementById('saveEstBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerText = 'Guardando...';
+
+            const id = document.getElementById('estId').value;
+            const estData = {
+                codigo: document.getElementById('estCodigo').value || null,
+                nombre: document.getElementById('estNombre').value,
+                categoria: document.getElementById('estCategoria').value,
+                precio: parseFloat(document.getElementById('estPrecio').value),
+                tipo_muestra: document.getElementById('estMuestra').value,
+                metodologia: document.getElementById('estMetodo').value,
+                indicaciones: document.getElementById('estIndicaciones').value,
+                es_frecuente: document.getElementById('estFrecuente').checked,
+                es_perfil: document.getElementById('estPerfil').checked,
+                activo: true
             };
 
             try {
-                const { error } = await supabaseClient
-                    .from('configuracion_laboratorio')
-                    .update(configData)
-                    .eq('id', 1);
+                let resId = id;
+                if (id) {
+                    const { error } = await supabaseClient.from('estudios_laboratorio').update(estData).eq('id', id);
+                    if (error) throw error;
+                } else {
+                    const { data, error } = await supabaseClient.from('estudios_laboratorio').insert(estData).select().single();
+                    if (error) throw error;
+                    resId = data.id;
+                }
 
-                if (error) throw error;
+                // Guardar componentes si es perfil
+                if (estData.es_perfil) {
+                    // Limpiar previos
+                    await supabaseClient.from('estudio_componentes').delete().eq('perfil_id', resId);
+                    // Insertar nuevos
+                    if (componentesPerfil.length > 0) {
+                        const comps = componentesPerfil.map(c => ({ perfil_id: resId, componente_id: c.id }));
+                        await supabaseClient.from('estudio_componentes').insert(comps);
+                    }
+                }
 
-                alert('¡Configuración actualizada con éxito!');
-                window.location.href = 'dashboard.html';
+                alert('Estudio guardado correctamente');
+                closeEstudioModal();
+                loadEstudios();
             } catch (err) {
-                console.error('Error saving config:', err);
-                alert('Error al guardar los cambios: ' + err.message);
+                console.error(err);
+                alert('Error al guardar: ' + err.message);
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = 'Guardar Cambios';
+                saveBtn.disabled = false;
+                saveBtn.innerText = 'Guardar Estudio';
             }
         }
 

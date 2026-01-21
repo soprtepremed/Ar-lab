@@ -70,7 +70,7 @@ async function loadFaseAnalitica() {
                 cita_id,
                 estudio_id,
                 estado_muestra,
-                estudios_laboratorio (id, nombre, codigo, categoria, area)
+                estudios_laboratorio (id, nombre, codigo, categoria, area, tubo_recipiente)
             `)
             .in('cita_id', citaIds);
 
@@ -129,17 +129,17 @@ async function loadFaseAnalitica() {
                         const yaExiste = pacienteEntry.categorias[areaNorm].some(e => e.id === ce.estudios_laboratorio.id);
                         if (!yaExiste) {
                             pacienteEntry.categorias[areaNorm].push({
-                                id: ce.estudios_laboratorio.id,
-                                citaId: ce.cita_id, // Guardar referencia a la cita
-                                nombre: ce.estudios_laboratorio.nombre,
-                                codigo: ce.estudios_laboratorio.codigo,
-                                estado: ce.estado_muestra || 'pendiente'
+                                ...ce.estudios_laboratorio,
+                                citaId: ce.cita_id,
+                                estado: ce.estado_muestra || 'pendiente',
+                                tubo_recipiente: ce.estudios_laboratorio.tubo_recipiente
                             });
 
                             pacienteEntry.estudios.push({
                                 ...ce.estudios_laboratorio,
                                 citaId: ce.cita_id,
-                                estado: ce.estado_muestra || 'pendiente'
+                                estado: ce.estado_muestra || 'pendiente',
+                                tubo_recipiente: ce.estudios_laboratorio.tubo_recipiente
                             });
                         }
                     }
@@ -153,11 +153,34 @@ async function loadFaseAnalitica() {
         // Actualizar contador
         if (countEl) countEl.textContent = analiticaData.length;
 
-        // Llenar select de áreas
+        // Llenar select de áreas (Siempre mostrar todas)
         if (selectCategoria) {
+            // Guardar selección actual
+            const prevSelection = selectCategoria.value;
+
+            // Obtener todas las categorías/áreas distintias de la BD
+            const { data: catData } = await supabaseClient
+                .from('estudios_laboratorio')
+                .select('categoria, area')
+                .eq('activo', true);
+
+            const todasCategorias = new Set();
+            if (catData) {
+                catData.forEach(item => {
+                    // Priorizar Área, luego Categoría
+                    const cat = item.area || item.categoria;
+                    if (cat) todasCategorias.add(normalizarArea(cat));
+                });
+            }
+
+            // También incluir las que vienen en las citas actuales (por si acaso hay discrepancias)
+            Array.from(categoriasSet).forEach(c => todasCategorias.add(c));
+
+            const categoriasOrdenadas = Array.from(todasCategorias).sort();
+
             selectCategoria.innerHTML = '<option value="all">Todas las áreas</option>';
-            categorias.forEach(cat => {
-                const selected = currentCategoryFilter === cat ? 'selected' : '';
+            categoriasOrdenadas.forEach(cat => {
+                const selected = (prevSelection === cat || currentCategoryFilter === cat) ? 'selected' : '';
                 selectCategoria.innerHTML += `<option value="${cat}" ${selected}>${cat}</option>`;
             });
         }
@@ -222,9 +245,15 @@ function renderAnaliticaTable(pacientes, tbody, categoryFilter = 'all') {
             // Calcular estado general del área (el peor estado de sus estudios)
             const estados = estudios.map(e => e.estado);
             let estadoArea = 'liberada';
+
+            // Orden de prioridad (Semaforización): 
+            // 1. Rojo (pendiente)
+            // 2. Naranja (tomado/tomada)
+            // 3. Amarillo (en_area)
+            // 4. Verde (liberada)
             if (estados.some(e => e === 'pendiente')) {
                 estadoArea = 'pendiente';
-            } else if (estados.some(e => e === 'tomado')) {
+            } else if (estados.some(e => e === 'tomado' || e === 'tomada')) {
                 estadoArea = 'tomado';
             } else if (estados.some(e => e === 'en_area')) {
                 estadoArea = 'en_area';
@@ -248,7 +277,12 @@ function renderAnaliticaTable(pacientes, tbody, categoryFilter = 'all') {
             <tr>
                 <td style="font-family: 'Consolas', 'Courier New', monospace; font-weight: 700; color: #000; font-size: 0.85rem;">${paciente.folio || 'N/A'}</td>
                 <td>
-                    <div style="font-weight: 500; color: #1e293b;">${paciente.nombre}</div>
+                    <div style="font-weight: 500; color: #1e293b;">
+                        <a href="resultados.html?id=${paciente.citaIds[0]}" target="_self" style="text-decoration: none; color: inherit; cursor: pointer;" onmouseover="this.style.color='#0d9488'" onmouseout="this.style.color='inherit'">
+                            ${paciente.nombre}
+                        </a>
+                        ${paciente.paciente_sexo ? `<span style="font-size: 0.75rem; color: #64748b; font-weight: normal; margin-left: 5px;">(${paciente.paciente_sexo.charAt(0)})</span>` : ''}
+                    </div>
                     <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 3px; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                         ${fechaNac ? `<span style="display: inline-flex; align-items: center; gap: 3px;"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${fechaNac}</span>` : ''}
                         ${paciente.telefono ? `<span style="display: inline-flex; align-items: center; gap: 3px;"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>${paciente.telefono}</span>` : ''}
@@ -534,46 +568,190 @@ function imprimirEtiquetasSeleccionadas() {
     generarVentanaImpresionEtiquetas(estudiosAImprimir);
 }
 
-// Generar ventana de impresión
-function generarVentanaImpresionEtiquetas(estudios) {
+// Generar ventana de impresión (ESTILO PROFESIONAL Y COMPATIBLE CON IMPRESORAS TÉRMICAS)
+function generarVentanaImpresionEtiquetas(estudiosAImprimir) {
     const { folio, nombre } = datosEtiquetaActual;
+    const paciente = pacientesParaEtiquetas[folio];
     const fechaHoy = new Date().toLocaleDateString('es-MX');
 
-    let etiquetasHtml = '';
-    estudios.forEach(est => {
-        const areaLabel = est.area || est.categoria || '';
-        etiquetasHtml += `
-            <div style="border: 1px dashed #ccc; padding: 8px; margin: 4px; width: 220px; font-family: Arial, sans-serif; page-break-inside: avoid;">
-                <div style="font-size: 10px; font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 3px; margin-bottom: 3px;">
-                    ${nombre}
-                </div>
-                <div style="font-size: 9px; color: #333;">Folio: ${folio}</div>
-                <div style="font-size: 11px; font-weight: bold; margin: 4px 0;">${est.codigo || ''} - ${est.nombre}</div>
-                <div style="font-size: 8px; color: #666;">${areaLabel}</div>
-                <div style="font-size: 8px; color: #666; margin-top: 3px;">Fecha: ${fechaHoy}</div>
-            </div>
-        `;
+    if (!estudiosAImprimir || estudiosAImprimir.length === 0) return;
+
+    // Group studies by Tube
+    const tubesMap = new Map(); // 'Rojo' -> [Estudio1, Estudio2]
+
+    estudiosAImprimir.forEach(est => {
+        const rawTubes = est.tubo_recipiente ? est.tubo_recipiente.split(',') : ['Tubo Indefinido'];
+        rawTubes.forEach(t => {
+            const tubeType = t.trim();
+            if (!tubesMap.has(tubeType)) tubesMap.set(tubeType, []);
+
+            if (!tubesMap.get(tubeType).find(s => s.id === est.id)) {
+                tubesMap.get(tubeType).push(est);
+            }
+        });
     });
 
-    const ventana = window.open('', '_blank');
-    ventana.document.write(`
-        <!DOCTYPE html>
+    const win = window.open('', '_blank');
+    win.document.write(`
         <html>
         <head>
-            <title>Etiquetas - ${nombre}</title>
+            <title>Imprimir Etiquetas - ${nombre}</title>
+            <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
             <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { 
+                    font-family: 'Consolas', monospace; 
+                    background: white; 
+                    -webkit-print-color-adjust: exact;
+                }
+                @page {
+                    size: 50mm 25mm;
+                    margin: 0;
+                }
+                .label-wrapper { 
+                    width: 50mm;
+                    height: 25mm;
+                    page-break-after: always;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1.5mm 2mm;
+                    background: white;
+                    overflow: hidden;
+                }
+                .label-header {
+                    position: relative;
+                    width: 100%;
+                    min-height: 7mm;
+                    margin-bottom: 0.5mm;
+                }
+                .patient-name {
+                    font-size: 8pt;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    display: block;
+                    width: 100%;
+                    line-height: 1.1;
+                    word-wrap: break-word;
+                    color: #000;
+                    padding-right: 18mm;
+                }
+                .patient-dob {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    font-size: 7.5pt;
+                    font-weight: 700;
+                    color: #000;
+                    background: white;
+                    padding-left: 2px;
+                }
+                .barcode-area {
+                    width: 100%;
+                    height: 8mm;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0.5mm 0;
+                }
+                .barcode-img {
+                    width: 100%;
+                    height: 100%;
+                }
+                .folio-box {
+                    font-size: 11pt;
+                    font-weight: 800;
+                    text-align: center;
+                    background: #000;
+                    color: #fff;
+                    width: 100%;
+                    padding: 0.3mm 0;
+                    border: 0.5mm solid #000;
+                    letter-spacing: 0.5mm;
+                    line-height: 1;
+                    border-radius: 1mm;
+                }
+                .label-footer {
+                    font-size: 7pt;
+                    font-weight: 700;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-top: 0.5mm;
+                }
                 @media print {
                     body { margin: 0; }
-                    @page { margin: 5mm; }
                 }
-                body { display: flex; flex-wrap: wrap; justify-content: flex-start; }
             </style>
         </head>
-        <body>
-            ${etiquetasHtml}
-            <script>window.onload = function() { window.print(); }</script>
+        <body onload="renderAndPrint()">
+            <div id="labelsContainer">
+    `);
+
+    let tubeIndex = 0;
+    tubesMap.forEach((studies, tubeType) => {
+        tubeIndex++;
+        const tubeCode = `${folio}-${tubeIndex}`;
+        const studyCodesStr = studies.map(s => s.codigo || s.nombre.substring(0, 4).toUpperCase()).join(', ');
+
+        // Tube type abbreviation
+        let tubeAbbrev = tubeType;
+        if (tubeType.toLowerCase().includes('lila')) tubeAbbrev = 'LILA';
+        else if (tubeType.toLowerCase().includes('celeste')) tubeAbbrev = 'CELES';
+        else if (tubeType.toLowerCase().includes('rojo')) tubeAbbrev = 'ROJO';
+        else if (tubeType.toLowerCase().includes('amarillo')) tubeAbbrev = 'AMAR';
+        else if (tubeType.toLowerCase().includes('verde')) tubeAbbrev = 'VERDE';
+        else if (tubeType.toLowerCase().includes('gris')) tubeAbbrev = 'GRIS';
+        else if (tubeType.toLowerCase().includes('estéril') || tubeType.toLowerCase().includes('esteril') || tubeType.toLowerCase().includes('orina')) tubeAbbrev = 'REP EST';
+        else tubeAbbrev = tubeType.split(' ')[0].substring(0, 5).toUpperCase();
+
+        // Format DOB
+        let dobStr = 'N/A';
+        const fechaNacRaw = paciente?.fechaNacimiento || paciente?.fecha_nacimiento;
+        if (fechaNacRaw) {
+            const d = new Date(fechaNacRaw);
+            dobStr = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+        }
+
+        win.document.write(`
+            <div class="label-wrapper">
+                <div class="label-header">
+                    <span class="patient-name">${nombre}</span>
+                    <span class="patient-dob">${dobStr}</span>
+                </div>
+                <div class="barcode-area">
+                    <svg class="barcode-img" data-code="${tubeCode}"></svg>
+                </div>
+                <div class="folio-box">${tubeCode}</div>
+                <div class="label-footer">${tubeAbbrev} | ${studyCodesStr}</div>
+            </div>
+        `);
+    });
+
+    win.document.write(`
+            </div>
+            <script>
+                function renderAndPrint() {
+                    const svgs = document.querySelectorAll('.barcode-img');
+                    svgs.forEach(svg => {
+                        const code = svg.getAttribute('data-code');
+                        JsBarcode(svg, code, {
+                            format: "CODE128",
+                            lineColor: "#000",
+                            width: 2,
+                            height: 35,
+                            displayValue: false,
+                            margin: 0
+                        });
+                    });
+                    
+                    setTimeout(() => {
+                        window.print();
+                        window.close();
+                    }, 450);
+                }
+            </script>
         </body>
         </html>
     `);
-    ventana.document.close();
+    win.document.close();
 }

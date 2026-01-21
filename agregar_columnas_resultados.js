@@ -4,10 +4,10 @@
 const { Client } = require('pg');
 
 const client = new Client({
-    host: 'db.ebihobjrwcwtjfazcjmv.supabase.co',
-    port: 5432,
+    host: 'aws-1-us-east-2.pooler.supabase.com',
+    port: 6543,
     database: 'postgres',
-    user: 'postgres',
+    user: 'postgres.ebihobjrwcwtjfazcjmv',
     password: 'RDF6lvPNdCZWFeAT',
     ssl: { rejectUnauthorized: false }
 });
@@ -45,7 +45,7 @@ async function addResultColumns() {
         // Agregar columna rango_referencia a estudios si no existe
         console.log('🔧 Agregando columna rango_referencia a estudios...');
         try {
-            await client.query(`ALTER TABLE estudios ADD COLUMN IF NOT EXISTS rango_referencia TEXT;`);
+            await client.query(`ALTER TABLE estudios_laboratorio ADD COLUMN IF NOT EXISTS rango_referencia TEXT;`);
             console.log('   ✅ Columna rango_referencia agregada');
         } catch (err) {
             console.log('   ⚠️ Columna ya existe o error:', err.message);

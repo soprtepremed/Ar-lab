@@ -1,0 +1,3771 @@
+estudios de laboratorio catalogo  de orthin 
+
+[
+  {
+    "pagina": 41,
+    "estudios": [
+      {
+        "clave_estudio": "01",
+        "nombre_estudio": "17 Alfa hidroxiprogesterona en suero*",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "02",
+        "nombre_estudio": "Adrenalina en plasma",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma / EDTA",
+        "tiempo_entrega": "7 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 42,
+    "estudios": [
+      {
+        "clave_estudio": "03",
+        "nombre_estudio": "Calcitonina",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "04",
+        "nombre_estudio": "Analisis fisicoquimico de urolito (cálculo renal)",
+        "metodologia": "Espectroscopia de infrarojo (IR)",
+        "contenido": "N/A",
+        "tipo_muestra": "Calculo renal",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Cannabinoides (marihuana)",
+        "metodologia": "Inmunoensayo cromatográfico",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "CurT- uptake (TU)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Isoenzimas de deshidrogenasa láctica (LDH)**",
+        "metodologia": "Electroforesis",
+        "contenido": "LDH 1, LDH 2, LDH 3, LDH 4 y LDH 5",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "10 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 43,
+    "estudios": [
+      {
+        "clave_estudio": "09",
+        "nombre_estudio": "Capacidad total de fijación de hierro (TIBC)",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "10",
+        "nombre_estudio": "Carbamacepina (Tegretol)*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "11",
+        "nombre_estudio": "Perfil de Catecolaminas en plasma",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "Catecolaminas totales, Adrenalina en plasma, Noradrenalina en plasma y Dopamina en plasma",
+        "tipo_muestra": "Plasma / EDTA",
+        "tiempo_entrega": "7 días hábiles"
+      },
+      {
+        "clave_estudio": "13",
+        "nombre_estudio": "Complemento C- 5**",
+        "metodologia": "Nefelometría",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "16 días hábiles"
+      },
+      {
+        "clave_estudio": "14",
+        "nombre_estudio": "Células L.E.",
+        "metodologia": "Microscopía",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre coagulada",
+        "tiempo_entrega": "1 día hábil"
+      }
+    ]
+  },
+  {
+    "pagina": 44,
+    "estudios": [
+      {
+        "clave_estudio": "15",
+        "nombre_estudio": "Clicosporina",
+        "metodologia": "Quimioluminescence (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "16",
+        "nombre_estudio": "Clotologia de moco fecal",
+        "metodologia": "Microscopia Tinción de Wright",
+        "contenido": "Texto",
+        "tipo_muestra": "Texto",
+        "tiempo_entrega": "00 días hábiles"
+      },
+      {
+        "clave_estudio": "17",
+        "nombre_estudio": "Clotoquimico de liquido bronquial",
+        "metodologia": "Espectrofotometria automatizada, Impedancia, Microscopia",
+        "contenido": "Color, Aspecto, pH, Glucosa, Deshidrogenasa láctica, Proteínas totales, Leucocitos Totales, Diferencial de Leucocitos (%), Diferencial de Leucocitos (absolutos), Erotrocitos (cualitativo) y Observaciones microscópicas",
+        "tipo_muestra": "Texto",
+        "tiempo_entrega": "00 días hábiles"
+      },
+      {
+        "clave_estudio": "18",
+        "nombre_estudio": "Clotoquimico de liquido cefalorraquideo",
+        "metodologia": "Espectrofotometria automatizada, Impedancia, Microscopia",
+        "contenido": "Color, Aspecto, pH, Glucosa, Cloro, Proteínas totales, Leucocitos Totales, Diferencial de Leucocitos (%), Diferencial de Leucocitos (absolutos), Erotrocitos (cualitativo) y Observaciones microscópicas",
+        "tipo_muestra": "LCR",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "19",
+        "nombre_estudio": "Clotoquimico de liquido de ascitis o peritoneal",
+        "metodologia": "Espectrofotometria automatizada, Impedancia, Microscopia",
+        "contenido": "Color, Aspecto, pH, Glucosa, Deshidrogenasa láctica, Proteínas totales, Leucocitos Totales., Diferencial de Leucocitos (%), Diferencial de Leucocitos (absolutos), Erotrocitos (cualitativo), Observaciones microscópicas",
+        "tipo_muestra": "Liquido de ascitis, Liquido peritoneal",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 45,
+    "estudios": [
+      {
+        "clave_estudio": "20",
+        "nombre_estudio": "Cloqueimico de liquido de dialisis",
+        "metodologia": "Espectrofotometria automatizada, Impedancia, Microscopia",
+        "contenido": "Color, Aspecto, pH, Glucosa, Proteínas totales, Leucocitos Totales, Diferencial de Leucocitos (%), Diferencial de Leucocitos (absolutos), Erotrocitos (cualitativo) y Observaciones microscópicas",
+        "tipo_muestra": "Liquido de dialisis",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "21",
+        "nombre_estudio": "Cloqueimico de liquidos organicos",
+        "metodologia": "Espectrofotometria automatizada, Impedancia, Microscopia",
+        "contenido": "Color, Aspecto, pH, Glucosa, Deshidrogenasa láctica, Proteínas totales, Leucocitos Totales, Diferencial de Leucocitos (%), Diferencial de Leucocitos (absolutos), Erotrocitos (cualitativo) y Observaciones microscópicas",
+        "tipo_muestra": "Liquido orgánico",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "22",
+        "nombre_estudio": "Cloqueimico de liquido sinovial",
+        "metodologia": "Espectrofotometria automatizada, Impedancia, Microscopia",
+        "contenido": "Color, Aspecto, pH, Glucosa, Proteínas totales, Leucocitos Totales, Diferencial de Leucocitos (%), Diferencial de Leucocitos (absolutos), Erotrocitos (cualitativo) y Observaciones microscópicas",
+        "tipo_muestra": "Liquido sinovial",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "23",
+        "nombre_estudio": "Clonazepan en suero (Rivotril)**",
+        "metodologia": "Cromatografia líquida y espectrometría de masas Tándem",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero, Plasma / EDTA",
+        "tiempo_entrega": "10 días hábiles"
+      },
+      {
+        "clave_estudio": "24",
+        "nombre_estudio": "Albumina*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero, Plasma",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 46,
+    "estudios": [
+      {
+        "clave_estudio": "25",
+        "nombre_estudio": "Cloro*",
+        "metodologia": "lón selectivo",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero, Plasma",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "26",
+        "nombre_estudio": "Cloro en orina*",
+        "metodologia": "lón selectivo",
+        "contenido": "Cloro urinario, Volumen remitido, Cloro en orina de 24 hrs",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "27",
+        "nombre_estudio": "Co2*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "29",
+        "nombre_estudio": "Cobre serico*",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "30",
+        "nombre_estudio": "Cocaína",
+        "metodologia": "Inmunoensayo cromatográfico",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 47,
+    "estudios": [
+      {
+        "clave_estudio": "32",
+        "nombre_estudio": "Colesterol LDL*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "34",
+        "nombre_estudio": "Colesterol*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "37",
+        "nombre_estudio": "Complejos inmunes**",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "10 días hábiles"
+      },
+      {
+        "clave_estudio": "38",
+        "nombre_estudio": "Complemento C3*",
+        "metodologia": "Inmunoturbidimetria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 48,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Complemento C4*",
+        "metodologia": "Inmunoturbidimetria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "40",
+        "nombre_estudio": "Complemento hemolitico (50%)",
+        "metodologia": "Inmunoensayo enzimatico (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 dias habiles"
+      },
+      {
+        "clave_estudio": "41",
+        "nombre_estudio": "Coombs directo (Ac. Anti Rh eritrocitarios)",
+        "metodologia": "Inmunoaglutinacion",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "42",
+        "nombre_estudio": "Coombs indirecto",
+        "metodologia": "Inmunoaglutinacion",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "43",
+        "nombre_estudio": "Coproparasitoscopico (1m*)",
+        "metodologia": "Metodo directo",
+        "contenido": "N/A",
+        "tipo_muestra": "Heces frescas",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 49,
+    "estudios": [
+      {
+        "clave_estudio": "44",
+        "nombre_estudio": "Coproparasitoscópico (2m*)",
+        "metodologia": "Método directo",
+        "contenido": "N/A",
+        "tipo_muestra": "Heces frescas",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "46",
+        "nombre_estudio": "Etanol*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "48",
+        "nombre_estudio": "Creatinfosfoquinasa (CPK)*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero, Plasma",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "50",
+        "nombre_estudio": "Creatinina*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "53",
+        "nombre_estudio": "Creatinina orina 24 hrs.*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Cratinina urinaria, Volumen remitido, Creatinina en orina de 24 hrs",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 50,
+    "estudios": [
+      {
+        "clave_estudio": "54",
+        "nombre_estudio": "Beta 2 microglobulina en orina**",
+        "metodologia": "Quimioluminescence (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "55",
+        "nombre_estudio": "Crio globulinas",
+        "metodologia": "Precipitación en frío",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre coagulada",
+        "tiempo_entrega": "1 días hábiles"
+      },
+      {
+        "clave_estudio": "58",
+        "nombre_estudio": "Curva de tolerancia a la glucosa (2 horas)",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Glucosa basal, Glucosa 60 min, Glucosa 90 minutos, Glucosa 120 min",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "59",
+        "nombre_estudio": "Alcohol etílico en suero*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "60",
+        "nombre_estudio": "Dehidroepiandrosterona (DHEA)*",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      }
+    ]
+  },
+  {
+    "pagina": 51,
+    "estudios": [
+      {
+        "clave_estudio": "62",
+        "nombre_estudio": "Depuración de creatinina",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "Creatinina Sérica, Creatinina en Orina, Creatinina en Orina 24 hrs",
+        "tipo_muestra": "Suero, Orina de 24 hrs",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "63",
+        "nombre_estudio": "Deshidrogenasa láctica (DHL)*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "65",
+        "nombre_estudio": "Fenitoína*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 días hábiles"
+      },
+      {
+        "clave_estudio": "66",
+        "nombre_estudio": "Digoxina*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 52,
+    "estudios": [
+      {
+        "clave_estudio": "68",
+        "nombre_estudio": "Electroforesis de proteínas",
+        "metodologia": "Electroforesis",
+        "contenido": "Proteínas totales, Albumina, Fraccion alfa I, Fraccion alfa II, Fraccion beta, Fraccion gama",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "69",
+        "nombre_estudio": "Electrolitos sericos 3 (Na, K, Cl)",
+        "metodologia": "lón selectivo",
+        "contenido": "Na, K, Cl",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "70",
+        "nombre_estudio": "Aldolasa",
+        "metodologia": "Espectrofotometría",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "71",
+        "nombre_estudio": "Coproparasitoscópico 2 muestras*",
+        "metodologia": "Método directo",
+        "contenido": "N/A",
+        "tipo_muestra": "Heces frescas",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "73",
+        "nombre_estudio": "Eosinófilos en moco nasal 1 m",
+        "metodologia": "Tinción de Wright y microscopía",
+        "contenido": "N/A",
+        "tipo_muestra": "Extendido de moco nasal",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 53,
+    "estudios": [
+      {
+        "clave_estudio": "78",
+        "nombre_estudio": "Estriol serico no conjugado",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 dia hábil"
+      },
+      {
+        "clave_estudio": "81",
+        "nombre_estudio": "Aldosterona*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 dias hábiles"
+      },
+      {
+        "clave_estudio": "83",
+        "nombre_estudio": "Examen general de orina*",
+        "metodologia": "Espectrofotometria de reflectancia y microscopia",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "85",
+        "nombre_estudio": "Factor reumatoide*",
+        "metodologia": "Inmunoturbidimetria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 54,
+    "estudios": [
+      {
+        "clave_estudio": "86",
+        "nombre_estudio": "Fenobarbital*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 días hábiles"
+      },
+      {
+        "clave_estudio": "87",
+        "nombre_estudio": "Ferrítica*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "88",
+        "nombre_estudio": "Fibrinógeno*",
+        "metodologia": "Coagulométrico",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma citratado",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "92",
+        "nombre_estudio": "Fosfatasa acida total",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "93",
+        "nombre_estudio": "Fosfatasa ácida/fracción prostática",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Fosfatasa ácida, Fracción prostática",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      }
+    ]
+  },
+  {
+    "pagina": 55,
+    "estudios": [
+      {
+        "clave_estudio": "95",
+        "nombre_estudio": "Fostatasa alcalina (ALP)*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "97",
+        "nombre_estudio": "Fosforo*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "100",
+        "nombre_estudio": "Fructosamina**",
+        "metodologia": "Colorimetria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "101",
+        "nombre_estudio": "Gammaglutamil transpeptidasa (GGT)*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 56,
+    "estudios": [
+      {
+        "clave_estudio": "105",
+        "nombre_estudio": "Alfafetoproteína (AFP)*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "108",
+        "nombre_estudio": "Glucosa basal y postprandial",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Glucosa basal, Glucosa postprandial",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "109",
+        "nombre_estudio": "Glucosa sérica*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "111",
+        "nombre_estudio": "Glucosa urinaria",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 57,
+    "estudios": [
+      {
+        "clave_estudio": "113",
+        "nombre_estudio": "Gota gruesa (Plasmodium sp.)",
+        "metodologia": "Microscopia",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA, Extendido de sangre periferica",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "118",
+        "nombre_estudio": "Búsqueda de amiba en fresco",
+        "metodologia": "Microscopia",
+        "contenido": "N/A",
+        "tipo_muestra": "Heces frescas",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "119",
+        "nombre_estudio": "Grupo sanguíneo y factor Rh",
+        "metodologia": "Inmunoaglutinación",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "120",
+        "nombre_estudio": "Haptoglobina",
+        "metodologia": "Inmunonefelometria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "129",
+        "nombre_estudio": "Amilasa*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 58,
+    "estudios": [
+      {
+        "clave_estudio": "132",
+        "nombre_estudio": "Hidroxiprolina**",
+        "metodologia": "Espectrofotometria",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "12 días hábiles"
+      },
+      {
+        "clave_estudio": "133",
+        "nombre_estudio": "Hierro*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "134",
+        "nombre_estudio": "Hormona adrenocorticotrófica (ACTH)*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma / EDTA",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "137",
+        "nombre_estudio": "Hormona del crecimiento*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 59,
+    "estudios": [
+      {
+        "clave_estudio": "139",
+        "nombre_estudio": "Hormona foliculo estimulante (FSH)*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "141",
+        "nombre_estudio": "Hormona luteinizante (HL)*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "142",
+        "nombre_estudio": "Paratohormona (PTH, molécula intacta)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "144",
+        "nombre_estudio": "Inmunoglobulina A*",
+        "metodologia": "Inmunoturbidimetria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 60,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Inmunoglobulina G*",
+        "metodologia": "Inmunoturbidimetria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Inmunoglobulina M*",
+        "metodologia": "Inmunoturbidimetria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Alergeno individual especial",
+        "metodologia": "Inmunocap",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "5 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Amonio",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma / EDTA",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 61,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Lipasa serica",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Lipidos totales",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Androstenediona",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Litio*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 62,
+    "estudios": [
+      {
+        "clave_estudio": "168",
+        "nombre_estudio": "Fragilidad osmótica eritrocitaria",
+        "metodologia": "Espectrofotometria",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "169",
+        "nombre_estudio": "Morfia",
+        "metodologia": "Inmunoensayo cromatográfico",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "170",
+        "nombre_estudio": "PCR Detección Mycobacterium tuberculosis*",
+        "metodologia": "PCR Tiempo Real",
+        "contenido": "M. tuberculosis, Micobacterias no tuberculosis",
+        "tipo_muestra": "Expectoración*, Lavado bronquial*, Orina ocasional, Líquidos orgánicos sin hemolisis, Sangre/EDTA, Biopsia en solución salina* y/o bloques de parafina, Cultivo sólido en medio Löwenstein-Jensen",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "171",
+        "nombre_estudio": "Nitrógeno ureico sérico (BUN)",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 63,
+    "estudios": [
+      {
+        "clave_estudio": "172",
+        "nombre_estudio": "Nitrógeno ureico en orina 24 hrs",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "Nitrógeno ureico urinario, Volumen remitido, Nitrógeno ureico orina 24 hrs",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "174",
+        "nombre_estudio": "Anfetaminas",
+        "metodologia": "Inmunoensayo cromatográfico",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "175",
+        "nombre_estudio": "Osmolaridad sérica",
+        "metodologia": "Osmometria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "176",
+        "nombre_estudio": "Osmolaridad urinaria",
+        "metodologia": "Espectrofotometria automatizada/ electrodo selectivo",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "178",
+        "nombre_estudio": "Peptido C",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 64,
+    "estudios": [
+      {
+        "clave_estudio": "180",
+        "nombre_estudio": "Perfil de enzimas cardiacas (Infarto Agudo de Miocardio)",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "CK- MB, DHL, CPK, TGO, TGP",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Cariotipo en sangre periférica (con fotografia)*",
+        "metodologia": "Tinción de Bandas GTG",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre periférica",
+        "tiempo_entrega": "20 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti ameba IgG (Serameba)",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Química sanguínea 19 elementos",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Glucosa sérica, Urea sérica, Nitrógeno ureico sérico (BUN), Creatinina sérica, Ácido úrico sérico, Colesterol total, Triglicéridos, Bilirrubina total, Bilirrubina conjugada (Directa), Deshidrogenasa láctica (DHL), Fosfatasa alcalina (ALP), Proteínas totales, Potasio sérico, Albumina sérica, Globulina, Relación albumina- globulina, Calcio en suero, Fósforo sérico, Sodio sérico, Bilirrubina no conjugada (Indirecta), Aspartato amino transferasa (TGO)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil Torch IgG, IgM",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.), Inmunoensayo enzimático (ELISA)",
+        "contenido": "Ac. Anti Rubeola IgG e IgM, Citomegalovirus IgG e IgM, Herpes I IgG e IgM, Herpes II IgG e IgM, Toxoplasma IgG e IgM",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 65,
+    "estudios": [
+      {
+        "clave_estudio": "199",
+        "nombre_estudio": "Perfil Torch IgM",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.), Inmunoensayo enzimático (ELISA)",
+        "contenido": "Ac. Anti Rubeola IgM, Citomegalovirus IgM, Herpes I IgM, Herpes II IgM, Toxoplasma IgM",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "200",
+        "nombre_estudio": "Electrolitos urinarios 3 (Na, K, Cl)",
+        "metodologia": "Ión selectivo",
+        "contenido": "Na, K, Cl",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "214",
+        "nombre_estudio": "Plomo en sangre*",
+        "metodologia": "Espectrometría de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "215",
+        "nombre_estudio": "Subpoblación de linfocitos CD4/CD8*",
+        "metodologia": "Citometría de flujo",
+        "contenido": "Leucocitos totales, Linfocitos totales, Linfocitos supresores CD3/CD8, Linfocitos cooperadores CD3/CD4, Linfocitos totales CD3, Relación CD4/CD8",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "5 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 66,
+    "estudios": [
+      {
+        "clave_estudio": "223",
+        "nombre_estudio": "Primidona (Mysoline)**",
+        "metodologia": "Inmunofluorometria polarizada (FPIA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "6 días hábiles"
+      },
+      {
+        "clave_estudio": "225",
+        "nombre_estudio": "Prolactina*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "226",
+        "nombre_estudio": "Proteina C reactiva*",
+        "metodologia": "Inmunoturbidimetria",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "227",
+        "nombre_estudio": "Proteina de Bence Jones",
+        "metodologia": "Termo precipitación",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "229",
+        "nombre_estudio": "Ac. Anti- Chlamydia trachomatis IgA",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      }
+    ]
+  },
+  {
+    "pagina": 67,
+    "estudios": [
+      {
+        "clave_estudio": "231",
+        "nombre_estudio": "Proteínas totales séricas",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Proteínas totales, Albumina, Globulina, Relación albumina- globulina",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "238",
+        "nombre_estudio": "Reacciones febriles",
+        "metodologia": "Inmunoaglutinación",
+        "contenido": "Tifico O, Tifico H, Paratifico A, Paratifico B, Huddleston, Proteus OX19",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "240",
+        "nombre_estudio": "Renina",
+        "metodologia": "Quimioluminescence (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma / EDTA",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "243",
+        "nombre_estudio": "Ac. Anti- Herpes I IgG, IgM",
+        "metodologia": "Quimioluminescence (C.M.I.A.)",
+        "contenido": "Ac. Anti- Herpes I IgG, Ac. Anti Herpes I IgM",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 68,
+    "estudios": [
+      {
+        "clave_estudio": "245",
+        "nombre_estudio": "Reticulocitos",
+        "metodologia": "Citoquímico automatizado",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "246",
+        "nombre_estudio": "Rotavirus en heces",
+        "metodologia": "Inmunoensayo cromatográfico",
+        "contenido": "N/A",
+        "tipo_muestra": "Heces frescas",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "248",
+        "nombre_estudio": "Sangre oculta en heces (1 muestra)",
+        "metodologia": "Reacción de Guayaco",
+        "contenido": "N/A",
+        "tipo_muestra": "Heces frescas",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "250",
+        "nombre_estudio": "Sodio sérico*",
+        "metodologia": "Ion selectivo",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 69,
+    "estudios": [
+      {
+        "clave_estudio": "251",
+        "nombre_estudio": "Sodio en orina de 24 hrs",
+        "metodologia": "lón selectivo",
+        "contenido": "Sodio urinario, Volumen remitido, Sodio en orina de 24 hrs",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "252",
+        "nombre_estudio": "Ac. Anti- Cisticerco IgG",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero, LCR",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "253",
+        "nombre_estudio": "Somatomedina C (IGF- 1)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "254",
+        "nombre_estudio": "Detección de Cryptosporidium",
+        "metodologia": "Tinción de Kinyoun",
+        "contenido": "N/A",
+        "tipo_muestra": "Heces",
+        "tiempo_entrega": "1 día hábiles"
+      },
+      {
+        "clave_estudio": "256",
+        "nombre_estudio": "Testosterona total*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 70,
+    "estudios": [
+      {
+        "clave_estudio": "258",
+        "nombre_estudio": "Ac. Anti- Herpes II IgG, IgM",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Ac. Anti- Herpes II IgG, Ac. Anti- Herpes II IgM",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "259",
+        "nombre_estudio": "Tiempo de protrombina (TP)*",
+        "metodologia": "Coagulométrico",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma citratado",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "261",
+        "nombre_estudio": "Tiempo de trombina (TT)*",
+        "metodologia": "Coagulométrico",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma citratado",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "262",
+        "nombre_estudio": "Tiempo de tromboplastina parcial activada (APTT)*",
+        "metodologia": "Coagulométrico",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma citratado",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 71,
+    "estudios": [
+      {
+        "clave_estudio": "265",
+        "nombre_estudio": "Tinción de Gram*",
+        "metodologia": "Microscopia",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreciones diversas, Líquidos orgánicos, Extendido previamente fijado",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "269",
+        "nombre_estudio": "Tinción Tinta china",
+        "metodologia": "Microscopia",
+        "contenido": "N/A",
+        "tipo_muestra": "LCR",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "270",
+        "nombre_estudio": "Tinción Ziehl Neelsen",
+        "metodologia": "Microscopia",
+        "contenido": "N/A",
+        "tipo_muestra": "Expectoración",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "271",
+        "nombre_estudio": "Tiroglobulina",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 72,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Aspartato aminotransferasa (AST o TGO) *",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Alanina aminotransferasa (ALT o TGP) *",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Transferrina",
+        "metodologia": "Texto",
+        "contenido": "Texto",
+        "tipo_muestra": "Texto",
+        "tiempo_entrega": "00 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 73,
+    "estudios": [
+      {
+        "clave_estudio": "282",
+        "nombre_estudio": "Trijodotironina total T3 (T3 Total) *",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "283",
+        "nombre_estudio": "Hormona estimulante de tiroides (TSH neonatal) *",
+        "metodologia": "Fluorometria",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre seca en papel de filtro",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "284",
+        "nombre_estudio": "Urea*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "286",
+        "nombre_estudio": "V.D.R.L. (reacciones serolucticas)",
+        "metodologia": "Floculación (RPR)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 74,
+    "estudios": [
+      {
+        "clave_estudio": "288",
+        "nombre_estudio": "Velocidad de eritrosedimentación",
+        "metodologia": "Sedimentación globular",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "291",
+        "nombre_estudio": "Vitamina B12*",
+        "metodologia": "Sedimentación globular",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "293",
+        "nombre_estudio": "Western blot HIV*",
+        "metodologia": "Enzimoinmunoensayo",
+        "contenido": "Anticuerpos anti GP 160 (ENV), Anticuerpos anti GP 120 (ENV), Anticuerpos anti P 66, Anticuerpos anti P 55, Anticuerpos anti P 51, Anticuerpos anti GP 41 (ENV), Anticuerpos anti P 39, Anticuerpos anti P 31, Anticuerpos anti P 24 (GAG), Anticuerpos anti P 17, Anticuerpos anti HIV- 2",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "295",
+        "nombre_estudio": "Zinc en orina",
+        "metodologia": "Espectrometría de absorción atómica de llama (FAAS)",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "4 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 75,
+    "estudios": [
+      {
+        "clave_estudio": "298",
+        "nombre_estudio": "Anticoagulante circulatorio lúpico*",
+        "metodologia": "Coagulométrico",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma citratado",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "299",
+        "nombre_estudio": "Ac. Anti Histoplasma Capsulatum IgM**",
+        "metodologia": "Aglutinción en latex (AL)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "10 dias habiles"
+      },
+      {
+        "clave_estudio": "300",
+        "nombre_estudio": "Ac. Anti SCL- 70 IgG",
+        "metodologia": "Inmunoensayo enzimatico (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "304",
+        "nombre_estudio": "Ac. Anti Brucella IgG (2 Mercapto- etanol)",
+        "metodologia": "Inmunoprecipitación",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 76,
+    "estudios": [
+      {
+        "clave_estudio": "306",
+        "nombre_estudio": "Calcio ionizado",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "307",
+        "nombre_estudio": "Ac. Anti ENA IgG (Ac. RO, LA, SM, RNP)",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "SSA (Ro), SSB (La), Sm, RNP",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "311",
+        "nombre_estudio": "Antígeno Específico Fracción Libre (FPSA)*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "313",
+        "nombre_estudio": "Barbituricos",
+        "metodologia": "Inmunoensayo cromatográfico",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "314",
+        "nombre_estudio": "Triyodotironina libre T3 (T3 libre) *",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 77,
+    "estudios": [
+      {
+        "clave_estudio": "317",
+        "nombre_estudio": "Osteocalcina**",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "321",
+        "nombre_estudio": "Triple marcador",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Estriol sérico no conjugado, Alfafetoproteína, Hormona gonadotropina coriónica humana fracción beta",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "322",
+        "nombre_estudio": "Proteína C de la coagulación*",
+        "metodologia": "Coagulométrico",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma citratado",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "323",
+        "nombre_estudio": "Proteína S de la coagulación*",
+        "metodologia": "Coagulométrico",
+        "contenido": "N/A",
+        "tipo_muestra": "Plasma citratado",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 78,
+    "estudios": [
+      {
+        "clave_estudio": "327",
+        "nombre_estudio": "Opiáceos",
+        "metodologia": "Inmunoensayo cromatográfico",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "330",
+        "nombre_estudio": "Ac. Anti Dengue IgG, IgM*",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "Dengue IgG, Dengue IgM",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "331",
+        "nombre_estudio": "Ac. Anti Trypanosoma cruzi (IgG)",
+        "metodologia": "Quimioluminescence (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "336",
+        "nombre_estudio": "Biopsia de 0.1 - 1.0 cm. (Endoscópicas)",
+        "metodologia": "Tinción hematoxilina- eosina (HE), visualización microscópica de luz",
+        "contenido": "N/A",
+        "tipo_muestra": "Biopsia",
+        "tiempo_entrega": "5 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 79,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Biopsia de 1.0 - 4.0 cm. (Chica)",
+        "metodologia": "Tinción hematoxilina- eosina (HE), visualización microscópica de luz",
+        "contenido": "N/A",
+        "tipo_muestra": "Biopsia",
+        "tiempo_entrega": "5 días hábiles"
+      },
+      {
+        "clave_estudio": "338",
+        "nombre_estudio": "Acido delta amino levulinico (DAL) orina**",
+        "metodologia": "Espectrofotometría",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "10 días hábiles"
+      },
+      {
+        "clave_estudio": "339",
+        "nombre_estudio": "Ac. Anti- Fosfolipidos IgG, IgM",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "Fosfolipido IgG, Fosfolipido IgM",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "340",
+        "nombre_estudio": "Biopsia mayor de 4.0 cm. (Mediana)",
+        "metodologia": "Tinción hematoxilina- eosina (HE), visualización microscópica de luz",
+        "contenido": "N/A",
+        "tipo_muestra": "Biopsia",
+        "tiempo_entrega": "5 días hábiles"
+      },
+      {
+        "clave_estudio": "342",
+        "nombre_estudio": "Antibiograma concentración mínima inhibitoria*",
+        "metodologia": "Turbidimetría, Colorimetría",
+        "contenido": "N/A",
+        "tipo_muestra": "Placa de Agar Sangre con la bacteria aislada",
+        "tiempo_entrega": "3 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 80,
+    "estudios": [
+      {
+        "clave_estudio": "343",
+        "nombre_estudio": "Analisis bacteriológico de agua potable",
+        "metodologia": "Cultivo e identificación en medios selectivos",
+        "contenido": "Coliformes Totales, Escherichia coli, Mesofílicos aerobios, Salmonella sp, Hongos y levaduras",
+        "tipo_muestra": "Agua potable",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "345",
+        "nombre_estudio": "Cultivo anaerobio de:",
+        "metodologia": "Cultivo en medios selectivos para anaerobios",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreciones diversas",
+        "tiempo_entrega": "7 días hábiles"
+      },
+      {
+        "clave_estudio": "346",
+        "nombre_estudio": "Cultivo de absceso*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreciones diversas",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "347",
+        "nombre_estudio": "Cultivo de cavidad abdominal*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreción de cavidad abdominal",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "348",
+        "nombre_estudio": "Cultivo de esputo*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Expectoración",
+        "tiempo_entrega": "3 días hábiles"
+       },
+      {
+
+
+[
+  {
+    "pagina": 81,
+    "estudios": [
+      {
+        "clave_estudio": "349",
+        "nombre_estudio": "Cultivo de exudado cérvico vaginal*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreción endocervical y/o vaginal en medio de transporte, Fresco de secreción vaginal en solución salina, Laminilla previamente fijada",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "350",
+        "nombre_estudio": "Ac. Anti Helicobacter pylori IgG",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "351",
+        "nombre_estudio": "Cultivo de exudado conjuntival*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreción de la conjuntiva en medio de transporte",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "352",
+        "nombre_estudio": "Cultivo de exudado nasal*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreción nasal en medio de transporte",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "353",
+        "nombre_estudio": "Cultivo de exudado faríngeo*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Exudado faríngeo en medio de transporte",
+        "tiempo_entrega": "3 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 82,
+    "estudios": [
+      {
+        "clave_estudio": "355",
+        "nombre_estudio": "Cultivo de exudado uretral*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreción uretral en medio de transporte, Laminilla previamente fijada",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "356",
+        "nombre_estudio": "Cultivo de exudado vulvar*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreción vulvar en medio de transporte, Laminilla previamente fijada",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "358",
+        "nombre_estudio": "Cultivo de líquido bronquial*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Líquido bronquial",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "359",
+        "nombre_estudio": "Cultivo de líquido cefalorraquídeo*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "LCR",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "361",
+        "nombre_estudio": "Ac. Anti-Herpes I IgG",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 83,
+    "estudios": [
+      {
+        "clave_estudio": "363",
+        "nombre_estudio": "Cultivo de liquido pleural*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Líquido pleural",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "364",
+        "nombre_estudio": "Cultivo de liquido sinovial*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Líquido sinovial",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "365",
+        "nombre_estudio": "Cultivo de Mycobacterium tuberculosis",
+        "metodologia": "Cultivo en medios específicos",
+        "contenido": "N/A",
+        "tipo_muestra": "Líquidos corporales, Expectoración",
+        "tiempo_entrega": "45 días hábiles"
+      },
+      {
+        "clave_estudio": "366",
+        "nombre_estudio": "Cultivo de Neisseria Gonorrhoeae*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreción en medio de transporte",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "367",
+        "nombre_estudio": "Cultivo de orina (Urocultivo)*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "3 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 84,
+    "estudios": [
+      {
+        "clave_estudio": "368",
+        "nombre_estudio": "Cultivo de punta de catéter*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Punta de Catéter",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "370",
+        "nombre_estudio": "Cultivo de secreción de herida*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreción de herida en medio de transporte",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "371",
+        "nombre_estudio": "Cultivo de secreción ótica*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreción ótica en medio de transporte",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "372",
+        "nombre_estudio": "Ac. Anti-Herpes I IgM",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "373",
+        "nombre_estudio": "Cultivo de semen (Espermocultivo)*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Semen",
+        "tiempo_entrega": "3 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 85,
+    "estudios": [
+      {
+        "clave_estudio": "374",
+        "nombre_estudio": "Cultivo de Vibrio cholerae",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Heces",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "375",
+        "nombre_estudio": "Cultivo de:",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreciones diversas, Secreciones diversas en medio de transporte",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "376",
+        "nombre_estudio": "Cultivo micológico",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "N/A",
+        "tipo_muestra": "Escamas (piel o uñas), Cabello",
+        "tiempo_entrega": "30 días hábiles"
+      },
+      {
+        "clave_estudio": "377",
+        "nombre_estudio": "Hemocultivo Anaerobio*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "Texto",
+        "tipo_muestra": "Sangre en frasco para hemocultivo anaerobio",
+        "tiempo_entrega": "00 días hábiles"
+      },
+      {
+        "clave_estudio": "383",
+        "nombre_estudio": "Ac. Anti- Herpes II IgG",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 86,
+    "estudios": [
+      {
+        "clave_estudio": "390",
+        "nombre_estudio": "Arsénico en orina",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "391",
+        "nombre_estudio": "Cadmio en orina",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "392",
+        "nombre_estudio": "Prueba de exclusión de paternidad (2 muestras) *",
+        "metodologia": "PCR- Electroforesis capilar",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA*, Papel tamiz con sangre seca, Raspado de carrillos* en medio de transporte",
+        "tiempo_entrega": "10 días hábiles"
+      },
+      {
+        "clave_estudio": "394",
+        "nombre_estudio": "Ac. Anti- Herpes II IgM",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "403",
+        "nombre_estudio": "Identificación de Mycoplasma sp y Ureaplasma sp",
+        "metodologia": "Colorimétrico",
+        "contenido": "N/A",
+        "tipo_muestra": "Secreciones genitales en medio UMMt, Semen, Orina",
+        "tiempo_entrega": "3 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 87,
+    "estudios": [
+      {
+        "clave_estudio": "408",
+        "nombre_estudio": "Ac. Anti Rickettsias typhi IgG, IgM**",
+        "metodologia": "Immunofluorescencia",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "12 días hábiles"
+      },
+      {
+        "clave_estudio": "409",
+        "nombre_estudio": "Cobalto en sangre",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "410",
+        "nombre_estudio": "FibroTest",
+        "metodologia": "Algoritmo combinado",
+        "contenido": "Gammaglutamil transferasa (GGT), Haptoglobina, Alanina aminotransferasa (ALT/TGP), Apolipoproteina A1, Bilirrutina total, Alfa 2 macroglobulina",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "411",
+        "nombre_estudio": "Fibromax (NASH- FibroTest)",
+        "metodologia": "Algoritmo combinado",
+        "contenido": "Alfa 2 macroglobulina, Haptoglobina, Apolipoproteinas A1, Bilirrubina total, Gammaglutamil transferasa, Alanina aminotransferasa (ALT/TGP), Aspartato aminotransferasa (AST/TGO), Glucosa, Colesterol, Trigliceridos",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 88,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Cultivo de Pseudomonas aeruginosa en agua de uso recreativo",
+        "metodologia": "Medio selectivo y microscopia",
+        "contenido": "N/A",
+        "tipo_muestra": "Agua de uso recreativo",
+        "tiempo_entrega": "7 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti- Virus influenza tipo A y B**",
+        "metodologia": "Fijación del complemento",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "12 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Anticuerpos Anti- HIV*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil Tiroideo I",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Yodo proteico (IP), Tiroxina total (T4), Yodo butanolico (IB), Tiroxina libre (T4 libre), T4 Yodo, índice de Tiroxina libre (ITL), T- Uptake (TU), Triyodotironina total T3, Triyodotironina libre T3, Hormona estimulante del tiroides",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Oxalato en orina de 24 hrs",
+        "metodologia": "Espectrofotometria",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 89,
+    "estudios": [
+      {
+        "clave_estudio": "425",
+        "nombre_estudio": "Ac. Anti Microsomales totales (Peroxidasa)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "431",
+        "nombre_estudio": "Cobre en orina*",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "N/A",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "432",
+        "nombre_estudio": "Cianuro cualitativo**",
+        "metodologia": "Micro difusión de gases (Cámara de Conway)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero, Orina",
+        "tiempo_entrega": "5 días hábiles"
+      },
+      {
+        "clave_estudio": "436",
+        "nombre_estudio": "Ac. Anti- Mitocondria",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "N/A",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 90,
+    "estudios": [
+      {
+        "clave_estudio": "439",
+        "nombre_estudio": "Cromo en sangre",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA, Suero (previamente separado)",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "442",
+        "nombre_estudio": "Cromo en orina",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "N/A",
+        "tipo_muestra": "Sangre total / EDTA, Suero (previamente separado)",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Mercurio en sangre",
+        "metodologia": "Espectrometria de absorción atómica por generación de hidruros (VG- AAS)",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "15 días hábiles"
+      },
+      {
+        "clave_estudio": "446",
+        "nombre_estudio": "Ac. Anti Musculo liso",
+        "metodologia": "Inmunofluorescencia indirecta (IFA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "458",
+        "nombre_estudio": "N- Telopéptidos**",
+        "metodologia": "Quimiolumincencia",
+        "contenido": "NA",
+        "tipo_muestra": "Orina de 2 hrs",
+        "tiempo_entrega": "10 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 91,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Mycoplasma pneumoniae IgG, IgM",
+        "metodologia": "Inmunoensayo enzimatico (ELISA)",
+        "contenido": "Mycoplasma IgG, Mycoplasma IgM",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 dias habiles"
+      },
+      {
+        "clave_estudio": "473",
+        "nombre_estudio": "Zinc en suero",
+        "metodologia": "Espectrometria de absorción atómica de llama (FAAS)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "4 dias habiles"
+      },
+      {
+        "clave_estudio": "474",
+        "nombre_estudio": "Niquel en sangre",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "4 dias habiles"
+      },
+      {
+        "clave_estudio": "476",
+        "nombre_estudio": "Inmunoglobulina D**",
+        "metodologia": "Inmunodifusión radial (RID)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "8 dias habiles"
+      },
+      {
+        "clave_estudio": "477",
+        "nombre_estudio": "Perfil de Catecolaminas orina 24 hrs",
+        "metodologia": "Inmunoensayo enzimatico (ELISA)",
+        "contenido": "Catecolaminas Totales, Adrenalina, Noradrenalina, Dopamina",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "7 dias habiles"
+      }
+    ]
+  },
+  {
+    "pagina": 92,
+    "estudios": [
+      {
+        "clave_estudio": "478",
+        "nombre_estudio": "Aldosterona en orina",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "490",
+        "nombre_estudio": "Ac. Anti Epstein barr Ag. nuclear IgG*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "493",
+        "nombre_estudio": "Ac. Anti Epstein barr Ag. temprano IgG",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "493",
+        "nombre_estudio": "Anti - ANA (IgG)",
+        "metodologia": "Inmunoensayo enzimatico (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero y plasma",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 93,
+    "estudios": [
+      {
+        "clave_estudio": "503",
+        "nombre_estudio": "Prenupciales (grupo- RH, VDRL)",
+        "metodologia": "Inmunoaglutinación, Floculación (RPR)",
+        "contenido": "Grupo sanguíneo y factor Rh. y V.D.R.L. (reacciones serolucíticas)",
+        "tipo_muestra": "Suero y Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "504",
+        "nombre_estudio": "Ac. Anti Parotiditis IgG, IgM",
+        "metodologia": "Parotiditis IgG. / Parotiditis IgM",
+        "contenido": "Suero",
+        "tipo_muestra": "Suero y Sangre total / EDTA",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "516",
+        "nombre_estudio": "Ácido úrico sérico*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "529",
+        "nombre_estudio": "Ac. Anti Borrelia Burgdorferi LCR (IgG, IgM enf. Lyme)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Ac. Anti Borrelia Burgdorferi LCR IgG. / Ac. Anti Borrelia Burgdorferi LCR IgM",
+        "tipo_muestra": "LCR",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 94,
+    "estudios": [
+      {
+        "clave_estudio": "532",
+        "nombre_estudio": "Electroforesis de proteínas en líquido cefarrolaquídeo**",
+        "metodologia": "Electroforesis",
+        "contenido": "NA",
+        "tipo_muestra": "LCR",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "535",
+        "nombre_estudio": "Depuración de urea",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Nitrógeno ureico urinario. Urea urinaria. Volumen remitido. Depuración de urea. Urea",
+        "tipo_muestra": "Orina de 24 hrs / Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "537",
+        "nombre_estudio": "Cultivo exudado prepucio*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "NA",
+        "tipo_muestra": "Exudado genital en medio de transporte",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "539",
+        "nombre_estudio": "Eritropoyetina (EPO)**",
+        "metodologia": "Quimioluminiscencia",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "4 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 95,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Sarampion IgG, IgM",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "Sarampion IgG. Sarampion IgM",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Borrelia burgdorferi (IgG e IgM enf. Lyme)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Ac. Anti Borrelia burgdorferi (IgG e IgM enf. Lyme)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "560",
+        "nombre_estudio": "Ac. Anti Toxoplasma Gondii IgM",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "562",
+        "nombre_estudio": "Electroforesis de proteínas en orina",
+        "metodologia": "Electroforesis",
+        "contenido": "Proteinas Urinarias. Proteinas totales en orina de 24h. Volumen remitido. Proteinas totales en orina. Albumina en orina. Alfa 1. Alfa 2. Beta. Gamma",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "6 días hábiles"
+      },
+      {
+        "clave_estudio": "564",
+        "nombre_estudio": "Antígeno CA 27- 29**",
+        "metodologia": "Inmunoensayo",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "8 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 96,
+    "estudios": [
+      {
+        "clave_estudio": "567",
+        "nombre_estudio": "Serotonina en suero",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "568",
+        "nombre_estudio": "Actividad tríptica en heces",
+        "metodologia": "Potenciométrico utilizando sustratos sintéticos",
+        "contenido": "NA",
+        "tipo_muestra": "Heces frescas",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "571",
+        "nombre_estudio": "Ac. Anti Citoplasma de neutrófilos (P y C ANCA)",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "MPO. PR3",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "574",
+        "nombre_estudio": "Ac. Anti Smith IgG (Sm)",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "575",
+        "nombre_estudio": "Ac. Anti Proteína P- Ribosomal (totales)**",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "10 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 97,
+    "estudios": [
+      {
+        "clave_estudio": "577",
+        "nombre_estudio": "PCR Detección cromosoma filadelfia BCR/ABL t(9;22)**",
+        "metodologia": "Reacción en cadena de la polimerasa",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "6 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "PCR Carga viral de Hepatitis C (HCV)*",
+        "metodologia": "RT- PCR Tiempo Real",
+        "contenido": "NA",
+        "tipo_muestra": "Plasma/EDTA",
+        "tiempo_entrega": "6 dias hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Pyrilinks- D (DPD, desoxipiridolina)**",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "8 dias hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Plaquetas totales (Ac. Autologas y alogénicas)**",
+        "metodologia": "Citometria de flujo",
+        "contenido": "Ac. anti- plaquetas Autólogas y Alogénicas",
+        "tipo_muestra": "Suero. Sangre total / Heparina",
+        "tiempo_entrega": "6 dias hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Papanicolaou en líquidos orgánicos*",
+        "metodologia": "Tinción de Papanicolaou",
+        "contenido": "NA",
+        "tipo_muestra": "Líquidos orgánicos. Extendido citológico previamente fijado",
+        "tiempo_entrega": "5 dias hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 98,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti SSA (Ro)",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Inmunoglobulina A subclases",
+        "metodologia": "Inmunonefelometria",
+        "contenido": "IgA subclase 1. IgA subclase 2",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "12 dias habiles"
+      },
+      {
+        "clave_estudio": "592",
+        "nombre_estudio": "Ac. Anti Aspergillus totales (Flavus,Niger, Fumigatus)**",
+        "metodologia": "inmunodifusión",
+        "contenido": "Aspergillus flavus. Aspergillus fumigatus. Aspergillus niger",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "12 dias habiles"
+      },
+      {
+        "clave_estudio": "595",
+        "nombre_estudio": "Ac. Anti SSB (La)",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "599",
+        "nombre_estudio": "Ac. Anti Tiroglobulina totales (Tg)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 99,
+    "estudios": [
+      {
+        "clave_estudio": "601",
+        "nombre_estudio": "Ac. Anti Tiroides TPO,TG",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "603",
+        "nombre_estudio": "Ac. Anti Toxoplasma Gondii IgG",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 dias habiles"
+      },
+      {
+        "clave_estudio": "604",
+        "nombre_estudio": "Ac. Anti Toxoplasma Gondii IgM",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 dias habiles"
+      },
+      {
+        "clave_estudio": "605",
+        "nombre_estudio": "Ac. Anti Treponema pallidum totales",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 dias habiles"
+      },
+      {
+        "clave_estudio": "606",
+        "nombre_estudio": "Ac. Anti Varicela IgG, IgM**",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "6 dias habiles"
+      }
+    ]
+  },
+  {
+    "pagina": 100,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Antiestreptolisinas (AEL)*",
+        "metodologia": "Inmunoturbidimetria",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Antigeno carcinoembrionario (CEA)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Antigeno prostático específico (PSA)*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Antitrombina III*",
+        "metodologia": "Cromo génico",
+        "contenido": "NA",
+        "tipo_muestra": "Plasma citratado",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 101,
+    "estudios": [
+      {
+        "clave_estudio": "618",
+        "nombre_estudio": "Baciloscopia (1m*)",
+        "metodologia": "Tinción de Kinyoun",
+        "contenido": "NA",
+        "tipo_muestra": "Expectoración",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "619",
+        "nombre_estudio": "Baciloscopia (2m*)",
+        "metodologia": "Tinción de Kinyoun",
+        "contenido": "NA",
+        "tipo_muestra": "Expectoración",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "620",
+        "nombre_estudio": "Baciloscopia (3m*)",
+        "metodologia": "Tinción de Kinyoun",
+        "contenido": "NA",
+        "tipo_muestra": "Expectoración",
+        "tiempo_entrega": "1 días hábil"
+      },
+      {
+        "clave_estudio": "621",
+        "nombre_estudio": "Ácido valproico (Valproato, Depakene)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      }
+    ]
+  },
+  {
+    "pagina": 102,
+    "estudios": [
+      {
+        "clave_estudio": "623",
+        "nombre_estudio": "Benzodiacepinas",
+        "metodologia": "Inmunoensayo cromatográfico",
+        "contenido": "NA",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "624",
+        "nombre_estudio": "Beta 2 microglobulina suero",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "631",
+        "nombre_estudio": "Antígeno CA 125*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "632",
+        "nombre_estudio": "Antígeno CA 15- 3",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 103,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Antigeno CA 19- 9",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Calcio en suero*",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Quimica sanguinea 24 elementos",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "Glucosa serica. Urea serica. Nitrogeno ureico serico (BUN). Creatinina serica. Acido urico serico. Colesterol total. Trigliceridos. Colesterol de alta densidad (HDL). Colesterol de baja densidad (LDL). Colesterol de muy baja densidad (VLDL). Indice aterogenico. Bilirrubina total. Bilirrubina conjugada (Directa). Bilirrubina no conjugada (Indirecta). Aspartato aminotransferasa (AST o TGO). Alanina aminotransferasa (ALT o TGP). Gammaglutamil transpeptidasa (GGT). Fosfatasa alcalina (ALP). Deshidrogenasa lactica (DHL). Proteinas totales. Albumina serica. Globulina. Relacion albumina-globulina. Hierro serico. Amilasa en suero. Calcio en suero. Fosforo serico. Riesgo Aterogenico I. Riesgo Aterogenico II. Riesgo Aterogenico III",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Biometria hematica*",
+        "metodologia": "Citometria de flujo, Espectrofotometria y Microscopia optica",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 104,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Colesterol de muy baja densidad (VLDL)",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Apolipoproteínas A1 y B",
+        "metodologia": "Inmunonefelometria",
+        "contenido": "Apolipoproteínas A1. Apolipoproteínas B. Relación Apo A1/ApoB. Relación Apo B/Apo A1",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Fenilalanina",
+        "metodologia": "Fluorometria",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre seca en papel de filtro",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Azúcares reductores",
+        "metodologia": "Método de Benedict (Reducción de cobre)",
+        "contenido": "NA",
+        "tipo_muestra": "Heces frescas",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Tiroxina neonatal (T4 neonatal)*",
+        "metodologia": "Fluorometria",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre seca en papel de filtro",
+        "tiempo_entrega": "3 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 105,
+    "estudios": [
+      {
+        "clave_estudio": "839",
+        "nombre_estudio": "Ac. Anti Cardiolipina IgG",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "840",
+        "nombre_estudio": "Ac. Anti Cardiolipina IgM",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "844",
+        "nombre_estudio": "Ac. Anti Mycoplasma pneumoniae IgG",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "845",
+        "nombre_estudio": "Ac. Anti Mycoplasma pneumoniae IgM",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 106,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Lamotrigina**",
+        "metodologia": "Cromatografia liquida/Tandem masas (LC- MS/MS)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "10 dias habiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Cardiolipina IgG, IgM",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Ac. Anti Cardiolipina IgG. Ac. Anti Cardiolipina IgM",
+        "tiempo_entrega": "2 dias habiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Hemoglobina glicosilada*",
+        "metodologia": "Fotométrico",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Amilasa en orina de 24 hrs",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "NA",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 107,
+    "estudios": [
+      {
+        "clave_estudio": "1006",
+        "nombre_estudio": "Alfa - 1 antitripsina",
+        "metodologia": "Inmunonefelometría",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1013",
+        "nombre_estudio": "Fracción prostática",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "1018",
+        "nombre_estudio": "Glucosa posprandial",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1020",
+        "nombre_estudio": "Metanefrinas plasmáticas totales",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Plasma / EDTA",
+        "tiempo_entrega": "4 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 108,
+    "estudios": [
+      {
+        "clave_estudio": "1041",
+        "nombre_estudio": "Benzodiacepinas en suero**",
+        "metodologia": "Inmunoensayo enzimático multiplicado (EMIT)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "5 días hábiles"
+      },
+      {
+        "clave_estudio": "1060",
+        "nombre_estudio": "Adrenalina en orina",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Orina de 24 horas",
+        "tiempo_entrega": "7 días hábiles"
+      },
+      {
+        "clave_estudio": "1063",
+        "nombre_estudio": "Ac. Anti Sarampión IgG",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 109,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Sarampión IgM",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Paul Bunell (Ac. Heterofilos)",
+        "metodologia": "Immunocromatografia de flujo lateral",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Aminoácidos en orina**",
+        "metodologia": "Cromatografia líquida de alta resolución (HPLC)",
+        "contenido": "Alanina. Glicina. Arginina. Valina. Taurina. Leucina. Isoleucina. Treonina. Serina. Prolina. Asparraguina. Acido aspártico. Metionina, 4- hidroxiprolina. Acido glutámico. Fenilalanina. Glutamina. Ornitina. Lisina. Histidina. Tirosina. Triptófano",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "14 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Nicotina (Cotinina) suero",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      }
+    ]
+  },
+  {
+    "pagina": 110,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Cadmio en sangre",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "1091",
+        "nombre_estudio": "Ac. Anti Dengue IgG*",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "1092",
+        "nombre_estudio": "Ac. Anti Dengue IgM*",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "1093",
+        "nombre_estudio": "Ac. Anti Insulina IgG",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1095",
+        "nombre_estudio": "Ac. Anti Parotiditis IgG",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 111,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Parotiditis IgM",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1101",
+        "nombre_estudio": "Vitamina D*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1104",
+        "nombre_estudio": "Biopsia por aspiración con aguja (BAAF)",
+        "metodologia": "Tinción de Papanicolaou / Tinción hematoxilina-eosina (HE)",
+        "contenido": "NA",
+        "tipo_muestra": "Biopsia por aspiración con aguja fina (BAAF)",
+        "tiempo_entrega": "5 días hábiles"
+      },
+      {
+        "clave_estudio": "1105",
+        "nombre_estudio": "Cariotipo en sangre periférica alta resolución",
+        "metodologia": "Tinción de Bandas GTG",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre periférica",
+        "tiempo_entrega": "30 días hábiles"
+      },
+      {
+        "clave_estudio": "1113",
+        "nombre_estudio": "Cortisol*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 112,
+    "estudios": [
+      {
+        "clave_estudio": "1143",
+        "nombre_estudio": "Analisis microbiológico de alimentos",
+        "metodologia": "Cultivo e identificación en medios selectivos",
+        "contenido": "Coliformes totales. Coliformes fecales. Mesofilicos aerobios. Escherichia coli. Hongos. Levaduras. Salmonella sp. Staphylococcus aureus (dependiendo el tipo de alimento)",
+        "tipo_muestra": "Alimento",
+        "tiempo_entrega": "6 dias habiles"
+      },
+      {
+        "clave_estudio": "1155",
+        "nombre_estudio": "Ac. Anti Adenovirus totales**",
+        "metodologia": "Fijación del complemento",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "12 dias habiles"
+      },
+      {
+        "clave_estudio": "1159",
+        "nombre_estudio": "Ac. Anti Bordetella pertussis IgA, IgG, IgM",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "Bordetella pertussis IgA. Bordetella pertussis IgG. Bordetella pertussis IgM",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "7 dias habiles"
+      },
+      {
+        "clave_estudio": "1160",
+        "nombre_estudio": "Ac. Anti Brucella por rosa de bengala",
+        "metodologia": "Aglutinación",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 113,
+    "estudios": [
+      {
+        "clave_estudio": "1162",
+        "nombre_estudio": "Ac. Anti Coccidioides immitis IgM**",
+        "metodologia": "Inmunodifusión doble",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "8 días hábiles"
+      },
+      {
+        "clave_estudio": "1163",
+        "nombre_estudio": "Ac. Anti Coxsackie A virus (A2,4,7,9,10,16)**",
+        "metodologia": "Fijación del complemento",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "12 días hábiles"
+      },
+      {
+        "clave_estudio": "1164",
+        "nombre_estudio": "Ac. Anti Coxsackie A virus en L.C.R. (A2,4,7,9,10,16)**",
+        "metodologia": "Fijación del complemento",
+        "contenido": "NA",
+        "tipo_muestra": "LCR",
+        "tiempo_entrega": "12 días hábiles"
+      },
+      {
+        "clave_estudio": "1166",
+        "nombre_estudio": "Ac. Anti Cryptococcus neoformans en suero totales**",
+        "metodologia": "Aglutinación",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "10 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 114,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Echo virus (4,7,9,11,30)",
+        "metodologia": "Fijación del complemento",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "15 dias habiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Echo virus L.C.R. (4,7,9,11,30)",
+        "metodologia": "Fijación del complemento",
+        "contenido": "NA",
+        "tipo_muestra": "LCR",
+        "tiempo_entrega": "12 dias habiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Epstein barr IgG (Capside)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 dias habiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Epstein barr IgM (Capside)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 dias habiles"
+      }
+    ]
+  },
+  {
+    "pagina": 115,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Musculo estriado totales**",
+        "metodologia": "Inmunofluorescencia indirecta",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "10 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Mielina totales**",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "12 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Helicobacter pylori IgM",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ac. Anti Mycobacterium tuberculosis totales (prueba rápida)",
+        "metodologia": "Inmunocromatografia",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      }
+    ]
+  },
+  {
+    "pagina": 116,
+    "estudios": [
+      {
+        "clave_estudio": "1190",
+        "nombre_estudio": "Acido folico intraeritrocitario**",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "5 dias habiles"
+      },
+      {
+        "clave_estudio": "1191",
+        "nombre_estudio": "Acido hipurico",
+        "metodologia": "Cromatografia liquida de alta resolución (HPLC)",
+        "contenido": "NA",
+        "tipo_muestra": "Orina",
+        "tiempo_entrega": "8 dias habiles"
+      },
+      {
+        "clave_estudio": "1193",
+        "nombre_estudio": "Acidos grasos libres en suero**",
+        "metodologia": "Espectrofotometria",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "6 dias habiles"
+      },
+      {
+        "clave_estudio": "1196",
+        "nombre_estudio": "Alergeno individual",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 dias habiles"
+      }
+    ]
+  },
+  {
+    "pagina": 117,
+    "estudios": [
+      {
+        "clave_estudio": "1199",
+        "nombre_estudio": "Aluminio en orina",
+        "metodologia": "Espectrometria de absorción atómica por horno de grafito (GFAAS)",
+        "contenido": "NA",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "1200",
+        "nombre_estudio": "Amikacina**",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "12 días hábiles"
+      },
+      {
+        "clave_estudio": "1201",
+        "nombre_estudio": "Aminoácidos en suero**",
+        "metodologia": "Cromatografía líquida de alta resolución (HPLC)",
+        "contenido": "Alanina. Glicina. Arginina. Valina. Taurina. Leucina. Isoleucina. Treonina. Serina. Prolina. Asparraguina. Ácido aspártico. Metionina. 4- hidroxiprolina. Acido glutámico. Fenilalanina. Glutamina. Ornitina. Lisina. Histidina. Tirosina. Triptófano",
+        "tipo_muestra": "Suero. Plasma / EDTA",
+        "tiempo_entrega": "14 días hábiles"
+      },
+      {
+        "clave_estudio": "1204",
+        "nombre_estudio": "Angiotensina enzima convertidora**",
+        "metodologia": "Espectrofotometría",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "8 días hábiles"
+      },
+      {
+        "clave_estudio": "1205",
+        "nombre_estudio": "Antígeno CA 72- 4*",
+        "metodologia": "Inmunoensayo enzimático (ELISA)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "4 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 118,
+    "estudios": [
+      {
+        "clave_estudio": "1210",
+        "nombre_estudio": "Hormona gonadotropina coriónica humana fracción beta (HGC Beta)*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1215",
+        "nombre_estudio": "Carboxihemoglobina",
+        "metodologia": "Coximetría",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / Heparina",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Carotenos**",
+        "metodologia": "Espectrofotometria",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "3 dias habiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Ceruloplasmina en suero",
+        "metodologia": "Inmunonefolemetria",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 dias habiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Coproporfirinas en orina 24 hrs**",
+        "metodologia": "Espectrofotometria",
+        "contenido": "NA",
+        "tipo_muestra": "Orina de 24 hrs",
+        "tiempo_entrega": "5 dias habiles"
+      }
+    ]
+  },
+  {
+    "pagina": 119,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Creatinfosfoquinasa isoenzimas**",
+        "metodologia": "Electroforesis",
+        "contenido": "CPK. CPK- MB. CPK- MM. CPK- BB",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "5 dias habiles"
+      },
+      {
+        "clave_estudio": "1223",
+        "nombre_estudio": "Coombs directo con suero anti globulina humana",
+        "metodologia": "Aglutinacion",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / EDTA",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1225",
+        "nombre_estudio": "Cuenta de plaquetas",
+        "metodologia": "Citometria de flujo, Espectrofotometria y Microscopia optica",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / EDTA. Sangre total / Citrato",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1226",
+        "nombre_estudio": "Cuenta minutada (Addis)",
+        "metodologia": "Microscopia",
+        "contenido": "NA",
+        "tipo_muestra": "Orina",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1227",
+        "nombre_estudio": "Cuertos de inclusión, búsqueda*",
+        "metodologia": "Tinción de Papanicolaou",
+        "contenido": "NA",
+        "tipo_muestra": "Líquidos orgánicos. Extendido citológico previamente fijado",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 120,
+    "estudios": [
+      {
+        "clave_estudio": "1232",
+        "nombre_estudio": "D- xilosa en orina**",
+        "metodologia": "Colorimetria",
+        "contenido": "NA",
+        "tipo_muestra": "Orina",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "1240",
+        "nombre_estudio": "Ethasuximide (Zarontin)**",
+        "metodologia": "Inmunoensayo",
+        "contenido": "NA",
+        "tipo_muestra": "Suero. Plasma / EDTA",
+        "tiempo_entrega": "8 dias habiles"
+      },
+      {
+        "clave_estudio": "1241",
+        "nombre_estudio": "Fenol en orina",
+        "metodologia": "Cromatografia liquida de alta resolución (HPLC)",
+        "contenido": "NA",
+        "tipo_muestra": "Orina",
+        "tiempo_entrega": "8 dias habiles"
+      },
+      {
+        "clave_estudio": "1242",
+        "nombre_estudio": "Fructosa en semen**",
+        "metodologia": "Espectrofotometria",
+        "contenido": "NA",
+        "tipo_muestra": "Liquido seminal",
+        "tiempo_entrega": "3 dias habiles"
+      },
+      {
+        "clave_estudio": "1245",
+        "nombre_estudio": "Hemoglobina libre en plasma**",
+        "metodologia": "Fotometria",
+        "contenido": "NA",
+        "tipo_muestra": "Plasma / EDTA",
+        "tiempo_entrega": "8 dias habiles"
+      }
+    ]
+  },
+  {
+    "pagina": 121,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Hemolisis acida (Prueba de Ham)",
+        "metodologia": "Hemolisis",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Hepatitis A IgG*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Hepatitis A IgM*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Hepatitis A y B marcadores IgG, IgM",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Hepatitis A IgG (HAVAG). Hepatitis A IgM (HAVAB M). Hepatitis B Ac. (HBs Ac). Hepatitis B Ag. (HBs Ag). Hepatitis B Core (HBc Ac IgG). Hepatitis B Core (HBc Ac IgM). Hepatitis B (HBe Ac). Hepatitis B (HBe Ag)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 122,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Hepatitis A, B y C marcadores completos",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Hepatitis A IgG (HAVAG). Hepatitis A IgM (HAVAB M). Hepatitis B Ac. (HBs Ac). Hepatitis B Ag. (HBs Ag). Hepatitis B Core (HBc Ac IgG). Hepatitis B Core (HBc Ac IgM). Hepatitis B (HBe Ac). Hepatitis B (HBe Ag). Hepatitis C (HCVAc)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Hepatitis A, B, C y D marcadores completos",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Hepatitis A IgG (HAVAG). Hepatitis A IgM (HAVAB M). Hepatitis B Ac. (HBs Ac). Hepatitis B Ag. (HBs Ag). Hepatitis B Core (HBc Ac IgG). Hepatitis B Core (HBc Ac IgM). Hepatitis B (HBe Ac). Hepatitis B (HBe Ag). Hepatitis C (HCVAc). Hepatitis D (HDVAc)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Hepatitis B Ac. (HBs Ac)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Antigeno de Superficie de la Hepatitis B*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 123,
+    "estudios": [
+      {
+        "clave_estudio": "1255",
+        "nombre_estudio": "Anticuerpos Core Hepatitis B*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1256",
+        "nombre_estudio": "Hepatitis B Core (HBc Ac. IgM)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1257",
+        "nombre_estudio": "Hepatitis B (HBe Ac)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1259",
+        "nombre_estudio": "Hepatitis B (HBe Ag)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1261",
+        "nombre_estudio": "Hepatitis D (Ac.)",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 124,
+    "estudios": [
+      {
+        "clave_estudio": "1269",
+        "nombre_estudio": "Perfil de Inmunoglobulinas (4) IgG, IgA, IgM, IgE",
+        "metodologia": "Espectrofotometria automatizada, Inmunoturbidimetria, Quimioluminiscencia (C.M.I.A)",
+        "contenido": "Inmunoglobulina \"A\". Inmunoglobulina \"E\". Inmunoglobulina \"G\". Inmunoglobulina \"M\". Electroforesis de proteínas",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 dias habiles"
+      },
+      {
+        "clave_estudio": "1270",
+        "nombre_estudio": "Insulina 30 min",
+        "metodologia": "Quimioluminiscencia (C.M.I.A)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1278",
+        "nombre_estudio": "Lisis de euglobulinas",
+        "metodologia": "Precipitación",
+        "contenido": "NA",
+        "tipo_muestra": "Plasma citratado",
+        "tiempo_entrega": "1 día hábil"
+      }
+    ]
+  },
+  {
+    "pagina": 125,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Metahemoglobina (metHb)",
+        "metodologia": "Coximetria",
+        "contenido": "NA",
+        "tipo_muestra": "Sangre total / Heparina",
+        "tiempo_entrega": "1 día hábil"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil ANA 12*",
+        "metodologia": "Inmunoensayo",
+        "contenido": "ds DNA. Nucleosoma. Sm. PO. Histonas. U1 sn RNP. SSA/Ro60. SSB/La. SCL 70 CENP B. Jo 1. SSA/Ro 52",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil de Hierro I",
+        "metodologia": "Inmunoensayo enzimático",
+        "contenido": "Hierro sérico. % De saturación. Capacidad total de fijación de hierro",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil de Lupus",
+        "metodologia": "Microscopia, Inmunonefolemetria, Inmunoturbidimetria, Quimioluminiscencia (C.M.I.A.), Inmunoensayo enzimático (ELISA)",
+        "contenido": "Anti- ANA (IgG). Células LE. Complemento C- 1 esterasa inhibidor. Complemento C- 4. T- Uptake (TU). Complemento hemolítico 50% (CAE)",
+        "tipo_muestra": "Suero. Sangre coagulada",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 126,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil Ginecológico I*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Estradiol (E2). Testosterona total. Hormona luteinizante (HL). Prolactina. Progesterona. Hormona folículo estimulante (FSH)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil Prenatal",
+        "metodologia": "Citometria de flujo, Espectrofotometria, Microscopia optica, Espectrofotometria de reflectancia, Espectrofotometria automatizada, Inmunoaglutinación, Floculación (RPR), Coagulométrico",
+        "contenido": "Examen general de orina. Glucosa sérica. Urea sérica. Creatinina sérica. Grupo Factor Rh. Biometría Hemática. V.D.R.L. INR. Tiempo de protrombina. Tiempo de tromboplastina",
+        "tipo_muestra": "Orina ocasional. Suero. Sangre total / EDTA. Plasma citratado",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil preoperatorio I",
+        "metodologia": "Citometria de Flujo, Espectrofotometria, Microscopia, Espectrofotometria automatizada, Espectrofotometria de reflectancia, Inmunoaglutinación, Coagulométrico, Análisis físico- químico",
+        "contenido": "Examen general de orina. Glucosa. Urea sérica. Nitrógeno ureico sérico (BUN). Creatinina sérica. Biometría Hemática. Grupo factor Rh. INR. Tiempo de protrombina. Tiempo de tromboplastina",
+        "tipo_muestra": "Suero. Sangre total / EDTA. Plasma citratado. Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil Prostático",
+        "metodologia": "Espectrofotometria automatizada. Quimioluminiscencia (C.M.I.A)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 127,
+    "estudios": [
+      {
+        "clave_estudio": "1320",
+        "nombre_estudio": "Química sanguínea 4 elementos",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "Glucosa sérica. Urea sérica. Nitrógeno ureico sérico (BUN). Creatinina sérica. Ácido urico sérico",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1321",
+        "nombre_estudio": "Química sanguínea 5 elementos",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "Glucosa sérica. Urea sérica. Nitrógeno ureico sérico (BUN). Creatinina sérica. Ácido urico sérico. Colesterol Total",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1322",
+        "nombre_estudio": "Química sanguínea 6 elementos",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "Glucosa sérica. Urea sérica. Nitrógeno ureico sérico (BUN). Creatinina sérica. Ácido urico sérico. Colesterol Total. Triglicéridos",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 128,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Prueba inmunológica de embarazo en orina",
+        "metodologia": "Inmunotransferencia",
+        "contenido": "NA",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil Hepático",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Bilirrubina total. Bilirrubina conjugada (Directa). Bilirrubina no conjugada (Indirecta). Proteínas totales. Albúmina sérica. Globulina. Relación albúmina-globulina. Aspartato aminotransferasa (TGO, AST). Alanina aminotransferasa (ALT,TGP). Gammaglutamil transpeptidasa (GGT). Fosfatasa alcalina (ALP)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Perfil Hormonal completo",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "a) Cortisol matutino. b) Hormona del crecimiento. c) Perfil tiroideo I. Yodo proteico (IP). Tiroxina total (T4). Yodo butanolico (IB). Tiroxina libre (T4 libre). T4 Yodo. Índice de Tiroxina libre (ITL). T- Uptake (TU). Triyodotironina total T3. Triyodotironina libre T3. Hormona estimulante del tiroides. d) Perfil ginecológico I. Estradiol (E2). Testosterona total. Hormona luteinizante (HL). Prolactina. Progesterona. Hormona folículo estimulante (FSH)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "1 día hábil"
+      }
+    ]
+  },
+  {
+    "pagina": 129,
+    "estudios": [
+      {
+        "clave_estudio": "1356",
+        "nombre_estudio": "Coproparasitoscópico 3 muestras",
+        "metodologia": "Método directo, Tinción de Sudan III, Tinción con Lugol, Guaiaco, Concentración de iones hidrógeno",
+        "contenido": "NA",
+        "tipo_muestra": "Heces frescas",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1364",
+        "nombre_estudio": "Bilirrubinas totales (BT, BD, BI)*",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Bilirrubina Total. Bilirrubina directa. Bilirrubina indirecta",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1388",
+        "nombre_estudio": "Tiroxina libre (T4 libre)*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1394",
+        "nombre_estudio": "Cultivo microbiológico ambiental",
+        "metodologia": "Cultivo en medios específicos",
+        "contenido": "Coliformes totales. Mesofílicos aerobios. Hongos. Levaduras",
+        "tipo_muestra": "Medio de cultivo nutritivo",
+        "tiempo_entrega": "6 días hábiles"
+      },
+      {
+        "clave_estudio": "1395",
+        "nombre_estudio": "Cultivo microbiológico de uñas",
+        "metodologia": "Cultivo e identificación en medios selectivos",
+        "contenido": "Coliformes totales. Mesofílicos aerobios. Escherichia coli. Hongos. Levaduras",
+        "tipo_muestra": "Hisopado de superficie viva uñas",
+        "tiempo_entrega": "4 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 130,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Cultivo microbiológico de manos",
+        "metodologia": "Cultivo e identificacion en medios selectivos",
+        "contenido": "Coliformes totales. Mesofilicos aerobios. Escherichia coli. Hongos. Levaduras",
+        "tipo_muestra": "Hisopado de superficie viva manos",
+        "tiempo_entrega": "4 dias habiles"
+      },
+      {
+        "clave_estudio": "1413",
+        "nombre_estudio": "Anti- doping II",
+        "metodologia": "Inmunoensayo cromatográfico, Inmunoensayo enzimático",
+        "contenido": "Cocaína. Cannabinoides (Marihuana). Anfetaminas. pH. Densidad. Creatinina",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1431",
+        "nombre_estudio": "Citologia uretral (Papanicolaou)*",
+        "metodologia": "Tinción de Papanicolaou",
+        "contenido": "NA",
+        "tipo_muestra": "Extendido citológico previamente fijado",
+        "tiempo_entrega": "4 días hábiles"
+      },
+      {
+        "clave_estudio": "1432",
+        "nombre_estudio": "Estrógenos totales",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1476",
+        "nombre_estudio": "Hepatitis Perfil B IgG e IgM",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Hepatitis B Ac. (HBs Ac). Hepatitis B Ag. (HBs Ag). Hepatitis B Core (HBc Ac IgG). Hepatitis B Core (HBc Ac IgM). Hepatitis B (HBe Ac). Hepatitis B (HBe Ag)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 131,
+    "estudios": [
+      {
+        "clave_estudio": "1479",
+        "nombre_estudio": "Prueba inmunológica de embarazo. Sangre",
+        "metodologia": "Inmunotransferencia",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1481",
+        "nombre_estudio": "Filtrado glomerular",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Creatinina Sérica. Filtrado glomerular",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1482",
+        "nombre_estudio": "Electrolitos séricos (4)",
+        "metodologia": "Ión selectivo",
+        "contenido": "Na. K. Cl. CO2",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1483",
+        "nombre_estudio": "Anti- doping I",
+        "metodologia": "Inmunoensayo cromatográfico, Inmunoensayo enzimático",
+        "contenido": "Cannabinoides (Marihuana). Cocaína. pH. Densidad. Creatinina",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      }
+    ]
+  },
+  {
+    "pagina": 132,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Anti- doping III",
+        "metodologia": "Inmunoensayo cromatográfico, Inmunoensayo enzimático",
+        "contenido": "Anfetaminas. Cannabinoides (Marihuana). Cocaína. Benzodiacepinas. Barbituricos. Opiáceos. Metadona. pH. Densidad. Creatinina",
+        "tipo_muestra": "Orina ocasional",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1491",
+        "nombre_estudio": "Marcadores tumorales I",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Alfafetoproteína. Antígeno carcinoembrionario (CEA). Fracción beta gonadotrofina coriónica",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1589",
+        "nombre_estudio": "Química sanguínea 28 elementos",
+        "metodologia": "Espectrofotometría automatizada",
+        "contenido": "Glucosa sérica. Urea sérica. Nitrógeno ureico sérico (BUN). Creatinina sérica. Ácido úrico sérico. Colesterol total. Triglicéridos. Colesterol de alta densidad (HDL). Colesterol de baja densidad (LDL). Índice aterogénico. Bilirrubina total. Bilirrubina conjugada (Directa). Bilirrubina no conjugada (Indirecta). Aspartato aminotransferasa (AST o TGO). Alanina aminotransferasa (ALT o TGP). Gammaglutamil transpeptidasa (GGT). Fosfatasa alcalina (ALP). Deshidrogenasa láctica (DHL). Proteínas totales. Albúmina sérica. Globulina. Relación albúmina-globulina. Hierro sérico. Amilasa en suero. Calcio en suero. Fósforo sérico. Sodio sérico. Potasio sérico. Cloro sérico. Magnesio sérico. Riesgo Aterogénico I. Riesgo Aterogénico II. Riesgo Aterogénico III",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1592",
+        "nombre_estudio": "Fosfatasa alcalina de los neutrófilos**",
+        "metodologia": "Citoquímica",
+        "contenido": "NA",
+        "tipo_muestra": "4 Extendidos de sangre sin anticoagulante",
+        "tiempo_entrega": "5 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 133,
+    "estudios": [
+      {
+        "clave_estudio": "",
+        "nombre_estudio": "Curva de tolerancia a la glucosa (3 horas)",
+        "metodologia": "Espectrofotometria automatizada",
+        "contenido": "Glucosa basal. Glucosa 60 min. Glucosa 90 min. Glucosa 120 min. Glucosa 180 min",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1621",
+        "nombre_estudio": "Marcadores tumorales II",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "alfafetoproteína. Antígeno CA 125. Antígeno carcinoembrionario (CEA)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1629",
+        "nombre_estudio": "Marcadores de hepatitis A*",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "Hepatitis A IgG (HAVAG). Hepatitis A IgM (HAVAB M)",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "2 días hábiles"
+      },
+      {
+        "clave_estudio": "1645",
+        "nombre_estudio": "Perfil preescolar II",
+        "metodologia": "Citometría de Flujo, Espectrofotometría, Microscopía, Inmunoaglutinación, Cultivo en medios específicos e identificación automatizada, Método directo, Espectrofotometría de reflectancia, Análisis físico- químico",
+        "contenido": "Biometría Hemática. Grupo sanguíneo y Rh. Cultivo de exudado faríngeo. CPS 3 muestras. Examen general de orina",
+        "tipo_muestra": "Sangre total / EDTA. Exudado faríngeo en medio de transporte. Heces. Orina ocasional",
+        "tiempo_entrega": "3 días hábiles"
+      }
+    ]
+  },
+  {
+    "pagina": 134,
+    "estudios": [
+      {
+        "clave_estudio": "1652",
+        "nombre_estudio": "Cultivo ocular*",
+        "metodologia": "Cultivo en medios específicos e identificación automatizada",
+        "contenido": "NA",
+        "tipo_muestra": "Secreción ocular en medio de transporte",
+        "tiempo_entrega": "3 días hábiles"
+      },
+      {
+        "clave_estudio": "1668",
+        "nombre_estudio": "Insulina 60 min",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1669",
+        "nombre_estudio": "Insulina 120 min",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero",
+        "tiempo_entrega": "EMD"
+      },
+      {
+        "clave_estudio": "1676",
+        "nombre_estudio": "Péptido \"C\" post pandrial",
+        "metodologia": "Quimioluminiscencia (C.M.I.A.)",
+        "contenido": "NA",
+        "tipo_muestra": "Suero. Plasma / Heparina",
+        "tiempo_entrega": "
+
+
+
+
+
+      }
+    ]
+  }
+]
+
+

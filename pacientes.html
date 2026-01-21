@@ -638,20 +638,20 @@
             try {
                 const { data, error } = await supabaseClient
                     .from('citas')
-                    .select('paciente_nombre, paciente_telefono, fecha_hora, total, id')
+                    .select('paciente_nombre, paciente_telefono, paciente_sexo, fecha_hora, total, id')
                     .order('fecha_hora', { ascending: false });
 
                 if (error) throw error;
 
                 const pacientesMap = {};
                 data.forEach(cita => {
-                    // Normalizamos el nombre para agrupar (sin importar mayúsculas/minúsculas)
                     const nombreNormal = (cita.paciente_nombre || 'Sin Nombre').trim().toLowerCase();
 
                     if (!pacientesMap[nombreNormal]) {
                         pacientesMap[nombreNormal] = {
-                            nombre: cita.paciente_nombre.trim(), // Guardamos el nombre "bonito"
+                            nombre: cita.paciente_nombre.trim(),
                             telefono: cita.paciente_telefono,
+                            sexo: cita.paciente_sexo,
                             ultimaVisita: cita.fecha_hora,
                             visitas: 0,
                             citas: []
@@ -704,7 +704,10 @@
                         <td>
                             <div class="patient-cell">
                                 <div class="patient-avatar">${initials}</div>
-                                <div class="patient-name">${p.nombre}</div>
+                                <div class="patient-name">
+                                    ${p.nombre}
+                                    ${p.sexo ? `<span style="font-size: 0.75rem; color: var(--text-light); font-weight: normal; margin-left:1px;">(${p.sexo.charAt(0)})</span>` : ''}
+                                </div>
                             </div>
                         </td>
                         <td>
@@ -758,7 +761,10 @@
                     <div class="folder-avatar">${initials}</div>
                     <div>
                         <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">${paciente.nombre}</h2>
-                        <p style="color: var(--text-light);">${paciente.telefono || 'Sin teléfono'} • ${paciente.visitas} visitas totales</p>
+                        <p style="color: var(--text-light); font-size: 0.9rem;">
+                            ${paciente.sexo ? `<strong>${paciente.sexo}</strong> • ` : ''}
+                            ${paciente.telefono || 'Sin teléfono'} • ${paciente.visitas} visitas totales
+                        </p>
                     </div>
                 </div>
                 <div class="visit-timeline">

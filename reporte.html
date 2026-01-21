@@ -569,7 +569,7 @@
                         </div>
                         <div class="patient-field">
                             <label>Sexo</label>
-                            <span>${cita.paciente_sexo === 'M' ? 'Masculino' : cita.paciente_sexo === 'F' ? 'Femenino' : '-'}</span>
+                            <span>${(cita.paciente_sexo && cita.paciente_sexo.toLowerCase() === 'masculino') ? 'Masculino' : (cita.paciente_sexo && cita.paciente_sexo.toLowerCase() === 'femenino') ? 'Femenino' : cita.paciente_sexo || '-'}</span>
                         </div>
                         <div class="patient-field">
                             <label>Médico Referente</label>

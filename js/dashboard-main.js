@@ -301,7 +301,10 @@ function renderAppointmentsList() {
                 <div class="patient-info">
                     <div class="patient-avatar" style="width: 30px; height: 30px; font-size: 0.75rem;">${apt.paciente_nombre.charAt(0).toUpperCase()}</div>
                     <div>
-                        <div class="patient-name" style="font-size: 0.85rem;">${apt.paciente_nombre}</div>
+                        <div class="patient-name" style="font-size: 0.85rem;">
+                            ${apt.paciente_nombre} 
+                            ${apt.paciente_sexo ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: normal; margin-left: 4px;">(${apt.paciente_sexo.charAt(0)})</span>` : ''}
+                        </div>
                         <div class="patient-phone">${apt.paciente_telefono || ''}</div>
                     </div>
                 </div>
@@ -409,6 +412,7 @@ async function saveAppointment(event) {
         primer_apellido: primerApellido,
         segundo_apellido: segundoApellido || null,
         fecha_nacimiento: document.getElementById('fechaNacimiento').value,
+        paciente_sexo: document.getElementById('pacienteSexo') ? document.getElementById('pacienteSexo').value : null,
         diagnostico: document.getElementById('diagnostico').value || null,
 
         total: totalVenta,
