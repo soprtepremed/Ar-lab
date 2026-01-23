@@ -472,6 +472,16 @@
             }
         }
 
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         /* Empty State */
         .empty-state {
             text-align: center;
@@ -527,7 +537,7 @@
                     <line x1="16" y1="17" x2="8" y2="17"></line>
                     <polyline points="10 9 9 9 8 9"></polyline>
                 </svg>
-                Captura de Resultados
+                Captura de Resultados <span style="font-size: 0.8rem; opacity: 0.5; margin-left: 10px;">v1.2</span>
             </h1>
         </header>
 
@@ -575,7 +585,7 @@
         <div style="display: flex; height: 100%; gap: 1.5rem;">
             <!-- Sidebar -->
             <aside id="patientSidebar" style="
-                width: 280px; 
+                width: 360px; 
                 background: white; 
                 border-radius: 12px; 
                 border: 1px solid #e2e8f0; 
@@ -584,12 +594,23 @@
                 overflow: hidden;
                 flex-shrink: 0;
             ">
+                <div style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0; display: flex; gap: 4px;">
+                    <input type="date" id="sidebarFilterDate" onchange="loadCitasConEstudios()"
+                        style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.8rem; color: #334155;">
+                </div>
+                <div style="padding: 0 0.5rem 0.5rem 0.5rem; border-bottom: 1px solid #e2e8f0;">
+                    <select id="filterArea" onchange="renderSidebarList(allCitas); renderCaptureValues();"
+                        style="width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.8rem; color: #334155;">
+                        <option value="">Todas las Áreas</option>
+                        <!-- Dynamic options will be added here -->
+                    </select>
+                </div>
                 <div style="padding: 1rem; border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
                     <h3
                         style="margin: 0; font-size: 0.9rem; color: #64748b; text-transform: uppercase; font-weight: 700;">
                         Pacientes del Día</h3>
                 </div>
-                <div id="sidebarList" style="flex: 1; overflow-y: auto; padding: 0.5rem;">
+                <div id="sidebarList" style="flex: 1; overflow-y: auto; padding: 0;">
                     <!-- Patient items -->
                     <div style="text-align: center; padding: 1rem; color: #94a3b8;">Cargando...</div>
                 </div>
@@ -597,30 +618,36 @@
 
             <!-- Main Capture Area -->
             <div style="flex: 1; overflow-y: auto; padding-right: 0.5rem; display: flex; flex-direction: column;">
+
+                <div style="margin-bottom: 1rem;">
+                    <button onclick="window.location.href='dashboard.html'"
+                        style="border: none; background: none; cursor: pointer; color: var(--secondary); display: flex; align-items: center; gap: 5px; font-size: 0.95rem; font-weight: 500; padding: 0;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        Volver a Inicio
+                    </button>
+                </div>
+
                 <div class="card" style="margin-bottom: 2rem; flex-shrink: 0;">
                     <div class="card-header" style="background: #f1f5f9;">
                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                             <div>
-                                <button onclick="window.history.back()"
-                                    style="border: none; background: none; cursor: pointer; color: var(--secondary); display: flex; align-items: center; gap: 5px; margin-bottom: 5px; font-size: 0.9rem;">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                                    </svg>
-                                    Volver al Dashboard
-                                </button>
-                                <h2 id="capturePatientName" style="color: var(--primary-dark); font-size: 1.5rem;">
+                                <h2 id="capturePatientName"
+                                    style="color: var(--primary-dark); font-size: 1.5rem; margin-top: 0;">
                                     Cargando...
                                 </h2>
-                                <div style="display: flex; gap: 1rem; font-size: 0.9rem; color: var(--text-light);">
-                                    <span id="captureFolio">#---</span>
-                                    <span id="captureDate">---</span>
-                                    <span id="captureSex">---</span>
-                                    <span id="captureAge">---</span>
+                                <div
+                                    style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.9rem; color: var(--text-light); margin-top: 0.5rem; font-family: 'Consolas', monospace;">
+                                    <span id="captureFolio"
+                                        style="font-weight: 700; color: var(--text-dark); font-family: 'Consolas', monospace;">Folio:
+                                        ---</span>
+                                    <span id="captureLine1">EXP: --- FN: --- EDAD: ---</span>
+                                    <span id="captureLine2">SEXO: --- TEL: ---</span>
                                 </div>
                             </div>
                             <div class="actions">
-                                <button class="btn btn-outline" onclick="window.location.reload()">Cancelar</button>
                                 <button class="btn btn-primary" onclick="saveCaptureResults()">
                                     <svg viewBox="0 0 24 24">
                                         <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z">
@@ -659,6 +686,8 @@
 
             let allCitas = [];
             let currentCaptureCita = null; // Cita activa en modo captura
+            let currentProfileMap = {}; // Maps component_id -> profile_name
+            let currentOrderMap = {}; // Maps component_id -> order
             let currentUser = null;
 
             document.addEventListener('DOMContentLoaded', async () => {
@@ -668,10 +697,15 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const citaId = urlParams.get('id');
 
-                // Set default date filter to today if empty
-                if (!document.getElementById('filterDate').value) {
-                    document.getElementById('filterDate').valueAsDate = new Date();
-                }
+                // Set default date filter to today if empty (Local Time) - Handling both IDs
+                const now = new Date();
+                const localISO = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+
+                const fDate = document.getElementById('filterDate');
+                if (fDate && !fDate.value) fDate.value = localISO;
+
+                const sDate = document.getElementById('sidebarFilterDate');
+                if (sDate && !sDate.value) sDate.value = localISO;
 
                 // Always load the list (for sidebar or list view)
                 await loadCitasConEstudios();
@@ -715,8 +749,12 @@
             async function loadCitasConEstudios() {
                 // (Same implementation as before but streamlined)
                 try {
-                    const filterDate = document.getElementById('filterDate').value;
-                    let query = supabaseClient.from('citas').select('*, citas_estudios(*, estudios_laboratorio(nombre, categoria))').order('fecha_hora', { ascending: false });
+                    // Try sidebar date first, then main filter date
+                    const filterDate = document.getElementById('sidebarFilterDate')?.value || document.getElementById('filterDate')?.value;
+                    let query = supabaseClient.from('citas')
+                        .select('*, citas_estudios(*, estudios_laboratorio(nombre, categoria, codigo))')
+                        .in('estado', ['muestra_parcial', 'en_proceso', 'completada'])
+                        .order('fecha_hora', { ascending: true });
 
                     if (filterDate) query = query.gte('fecha_hora', filterDate + 'T00:00:00').lte('fecha_hora', filterDate + 'T23:59:59');
 
@@ -779,34 +817,186 @@
 
                 const urlParams = new URLSearchParams(window.location.search);
                 const currentId = urlParams.get('id');
+                const selectedArea = document.getElementById('filterArea')?.value || '';
 
-                sidebarList.innerHTML = citas.map(c => {
-                    const isActive = c.id == currentId; // Use == for potential type coercion
+                // Extract all unique areas from current citas
+                const areas = new Set();
+                citas.forEach(c => {
+                    c.citas_estudios.forEach(ce => {
+                        const area = ce.estudios_laboratorio?.categoria || ce.estudios_laboratorio?.area;
+                        if (area) areas.add(area);
+                    });
+                });
+
+                // Populate Area Filter if empty
+                const areaSelect = document.getElementById('filterArea');
+                if (areaSelect && areaSelect.options.length <= 1) {
+                    Array.from(areas).sort().forEach(area => {
+                        const opt = document.createElement('option');
+                        opt.value = area;
+                        opt.textContent = area;
+                        areaSelect.appendChild(opt);
+                    });
+                }
+
+
+                // Filter citas based on selected area
+                const filteredCitas = selectedArea
+                    ? citas.filter(c => c.citas_estudios.some(ce => (ce.estudios_laboratorio?.categoria === selectedArea || ce.estudios_laboratorio?.area === selectedArea)))
+                    : citas;
+
+                sidebarList.innerHTML = filteredCitas.map((c, index) => {
+                    const isActive = c.id == currentId;
+
+                    // Check if all studies are completed (validado or entregado)
+                    const studies = c.citas_estudios || [];
+                    const hasStudies = studies.length > 0;
+                    const allDone = hasStudies && studies.every(s => ['validado', 'entregado'].includes(s.estado_resultado));
+
+                    const activeClass = isActive ? 'active' : '';
+
+                    // Logic: Name is black normally, Green if validated.
+                    const nameColor = allDone ? '#16a34a' : '#000000';
+                    const nameWeight = allDone ? '700' : '400';
+
+                    // Priority: folio_atencion > folio > Constructed (YYMMDD-XX)
+                    let displayFolio = c.folio_atencion || c.folio;
+
+                    // Fallback if missing or if it looks like a long UUID/Supabase ID
+                    if (!displayFolio || displayFolio.toString().length > 12) {
+                        try {
+                            const dateObj = new Date(c.fecha_hora);
+                            const yy = dateObj.getFullYear().toString().slice(-2);
+                            const mm = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                            const dd = dateObj.getDate().toString().padStart(2, '0');
+                            const idx = (index + 1).toString().padStart(2, '0');
+                            displayFolio = `${yy}${mm}${dd}-${idx}`;
+                        } catch (e) {
+                            displayFolio = c.folio_venta || c.id;
+                        }
+                    }
+
                     return `
-                    <a href="resultados.html?id=${c.id}" style="
-                        display: block; 
-                        padding: 0.75rem; 
-                        margin-bottom: 0.5rem; 
-                        border-radius: 8px; 
-                        text-decoration: none; 
-                        color: ${isActive ? '#0f766e' : '#334155'}; 
-                        background: ${isActive ? '#f0fdfa' : 'white'}; 
-                        border: 1px solid ${isActive ? '#ccfbf1' : 'transparent'};
-                        transition: all 0.2s;
-                    ">
-                        <div style="font-weight: 700; font-size: 0.85rem; display: flex; justify-content: space-between;">
-                            <span>#${c.folio_venta || c.folio_atencion || 'S/N'}</span>
-                            <span style="font-weight: 400; font-size: 0.75rem; color: #94a3b8;">${new Date(c.fecha_hora).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    <div class="patient-card ${activeClass}" 
+                         style="cursor: pointer; position: relative; padding: 8px 10px; margin-bottom: 6px; border-radius: 6px; border: 1px solid #e2e8f0; background: white; transition: all 0.2s;" 
+                         onclick="selectPatient('${c.id}')"
+                         title="${c.paciente_nombre}">
+                        <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
+                            <div style="font-family: 'Consolas', monospace; font-weight: 700; color: #000; font-size: 0.85rem; white-space: nowrap;">
+                                ${displayFolio}
+                            </div>
+                            <div style="font-size: 0.85rem; color: ${nameColor}; font-weight: ${nameWeight}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;">
+                                ${c.paciente_nombre}
+                            </div>
                         </div>
-                        <div style="font-size: 0.9rem; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            ${c.paciente_nombre}
-                        </div>
-                    </a>
-                `;
+                    </div>
+                    `;
                 }).join('');
             }
 
             // --- SINGLE CAPTURE MODE FUNCTIONS ---
+
+            async function selectPatient(id) {
+                console.log('Selecting Patient ID:', id);
+                if (currentCaptureCita && currentCaptureCita.id == id) {
+                    console.log('Patient already selected');
+                    return;
+                }
+
+                // Update URL without reload
+                const newUrl = `${window.location.pathname}?id=${id}`;
+                window.history.pushState({ path: newUrl }, '', newUrl);
+
+                // Show loading in capture area
+                document.getElementById('capturePatientName').innerHTML = '<span style="color:#64748b; font-size:1.2rem;">Cargando...</span>';
+                document.getElementById('captureTablesContainer').innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:200px;"><div style="width:30px; height:30px; border:3px solid #f3f3f3; border-top:3px solid #0d9488; border-radius:50%; animation:spin 1s linear infinite;"></div></div>';
+
+                // Clear inputs
+                document.getElementById('captureFolio').textContent = 'Folio: ---';
+                document.getElementById('captureLine1').textContent = 'EXP: --- FN: --- EDAD: ---';
+                document.getElementById('captureLine2').textContent = 'SEXO: --- TEL: ---';
+
+                // Load data
+                await loadSingleCita(id);
+            }
+
+            async function checkAndExpandProfiles(cita) {
+                const profileStudies = cita.citas_estudios.filter(ce => ce.estudios_laboratorio && ce.estudios_laboratorio.es_perfil);
+                if (profileStudies.length === 0) return false;
+
+                // Get all profile IDs
+                const profileIds = profileStudies.map(ce => ce.estudios_laboratorio.id);
+
+                // Fetch components for these profiles
+                const { data: components, error } = await supabaseClient
+                    .from('estudio_componentes')
+                    .select('perfil_id, componente_id')
+                    .in('perfil_id', profileIds);
+
+                if (error) {
+                    console.error('Error fetching profile components', error);
+                    return false;
+                }
+
+                if (!components || components.length === 0) return false;
+
+                // Check which components are missing
+                const existingEstudioIds = new Set(cita.citas_estudios.map(ce => ce.estudios_laboratorio.id));
+                const toInsert = [];
+
+                components.forEach(comp => {
+                    if (!existingEstudioIds.has(comp.componente_id)) {
+                        toInsert.push({
+                            cita_id: cita.id,
+                            estudio_id: comp.componente_id,
+                            estado_resultado: 'pendiente' // Default status
+                        });
+                        // Add to set to prevent duplicates
+                        existingEstudioIds.add(comp.componente_id);
+                    }
+                });
+
+                if (toInsert.length > 0) {
+                    console.log('Expanding profiles, inserting components:', toInsert.length);
+                    const { error: insertError } = await supabaseClient
+                        .from('citas_estudios')
+                        .insert(toInsert);
+
+                    if (insertError) {
+                        console.error('Error expanding profiles:', insertError);
+                        return false;
+                    }
+                    showToast('Expandiendo perfil...', 'info');
+                    return true;
+                }
+
+                return false;
+            }
+
+            async function toggleReporte(id, checked) {
+                try {
+                    const { error } = await supabaseClient
+                        .from('citas_estudios')
+                        .update({ mostrar_en_reporte: checked })
+                        .eq('id', id);
+
+                    if (error) throw error;
+
+                    // Simple visual feedback without full reload if possible, but opacity needs reload or DOM manipulation
+                    // We can just update opacity here for speed
+                    // Finding the row might be tricky without ID on TR, but we have input context usually.
+                    // Let's just create a quick visual toggle for now
+                    const input = document.querySelector(`input[onchange="toggleReporte('${id}', this.checked)"]`);
+                    if (input) {
+                        const cellName = input.parentElement.nextElementSibling;
+                        if (cellName) cellName.style.opacity = checked ? '1' : '0.5';
+                    }
+
+                } catch (e) {
+                    console.error(e);
+                    showToast('Error al actualizar estado: ' + e.message, 'error');
+                }
+            }
 
             async function loadSingleCita(id) {
                 try {
@@ -818,9 +1008,9 @@
                         .select(`
                         *,
                         citas_estudios (
-                            id, estudio_id, resultado, valor_resultado, estado_resultado,
+                            *,
                             estudios_laboratorio (
-                                id, nombre, codigo, categoria, area, rango_referencia, unidades
+                                id, nombre, codigo, categoria, area, rango_referencia, unidades, formula, es_perfil
                             )
                         )
                     `)
@@ -828,11 +1018,44 @@
                         .single();
 
                     if (error) throw error;
+                    console.log('Datos cargados:', data); // Debug log
                     currentCaptureCita = data;
+
+                    // Check for profile expansion
+                    const expanded = await checkAndExpandProfiles(currentCaptureCita);
+                    if (expanded) {
+                        return loadSingleCita(id); // Reload to get new items
+                    }
+
+                    // --- FETCH PROFILE MAP ---
+                    // Calculate mapping before rendering
+                    currentProfileMap = {};
+                    const profileStudies = currentCaptureCita.citas_estudios.filter(ce => ce.estudios_laboratorio?.es_perfil);
+                    if (profileStudies.length > 0) {
+                        const profileIds = profileStudies.map(ce => ce.estudios_laboratorio.id);
+                        const { data: mapping } = await supabaseClient
+                            .from('estudio_componentes')
+                            .select('perfil_id, componente_id, orden')
+                            .in('perfil_id', profileIds);
+
+                        if (mapping) {
+                            mapping.forEach(m => {
+                                const profile = profileStudies.find(ps => ps.estudios_laboratorio.id === m.perfil_id);
+                                if (profile) {
+                                    currentProfileMap[m.componente_id] = profile.estudios_laboratorio.nombre;
+                                    currentOrderMap[m.componente_id] = m.orden;
+                                }
+                            });
+                        }
+                    }
+
                     renderCaptureValues();
 
                     // Update sidebar highlight if list is loaded
                     renderSidebarList(allCitas);
+
+                    // Initial calculation run
+                    setTimeout(calculateFormulas, 500);
 
                 } catch (err) {
                     console.error(err);
@@ -840,124 +1063,508 @@
                 }
             }
 
+            function calculateSingleFormula(input) {
+                const formula = input.dataset.formula;
+                if (!formula) return;
+
+                // 1. Map current values
+                const valuesMap = {};
+                document.querySelectorAll('.capture-input').forEach(i => {
+                    const code = i.dataset.code;
+                    if (code) {
+                        const val = parseFloat(i.value);
+                        if (!isNaN(val)) valuesMap[code.toUpperCase()] = val;
+                    }
+                });
+
+                // 2. Evaluate
+                try {
+                    let expression = formula.toUpperCase();
+                    for (const [code, val] of Object.entries(valuesMap)) {
+                        expression = expression.split(`[${code}]`).join(val);
+                    }
+
+                    // Check if still has brackets (missing dependencies)
+                    if (expression.includes('[')) {
+                        const missing = expression.match(/\[(.*?)\]/g)?.map(s => s.replace(/[\[\]]/g, '')) || [];
+                        const missingStr = missing.join(', ');
+                        showToast(`Faltan datos para calcular: ${missingStr}`, 'warning');
+                        return;
+                    }
+
+                    const newVal = eval(expression);
+                    // Round to 2 decimals if necessary
+                    const rounded = Math.round(newVal * 100) / 100;
+
+                    input.value = rounded;
+                    validateInputRange(input);
+                    updateCellColor(input);
+
+                    // Visual Feedback
+                    const originalBg = input.parentElement.parentElement.style.backgroundColor;
+                    input.parentElement.parentElement.style.backgroundColor = '#86efac'; // Flash Green
+                    setTimeout(() => {
+                        updateCellColor(input); // Restore normal color logic
+                    }, 400);
+
+                } catch (err) {
+                    console.error('Error calculating single formula:', err);
+                    showToast('Error en fórmula', 'error');
+                }
+            }
+
+            function calculateFormulas() {
+                const allInputs = document.querySelectorAll('.capture-input');
+                const calculatedInputs = Array.from(allInputs).filter(i => i.dataset.formula && i.dataset.formula !== 'null');
+
+                // Run multiple passes to resolve dependencies (A -> B -> C)
+                // 3 passes is usually enough for lab formulas
+                for (let pass = 0; pass < 3; pass++) {
+                    let changes = 0;
+
+                    // Create a map of Code -> Value (Snapshot for this pass)
+                    const valuesMap = {};
+                    allInputs.forEach(i => {
+                        const code = i.dataset.code;
+                        if (code) {
+                            const val = parseFloat(i.value);
+                            if (!isNaN(val)) {
+                                valuesMap[code.toUpperCase()] = val;
+                            }
+                        }
+                    });
+
+                    calculatedInputs.forEach(input => {
+                        let formula = input.dataset.formula; // e.g., "[UREA] / 2.14"
+
+                        // Replace [CODE] with value
+                        const matches = formula.match(/\[([a-zA-Z0-9_-]+)\]/g);
+
+                        if (matches) {
+                            let ready = true;
+                            matches.forEach(match => {
+                                const code = match.replace('[', '').replace(']', '').toUpperCase();
+                                if (valuesMap[code] !== undefined) {
+                                    formula = formula.replace(match, valuesMap[code]);
+                                } else {
+                                    ready = false;
+                                }
+                            });
+
+                            if (ready) {
+                                try {
+                                    if (!/^[0-9+\-*/().\s]+$/.test(formula)) {
+                                        return;
+                                    }
+                                    const result = eval(formula);
+                                    const newVal = parseFloat(result.toFixed(2));
+
+                                    // Only update and trigger if different to avoid potential loops (though fixed passes prevent infinite loops)
+                                    if (parseFloat(input.value) !== newVal) {
+                                        input.value = newVal;
+                                        validateInputRange(input);
+                                        changes++;
+                                    }
+                                } catch (e) {
+                                    // console.error(e);
+                                }
+                            }
+                        }
+                    });
+
+                    if (changes === 0) break; // Stabilized
+                }
+            }
+
+            function getStatusBadge(status) {
+                const statusColors = {
+                    'pendiente': '#fbbf24',
+                    'en-proceso': '#3b82f6',
+                    'listo': '#10b981',
+                    'validado': '#6366f1'
+                };
+                const color = statusColors[status] || '#94a3b8';
+                const labels = {
+                    'pendiente': '⏳ PENDIENTE',
+                    'en-proceso': '⚙️ EN PROCESO',
+                    'listo': '✅ LISTO',
+                    'validado': '🔒 VALIDADO'
+                };
+                const label = labels[status] || status;
+
+                return `<div class="status-badge" style="color: ${color}; display: flex; align-items: center; gap: 4px;">${label}</div>`;
+            }
+
             function renderCaptureValues() {
                 const c = currentCaptureCita;
                 document.getElementById('capturePatientName').textContent = c.paciente_nombre;
-                document.getElementById('captureFolio').textContent = `Folio: #${c.folio_atencion || c.folio_venta || 'S/N'}`;
-                document.getElementById('captureDate').textContent = new Date(c.fecha_hora).toLocaleDateString('es-MX');
-                document.getElementById('captureSex').textContent = c.paciente_sexo || 'N/A';
+                const folio = c.folio_atencion || c.folio_venta || 'S/N';
+                document.getElementById('captureFolio').textContent = `Folio: ${folio}`;
 
-                // Age calc
+                // --- LINE 1: EXP: 00022 FN: 16/02/1998 EDAD: 27 A ---
+                const expediente = c.expediente_numero || 'S/N';
+
+                let dobStr = 'N/A';
                 let age = 'N/A';
-                const dob = c.fecha_nacimiento; // || c.paciente_fecha_nacimiento
+                const dob = c.fecha_nacimiento;
                 if (dob) {
-                    const diff = Date.now() - new Date(dob).getTime();
-                    const ageDate = new Date(diff);
-                    age = Math.abs(ageDate.getUTCFullYear() - 1970) + ' años';
-                }
-                document.getElementById('captureAge').textContent = age;
+                    const dobDate = new Date(dob);
+                    dobStr = dobDate.toLocaleDateString('es-MX');
 
-                // --- GROUPING STUDIES ---
-                // Group by CATEGORIA first (or Area)
+                    const diff = Date.now() - dobDate.getTime();
+                    const ageDate = new Date(diff);
+                    age = Math.abs(ageDate.getUTCFullYear() - 1970);
+                }
+
+                document.getElementById('captureLine1').textContent = `EXP: ${expediente} FN:${dobStr} EDAD:${age} A`;
+
+                // --- LINE 2: SEXO: M TEL: 0961223 ---
+                const sexRaw = c.paciente_sexo || '';
+                const sexAbbr = sexRaw.toUpperCase().startsWith('M') ? 'M' : (sexRaw.toUpperCase().startsWith('F') ? 'F' : '?');
+                const phone = c.paciente_telefono || 'S/N';
+
+                document.getElementById('captureLine2').textContent = `SEXO: ${sexAbbr} TEL:${phone}`;
+
+
+
+                // Uses global currentProfileMap calculated in loadSingleCita
                 const groups = {};
-                const noCategory = 'General';
+                const noCategory = 'Sin Categoría';
+
 
                 c.citas_estudios.forEach(ce => {
                     const est = ce.estudios_laboratorio || {};
                     const cat = est.categoria || est.area || noCategory;
                     if (!groups[cat]) groups[cat] = [];
-                    groups[cat].push({ ...ce, ...est }); // Merge for easier access
+                    // Merge order swapped: est (generic) first, then ce (specific) overrides
+                    groups[cat].push({ ...est, ...ce });
                 });
 
                 const container = document.getElementById('captureTablesContainer');
                 container.innerHTML = '';
 
+                // Filter Visible Groups based on selection
+                const selectedArea = document.getElementById('filterArea')?.value || '';
+
                 // Excel-style Grid Layout
                 Object.keys(groups).sort().forEach(cat => {
-                    const studies = groups[cat];
+                    // Filter: If filtered and not match, skip
+                    if (selectedArea && cat !== selectedArea) return;
+
+                    // Filter out profile parents from rendering
+                    const studies = groups[cat].filter(s => !s.estudios_laboratorio?.es_perfil);
+                    if (studies.length === 0) return; // Skip empty groups after filter
+
+                    // --- SUB-GROUP BY PROFILE ---
+                    const subGroups = {}; // 'Individual' -> [], 'Perfil X' -> []
+
+                    studies.forEach(s => {
+                        const profileName = currentProfileMap[s.estudios_laboratorio.id] || 'Individual';
+                        if (!subGroups[profileName]) subGroups[profileName] = [];
+                        subGroups[profileName].push(s);
+                    });
 
                     // Container for Group
                     const groupContainer = document.createElement('div');
-                    groupContainer.style.cssText = 'margin-bottom: 1.5rem;';
-
-                    // Header (Category Name)
-                    const header = document.createElement('div');
-                    header.style.cssText = 'padding: 0.5rem; background: #e2e8f0; border: 1px solid #94a3b8; border-bottom: none; font-weight: 700; color: #334155; font-family: sans-serif; font-size: 0.9rem; text-transform: uppercase;';
-                    header.textContent = cat;
-
-                    const table = document.createElement('table');
-                    table.style.cssText = 'width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 0.85rem; border: 1px solid #94a3b8; background: white;';
-
-                    // Table Header
-                    table.innerHTML = `
-                    <thead>
-                        <tr style="background: #f1f5f9;">
-                            <th style="border: 1px solid #cbd5e1; padding: 4px 8px; text-align: left; width: 35%; color: #475569; font-weight: 600;">PRUEBA</th>
-                            <th style="border: 1px solid #cbd5e1; padding: 4px 8px; text-align: left; width: 25%; color: #475569; font-weight: 600;">RESULTADO</th>
-                            <th style="border: 1px solid #cbd5e1; padding: 4px 8px; text-align: left; width: 10%; color: #475569; font-weight: 600;">UNIDADES</th>
-                            <th style="border: 1px solid #cbd5e1; padding: 4px 8px; text-align: left; width: 20%; color: #475569; font-weight: 600;">REFERENCIA</th>
-                            <th style="border: 1px solid #cbd5e1; padding: 4px 8px; text-align: center; width: 10%; color: #475569; font-weight: 600;">ESTADO</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                `;
-
-                    const tbody = table.querySelector('tbody');
-
-                    studies.forEach(item => {
-                        const row = document.createElement('tr');
-
-                        const statusColors = {
-                            'pendiente': '#fbbf24',
-                            'en-proceso': '#3b82f6',
-                            'listo': '#10b981',
-                            'validado': '#6366f1'
-                        };
-                        const currentColor = statusColors[item.estado_resultado] || '#94a3b8';
-
-                        // Referencia formatting
-                        let refText = item.rango_referencia || item.estudios_laboratorio?.rango_referencia || '';
-
-                        row.innerHTML = `
-                        <td style="border: 1px solid #cbd5e1; padding: 4px 8px; vertical-align: middle;">
-                            <div style="font-weight: 700; color: #1e293b;">${item.nombre}</div>
-                            ${item.codigo ? `<div style="font-size: 0.7rem; color: #64748b;">${item.codigo}</div>` : ''}
-                        </td>
-                        <!-- Excel-like Input Cell -->
-                        <td style="border: 1px solid #cbd5e1; padding: 0; vertical-align: middle; background: #fff;">
-                            <input type="text" class="capture-input" 
-                                data-id="${item.id}"
-                                value="${item.valor_resultado || ''}" 
-                                style="width: 100%; height: 100%; border: none; padding: 8px; font-family: inherit; font-size: inherit; font-weight: 600; color: #000; outline: none; background: transparent;"
-                                onfocus="this.parentElement.style.outline='2px solid #2563eb'; this.parentElement.style.zIndex='10';"
-                                onblur="this.parentElement.style.outline='none'; this.parentElement.style.zIndex='auto';">
-                        </td>
-                        <td style="border: 1px solid #cbd5e1; padding: 4px 8px; color: #334155; vertical-align: middle;">${item.unidades || ''}</td>
-                        <td style="border: 1px solid #cbd5e1; padding: 4px 8px; color: #334155; font-size: 0.75rem; vertical-align: middle; white-space: pre-line;">${refText}</td>
-                        <td style="border: 1px solid #cbd5e1; padding: 2px; text-align: center; vertical-align: middle;">
-                             <select class="capture-status" data-id="${item.id}" 
-                                style="width: 100%; padding: 2px; border: none; color: ${currentColor}; font-weight: 700; cursor: pointer; background: transparent; font-size: 0.75rem; text-align: center; -webkit-appearance: none;">
-                                <option value="pendiente" ${item.estado_resultado === 'pendiente' ? 'selected' : ''}>⏳</option>
-                                <option value="en-proceso" ${item.estado_resultado === 'en-proceso' ? 'selected' : ''}>⚙️</option>
-                                <option value="listo" ${item.estado_resultado === 'listo' ? 'selected' : ''}>✅</option>
-                                <option value="validado" ${item.estado_resultado === 'validado' ? 'selected' : ''} disabled>🔒</option>
-                             </select>
-                        </td>
+                    groupContainer.className = 'card';
+                    groupContainer.style.marginBottom = '1.5rem';
+                    groupContainer.innerHTML = `
+                        <div class="card-header" style="background: #e2e8f0; padding: 0.75rem 1rem; border-bottom: 1px solid #cbd5e1;">
+                            <h3 style="margin: 0; font-size: 0.95rem; font-weight: 700; color: #334155; text-transform: uppercase;">${cat}</h3>
+                        </div>
                     `;
-                        tbody.appendChild(row);
+
+                    // Sort keys: Profiles first, Individual last.
+                    const subKeys = Object.keys(subGroups).sort((a, b) => {
+                        if (a === 'Individual') return 1;
+                        if (b === 'Individual') return -1;
+                        return a.localeCompare(b);
                     });
 
-                    groupContainer.appendChild(header);
-                    groupContainer.appendChild(table);
+                    subKeys.forEach(subKey => {
+                        const items = subGroups[subKey];
+                        const isProfile = subKey !== 'Individual';
+
+                        // Sub-header if Profile
+                        if (isProfile) {
+                            const subHeader = document.createElement('div');
+                            subHeader.style.cssText = 'background: #f8fafc; padding: 0.5rem 1rem; border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 0.5rem;';
+                            subHeader.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21a4 4 0 0 1-4-4V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v12a4 4 0 0 1-4 4zm0 0h12a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3"></path></svg> ${subKey}`;
+                            groupContainer.appendChild(subHeader);
+                        }
+
+                        const table = document.createElement('table');
+                        table.className = 'w-full';
+                        table.style.borderCollapse = 'collapse';
+                        table.style.fontSize = '0.9rem';
+
+                        table.innerHTML = `
+                        <thead>
+                            <tr style="background: #f0f0f0;">
+                                <th style="border: 1px solid #c0c0c0; padding: 4px; text-align: center; width: 40px;" title="Incluir en Reporte">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: left; width: auto; color: #333; font-weight: 600;">${isProfile ? '' : 'ESTUDIO'}</th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: left; width: 20%; color: #333; font-weight: 600;">RESULTADO</th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; width: 10%; color: #333; font-weight: 600;">UNIDADES</th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; width: 25%; color: #333; font-weight: 600;">VALORES DE REFERENCIA</th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; width: 20%; color: #333; font-weight: 600;">ESTADO</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    `;
+
+                        const tbody = table.querySelector('tbody');
+
+                        // Sort items by order if available, otherwise by ID or Name stability
+                        items.sort((a, b) => {
+                            const oa = currentOrderMap[a.estudios_laboratorio.id] ?? 9999;
+                            const ob = currentOrderMap[b.estudios_laboratorio.id] ?? 9999;
+                            return oa - ob;
+                        });
+
+                        items.forEach(item => {
+                            const row = document.createElement('tr');
+
+                            // Determine Background Color
+                            const isCalculated = !!(item.formula || item.estudios_laboratorio?.formula);
+                            let initialBg = '#f1f5f9'; // Default Gray (Empty)
+                            if (item.estado_resultado === 'validado') {
+                                initialBg = '#dcfce7'; // Green (Validated)
+                            } else if (item.valor_resultado !== null && item.valor_resultado !== '') {
+                                initialBg = '#fef9c3'; // Yellow (Filled)
+                            } else if (isCalculated) {
+                                initialBg = '#eef2ff'; // Keep distinct for calculated if empty? Or just Gray. Let's use Gray to be consistent with "Empty".
+                                // Actually, if calculated is empty it should be gray. If calculated has value (auto) it should be yellow/green.
+                                if (item.valor_resultado) initialBg = '#fef9c3';
+                            }
+
+                            // Checkbox state (default true if undefined)
+                            const showInReport = item.mostrar_en_reporte !== false;
+
+                            // Referencia formatting
+                            let refText = item.rango_referencia || item.estudios_laboratorio?.rango_referencia || '';
+
+                            row.innerHTML = `
+                            <td style="border: 1px solid #c0c0c0; padding: 0; vertical-align: middle; text-align: center; background: #fff;">
+                                <input type="checkbox" 
+                                    ${showInReport ? 'checked' : ''} 
+                                    onchange="toggleReporte('${item.id}', this.checked)"
+                                    style="cursor: pointer; width: 16px; height: 16px; accent-color: #0f766e;">
+                            </td>
+                            <td style="border: 1px solid #c0c0c0; padding: 4px 8px; vertical-align: middle; opacity: ${showInReport ? '1' : '0.5'};">
+                                <div style="font-weight: 600; color: #000;">
+                                    ${item.estudios_laboratorio?.nombre || item.nombre} ${isCalculated ? '<span title="Calculado Automáticamente" style="font-size:0.75rem; cursor:help;">🧮</span>' : ''}
+                                </div>
+                                <div id="note-display-${item.id}" style="font-size: 0.75rem; color: #0f766e; font-style: italic; margin-top: 2px; display: ${item.observaciones ? 'block' : 'none'};">
+                                    ${item.observaciones ? 'Nota: ' + item.observaciones : ''}
+                                </div>
+                            </td>
+                            <td style="border: 1px solid #c0c0c0; padding: 0; vertical-align: middle; background: ${initialBg}; transition: background 0.3s;" id="cell-bg-${item.id}">
+                                <div style="display: flex; align-items: center; width: 100%; height: 100%;">
+                                    <input type="text" class="capture-input"
+                                        data-id="${item.id}"
+                                        data-code="${item.estudios_laboratorio?.codigo || item.codigo || ''}"
+                                        data-formula="${item.estudios_laboratorio?.formula || item.formula || ''}"
+                                        data-status="${item.estado_resultado}"
+                                        data-ref="${refText}"
+                                        ${isCalculated ? 'readonly' : ''}
+                                        oninput="validateInputRange(this); calculateFormulas(); updateCellColor(this);"
+                                        onkeydown="
+                                            if(event.key==='Enter' || event.key==='ArrowDown'){
+                                                event.preventDefault(); 
+                                                const inputs=[...document.querySelectorAll('.capture-input')]; 
+                                                const idx=inputs.indexOf(this); 
+                                                if(inputs[idx+1]) inputs[idx+1].focus();
+                                            }
+                                            if(event.key==='ArrowUp'){
+                                                event.preventDefault(); 
+                                                const inputs=[...document.querySelectorAll('.capture-input')]; 
+                                                const idx=inputs.indexOf(this); 
+                                                if(inputs[idx-1]) inputs[idx-1].focus();
+                                            }
+                                        "
+                                        style="flex: 1; width: auto; height: 100%; border: none; padding: 6px 8px; font-family: inherit; font-size: inherit; font-weight: 400; color: #000; outline: none; background: transparent;"
+                                    >
+                                    <span class="range-indicator" style="padding: 0 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; min-width: 24px;"></span>
+                                </div>
+                            </td>
+                            <td style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; vertical-align: middle; font-size: 0.85rem; color: #334155;">
+                                ${item.unidades || ''}
+                            </td>
+                            <td style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; vertical-align: middle; font-size: 0.85rem; color: #334155;">
+                                ${refText || '---'}
+                            </td>
+                            <td style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; vertical-align: middle;">
+                                <div id="status-${item.id}" style="display: flex; align-items: center; justify-content: center; gap: 5px; font-weight: 700; font-size: 0.75rem;">
+                                    ${getStatusBadge(item.estado_resultado)}
+                                    <button class="btn-icon" style="width: 20px; height: 20px;" onclick="openNoteModal('${item.id}', '${(item.observaciones || '').replace(/'/g, "\\'")}')" title="Agregar Observación">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        `;
+                            tbody.appendChild(row);
+
+                            // Initial validation
+                            validateInputRange(row.querySelector('input'));
+                        });
+
+                        groupContainer.appendChild(table);
+                    });
+
                     container.appendChild(groupContainer);
                 });
+
+
 
                 // Check if user is admin to show validation button
                 const canValidate = currentUser && (currentUser.rol === 'admin' || currentUser.rol === 'quimico');
                 if (canValidate) {
                     document.getElementById('btnCaptureValidate').style.display = 'inline-flex';
                 }
+                // Trigger validation for existing values
+                document.querySelectorAll('.capture-input').forEach(input => validateInputRange(input));
             }
+
+            function validateInputRange(input) {
+                const rawVal = input.value.trim();
+                const ref = input.dataset.ref;
+                const indicator = input.nextElementSibling;
+
+                if (!indicator) return;
+
+                // Reset styles
+                indicator.textContent = '';
+                input.style.color = '#000';
+
+                if (!rawVal || !ref) return;
+
+                // Check if input is a valid Number
+                const val = parseFloat(rawVal);
+                const isNum = !isNaN(val) && isFinite(rawVal); // Ensure it's not "12abc" treated as number partially, though parseFloat does that. 
+                // Better check: /^-?\d*(\.\d+)?$/.test(rawVal) but simple isNaN(val) is usually enough for this context if we accept that "10 mg" might be text.
+                // Actually, if user types "Negativo", isNaN is true.
+
+                if (isNum) {
+                    // --- NUMERIC LOGIC ---
+                    // Matches "num - num"
+                    const rangeMatch = ref.match(/([0-9.]+)\s*-\s*([0-9.]+)/);
+                    if (rangeMatch) {
+                        const min = parseFloat(rangeMatch[1]);
+                        const max = parseFloat(rangeMatch[2]);
+
+                        if (val < min) {
+                            indicator.textContent = '↓'; // Down Arrow
+                            indicator.style.color = '#2563eb'; // Blue
+                            input.style.color = '#2563eb';
+                        } else if (val > max) {
+                            indicator.textContent = '↑'; // Up Arrow
+                            indicator.style.color = '#dc2626'; // Red
+                            input.style.color = '#dc2626';
+                        }
+                    }
+                } else {
+                    // --- TEXT LOGIC ---
+                    // Compare text (case insensitive)
+                    const normVal = rawVal.toLowerCase();
+                    const normRef = ref.toLowerCase();
+
+                    // Specific logic: If they don't match, warn.
+                    // But Reference might be a range like "Negativo".
+                    // If Reference is a number range "10-20" and user types "Error", it counts as mismatch? Yes.
+
+                    // Simple logic: If reference is NOT a number range (approx check), treat as Text Reference.
+                    const isRefRange = /([0-9.]+)\s*-\s*([0-9.]+)/.test(ref);
+
+                    if (!isRefRange) {
+                        if (normVal !== normRef) {
+                            indicator.textContent = '*';
+                            indicator.style.color = '#ea580c'; // Orange/Red for attention
+                            indicator.title = 'El valor difiere de la referencia';
+                        }
+                    }
+                }
+            }
+
+            function updateCellColor(input) {
+                const cell = input.parentElement;
+                const status = input.dataset.status;
+                const val = input.value;
+
+                if (status === 'validado') {
+                    cell.style.background = '#dcfce7'; // Green
+                } else if (val !== '') {
+                    cell.style.background = '#fef9c3'; // Yellow
+                } else {
+                    cell.style.background = '#f1f5f9'; // Gray
+                }
+            }
+
+            // Note Modal Functions
+            // Note Modal Functions - Attached to window to ensure global scope access from HTML onclick
+            window.openNoteModal = function (id, currentNote) {
+                console.log('Opening note modal for:', id, currentNote);
+                const modal = document.getElementById('noteModal');
+                if (!modal) {
+                    alert('Error: Modal element not found!');
+                    return;
+                }
+                const parsedNote = (currentNote && currentNote !== 'null' && currentNote !== 'undefined') ? currentNote : '';
+
+                document.getElementById('noteStudyId').value = id;
+                document.getElementById('noteText').value = parsedNote;
+
+                // Force display flex
+                modal.style.display = 'flex';
+                // Double check z-index via direct style
+                modal.style.zIndex = '100000';
+
+                setTimeout(() => document.getElementById('noteText').focus(), 100);
+            };
+
+            window.saveNoteModal = async function () {
+                const id = document.getElementById('noteStudyId').value;
+                const note = document.getElementById('noteText').value.trim();
+
+                console.log('Saving note for:', id, note);
+
+                // 1. Update In-Memory Data for UI consistency
+                if (typeof currentCaptureCita !== 'undefined' && currentCaptureCita && currentCaptureCita.citas_estudios) {
+                    const studyIndex = currentCaptureCita.citas_estudios.findIndex(ce => ce.id === id);
+                    if (studyIndex > -1) {
+                        currentCaptureCita.citas_estudios[studyIndex].observaciones = note;
+                    }
+                }
+
+                // 2. UI Updates (Optimistic)
+                const btn = document.querySelector(`.btn-note[data-id="${id}"]`); // Selector might need adjustment if class is not there, logic below uses dynamic selector based on onclick
+                // Actually the current button doesn't have a class or data-id easy to grab, but we can refresh the row or just the display div.
+
+                // Update text display in table
+                const noteDisplay = document.getElementById('note-display-' + id);
+                if (noteDisplay) {
+                    noteDisplay.textContent = note ? 'Nota: ' + note : '';
+                    noteDisplay.style.display = note ? 'block' : 'none';
+                }
+
+                document.getElementById('noteModal').style.display = 'none';
+
+                // 3. Persist to Database Immediately
+                try {
+                    const { error } = await supabaseClient
+                        .from('citas_estudios')
+                        .update({ observaciones: note || null }) // Send null if empty to clean up
+                        .eq('id', id);
+
+                    if (error) throw error;
+                    showToast('Nota guardada correctamente', 'success');
+                } catch (e) {
+                    console.error('Error saving note:', e);
+                    showToast('Error al guardar nota en BD', 'error');
+                    // Revert UI if needed? For now just alert.
+                }
+            };
 
             async function saveCaptureResults() {
                 if (!currentCaptureCita) return;
@@ -966,29 +1573,34 @@
 
                 const updates = [];
 
-                // Helper to find status for an id
-                const getStatus = (id) => {
-                    for (let s of statuses) { if (s.dataset.id === id) return s.value; }
-                    return 'pendiente';
-                };
-
-                for (const input of inputs) {
+                // Collect results
+                inputs.forEach(input => {
                     const id = input.dataset.id;
-                    const valor = input.value;
-                    const estado = getStatus(id);
+                    const val = input.value;
+                    const study = currentCaptureCita.citas_estudios.find(s => s.id === id);
 
-                    // Assuming simple update. For optimization we could batch, but supabase js client updates one by one usually unless using upsert.
-                    // We will do parallel promises
-                    updates.push(
-                        supabaseClient
-                            .from('citas_estudios')
-                            .update({
-                                valor_resultado: valor,
-                                estado_resultado: valor ? (estado === 'pendiente' ? 'listo' : estado) : estado // Auto set to listo if value present and still pending
-                            })
-                            .eq('id', id)
-                    );
-                }
+                    // Determine status automatically
+                    // If validated, keep validated. 
+                    // Else if value is present, set to 'listo'. 
+                    // Else set to 'pendiente' (or keep current if special)
+                    let newStatus = study.estado_resultado;
+                    if (newStatus !== 'validado') {
+                        newStatus = val ? 'listo' : 'pendiente';
+                    }
+
+                    if (study) {
+                        updates.push(
+                            supabaseClient
+                                .from('citas_estudios')
+                                .update({
+                                    valor_resultado: val,
+                                    estado_resultado: newStatus,
+                                    observaciones: study.observaciones || null
+                                })
+                                .eq('id', id)
+                        );
+                    }
+                });
 
                 try {
                     await Promise.all(updates);
@@ -1001,9 +1613,23 @@
                 }
             }
 
-            async function validateCaptureResults() {
-                // Mark all 'listo' as 'validado'
-                if (!confirm('¿Desea validar y firmar todos los resultados que estén en estado "Listo"?')) return;
+            function validateCaptureResults() {
+                // Check if there are items to validate
+                const toValidateCount = currentCaptureCita.citas_estudios.filter(ce => ce.estado_resultado === 'listo').length;
+
+                if (toValidateCount === 0) {
+                    showToast('No hay resultados en estado "Listo" para validar.', 'info');
+                    return;
+                }
+
+                // Open Custom Modal
+                document.getElementById('validationConfirmModal').style.display = 'flex';
+                document.getElementById('valConfirmText').textContent = `¿Desea validar y firmar ${toValidateCount} resultado(s) que están en estado "Listo"?`;
+            }
+
+            async function proceedValidation() {
+                document.getElementById('validationConfirmModal').style.display = 'none';
+
 
                 // Find eligible items
                 const toValidate = [];
@@ -1038,6 +1664,44 @@
             }
 
         </script>
+        <!-- Note Modal -->
+        <div id="noteModal"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100000; justify-content: center; align-items: center;">
+            <div
+                style="background: white; padding: 1.5rem; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="margin-top: 0; color: #0f766e;">Nota del Analito</h3>
+                <input type="hidden" id="noteStudyId">
+                <textarea id="noteText" rows="4"
+                    style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 0.5rem; margin: 1rem 0; font-family: sans-serif;"
+                    placeholder="Escriba una observación..."></textarea>
+                <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+                    <button onclick="document.getElementById('noteModal').style.display='none'"
+                        class="btn btn-outline">Cancelar</button>
+                    <button onclick="saveNoteModal()" class="btn btn-primary">Guardar Nota</button>
+                </div>
+            </div>
+        </div>
+        <div id="validationConfirmModal"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100000; justify-content: center; align-items: center;">
+            <div
+                style="background: white; padding: 2rem; border-radius: 12px; width: 90%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: center;">
+                <div style="color: #6366f1; margin-bottom: 1rem;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <h3 style="margin: 0 0 0.5rem 0; color: #1e293b; font-size: 1.25rem;">Confirmar Validación</h3>
+                <p id="valConfirmText" style="color: #64748b; margin-bottom: 1.5rem; line-height: 1.5;">¿Estás seguro?
+                </p>
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                    <button onclick="document.getElementById('validationConfirmModal').style.display='none'"
+                        class="btn btn-outline" style="min-width: 100px;">Cancelar</button>
+                    <button onclick="proceedValidation()" class="btn btn-primary"
+                        style="background: #6366f1; border-color: #6366f1; min-width: 100px;">Validar</button>
+                </div>
+            </div>
+        </div>
 </body>
 
 </html>

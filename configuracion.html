@@ -5,43 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración - Ar Lab</title>
-    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="navbar.css">
     <script src="navbar.js" defer></script>
     <style>
         :root {
             --primary: #0d9488;
-            --primary-light: #5eead4;
             --primary-dark: #0f766e;
-            --sidebar-bg: #1e293b;
-            --sidebar-hover: #334155;
-            --sidebar-active: #0d9488;
-            --content-bg: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-dark: #1e293b;
+            --primary-light: #e0f2fe;
+            --secondary: #64748b;
+            --accent: #f59e0b;
+            --background: #f1f5f9;
+            --surface: #ffffff;
+            --text-main: #0f172a;
             --text-light: #64748b;
-            --text-white: #f8fafc;
             --border: #e2e8f0;
             --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
+            --error: #ef4444;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
         }
 
         body {
-            background-color: #f8fafc;
-            color: var(--text-dark);
+            background-color: var(--background);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -346,12 +340,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            animation: slideUp 0.3s ease-out;
         }
 
         .modal-content-lg {
@@ -413,6 +419,7 @@
             <div class="config-tabs">
                 <button class="tab-btn active" onclick="switchTab('general')">Información General</button>
                 <button class="tab-btn" onclick="switchTab('estudios')">Gestión de Estudios</button>
+                <button class="tab-btn" onclick="switchTab('perfiles')">Gestión de Perfiles</button>
             </div>
 
             <!-- Tab: General -->
@@ -493,6 +500,43 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Tab: Perfiles -->
+            <div id="tab-perfiles" class="config-section">
+                <div class="search-bar">
+                    <input type="text" id="searchPerfil" class="form-input" placeholder="Buscar perfil..."
+                        oninput="filterPerfiles()">
+                    <button class="btn btn-primary" onclick="openPerfilModal()">Nuevo Perfil</button>
+                    <button class="btn btn-secondary" onclick="openTemplateModal()"
+                        style="background: white; color: var(--primary); border: 1px solid var(--primary); margin-left: 0.5rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                        Plantillas
+                    </button>
+                </div>
+
+                <div class="studies-table-container">
+                    <table class="studies-table">
+                        <thead>
+                            <tr>
+                                <th width="100">Código</th>
+                                <th>Nombre del Perfil</th>
+                                <th width="150">Componentes</th>
+                                <th width="100">Precio</th>
+                                <th width="80">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="perfilesTableBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 2rem;">Cargando perfiles...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -504,8 +548,11 @@
                 <input type="hidden" id="estId">
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label">Código</label>
-                        <input type="text" id="estCodigo" class="form-input" placeholder="Ej: HEM">
+                        <label class="form-label">Código *</label>
+                        <input type="text" id="estCodigo" class="form-input" placeholder="Ej: QS-GLU" required
+                            oninput="this.value = this.value.toUpperCase().replace(/\s/g, '')">
+                        <small style="color: #64748b; font-size: 0.75rem;">Debe ser único. Prefijo sugerido
+                            automático.</small>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nombre del Estudio *</label>
@@ -513,10 +560,25 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group">
+                    <div class="form-group" style="position: relative;">
                         <label class="form-label">Categoría *</label>
-                        <input type="text" id="estCategoria" class="form-input" list="catList" required>
-                        <datalist id="catList"></datalist>
+                        <input type="text" id="estCategoria" class="form-input" required autocomplete="off"
+                            onfocus="showCategorySuggestions()"
+                            oninput="filterCategorySuggestions(); suggestCodePrefix()" onchange="suggestCodePrefix()">
+                        <div id="catSuggestions" style="
+                            position: absolute;
+                            top: 100%;
+                            left: 0;
+                            right: 0;
+                            background: white;
+                            border: 1px solid var(--border);
+                            border-radius: 0 0 8px 8px;
+                            max-height: 200px;
+                            overflow-y: auto;
+                            z-index: 100;
+                            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                            display: none;
+                        "></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Precio ($) *</label>
@@ -529,8 +591,108 @@
                         <input type="text" id="estMuestra" class="form-input">
                     </div>
                     <div class="form-group">
+                        <label class="form-label">Tubo / Recipiente</label>
+                        <input type="text" id="estTubo" class="form-input" placeholder="Ej: Tubo Rojo, Frasco Estéril"
+                            list="tuboList">
+                        <datalist id="tuboList">
+                            <option value="Tubo Lila">
+                            <option value="Tubo Rojo">
+                            <option value="Tubo Amarillo">
+                            <option value="Tubo Azul">
+                            <option value="Tubo Verde">
+                            <option value="Tubo Gris">
+                            <option value="Frasco Estéril">
+                        </datalist>
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">Metodología</label>
                         <input type="text" id="estMetodo" class="form-input">
+                    </div>
+                </div>
+                <!-- New Fields -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Unidades de Medida</label>
+                        <input type="text" id="estUnidades" class="form-input" placeholder="Ej: mg/dL, g/L">
+                    </div>
+                </div>
+                <!-- Cálculo Automático -->
+                <div
+                    style="margin-bottom: 1rem; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; background: #fffbeb;">
+                    <label
+                        style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-bottom: 0.5rem; font-weight: 600; color: #b45309;">
+                        <input type="checkbox" id="estEsCalculado" onchange="toggleFormulaSection()">
+                        <span style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                                <line x1="8" y1="6" x2="16" y2="6"></line>
+                                <line x1="16" y1="14" x2="16" y2="18"></line>
+                                <path d="M16 10h.01"></path>
+                                <path d="M12 10h.01"></path>
+                                <path d="M8 10h.01"></path>
+                                <path d="M12 14h.01"></path>
+                                <path d="M8 14h.01"></path>
+                                <path d="M12 18h.01"></path>
+                                <path d="M8 18h.01"></path>
+                            </svg>
+                            Es un Analito Calculado
+                        </span>
+                    </label>
+                    <div id="formulaSection" style="display: none;">
+                        <label class="form-label" style="font-size: 0.85rem; color: #92400e;">Fórmula</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="estFormula" class="form-input" placeholder="Ej: [GLU] / 18"
+                                style="font-family: monospace;">
+                            <button type="button" class="btn btn-secondary" onclick="showFormulaHelp()"
+                                title="Ayuda de Fórmulas">?</button>
+                        </div>
+                        <p style="font-size: 0.75rem; color: #b45309; margin-top: 5px;">
+                            Usa el <strong>Código</strong> de otros estudios entre corchetes, ej:
+                            <code>[CREA] / 28.3</code>.
+                            Operadores válidos: +, -, *, /, (, ).
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1rem;">
+                    <label class="form-label" style="margin-bottom: 0.5rem;">Valores de Referencia</label>
+
+                    <div style="display: flex; gap: 1.5rem; margin-bottom: 1rem;">
+                        <label
+                            style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="radio" name="refType" value="texto" checked onchange="toggleRefType()"> Texto /
+                            General
+                        </label>
+                        <label
+                            style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="radio" name="refType" value="rango" onchange="toggleRefType()"> Rango Numérico
+                        </label>
+                    </div>
+
+                    <!-- Input Texto -->
+                    <div id="refInputTexto">
+                        <textarea id="estRefTexto" class="form-textarea" rows="4"
+                            style="font-family: monospace; line-height: 1.5;" placeholder="Ej:
+Deseable: < 200
+Limitrofe: 200 - 239
+Alto: > 240"></textarea>
+                    </div>
+
+                    <!-- Inputs Rango -->
+                    <div id="refInputRango" style="display: none;">
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <div style="flex: 1;">
+                                <label style="font-size: 0.75rem; color: #64748b;">Mínimo</label>
+                                <input type="number" id="estRefMin" class="form-input" step="0.01" placeholder="0.0">
+                            </div>
+                            <span style="font-weight: bold; color: #94a3b8; margin-top: 14px;">-</span>
+                            <div style="flex: 1;">
+                                <label style="font-size: 0.75rem; color: #64748b;">Máximo</label>
+                                <input type="number" id="estRefMax" class="form-input" step="0.01" placeholder="100.0">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -540,11 +702,30 @@
                 <div
                     style="margin-bottom: 1.5rem; display: flex; gap: 2rem; border: 1px solid var(--border); padding: 1rem; border-radius: 12px;">
                     <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                        <input type="checkbox" id="estFrecuente"> 🌟 Más Solicitado
+                        <input type="checkbox" id="estFrecuente">
+                        <span style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eab308"
+                                stroke-width="2">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                </polygon>
+                            </svg>
+                            Más Solicitado
+                        </span>
                     </label>
                     <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                        <input type="checkbox" id="estPerfil" onchange="togglePerfilSection()"> 📋 Es un Perfil
-                        (Paquete)
+                        <input type="checkbox" id="estPerfil" onchange="togglePerfilSection()">
+                        <span style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            Es un Perfil (Paquete)
+                        </span>
                     </label>
                 </div>
 
@@ -569,6 +750,189 @@
         </div>
     </div>
 
+    <!-- Modal Ayuda Fórmulas -->
+    <div id="formulaHelpModal" class="modal" style="z-index: 2005;">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="font-family: 'Outfit'; margin: 0;">Ayuda de Fórmulas</h3>
+                <button class="btn-icon"
+                    onclick="document.getElementById('formulaHelpModal').style.display='none'">&times;</button>
+            </div>
+            <div style="font-size: 0.9rem; color: #334155; line-height: 1.6;">
+                <p>Para crear un analito calculado, escribe una expresión matemática usando los códigos de otros
+                    estudios entre corchetes.</p>
+                <p><strong>Ejemplos:</strong></p>
+                <ul style="list-style: disc; margin-left: 1.5rem; margin-bottom: 1rem;">
+                    <li>Relación A/G: <code>[ALB] / [GLOB]</code></li>
+                    <li>Nitrógeno Ureico: <code>[UREA] / 2.1428</code></li>
+                    <li>Colesterol LDL (Friedewald): <code>[COL] - [HDL] - ([TRI] / 5)</code></li>
+                </ul>
+                <p><strong>Operadores Disponibles:</strong></p>
+                <p><code>+</code> (Suma), <code>-</code> (Resta), <code>*</code> (Multiplicación), <code>/</code>
+                    (División), <code>( )</code> (Paréntesis).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Perfil -->
+    <div id="perfilModal" class="modal">
+        <div class="modal-content-lg">
+            <h2 id="modalPerfilTitle" style="margin-bottom: 1.5rem; font-family: 'Outfit';">Crear Nuevo Perfil</h2>
+            <form id="perfilForm" onsubmit="savePerfil(event)">
+                <input type="hidden" id="perfilId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Código del Perfil</label>
+                        <input type="text" id="perfilCodigo" class="form-input" placeholder="Ej: P-001">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nombre del Perfil *</label>
+                        <input type="text" id="perfilNombre" class="form-input" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Categoría</label>
+                        <input type="text" id="perfilCategoria" class="form-input" value="Perfiles" readonly
+                            style="background: #f1f5f9;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Precio Total ($) *</label>
+                        <input type="number" id="perfilPrecio" class="form-input" step="0.01" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Indicaciones / Preparación</label>
+                    <textarea id="perfilIndicaciones" class="form-textarea" rows="2"
+                        placeholder="Ayuno de 8 horas, etc."></textarea>
+                </div>
+
+                <div
+                    style="margin-bottom: 1.5rem; background: #f8fafc; padding: 1rem; border-radius: 12px; border: 1px solid var(--border);">
+                    <label class="form-label"
+                        style="display: flex; justify-content: space-between; align-items: center;">
+                        Componentes del Perfil
+                        <span style="font-size: 0.75rem; color: var(--primary); font-weight: normal;">* Agrega estudios
+                            individuales</span>
+                    </label>
+                    <div style="position: relative; display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                        <div style="position: relative; flex: 1;">
+                            <input type="text" id="buscCompPerfil" class="form-input"
+                                placeholder="Escribe para buscar estudio..." autocomplete="off"
+                                oninput="filterCompSuggestions()">
+                            <div id="suggestionsList" style="
+                                position: absolute;
+                                top: 100%;
+                                left: 0;
+                                right: 0;
+                                background: white;
+                                border: 1px solid var(--border);
+                                border-radius: 0 0 8px 8px;
+                                max-height: 200px;
+                                overflow-y: auto;
+                                z-index: 10;
+                                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                                display: none;
+                            "></div>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="addCustomCompPerfil()">Agregar
+                            (+)</button>
+                    </div>
+                    <div id="compListPerfil"
+                        style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 300px; overflow-y: auto;">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn-secondary" onclick="closePerfilModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="savePerfilBtn">Guardar Perfil</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Generic Message Modal -->
+    <div id="messageModal" class="modal" style="z-index: 2000;">
+        <div class="modal-content"
+            style="max-width: 400px; text-align: center; background-color: white; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-radius: 12px; padding: 2rem;">
+            <div id="msgModalIcon" style="margin-bottom: 1rem;"></div>
+            <h3 id="msgModalTitle" style="font-family: 'Outfit', sans-serif; margin-bottom: 0.5rem; color: #1e293b;">
+            </h3>
+            <p id="msgModalText" style="color: #64748b; margin-bottom: 1.5rem; line-height: 1.5;"></p>
+            <button class="btn btn-primary" onclick="closeMessageModal()">Entendido</button>
+        </div>
+    </div>
+
+    <!-- Generic Confirm Modal -->
+    <div id="confirmModal" class="modal" style="z-index: 2001;">
+        <div class="modal-content"
+            style="max-width: 400px; text-align: center; background-color: white; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-radius: 12px; padding: 2rem;">
+            <div style="color: #f59e0b; margin-bottom: 1rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <h3 style="font-family: 'Outfit', sans-serif; margin-bottom: 0.5rem; color: #1e293b;">¿Estás seguro?</h3>
+            <p id="confirmModalText" style="color: #64748b; margin-bottom: 1.5rem; line-height: 1.5;"></p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="btn btn-secondary" onclick="closeConfirmModal(false)">Cancelar</button>
+                <button class="btn btn-primary" style="background-color: #ef4444; border-color: #ef4444;"
+                    onclick="closeConfirmModal(true)">Sí, eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Selection Modal -->
+    <div class="modal" id="templateModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>Importar Plantilla Estándar</h2>
+                <button class="modal-close" onclick="closeTemplateModal()">&times;</button>
+            </div>
+            <div style="padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+
+                <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#e2e8f0'">
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">🩸 Biometría Hemática</div>
+                    <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">Incluye Serie Roja, Blanca y
+                        Plaquetas. 15 analitos.</div>
+                    <button id="btn-temp-bh" class="btn btn-sm btn-primary" style="width: 100%;"
+                        onclick="importTemplate('bh')">Importar</button>
+                </div>
+
+                <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#e2e8f0'">
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">💧 Examen General de Orina</div>
+                    <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">Físico-químico y sedimento. 15
+                        analitos.</div>
+                    <button id="btn-temp-ego" class="btn btn-sm btn-primary" style="width: 100%;"
+                        onclick="importTemplate('ego')">Importar</button>
+                </div>
+
+                <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#e2e8f0'">
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">🧪 Química Sanguínea (6)</div>
+                    <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">Glucosa, Urea, BUN, Creatinina,
+                        Ácido Úrico, Colesterol.</div>
+                    <button id="btn-temp-qs6" class="btn btn-sm btn-primary" style="width: 100%;"
+                        onclick="importTemplate('qs6')">Importar</button>
+                </div>
+
+                <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#e2e8f0'">
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">⚡ Electrolitos Séricos (3)</div>
+                    <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 1rem;">Na, K, Cl.</div>
+                    <button id="btn-temp-electrolitos" class="btn btn-sm btn-primary" style="width: 100%;"
+                        onclick="importTemplate('electrolitos')">Importar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -578,12 +942,21 @@
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         let todosEstudios = [];
+        let todosPerfiles = [];
         let componentesPerfil = [];
+        let componentesPerfilActual = []; // For the separate Perfil Modal
 
         document.addEventListener('DOMContentLoaded', () => {
             loadConfig();
             initAnimation();
-            loadEstudios();
+
+            // Restore Tab
+            const savedTab = localStorage.getItem('config_active_tab') || 'general';
+            switchTab(savedTab);
+            // Note: switchTab will call loadEstudios if needed, so we don't need to call it explicitly here unless default 'general' needs something (it doesn't).
+            // But if savedTab is 'general', loadEstudios won't be called by switchTab. 
+            // However, general tab has no table to load.
+            // If savedTab is 'estudios', switchTab calls loadEstudios. Perfect.
 
             // Check auth
             const userStr = localStorage.getItem('arlab_user');
@@ -603,43 +976,81 @@
             }
         });
 
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.config-section').forEach(s => s.classList.remove('active'));
-
-            event.target.classList.add('active');
-            document.getElementById(`tab-${tab}`).classList.add('active');
-
-            if (tab === 'estudios') loadEstudios();
-        }
-
         // Normalizar nombres (Tipo Oración: Juan Carlos)
         function normalizeInput(input) {
             const cursor = input.selectionStart;
-            const value = input.value;
-            // Capitalizar la primera letra de cada palabra y el resto minúsculas
-            const normalized = value.toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase());
+            const val = input.value;
+            // Capitalizar primera letra de cada palabra
+            input.value = val.toLowerCase().replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+            input.setSelectionRange(cursor, cursor);
+        }
 
-            if (value !== normalized) {
-                input.value = normalized;
-                input.setSelectionRange(cursor, cursor);
+        function switchTab(tab) {
+            // Save state
+            localStorage.setItem('config_active_tab', tab);
+
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.config-section').forEach(s => s.classList.remove('active'));
+
+            const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tab));
+            if (btn) btn.classList.add('active');
+
+            const section = document.getElementById(`tab-${tab}`);
+            if (section) section.classList.add('active');
+
+            if (tab === 'estudios' || tab === 'perfiles') {
+                if (todosEstudios.length === 0) {
+                    if (tab === 'estudios') document.getElementById('estudiosTableBody').innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">Cargando...</td></tr>';
+                    else document.getElementById('perfilesTableBody').innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">Cargando...</td></tr>';
+                }
+                loadEstudios();
             }
         }
 
 
-        async function loadEstudios() {
+        async function loadEstudios(refresh = true) {
             try {
                 const { data, error } = await supabaseClient
                     .from('estudios_laboratorio')
-                    .select('*')
+                    .select(`
+                        *,
+                        estudio_componentes!perfil_id (
+                            estudios_laboratorio!componente_id (nombre)
+                        )
+                    `)
                     .order('nombre', { ascending: true });
 
                 if (error) throw error;
+
+                // Separate arrays
                 todosEstudios = data || [];
-                renderTable(todosEstudios);
-                renderCategories();
+                todosPerfiles = todosEstudios.filter(e => e.es_perfil);
+
+                // Refresh active view
+                if (refresh) {
+                    const activeSection = document.querySelector('.config-section.active');
+                    const activeTab = activeSection ? activeSection.id : 'tab-estudios'; // Fallback logic
+
+                    if (activeTab === 'tab-estudios') {
+                        renderTable(todosEstudios.filter(e => !e.es_perfil));
+                    } else if (activeTab === 'tab-perfiles') {
+                        renderPerfilesTable();
+                    }
+                    renderCategories();
+
+                    // Update datalist for Profile Modal
+                    const dl = document.getElementById('compDataPerfil');
+                    if (dl) {
+                        dl.innerHTML = todosEstudios
+                            .filter(e => !e.es_perfil) // Only allow adding individual studies to profiles
+                            .map(e => `<option value="${e.nombre}">`).join('');
+                    }
+                }
             } catch (err) {
                 console.error('Error loading estudios:', err);
+                if (typeof showToast === 'function') {
+                    showToast('Error: ' + (err.message || 'Error desconocido'), 'error');
+                }
             }
         }
 
@@ -660,17 +1071,201 @@
                     <td style="font-family: monospace;">${est.codigo || '---'}</td>
                     <td>
                         <div style="font-weight: 600;">${est.nombre}</div>
-                        ${est.es_perfil ? '<span class="status-badge" style="background:#e0f2fe; color:#0369a1; font-size: 0.65rem;">PERFIL</span>' : ''}
                     </td>
                     <td><span class="status-badge status-badge-warning">${est.categoria}</span></td>
                     <td style="font-weight: 700;">$${parseFloat(est.precio || 0).toFixed(2)}</td>
                     <td>
-                        <button class="btn-icon btn-icon-primary" onclick="openEstudioModal('${est.id}')" title="Editar">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn-icon btn-icon-primary" onclick="openEstudioModal('${est.id}')" title="Editar">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                            <button class="btn-icon" style="color: #ef4444; border-color: #fecaca;" onclick="deleteEstudio('${est.id}')" title="Eliminar">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // --- Perfiles Logic ---
+        function renderPerfilesTable() {
+            const tbody = document.getElementById('perfilesTableBody');
+            const data = todosPerfiles; // Use global loaded profiles
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No hay perfiles creados.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map(p => {
+                // Extract component names
+                const comps = p.estudio_componentes
+                    ? p.estudio_componentes.map(c => c.estudios_laboratorio.nombre)
+                    : [];
+
+                const compText = comps.length > 0
+                    ? (comps.length > 3 ? `${comps.slice(0, 3).join(', ')}... (+${comps.length - 3})` : comps.join(', '))
+                    : '<span style="color: #94a3b8; font-style: italic;">Sin componentes</span>';
+
+                return `
+                <tr>
+                    <td style="font-family: monospace;">${p.codigo || '---'}</td>
+                    <td>
+                        <div style="font-weight: 600;">${p.nombre}</div>
+                        <div style="font-size: 0.75rem; color: #64748b;">${p.indicaciones || ''}</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem; color: #334155; line-height: 1.4;">
+                            ${compText}
+                        </div>
+                    </td> 
+                    <td style="font-weight: 700;">$${parseFloat(p.precio || 0).toFixed(2)}</td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn-icon btn-icon-primary" onclick="openPerfilModal('${p.id}')" title="Editar Perfil">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                            <button class="btn-icon" style="color: #ef4444; border-color: #fecaca;" onclick="deletePerfil('${p.id}')" title="Eliminar Perfil">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        // --- Modal System ---
+        function showMessage(title, text, type = 'info') {
+            const modal = document.getElementById('messageModal');
+            const icon = document.getElementById('msgModalIcon');
+            const titleEl = document.getElementById('msgModalTitle');
+            const textEl = document.getElementById('msgModalText');
+
+            titleEl.innerText = title;
+            textEl.innerText = text;
+
+            if (type === 'success') {
+                icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+            } else if (type === 'error') {
+                icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+            } else {
+                icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>';
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeMessageModal() {
+            document.getElementById('messageModal').style.display = 'none';
+        }
+
+        let confirmResolve = null;
+        function showConfirm(text) {
+            return new Promise((resolve) => {
+                confirmResolve = resolve;
+                document.getElementById('confirmModalText').innerText = text;
+                document.getElementById('confirmModal').style.display = 'flex';
+            });
+        }
+
+        function closeConfirmModal(result) {
+            document.getElementById('confirmModal').style.display = 'none';
+            if (confirmResolve) confirmResolve(result);
+        }
+        async function deleteEstudio(id) {
+            const confirmed = await showConfirm('¿Estás seguro de que quieres eliminar este estudio? Esta acción eliminará el estudio de tu base de datos permanentemente.');
+            if (!confirmed) return;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('estudios_laboratorio')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                showMessage('¡Eliminado!', 'Estudio eliminado correctamente', 'success');
+                loadEstudios();
+            } catch (err) {
+                console.error(err);
+                if (err.code === '23503') { // FK Violation
+                    showMessage('Error', 'No se puede eliminar: El estudio está asociado a pacientes o resultados.', 'error');
+                } else {
+                    showMessage('Error', 'Error al eliminar: ' + err.message, 'error');
+                }
+            }
+        }
+
+        async function deletePerfil(id) {
+            const confirmed = await showConfirm('¿Estás seguro de eliminar este perfil?');
+            if (!confirmed) return;
+
+            try {
+                // First delete components associations just in case cascading isn't set, though it usually is good practice to rely on cascade or handle it.
+                // We'll try direct delete, assuming cascade or no constraints. If it fails we'll know.
+                // Actually, let's delete components manually to be safe if no cascade is configured
+                await supabaseClient.from('estudio_componentes').delete().eq('perfil_id', id);
+
+                const { error } = await supabaseClient
+                    .from('estudios_laboratorio')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                showMessage('¡Eliminado!', 'Perfil eliminado correctamente', 'success');
+                loadEstudios();
+            } catch (err) {
+                console.error(err);
+                showMessage('Error', 'Error al eliminar perfil: ' + err.message, 'error');
+            }
+        }
+
+
+
+        function filterPerfiles() {
+            const search = document.getElementById('searchPerfil').value.toLowerCase();
+            const filtered = todosPerfiles.filter(p =>
+                p.nombre.toLowerCase().includes(search) ||
+                (p.codigo && p.codigo.toLowerCase().includes(search))
+            );
+            // Manually render filtered result
+            const tbody = document.getElementById('perfilesTableBody');
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No se encontraron perfiles.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(p => {
+                const comps = p.estudio_componentes
+                    ? p.estudio_componentes.map(c => c.estudios_laboratorio.nombre)
+                    : [];
+
+                const compText = comps.length > 0
+                    ? (comps.length > 3 ? `${comps.slice(0, 3).join(', ')}... (+${comps.length - 3})` : comps.join(', '))
+                    : '<span style="color: #94a3b8; font-style: italic;">Sin componentes</span>';
+
+                return `
+                <tr>
+                    <td style="font-family: monospace;">${p.codigo || '---'}</td>
+                    <td>
+                        <div style="font-weight: 600;">${p.nombre}</div>
+                        <div style="font-size: 0.75rem; color: #64748b;">${p.indicaciones || ''}</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem; color: #334155; line-height: 1.4;">
+                            ${compText}
+                        </div>
+                    </td> 
+                    <td style="font-weight: 700;">$${parseFloat(p.precio || 0).toFixed(2)}</td>
+                    <td>
+                        <button class="btn-icon btn-icon-primary" onclick="openPerfilModal('${p.id}')" title="Editar Perfil">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         </button>
                     </td>
                 </tr>
-            `).join('');
+            `}).join('');
         }
 
         function renderCategories() {
@@ -678,10 +1273,14 @@
             const filterSelect = document.getElementById('filterCat');
             const catList = document.getElementById('catList');
 
-            filterSelect.innerHTML = '<option value="">Todas las categorías</option>' +
-                cats.map(c => `<option value="${c}">${c}</option>`).join('');
+            if (filterSelect) {
+                filterSelect.innerHTML = '<option value="">Todas las categorías</option>' +
+                    cats.map(c => `<option value="${c}">${c}</option>`).join('');
+            }
 
-            catList.innerHTML = cats.map(c => `<option value="${c}">`).join('');
+            if (catList) {
+                catList.innerHTML = cats.map(c => `<option value="${c}">`).join('');
+            }
         }
 
         function filterEstudios() {
@@ -696,6 +1295,207 @@
             renderTable(filtered);
         }
 
+        // --- Template System (Opción 6) ---
+
+        const LAB_TEMPLATES = {
+            'bh': {
+                nombre: 'Biometría Hemática Completa',
+                categoria: 'Hematología',
+                codigo: 'PERFIL-BH',
+                precio: 0,
+                componentes: [
+                    { nombre: 'Eritrocitos', codigo: 'BH-ERI', unidades: 'mill/mm³', ref_min: 4.5, ref_max: 5.9, tipo: 'rango' },
+                    { nombre: 'Hemoglobina', codigo: 'BH-HB', unidades: 'g/dL', ref_min: 13, ref_max: 17, tipo: 'rango' },
+                    { nombre: 'Hematocrito', codigo: 'BH-HTO', unidades: '%', ref_min: 40, ref_max: 52, tipo: 'rango' },
+                    { nombre: 'VCM', codigo: 'BH-VCM', unidades: 'fL', ref_min: 80, ref_max: 100, tipo: 'rango' },
+                    { nombre: 'HCM', codigo: 'BH-HCM', unidades: 'pg', ref_min: 27, ref_max: 32, tipo: 'rango' },
+                    { nombre: 'CHCM', codigo: 'BH-CHCM', unidades: 'g/dL', ref_min: 32, ref_max: 36, tipo: 'rango' },
+                    { nombre: 'RDW', codigo: 'BH-RDW', unidades: '%', ref_min: 11, ref_max: 15, tipo: 'rango' },
+                    { nombre: 'Leucocitos Totales', codigo: 'BH-LEU', unidades: 'mil/mm³', ref_min: 4.0, ref_max: 11.0, tipo: 'rango' },
+                    { nombre: 'Neutrófilos %', codigo: 'BH-NEU', unidades: '%', ref_min: 40, ref_max: 85, tipo: 'rango' },
+                    { nombre: 'Linfocitos %', codigo: 'BH-LIN', unidades: '%', ref_min: 18, ref_max: 45, tipo: 'rango' },
+                    { nombre: 'Monocitos %', codigo: 'BH-MON', unidades: '%', ref_min: 2, ref_max: 10, tipo: 'rango' },
+                    { nombre: 'Eosinófilos %', codigo: 'BH-EOS', unidades: '%', ref_min: 0, ref_max: 6, tipo: 'rango' },
+                    { nombre: 'Basófilos %', codigo: 'BH-BAS', unidades: '%', ref_min: 0, ref_max: 2, tipo: 'rango' },
+                    { nombre: 'Plaquetas', codigo: 'BH-PLT', unidades: 'mil/mm³', ref_min: 150, ref_max: 450, tipo: 'rango' },
+                    { nombre: 'VPM', codigo: 'BH-VPM', unidades: 'fL', ref_min: 7, ref_max: 11, tipo: 'rango' }
+                ]
+            },
+            'ego': {
+                nombre: 'Examen General de Orina',
+                categoria: 'Uroanálisis',
+                codigo: 'PERFIL-EGO',
+                precio: 0,
+                componentes: [
+                    { nombre: 'Color', codigo: 'EGO-COL', unidades: '', tipo: 'texto', ref_texto: 'Amarillo' },
+                    { nombre: 'Aspecto', codigo: 'EGO-ASP', unidades: '', tipo: 'texto', ref_texto: 'Transparente' },
+                    { nombre: 'Densidad', codigo: 'EGO-DEN', unidades: '', ref_min: 1.005, ref_max: 1.030, tipo: 'rango' },
+                    { nombre: 'pH', codigo: 'EGO-PH', unidades: '', ref_min: 5.0, ref_max: 8.0, tipo: 'rango' },
+                    { nombre: 'Proteínas', codigo: 'EGO-PRO', unidades: 'mg/dL', tipo: 'texto', ref_texto: 'Negativo' },
+                    { nombre: 'Glucosa', codigo: 'EGO-GLU', unidades: 'mg/dL', tipo: 'texto', ref_texto: 'Negativo' },
+                    { nombre: 'Cetonas', codigo: 'EGO-CET', unidades: 'mg/dL', tipo: 'texto', ref_texto: 'Negativo' },
+                    { nombre: 'Bilirrubinas', codigo: 'EGO-BIL', unidades: '', tipo: 'texto', ref_texto: 'Negativo' },
+                    { nombre: 'Urobilinógeno', codigo: 'EGO-URO', unidades: 'EU/dL', ref_min: 0.2, ref_max: 1.0, tipo: 'rango' },
+                    { nombre: 'Nitritos', codigo: 'EGO-NIT', unidades: '', tipo: 'texto', ref_texto: 'Negativo' },
+                    { nombre: 'Leucocitos (Tira)', codigo: 'EGO-LEU-TI', unidades: 'Leu/uL', tipo: 'texto', ref_texto: 'Negativo' },
+                    { nombre: 'Sedimento Celular', codigo: 'EGO-SED', unidades: '', tipo: 'texto', ref_texto: 'Escaso' },
+                    { nombre: 'Leucocitos', codigo: 'EGO-LEU-CA', unidades: 'x campo', ref_min: 0, ref_max: 5, tipo: 'rango' },
+                    { nombre: 'Eritrocitos', codigo: 'EGO-ERI-CA', unidades: 'x campo', ref_min: 0, ref_max: 2, tipo: 'rango' },
+                    { nombre: 'Bacterias', codigo: 'EGO-BAC', unidades: '', tipo: 'texto', ref_texto: 'Escasas' }
+                ]
+            },
+            'qs6': {
+                nombre: 'Química Sanguínea (6 Elementos)',
+                categoria: 'Química Clínica',
+                codigo: 'PERFIL-QS6',
+                precio: 0,
+                componentes: [
+                    { nombre: 'Glucosa', codigo: 'QS-GLU', unidades: 'mg/dL', ref_min: 70, ref_max: 100, tipo: 'rango' },
+                    { nombre: 'Urea', codigo: 'QS-URE', unidades: 'mg/dL', ref_min: 15, ref_max: 45, tipo: 'rango' },
+                    { nombre: 'Nitrógeno Ureico (BUN)', codigo: 'QS-BUN', unidades: 'mg/dL', ref_min: 7, ref_max: 20, tipo: 'rango' },
+                    { nombre: 'Creatinina', codigo: 'QS-CRE', unidades: 'mg/dL', ref_min: 0.6, ref_max: 1.2, tipo: 'rango' },
+                    { nombre: 'Ácido Úrico', codigo: 'QS-URI', unidades: 'mg/dL', ref_min: 3.5, ref_max: 7.2, tipo: 'rango' },
+                    { nombre: 'Colesterol Total', codigo: 'QS-COL', unidades: 'mg/dL', ref_min: 0, ref_max: 200, tipo: 'rango' }
+                ]
+            },
+            'electrolitos': {
+                nombre: 'Electrolitos Séricos (3)',
+                categoria: 'Química Clínica',
+                codigo: 'PERFIL-ES',
+                precio: 0,
+                componentes: [
+                    { nombre: 'Sodio (Na)', codigo: 'ES-NA', unidades: 'mmol/L', ref_min: 135, ref_max: 145, tipo: 'rango' },
+                    { nombre: 'Potasio (K)', codigo: 'ES-K', unidades: 'mmol/L', ref_min: 3.5, ref_max: 5.1, tipo: 'rango' },
+                    { nombre: 'Cloro (Cl)', codigo: 'ES-CL', unidades: 'mmol/L', ref_min: 98, ref_max: 107, tipo: 'rango' }
+                ]
+            }
+        };
+
+        function openTemplateModal() {
+            document.getElementById('templateModal').style.display = 'flex';
+        }
+
+        function closeTemplateModal() {
+            document.getElementById('templateModal').style.display = 'none';
+        }
+
+        async function importTemplate(key) {
+            const template = LAB_TEMPLATES[key];
+            if (!template) return;
+
+            const btn = document.getElementById(`btn-temp-${key}`);
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Creando...';
+            btn.disabled = true;
+
+            try {
+                // 1. Create the Profile Parent
+                // Check if exists logic omitted for simplicity, prefer creating new with suffix if needed or just insert.
+                // We'll insert a new one to ensure structure.
+
+                const perfilData = {
+                    nombre: template.nombre,
+                    categoria: template.categoria,
+                    codigo: template.codigo,
+                    precio: template.precio,
+                    es_perfil: true,
+                    activo: true,
+                    tipo_referencia: 'texto'
+                };
+
+                // Intentar insertar perfil, si falla por código duplicado, agregar sufijo
+                let perfil;
+                try {
+                    const { data, error } = await supabaseClient.from('estudios_laboratorio').insert(perfilData).select().single();
+                    if (error && error.code === '23505') throw error; // Duplicate key
+                    if (error) throw error;
+                    perfil = data;
+                } catch (e) {
+                    // Retry with random suffix if code exists
+                    perfilData.codigo = perfilData.codigo + '-' + Math.floor(Math.random() * 1000);
+                    const { data: dataRetry, error: errorRetry } = await supabaseClient.from('estudios_laboratorio').insert(perfilData).select().single();
+                    if (errorRetry) throw errorRetry;
+                    perfil = dataRetry;
+                }
+
+                const perfilId = perfil.id;
+
+                // 2. Process Components
+                let orden = 0;
+                for (const compDef of template.componentes) {
+                    // Check if component exists (try to reuse by name to keep DB clean)
+                    let compId = null;
+                    const existing = todosEstudios.find(e => e.nombre.toLowerCase() === compDef.nombre.toLowerCase() && !e.es_perfil);
+
+                    if (existing) {
+                        compId = existing.id;
+                    } else {
+                        // Create new child component
+                        const compData = {
+                            nombre: compDef.nombre,
+                            categoria: template.categoria,
+                            codigo: compDef.codigo,
+                            precio: 0, // Components usually 0
+                            es_perfil: false,
+                            activo: true,
+                            unidades: compDef.unidades,
+                            tipo_referencia: compDef.tipo,
+                            referencia_min: compDef.ref_min || null,
+                            referencia_max: compDef.ref_max || null,
+                            referencia_texto: compDef.ref_texto || null,
+                            rango_referencia: compDef.tipo === 'texto' ? compDef.ref_texto : `${compDef.ref_min}-${compDef.ref_max}`
+                        };
+
+                        // Intentar insertar componente
+                        try {
+                            const { data: newComp, error: cError } = await supabaseClient
+                                .from('estudios_laboratorio')
+                                .insert(compData)
+                                .select()
+                                .single();
+                            if (cError) throw cError;
+                            compId = newComp.id;
+                        } catch (errComp) {
+                            if (errComp.code === '23505') { // Duplicate code
+                                // Si choca el código, intentamos obtener el existente con ese código
+                                const { data: existingByCode } = await supabaseClient.from('estudios_laboratorio').select('id').eq('codigo', compData.codigo).single();
+                                if (existingByCode) {
+                                    compId = existingByCode.id;
+                                } else {
+                                    // Si falla por otra cosa, reintentar con sufijo
+                                    compData.codigo = compData.codigo + '-' + Math.floor(Math.random() * 1000);
+                                    const { data: retryComp } = await supabaseClient.from('estudios_laboratorio').insert(compData).select().single();
+                                    compId = retryComp.id;
+                                }
+                            } else {
+                                throw errComp;
+                            }
+                        }
+                    }
+
+                    // 3. Link Profile -> Component with Order
+                    await supabaseClient.from('estudio_componentes').insert({
+                        perfil_id: perfilId,
+                        componente_id: compId,
+                        orden: orden
+                    });
+
+                    orden++;
+                }
+
+                showMessage('¡Importación Exitosa!', `Se ha creado el perfil "${template.nombre}" con ${orden} componentes.`, 'success');
+                closeTemplateModal();
+                loadEstudios();
+
+            } catch (err) {
+                console.error("Template error:", err);
+                showMessage('Error', 'Falló la importación: ' + err.message, 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
         async function toggleFrequent(id, current) {
             try {
                 const { error } = await supabaseClient
@@ -707,6 +1507,234 @@
             } catch (err) { console.error(err); }
         }
 
+        // --- Perfil Management Functions ---
+
+
+        async function openPerfilModal(id = null) {
+            const modal = document.getElementById('perfilModal');
+            const form = document.getElementById('perfilForm');
+            form.reset();
+            document.getElementById('perfilId').value = id || '';
+            document.getElementById('modalPerfilTitle').innerText = id ? 'Editar Perfil' : 'Crear Nuevo Perfil';
+            componentesPerfilActual = [];
+
+            if (id) {
+                const est = todosEstudios.find(e => e.id === id);
+                if (est) {
+                    document.getElementById('perfilCodigo').value = est.codigo || '';
+                    document.getElementById('perfilNombre').value = est.nombre || '';
+                    document.getElementById('perfilCategoria').value = est.categoria || 'Perfiles';
+                    document.getElementById('perfilPrecio').value = est.precio || '';
+                    document.getElementById('perfilIndicaciones').value = est.indicaciones || '';
+
+                    // Load components using a safer 2-step approach to avoid FK ambiguity errors
+                    try {
+                        // 1. Get the relationship IDs
+                        // 1. Get the relationship IDs
+                        const { data: relations, error: relError } = await supabaseClient
+                            .from('estudio_componentes')
+                            .select('componente_id, orden')
+                            .eq('perfil_id', id)
+                            .order('orden', { ascending: true });
+
+                        if (relError) throw relError;
+
+                        if (relError) throw relError;
+
+                        if (relations && relations.length > 0) {
+                            const ids = relations.map(r => r.componente_id);
+
+                            // 2. Get the study details
+                            const { data: studies, error: studyError } = await supabaseClient
+                                .from('estudios_laboratorio')
+                                .select('id, nombre, codigo, categoria')
+                                .in('id', ids);
+
+                            if (studyError) throw studyError;
+
+                            // 3. Map back to preserve order
+                            componentesPerfilActual = relations.map(r => {
+                                const study = studies.find(s => s.id === r.componente_id);
+                                return study ? { id: study.id, nombre: study.nombre } : null;
+                            }).filter(x => x !== null);
+                        } else {
+                            componentesPerfilActual = [];
+                        }
+                    } catch (err) {
+                        console.error("Error loading profile details:", err);
+                        showMessage('Error', 'No se pudieron cargar los componentes del perfil: ' + err.message, 'error');
+                    }
+                }
+            }
+
+            renderCompListPerfil();
+            modal.style.display = 'flex';
+        }
+
+        function closePerfilModal() {
+            document.getElementById('perfilModal').style.display = 'none';
+        }
+
+        function renderCompListPerfil() {
+            const container = document.getElementById('compListPerfil');
+            if (!container) return;
+
+            if (componentesPerfilActual.length === 0) {
+                container.innerHTML = '<div style="color: #94a3b8; font-size: 0.8rem; padding: 0.5rem; text-align: center;">Sin componentes seleccionados</div>';
+                return;
+            }
+
+            container.innerHTML = componentesPerfilActual.map((c, index) => `
+                <div 
+                    draggable="true"
+                    ondragstart="handleDragStart(event, ${index})"
+                    ondragover="handleDragOver(event)"
+                    ondrop="handleDrop(event, ${index})"
+                    ondragenter="handleDragEnter(event)"
+                    ondragleave="handleDragLeave(event)"
+                    style="background: white; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: grab; transition: all 0.2s;"
+                >
+                     <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="color: #cbd5e1; display: flex; align-items: center;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 18a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM14 6a2 2 0 1 1 4 0 2 2 0 0 1-4 0zM14 12a2 2 0 1 1 4 0 2 2 0 0 1-4 0zM14 18a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/></svg>
+                        </div>
+                        <span style="font-weight: bold; color: var(--primary); font-size: 0.85rem; min-width: 1.5rem;">${index + 1}.</span>
+                        <span style="font-weight: 500; font-size: 0.9rem;">${c.nombre}</span>
+                     </div>
+                     <button type="button" class="btn-icon" style="color: #ef4444; border-color: #fee2e2;" onclick="removeCompPerfil('${c.id}')" title="Eliminar">&times;</button>
+                </div>
+            `).join('');
+        }
+
+        // --- Drag and Drop Logic ---
+        let draggedIndex = null;
+
+        function handleDragStart(e, index) {
+            draggedIndex = index;
+            e.dataTransfer.effectAllowed = 'move';
+            e.target.style.opacity = '0.5';
+            e.target.classList.add('dragging');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+            if (!e.currentTarget.classList.contains('dragging')) {
+                e.currentTarget.style.border = '2px dashed #3b82f6';
+                e.currentTarget.style.background = '#eff6ff';
+            }
+        }
+
+        function handleDragLeave(e) {
+            if (!e.currentTarget.classList.contains('dragging')) {
+                e.currentTarget.style.border = '1px solid #e2e8f0';
+                e.currentTarget.style.background = 'white';
+            }
+        }
+
+        function handleDrop(e, targetIndex) {
+            e.preventDefault();
+            const target = e.currentTarget;
+            target.style.border = '1px solid #e2e8f0';
+            target.style.background = 'white';
+            document.querySelectorAll('.dragging').forEach(el => {
+                el.style.opacity = '1';
+                el.classList.remove('dragging');
+            });
+
+            if (draggedIndex === null || draggedIndex === targetIndex) return;
+
+            // Reorder array
+            const itemMoved = componentesPerfilActual[draggedIndex];
+            componentesPerfilActual.splice(draggedIndex, 1);
+            componentesPerfilActual.splice(targetIndex, 0, itemMoved);
+
+            draggedIndex = null;
+            renderCompListPerfil();
+        }
+
+        function removeCompPerfil(id) {
+            componentesPerfilActual = componentesPerfilActual.filter(c => c.id !== id);
+            renderCompListPerfil();
+        }
+
+        async function savePerfil(event) {
+            event.preventDefault();
+            const btn = document.getElementById('savePerfilBtn');
+            btn.disabled = true;
+            btn.innerText = 'Guardando...';
+
+            const id = document.getElementById('perfilId').value;
+
+            const perfilData = {
+                codigo: document.getElementById('perfilCodigo').value || null,
+                nombre: document.getElementById('perfilNombre').value,
+                categoria: document.getElementById('perfilCategoria').value || 'Perfiles',
+                precio: parseFloat(document.getElementById('perfilPrecio').value),
+                indicaciones: document.getElementById('perfilIndicaciones').value,
+                es_perfil: true,
+                activo: true,
+                tipo_referencia: 'texto', // Default for profiles
+                unidades: null
+            };
+
+            try {
+                let resId = id;
+                if (id) {
+                    const { error } = await supabaseClient.from('estudios_laboratorio').update(perfilData).eq('id', id);
+                    if (error) throw error;
+                } else {
+                    const { data, error } = await supabaseClient.from('estudios_laboratorio').insert(perfilData).select().single();
+                    if (error) throw error;
+                    resId = data.id;
+                }
+
+                // Update Components
+                // 1. Delete old
+                await supabaseClient.from('estudio_componentes').delete().eq('perfil_id', resId);
+
+                // 2. Insert new
+                if (componentesPerfilActual.length > 0) {
+                    const comps = componentesPerfilActual.map((c, idx) => ({
+                        perfil_id: resId,
+                        componente_id: c.id,
+                        orden: idx
+                    }));
+                    await supabaseClient.from('estudio_componentes').insert(comps);
+                }
+
+                showMessage('¡Éxito!', 'Perfil guardado correctamente', 'success');
+                closePerfilModal();
+                loadEstudios(); // Reload all lists
+            } catch (err) {
+                console.error(err);
+                showMessage('Error', 'Error al guardar perfil: ' + err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Guardar Perfil';
+            }
+        }
+
+        function toggleRefType() {
+            const type = document.querySelector('input[name="refType"]:checked').value;
+            document.getElementById('refInputTexto').style.display = type === 'texto' ? 'block' : 'none';
+            document.getElementById('refInputRango').style.display = type === 'rango' ? 'block' : 'none';
+        }
+
+        function toggleFormulaSection(show = null) {
+            const section = document.getElementById('formulaSection');
+            const isChecked = document.getElementById('estEsCalculado').checked;
+            section.style.display = (show !== null ? show : isChecked) ? 'block' : 'none';
+        }
+
+        function showFormulaHelp() {
+            document.getElementById('formulaHelpModal').style.display = 'flex';
+        }
+
         async function openEstudioModal(id = null) {
             const modal = document.getElementById('estudioModal');
             const form = document.getElementById('estudioForm');
@@ -714,6 +1742,14 @@
             document.getElementById('estId').value = id || '';
             document.getElementById('modalTitle').innerText = id ? 'Editar Estudio' : 'Nuevo Estudio';
             componentesPerfil = [];
+
+            // Default to text
+            document.querySelector('input[name="refType"][value="texto"]').checked = true;
+            toggleRefType();
+
+            // Default formula off
+            document.getElementById('formulaSection').style.display = 'none';
+
             renderCompList();
 
             if (id) {
@@ -724,18 +1760,51 @@
                     document.getElementById('estCategoria').value = est.categoria || '';
                     document.getElementById('estPrecio').value = est.precio || 0;
                     document.getElementById('estMuestra').value = est.tipo_muestra || '';
+                    document.getElementById('estTubo').value = est.tubo_recipiente || '';
                     document.getElementById('estMetodo').value = est.metodologia || '';
+                    document.getElementById('estUnidades').value = est.unidades || '';
+
+                    // Formula Logic
+                    if (est.formula) {
+                        document.getElementById('estEsCalculado').checked = true;
+                        document.getElementById('estFormula').value = est.formula;
+                        toggleFormulaSection(true);
+                    } else {
+                        document.getElementById('estEsCalculado').checked = false;
+                        document.getElementById('estFormula').value = '';
+                        toggleFormulaSection(false);
+                    }
+
+                    // Reference Values Logic
+                    // Prioritize new columns, fallback to old if data migration isn't 100%
+                    const refType = est.tipo_referencia || 'texto';
+                    document.querySelector(`input[name="refType"][value="${refType}"]`).checked = true;
+                    toggleRefType();
+
+                    if (refType === 'rango') {
+                        document.getElementById('estRefMin').value = est.referencia_min !== null ? est.referencia_min : '';
+                        document.getElementById('estRefMax').value = est.referencia_max !== null ? est.referencia_max : '';
+                        document.getElementById('estRefTexto').value = '';
+                    } else {
+                        // If we have data in the new 'referencia_texto' column, use it
+                        // If not, fallback to the old 'rango_referencia' column for backward compatibility
+                        document.getElementById('estRefTexto').value = est.referencia_texto || est.rango_referencia || '';
+                        document.getElementById('estRefMin').value = '';
+                        document.getElementById('estRefMax').value = '';
+                    }
+
                     document.getElementById('estIndicaciones').value = est.indicaciones || '';
                     document.getElementById('estFrecuente').checked = est.es_frecuente || false;
                     document.getElementById('estPerfil').checked = est.es_perfil || false;
 
                     if (est.es_perfil) {
                         togglePerfilSection(true);
-                        // Cargar componentes
+                        // Cargar componentes ordenados
                         const { data } = await supabaseClient
                             .from('estudio_componentes')
-                            .select('componente_id, estudios_laboratorio(id, nombre)')
-                            .eq('perfil_id', id);
+                            .select('componente_id, orden, estudios_laboratorio(id, nombre)')
+                            .eq('perfil_id', id)
+                            .order('orden', { ascending: true });
 
                         if (data) {
                             componentesPerfil = data.map(d => ({
@@ -771,13 +1840,28 @@
         }
 
         function addComp() {
-            const val = document.getElementById('buscComp').value;
-            const item = todosEstudios.find(e => e.nombre === val);
-            if (item && !componentesPerfil.find(c => c.id === item.id)) {
-                componentesPerfil.push({ id: item.id, nombre: item.nombre });
-                renderCompList();
-                document.getElementById('buscComp').value = '';
+            const input = document.getElementById('buscComp');
+            const val = input.value.trim();
+            if (!val) return;
+
+            // Busca ignorando mayúsculas/minúsculas
+            const item = todosEstudios.find(e => e.nombre.toLowerCase() === val.toLowerCase());
+
+            if (!item) {
+                showMessage('No encontrado', `No se encontró el estudio "${val}". Por favor selecciona uno de la lista sugerida.`, 'warning');
+                return;
             }
+
+            if (componentesPerfil.find(c => c.id === item.id)) {
+                showMessage('Duplicado', 'Este estudio ya forma parte del perfil.', 'warning');
+                input.value = '';
+                return;
+            }
+
+            componentesPerfil.push({ id: item.id, nombre: item.nombre });
+            renderCompList();
+            input.value = '';
+            input.focus();
         }
 
         function removeComp(id) {
@@ -785,12 +1869,30 @@
             renderCompList();
         }
 
+        function moveComp(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= componentesPerfil.length) return;
+            const temp = componentesPerfil[index];
+            componentesPerfil[index] = componentesPerfil[newIndex];
+            componentesPerfil[newIndex] = temp;
+            renderCompList();
+        }
+
         function renderCompList() {
             const container = document.getElementById('compList');
-            container.innerHTML = componentesPerfil.map(c => `
-                <div style="background:#e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; display: flex; align-items: center; gap: 5px;">
-                    ${c.nombre}
-                    <span style="cursor:pointer; font-weight:bold;" onclick="removeComp('${c.id}')">&times;</span>
+            if (componentesPerfil.length === 0) {
+                container.innerHTML = '<div style="color: #94a3b8; font-size: 0.8rem; padding: 0.5rem;">Sin componentes añadidos</div>';
+                return;
+            }
+            container.innerHTML = componentesPerfil.map((c, index) => `
+                <div style="background: white; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 12px; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; width: 100%; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                    <div style="font-weight: bold; color: var(--primary); width: 20px;">${index + 1}.</div>
+                    <div style="flex: 1; font-weight: 500;">${c.nombre}</div>
+                    <div style="display: flex; gap: 4px;">
+                        <button type="button" class="btn-icon" onclick="moveComp(${index}, -1)" ${index === 0 ? 'disabled style="opacity:0.3"' : ''} title="Subir">▲</button>
+                        <button type="button" class="btn-icon" onclick="moveComp(${index}, 1)" ${index === componentesPerfil.length - 1 ? 'disabled style="opacity:0.3"' : ''} title="Bajar">▼</button>
+                        <button type="button" class="btn-icon" style="color: #ef4444; border-color: #fecaca;" onclick="removeComp('${c.id}')" title="Eliminar">&times;</button>
+                    </div>
                 </div>
             `).join('');
         }
@@ -802,13 +1904,36 @@
             saveBtn.innerText = 'Guardando...';
 
             const id = document.getElementById('estId').value;
+            const refType = document.querySelector('input[name="refType"]:checked').value;
+
+            // Prepare inputs
+            const refMinInput = document.getElementById('estRefMin').value;
+            const refMaxInput = document.getElementById('estRefMax').value;
+            const refTextInput = document.getElementById('estRefTexto').value;
+
             const estData = {
-                codigo: document.getElementById('estCodigo').value || null,
+                codigo: document.getElementById('estCodigo').value.trim().toUpperCase(),
                 nombre: document.getElementById('estNombre').value,
                 categoria: document.getElementById('estCategoria').value,
                 precio: parseFloat(document.getElementById('estPrecio').value),
                 tipo_muestra: document.getElementById('estMuestra').value,
+                tubo_recipiente: document.getElementById('estTubo').value,
                 metodologia: document.getElementById('estMetodo').value,
+                unidades: document.getElementById('estUnidades').value,
+
+                // New Reference Logic
+                tipo_referencia: refType,
+                referencia_min: (refType === 'rango' && refMinInput !== '') ? parseFloat(refMinInput) : null,
+                referencia_max: (refType === 'rango' && refMaxInput !== '') ? parseFloat(refMaxInput) : null,
+                referencia_texto: (refType === 'texto') ? refTextInput : null,
+                // Compatibility: Save string representation to legacy 'rango_referencia' column
+                rango_referencia: (refType === 'texto')
+                    ? refTextInput
+                    : (refMinInput && refMaxInput ? `${refMinInput} - ${refMaxInput}` : ''),
+
+                // Formula Logic
+                formula: document.getElementById('estEsCalculado').checked ? document.getElementById('estFormula').value : null,
+
                 indicaciones: document.getElementById('estIndicaciones').value,
                 es_frecuente: document.getElementById('estFrecuente').checked,
                 es_perfil: document.getElementById('estPerfil').checked,
@@ -830,26 +1955,193 @@
                 if (estData.es_perfil) {
                     // Limpiar previos
                     await supabaseClient.from('estudio_componentes').delete().eq('perfil_id', resId);
-                    // Insertar nuevos
+                    // Insertar nuevos con orden
                     if (componentesPerfil.length > 0) {
-                        const comps = componentesPerfil.map(c => ({ perfil_id: resId, componente_id: c.id }));
+                        const comps = componentesPerfil.map((c, idx) => ({
+                            perfil_id: resId,
+                            componente_id: c.id,
+                            orden: idx
+                        }));
                         await supabaseClient.from('estudio_componentes').insert(comps);
                     }
                 }
 
-                alert('Estudio guardado correctamente');
+                showMessage('¡Éxito!', 'Estudio guardado correctamente', 'success');
                 closeEstudioModal();
                 loadEstudios();
             } catch (err) {
                 console.error(err);
-                alert('Error al guardar: ' + err.message);
+                showMessage('Error', 'Error al guardar: ' + err.message, 'error');
             } finally {
                 saveBtn.disabled = false;
                 saveBtn.innerText = 'Guardar Estudio';
             }
         }
 
-        // Network & Stoichiometric Animation
+        // Autocomplete Logic for Profile Components
+        function filterCompSuggestions() {
+            const input = document.getElementById('buscCompPerfil');
+            const list = document.getElementById('suggestionsList');
+            const text = input.value.trim().toLowerCase();
+
+            if (text.length === 0) {
+                list.style.display = 'none';
+                return;
+            }
+
+            // Exclude already added components logic if needed, or just warn
+            const matches = todosEstudios.filter(e =>
+                !e.es_perfil &&
+                (e.nombre.toLowerCase().includes(text) || (e.codigo && e.codigo.toLowerCase().includes(text)))
+            );
+
+            if (matches.length === 0) {
+                list.innerHTML = '<div style="padding: 0.75rem; color: #64748b; font-size: 0.85rem;">No se encontraron resultados</div>';
+                list.style.display = 'block';
+                return;
+            }
+
+            list.innerHTML = matches.map(e => `
+                <div onclick="selectCompSuggestion('${e.id}')" style="
+                    padding: 0.75rem; 
+                    cursor: pointer; 
+                    border-bottom: 1px solid #f1f5f9; 
+                    display: flex; 
+                    justify-content: space-between;
+                    align-items: center;
+                " onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.9rem;">${e.nombre}</div>
+                        <div style="font-size: 0.75rem; color: #64748b;">${e.codigo || 'Sin código'} · ${e.categoria}</div>
+                    </div>
+                    <div style="font-size: 0.85rem; font-weight: 600; color: var(--primary);">+</div>
+                </div>
+            `).join('');
+
+            list.style.display = 'block';
+        }
+
+        function selectCompSuggestion(id) {
+            const item = todosEstudios.find(e => e.id === id);
+            if (!item) return;
+
+            // Check if already added
+            if (componentesPerfilActual.find(c => c.id === item.id)) {
+                showMessage('Atención', 'Este estudio ya está en la lista.', 'warning');
+                return;
+            }
+
+            // Add
+            componentesPerfilActual.push({ id: item.id, nombre: item.nombre });
+            renderCompListPerfil();
+
+            // Clear input and hide list
+            const input = document.getElementById('buscCompPerfil');
+            input.value = '';
+            input.focus();
+            document.getElementById('suggestionsList').style.display = 'none';
+        }
+
+        // Manual Add Button Fallback
+        function addCustomCompPerfil() {
+            const input = document.getElementById('buscCompPerfil');
+            const val = input.value.trim();
+            if (!val) return;
+
+            // Try explicit match
+            const item = todosEstudios.find(e => e.nombre.toLowerCase() === val.toLowerCase() && !e.es_perfil);
+            if (item) {
+                selectCompSuggestion(item.id);
+            } else {
+                showMessage('Atención', 'Por favor selecciona un estudio de la lista.', 'warning');
+            }
+        }
+
+        // --- Category Autocomplete ---
+        function showCategorySuggestions() {
+            filterCategorySuggestions();
+            document.getElementById('catSuggestions').style.display = 'block';
+        }
+
+        function filterCategorySuggestions() {
+            const input = document.getElementById('estCategoria');
+            const list = document.getElementById('catSuggestions');
+            const text = input.value.trim().toLowerCase();
+
+            // Get unique categories
+            const cats = [...new Set(todosEstudios.map(e => e.categoria))].sort();
+
+            const matches = cats.filter(c => c.toLowerCase().includes(text));
+
+            if (matches.length === 0) {
+                // Option to create new if not exists effectively just by typing, but let's show "New" generic or nothing
+                list.innerHTML = `<div style="padding: 0.75rem; color: #64748b; font-size: 0.85rem;">Crear nueva: "${input.value}"</div>`;
+                return;
+            }
+
+            list.innerHTML = matches.map(c => `
+                <div onclick="selectCategory('${c}')" style="
+                    padding: 0.5rem 0.75rem; 
+                    cursor: pointer; 
+                    border-bottom: 1px solid #f1f5f9;
+                    font-size: 0.9rem;
+                " onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                    ${c}
+                </div>
+            `).join('');
+
+            list.style.display = 'block';
+        }
+
+        function selectCategory(cat) {
+            document.getElementById('estCategoria').value = cat;
+            document.getElementById('catSuggestions').style.display = 'none';
+        }
+
+        // Close suggestions on outside click
+        document.addEventListener('click', function (e) {
+
+            // Profile Search
+            const container = document.getElementById('suggestionsList');
+            const input = document.getElementById('buscCompPerfil');
+            if (container && input && e.target !== container && e.target !== input) {
+                container.style.display = 'none';
+            }
+
+            // Category Search
+            if (catContainer && catInput && e.target !== catContainer && e.target !== catInput) {
+                catContainer.style.display = 'none';
+                suggestCodePrefix(); // Trigger on close
+            }
+        });
+
+        // --- Code Suggestion Logic ---
+        function suggestCodePrefix() {
+            const cat = document.getElementById('estCategoria').value.trim();
+            const codeInput = document.getElementById('estCodigo');
+
+            // Si ya tiene valor, no sobrescribir, salvo que sea muy corto
+            if (codeInput.value.length > 3) return;
+
+            let prefix = '';
+            const lowerCat = cat.toLowerCase();
+
+            if (lowerCat.includes('química') || lowerCat.includes('quimica')) prefix = 'QS-';
+            else if (lowerCat.includes('hematología') || lowerCat.includes('hematologia')) prefix = 'BH-';
+            else if (lowerCat.includes('orina') || lowerCat.includes('uro')) prefix = 'EGO-';
+            else if (lowerCat.includes('coagula')) prefix = 'COA-';
+            else if (lowerCat.includes('inmuno')) prefix = 'INM-';
+            else if (lowerCat.includes('hormona')) prefix = 'HOR-';
+            else if (lowerCat.includes('electrolito')) prefix = 'ES-';
+            else if (cat.length >= 3) prefix = cat.substring(0, 3).toUpperCase() + '-';
+
+            if (prefix && codeInput.value !== prefix) {
+                codeInput.value = prefix;
+            }
+        }
+
+
+        // Network & Stoichiometric Animation Logic... (keeping existing)
         function initAnimation() {
             const canvas = document.getElementById('networkCanvas');
             const ctx = canvas.getContext('2d');
@@ -971,7 +2263,45 @@
             resize();
             animate();
         }
+
+        // Simple Toast Notification
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#ef4444' : '#10b981'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                z-index: 9999;
+                font-family: 'Outfit', sans-serif;
+                font-size: 0.9rem;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+            `;
+            toast.innerText = message;
+            document.body.appendChild(toast);
+
+            // Animate in
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }, 10);
+
+            // Animate out and remove
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
     </script>
 </body>
 
 </html>
+```

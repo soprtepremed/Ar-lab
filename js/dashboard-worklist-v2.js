@@ -424,11 +424,11 @@ async function ejecutarConfirmacionMuestra() {
 
         if (tubosPendientes.length > 0) {
             showInfoModal(
-                '⏳ Muestras Parciales',
+                'Muestras Parciales',
                 `Se registraron ${tubosRecibidos.length} muestra(s).\n${tubosPendientes.length} muestra(s) quedan pendientes.`
             );
         } else {
-            showSuccessModal('✅ Muestras Completas', `Todas las muestras han sido registradas correctamente.`);
+            showSuccessModal('Muestras Completas', `Todas las muestras han sido registradas correctamente.`);
         }
 
         loadWorkList();

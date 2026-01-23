@@ -47,7 +47,7 @@ async function loadFaseAnalitica() {
             .select('*')
             .gte('fecha_hora', selectedDate + 'T00:00:00')
             .lte('fecha_hora', selectedDate + 'T23:59:59')
-            .in('estado', ['verificada', 'llamado', 'en_proceso', 'completada'])
+            .in('estado', ['muestra_parcial', 'en_proceso', 'completada'])
             .order('folio_atencion', { ascending: true });
 
         if (error) throw error;
@@ -614,69 +614,73 @@ function generarVentanaImpresionEtiquetas(estudiosAImprimir) {
                     page-break-after: always;
                     display: flex;
                     flex-direction: column;
-                    padding: 1.5mm 2mm;
+                    padding: 0.5mm 1.5mm;
                     background: white;
                     overflow: hidden;
+                    justify-content: space-between;
                 }
                 .label-header {
                     position: relative;
                     width: 100%;
-                    min-height: 7mm;
-                    margin-bottom: 0.5mm;
+                    height: auto;
+                    min-height: 5mm;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
                 }
                 .patient-name {
-                    font-size: 8pt;
+                    font-size: 7.5pt;
                     font-weight: 700;
                     text-transform: uppercase;
                     display: block;
-                    width: 100%;
-                    line-height: 1.1;
-                    word-wrap: break-word;
+                    flex: 1;
+                    line-height: 1;
+                    word-wrap: break-word; /* or word-break: break-all? word-wrap is safer */
+                    overflow: hidden;
                     color: #000;
-                    padding-right: 18mm;
+                    padding-right: 1mm;
                 }
                 .patient-dob {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    font-size: 7.5pt;
+                    font-size: 7pt;
                     font-weight: 700;
                     color: #000;
                     background: white;
-                    padding-left: 2px;
+                    text-align: right;
+                    white-space: nowrap;
+                    flex: 0 0 auto;
                 }
                 .barcode-area {
                     width: 100%;
-                    height: 8mm;
+                    height: 6mm;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    margin: 0.5mm 0;
                 }
                 .barcode-img {
                     width: 100%;
                     height: 100%;
                 }
                 .folio-box {
-                    font-size: 11pt;
+                    font-size: 10pt;
                     font-weight: 800;
                     text-align: center;
                     background: #000;
                     color: #fff;
                     width: 100%;
-                    padding: 0.3mm 0;
+                    padding: 0.1mm 0;
                     border: 0.5mm solid #000;
-                    letter-spacing: 0.5mm;
+                    letter-spacing: 0.3mm;
                     line-height: 1;
                     border-radius: 1mm;
                 }
                 .label-footer {
-                    font-size: 7pt;
+                    font-size: 6.5pt;
                     font-weight: 700;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    margin-top: 0.5mm;
+                    margin-top: 0.2mm;
+                    width: 100%;
                 }
                 @media print {
                     body { margin: 0; }

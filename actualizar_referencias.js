@@ -83,8 +83,34 @@ async function run() {
             { nombre: 'Frotis de Heces: Restos Vegetales', unidades: '', ref: 'NEGATIVO' }
         ];
 
+        // Helper function to parse reference values
+        function parseRef(refValue) {
+            if (!refValue) return { type: 'texto', min: null, max: null, text: '' };
+
+            // Check for range "min - max" (e.g. "0 - 1", "5.5 - 10.0")
+            // This regex finds two numbers separated by a hyphen, allowing for spaces
+            const rangeMatch = String(refValue).match(/^([\d\.]+)\s*-\s*([\d\.]+)$/);
+            if (rangeMatch) {
+                return {
+                    type: 'rango',
+                    min: parseFloat(rangeMatch[1]),
+                    max: parseFloat(rangeMatch[2]),
+                    text: null
+                };
+            }
+
+            // Default to text for everything else (including single numbers like "7.00")
+            return {
+                type: 'texto',
+                min: null,
+                max: null,
+                text: refValue
+            };
+        }
+
         for (const up of updates) {
             console.log(`Processing ${up.nombre}...`);
+            const { type, min, max, text } = parseRef(up.ref);
 
             // 1. Check if it exists
             const checkQuery = `SELECT id FROM estudios_laboratorio WHERE nombre ILIKE $1`;
@@ -95,19 +121,23 @@ async function run() {
                 console.log(`   -> Updating existing record(s)`);
                 const updateQuery = `
                     UPDATE estudios_laboratorio 
-                    SET rango_referencia = $1, unidades = $2 
+                    SET rango_referencia = $1, unidades = $2,
+                        tipo_referencia = $4, referencia_min = $5, referencia_max = $6, referencia_texto = $7
                     WHERE nombre ILIKE $3`;
-                await client.query(updateQuery, [up.ref, up.unidades, `%${up.nombre}%`]);
+                await client.query(updateQuery, [up.ref, up.unidades, `%${up.nombre}%`, type, min, max, text]);
             } else {
                 // INSERT new
                 console.log(`   -> Creating NEW study`);
                 const insertQuery = `
-                    INSERT INTO estudios_laboratorio (nombre, categoria, rango_referencia, unidades, precio, activo)
-                    VALUES ($1, 'General', $2, $3, 0, true)
+                    INSERT INTO estudios_laboratorio (
+                        nombre, categoria, rango_referencia, unidades, precio, activo,
+                        tipo_referencia, referencia_min, referencia_max, referencia_texto
+                    )
+                    VALUES ($1, 'General', $2, $3, 0, true, $4, $5, $6, $7)
                 `;
                 // Remove loose wildcards for insertion name, use exact name from update object
                 // We use up.nombre directly which is cleaner: e.g. "Tífico O"
-                await client.query(insertQuery, [up.nombre, up.ref, up.unidades]);
+                await client.query(insertQuery, [up.nombre, up.ref, up.unidades, type, min, max, text]);
             }
         }
 

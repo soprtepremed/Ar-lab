@@ -556,10 +556,11 @@
                 </h4>
 
                 <div class="form-group">
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-                        <input type="text" class="form-input" id="buscarEstudio"
+                    <div style="display: flex; gap: 1rem; margin-bottom: 0.5rem;">
+                        <input type="text" class="form-input" id="buscarEstudio" oninput="applyFilters()"
                             placeholder="Buscar estudio por nombre o código..." style="flex: 1;">
-                        <select class="form-select" id="filtroCategoria" style="width: 250px;">
+                        <select class="form-select" id="filtroCategoria" style="width: 250px;"
+                            onchange="applyFilters()">
                             <option value="">Todas las categorías</option>
                         </select>
                         <button type="button" class="btn btn-primary" onclick="abrirModalEstudioManual()"
@@ -571,6 +572,13 @@
                             </svg>
                             <span style="margin-left:5px">Estudio Manual</span>
                         </button>
+                    </div>
+
+                    <div
+                        style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #64748b;">
+                        <input type="checkbox" id="verComponentesOcultos" onchange="applyFilters()">
+                        <label for="verComponentesOcultos" style="cursor: pointer; user-select: none;">Ver componentes
+                            individuales (Precio $0)</label>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
@@ -630,6 +638,51 @@
 
 
 
+            <!-- Datos de Hospitalización / Segmentación -->
+            <div class="form-section form-section-amber">
+                <h4 class="section-header" style="color: #92400e;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    Ubicación y Segmentación
+                </h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Nº Expediente</label>
+                        <input type="text" class="form-input" id="expedienteNumero" placeholder="Ej: EXP-2024-001">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Servicio / Área</label>
+                        <select class="form-select" id="servicioHospital">
+                            <option value="Laboratorio">Laboratorio (General)</option>
+                            <option value="Urgencias">Urgencias</option>
+                            <option value="Hospitalización">Hospitalización</option>
+                            <option value="Consulta Externa">Consulta Externa</option>
+                            <option value="UCI">UCI (Cuidados Intensivos)</option>
+                            <option value="Quirófano">Quirófano</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Piso / Nivel</label>
+                        <select class="form-select" id="pisoHospital">
+                            <option value="Planta Baja">Planta Baja</option>
+                            <option value="Piso 1">Piso 1</option>
+                            <option value="Piso 2">Piso 2</option>
+                            <option value="Piso 3">Piso 3</option>
+                            <option value="Anexo">Anexo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Cama / Habitación (Opcional)</label>
+                        <input type="text" class="form-input" id="camaHabitacion" placeholder="Ej: 204-B">
+                    </div>
+                </div>
+            </div>
+
             <!-- Médico Referente -->
             <div class="form-section form-section-amber">
                 <h4 class="section-header" style="color: #b45309;">
@@ -648,7 +701,7 @@
                         <div style="flex: 1;">
                             <input type="text" class="form-input" id="medicoReferente"
                                 placeholder="Escribe el nombre del médico..." list="listaMedicos"
-                                oninput="normalizeInput(this)" value="A Quien Corresponda">
+                                oninput="normalizeInput(this)">
                             <datalist id="listaMedicos">
                                 <!-- Médicos se cargan dinámicamente -->
                             </datalist>
@@ -1304,13 +1357,28 @@
             });
         }
 
+
+
+        // Wrapper para llamar desde el onchange del checkbox
+        function applyFilters() {
+            renderEstudiosList(
+                document.getElementById('buscarEstudio').value,
+                document.getElementById('filtroCategoria').value
+            );
+        }
+
         function renderEstudiosList(filtro = '', categoria = '') {
             const container = document.getElementById('listaEstudios');
             let estudiosFiltrados = todosEstudios.filter(e => {
                 const nombre = e.nombre || '';
                 const matchNombre = nombre.toLowerCase().includes(filtro.toLowerCase());
                 const matchCategoria = !categoria || e.categoria === categoria;
-                return matchNombre && matchCategoria;
+
+                // Nuevo filtro: Ocultar precio 0 si no está marcado el checkbox
+                const mostrarOcultos = document.getElementById('verComponentesOcultos')?.checked || false;
+                const matchPrecio = mostrarOcultos || parseFloat(e.precio) > 0 || e.es_perfil; // Siempre mostrar perfiles aunque sean $0 (raro pero posible)
+
+                return matchNombre && matchCategoria && matchPrecio;
             });
 
             if (estudiosFiltrados.length === 0) {
@@ -1428,15 +1496,32 @@
             container.innerHTML = html;
         }
 
+
+
         function renderMedicosDatalist() {
             const datalist = document.getElementById('listaMedicos');
-            datalist.innerHTML = '';
+            datalist.innerHTML = '<option value="A Quien Corresponda">';
             todosMedicos.forEach(med => {
-                datalist.innerHTML += `<option value="${med.nombre}">`;
+                if (med.nombre !== 'A Quien Corresponda') {
+                    datalist.innerHTML += `<option value="${med.nombre}">`;
+                }
             });
+
+            // Set default if empty
+            const input = document.getElementById('medicoReferente');
+            if (!input.value) input.value = 'A Quien Corresponda';
         }
 
         function setupEstudioSearch() {
+            // Medico Input Focus UX
+            const medicoInput = document.getElementById('medicoReferente');
+            medicoInput.addEventListener('focus', function () {
+                if (this.value === 'A Quien Corresponda') this.value = '';
+            });
+            medicoInput.addEventListener('blur', function () {
+                if (this.value.trim() === '') this.value = 'A Quien Corresponda';
+            });
+
             document.getElementById('buscarEstudio').addEventListener('input', (e) => {
                 renderEstudiosList(e.target.value, document.getElementById('filtroCategoria').value);
             });
@@ -1639,110 +1724,61 @@
 
         async function sendWhatsAppMessage(citaData, folio) {
             const telefono = citaData.paciente_telefono.replace(/\D/g, '');
-            if (!telefono) return;
+            if (!telefono) {
+                alert('El paciente no tiene un número de teléfono válido.');
+                return;
+            }
 
-            // Mostrar aviso de que se está capturando
-            showCustomModal({
-                title: 'WhatsApp e Imagen',
-                message: 'Estamos generando una captura del ticket real. Se copiará a tu portapapeles automáticamente. Solo tendrás que "PEGAR" (Ctrl+V) en WhatsApp.',
-                type: 'alert',
-                onConfirm: async () => {
-                    await captureAndShareTicket(citaData, folio, telefono);
+            // Formatear datos para el mensaje
+            const fechaObj = new Date(citaData.fecha_hora);
+            const fechaLegible = fechaObj.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const horaLegible = fechaObj.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const pacienteNombre = citaData.paciente_nombre.split(' ')[0]; // Solo primer nombre
+
+            // Construir lista de estudios y sus indicaciones
+            let estudiosLista = "";
+            let indicacionesSet = new Set();
+
+            estudiosSeleccionados.forEach(est => {
+                estudiosLista += `• ${est.nombre}\n`;
+                if (est.indicaciones && est.indicaciones.trim() !== '' && est.indicaciones !== 'Sin indicaciones') {
+                    indicacionesSet.add(est.indicaciones.trim());
                 }
             });
+
+            let indicacionesTexto = "";
+            if (indicacionesSet.size > 0) {
+                indicacionesTexto = "\n⚠️ *Indicaciones Generales:*\n";
+                indicacionesSet.forEach(ind => {
+                    indicacionesTexto += `• ${ind}\n`;
+                });
+            } else {
+                indicacionesTexto = "\n⚠️ *Indicaciones:* Sin indicaciones especiales.\n";
+            }
+
+            // Construir mensaje estructurado
+            const mensaje = `👋 Hola *${pacienteNombre}*, confirmamos tu cita en *${currentLabConfig.nombre_laboratorio}*.\n\n` +
+                `✅ *Detalles de la Cita:*\n` +
+                `📅 Fecha: ${fechaLegible}\n` +
+                `⏰ Hora: ${horaLegible}\n\n` +
+                `🔬 *Estudios Solicitados:*\n${estudiosLista}` +
+                `${indicacionesTexto}\n` +
+                `📍 *Ubicación:*\n${currentLabConfig.direccion}\n\n` +
+                `📞 Tel: ${currentLabConfig.telefono}\n\n` +
+                `¡Te esperamos!`;
+
+            // Codificar y abrir WhatsApp
+            const waUrl = `https://wa.me/52${telefono}?text=${encodeURIComponent(mensaje)}`;
+            window.open(waUrl, '_blank');
+
+            // Redirigir al dashboard después de abrir WhatsApp
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
         }
 
-        async function captureAndShareTicket(citaData, folio, telefono) {
-            const container = document.getElementById('ticketCaptureContainer');
-            const fecha = new Date().toLocaleString('es-MX');
-            const paciente = citaData.paciente_nombre;
-            const medicoStr = document.getElementById('medicoReferente').value;
-            const medico = medicoStr ? medicoStr : 'Particular / Referencia General';
-            const metodoPago = metodoPagoActual.toUpperCase();
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=Folio:${folio}|Paciente:${paciente}`;
+        // Función captureAndShareTicket eliminada/reemplazada por la lógica de texto anterior
 
-            const itemsHtml = estudiosSeleccionados.map(est => `
-                <div style="border-bottom: 1px dashed #ccc; padding: 10px 0;">
-                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 14px;">
-                        <span>${est.nombre}</span>
-                        <span>$${parseFloat(est.precio).toFixed(2)}</span>
-                    </div>
-                    <div style="font-size: 12px; color: #000; margin-top: 4px;">
-                        <strong style="text-decoration: underline;">INDICACIONES:</strong> ${est.indicaciones || 'Sin indicaciones especiales.'}
-                    </div>
-                </div>
-            `).join('');
-
-            container.innerHTML = `
-                <div id="realTicketBody" style="width: 380px; background: white; padding: 30px; font-family: 'Courier New', monospace; color: #000; border: 1px solid #eee;">
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <div style="font-size: 26px; font-weight: bold; color: #0f766e;">${currentLabConfig.nombre_laboratorio}</div>
-                        <div style="font-size: 14px; font-weight: bold; margin-top: 5px;">LABORATORIO CLÍNICO</div>
-                        <div style="margin-top: 10px; font-size: 13px;">Folio: #${folio} | ${fecha}</div>
-                    </div>
-                    
-                    <div style="border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 10px 0; margin-bottom: 15px; font-size: 14px; line-height: 1.5;">
-                        <strong>PACIENTE:</strong> ${paciente}<br>
-                        <strong>MÉDICO:</strong> ${medico}<br>
-                        <strong>PAGO:</strong> ${metodoPago}
-                    </div>
-
-                    <div style="margin-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; font-weight: bold; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 5px;">
-                            <span>CONCEPTO</span>
-                            <span>IMPORTE</span>
-                        </div>
-                        ${itemsHtml}
-                    </div>
-
-                    <div style="border-top: 2px solid #000; padding-top: 10px; font-size: 16px;">
-                        <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                            <span>NETO A PAGAR:</span>
-                            <span>$${totalVenta.toFixed(2)}</span>
-                        </div>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 25px;">
-                        <img src="${qrUrl}" style="width: 100px; height: 100px;">
-                        <div style="font-size: 10px; margin-top: 5px;">Valida tu folio aquí</div>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 30px; font-size: 11px; border-top: 1px dashed #000; padding-top: 15px;">
-                        <div style="font-weight: bold; font-size: 13px; margin-bottom: 5px;">GRACIAS POR SU CONFIANZA</div>
-                        <div>${currentLabConfig.responsable_sanitario}</div>
-                        <div>Céd. Prof. ${currentLabConfig.cedula_profesional}</div>
-                        <div style="margin-top: 5px;">${currentLabConfig.direccion}</div>
-                    </div>
-                </div>
-            `;
-
-            // Dar un momento para que el QR cargue
-            setTimeout(async () => {
-                try {
-                    const canvas = await html2canvas(container.querySelector('#realTicketBody'), {
-                        backgroundColor: '#ffffff',
-                        scale: 2
-                    });
-
-                    canvas.toBlob(async (blob) => {
-                        try {
-                            const item = new ClipboardItem({ "image/png": blob });
-                            await navigator.clipboard.write([item]);
-
-                            // Abrir WhatsApp con un mensaje corto
-                            const mensaje = `Hola *${paciente.split(' ')[0]}*, adjunto el comprobante oficial de tu registro en *${currentLabConfig.nombre_laboratorio}*. (Pega la imagen ahora con Ctrl+V)`;
-                            const waUrl = `https://wa.me/52${telefono}?text=${encodeURIComponent(mensaje)}`;
-                            window.open(waUrl, '_blank');
-                        } catch (err) {
-                            console.error("Error copiando al portapapeles:", err);
-                            alert("No se pudo copiar la imagen automáticamente. Abre el ticket e imprímelo manualmente.");
-                        }
-                    });
-                } catch (err) {
-                    console.error("Error capturando ticket:", err);
-                }
-            }, 500);
-        }
 
         /* Modal Functionality */
         function showCustomModal({ title, message, type = 'alert', onConfirm, onCancel }) {
@@ -1798,13 +1834,17 @@
                 const nombreCompleto = `${primerNombre} ${segundoNombre} ${primerApellido} ${segundoApellido}`.replace(/\s+/g, ' ').trim();
                 const medicoActual = document.getElementById('medicoReferente').value;
                 const folioVenta = Math.floor(Date.now() / 1000);
+                const expedienteNumero = document.getElementById('expedienteNumero').value;
+                const servicio = document.getElementById('servicioHospital').value;
+                const piso = document.getElementById('pisoHospital').value;
+                const cama = document.getElementById('camaHabitacion').value;
 
                 const appointmentData = {
                     paciente_nombre: nombreCompleto,
                     paciente_telefono: document.getElementById('patientPhone').value,
                     fecha_hora: fechaHora,
                     tipo_servicio: 'laboratorio',
-                    notas: document.getElementById('appointmentNotes').value || null,
+                    notas: (document.getElementById('diagnostico').value || '') + (cama ? ` | Cama: ${cama}` : ''),
                     estado: 'pendiente',
                     primer_nombre: primerNombre,
                     segundo_nombre: segundoNombre || null,
@@ -1819,9 +1859,14 @@
                     metodo_pago: metodoPagoActual,
                     folio_venta: folioVenta,
                     medico_referente_nombre: medicoActual,
+                    medico_nombre: medicoActual, // También guardamos en la nueva columna
                     comprobante_notas: document.getElementById('comprobanteNotas').value || null,
                     comprobante_comentarios: document.getElementById('comprobanteComentarios').value || null,
-                    operador_pago: currentUser ? (currentUser.nombre || currentUser.email) : 'S/I'
+                    operador_pago: currentUser ? (currentUser.nombre || currentUser.email) : 'S/I',
+                    creado_por: currentUser ? currentUser.id : null,
+                    expediente_numero: expedienteNumero || null,
+                    servicio: servicio || null,
+                    piso: piso || null
                 };
 
                 try {
@@ -1856,33 +1901,34 @@
                     const urlParams = new URLSearchParams(window.location.search);
                     const isDirectMode = urlParams.get('mode') === 'directo';
 
-                    setTimeout(() => {
-                        if (isDirectMode) {
-                            // In direct mode, just show success and go to dashboard
-                            showCustomModal({
-                                title: '¡Venta Registrada!',
-                                message: 'El paciente ha sido registrado exitosamente.',
-                                type: 'alert',
-                                onConfirm: () => {
+                    // Removed setTimeout for immediate feedback
+                    if (isDirectMode) {
+                        // In direct mode, just show success and go to dashboard
+                        showCustomModal({
+                            title: '¡Venta Registrada!',
+                            message: 'El paciente ha sido registrado exitosamente.',
+                            type: 'alert',
+                            onConfirm: () => {
+                                setTimeout(() => {
                                     window.location.href = 'dashboard.html';
-                                }
-                            });
-                        } else {
-                            // In appointment mode, ask about WhatsApp
-                            showCustomModal({
-                                title: '¡Cita Guardada!',
-                                message: '¿Deseas enviar la confirmación por WhatsApp al paciente?',
-                                type: 'confirm',
-                                onConfirm: () => {
-                                    sendWhatsAppMessage(appointmentData, folioVenta);
-                                    window.location.href = 'dashboard.html';
-                                },
-                                onCancel: () => {
-                                    window.location.href = 'dashboard.html';
-                                }
-                            });
-                        }
-                    }, 1000);
+                                }, 500);
+                            }
+                        });
+                    } else {
+                        // In appointment mode, ask about WhatsApp
+                        showCustomModal({
+                            title: '¡Cita Guardada!',
+                            message: '¿Deseas enviar la confirmación por WhatsApp al paciente?',
+                            type: 'confirm',
+                            onConfirm: () => {
+                                sendWhatsAppMessage(appointmentData, folioVenta);
+                                // La redirección ocurrirá después de enviar el mensaje
+                            },
+                            onCancel: () => {
+                                window.location.href = 'dashboard.html';
+                            }
+                        });
+                    }
 
 
                 } catch (err) {
