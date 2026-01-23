@@ -1865,7 +1865,11 @@
                     operador_pago: currentUser ? (currentUser.nombre || currentUser.email) : 'S/I',
                     creado_por: currentUser ? currentUser.id : null,
                     expediente_numero: expedienteNumero || null,
-                    servicio: servicio || null,
+                    // Map UI 'Servicio/Area' dropdown to DB 'procedencia' as it contains values like Urgencias, Consulta Externa
+                    procedencia: servicio || 'CONSULTA EXTERNA',
+                    // Default servicio to Laboratorio since we don't have a specific input, or user can update later
+                    servicio: 'LABORATORIO',
+                    cama: cama || null, // Now saving to own column
                     piso: piso || null
                 };
 

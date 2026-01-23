@@ -5,167 +5,179 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrega de Resultados - Ar Lab</title>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF for Client Side PDF Gen -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="navbar.css">
-    <script src="navbar.js" defer></script>
     <style>
-        :root {
-            --primary: #0d9488;
-            --primary-dark: #0f766e;
-            --primary-light: #ccfbf1;
-            --secondary: #64748b;
-            --bg-main: #f8fafc;
-            --bg-card: #ffffff;
-            --text-dark: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
-            --success: #10b981;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-main);
-            color: var(--text-dark);
-            min-height: 100vh;
-            margin: 0;
+            background-color: #f8fafc;
         }
 
-        .main-content {
-            max-width: 1400px;
+        .main-container {
+            padding-top: 80px;
+            /* Navbar height */
+            padding-bottom: 2rem;
+            max-width: 98%;
             margin: 0 auto;
-            padding: 2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
 
         .page-header {
-            margin-bottom: 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 2rem;
         }
 
         .page-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.75rem;
-            color: var(--text-dark);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .filter-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
-        .search-bar {
+        .date-input-group {
             display: flex;
-            gap: 1rem;
-            background: white;
-            padding: 0.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .search-input {
-            border: none;
-            outline: none;
-            padding: 0.5rem;
-            width: 300px;
+        .date-input-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .date-input {
+            padding: 0.6rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
         }
 
-        .card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border);
-            overflow: hidden;
+        .date-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
         }
 
-        table {
+        .results-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        th {
+        .results-table th {
             background: #f1f5f9;
             padding: 1rem;
             text-align: left;
             font-weight: 600;
-            color: var(--secondary);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            color: #334155;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        td {
+        .results-table td {
             padding: 1rem;
-            border-bottom: 1px solid var(--border);
-            vertical-align: middle;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+            color: #0f172a;
         }
 
-        tr:last-child td {
+        .results-table tr:last-child td {
             border-bottom: none;
         }
 
-        tr:hover {
+        .results-table tr:hover td {
             background: #f8fafc;
         }
 
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-validado {
+        .status-badge-green {
             background: #dcfce7;
             color: #166534;
-        }
-
-        .status-entregado {
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s;
+            gap: 6px;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
+        .folio-text {
+            font-family: 'Consolas', monospace;
+            font-weight: 700;
+            color: #334155;
         }
 
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-outline {
-            background: white;
-            border: 1px solid var(--border);
-            color: var(--text-dark);
-        }
-
-        .btn-icon {
-            padding: 0.5rem;
+        .action-btn {
+            padding: 6px 12px;
             border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
-        .btn-icon:hover {
+        .action-btn:hover {
             background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #0f172a;
+        }
+
+        .action-btn.whatsapp {
+            color: #15803d;
+            border-color: #bbf7d0;
+            background: #f0fdf4;
+        }
+
+        .action-btn.whatsapp:hover {
+            background: #dcfce7;
+            border-color: #86efac;
+        }
+
+        .action-btn.pdf {
+            color: #b91c1c;
+            border-color: #fecaca;
+            background: #fef2f2;
+        }
+
+        .action-btn.pdf:hover {
+            background: #fee2e2;
+            border-color: #fca5a5;
         }
     </style>
 </head>
@@ -173,186 +185,194 @@
 <body>
     <div id="navbar-container"></div>
 
-    <main class="main-content">
-        <header class="page-header">
-            <h1 class="page-title">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                Entrega de Resultados
-            </h1>
-            <div class="search-bar">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"
-                    style="margin: auto 0;">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="text" id="searchInput" class="search-input" placeholder="Buscar por paciente o folio..."
-                    oninput="filterTable()">
-            </div>
-        </header>
-
-        <div class="card">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Folio</th>
-                        <th>Paciente</th>
-                        <th>Fecha</th>
-                        <th>Estudios</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="deliveryTableBody">
-                    <tr>
-                        <td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-light);">Cargando
-                            resultados...</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">Entrega de Resultados</h1>
         </div>
-    </main>
 
+        <div class="filter-card">
+            <div class="date-input-group">
+                <label for="filterDate">Fecha de Resultados</label>
+                <input type="date" id="filterDate" class="date-input" onchange="loadResults()">
+            </div>
+            <button class="btn btn-primary" onclick="loadResults()" style="margin-top: 1.5rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                Buscar
+            </button>
+        </div>
+
+        <div id="resultsContainer">
+            <div style="text-align: center; color: #64748b; padding: 3rem;">
+                Selecciona una fecha para ver los resultados disponibles.
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://ebihobjrwcwtjfazcjmv.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViaWhvYmpyd2N3dGpmYXpjam12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0MTY4NTgsImV4cCI6MjA1Mjk5Mjg1OH0.eP_BE7patBPpXNvzXNuE7bkO9TnX5Z17ma5wOLzSJPU';
+        const supabaseKey = 'sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        let allDeliveries = [];
+        // Set default date to today
+        document.getElementById('filterDate').valueAsDate = new Date();
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadDeliveries();
+        // Load initially
+        window.addEventListener('load', () => {
+            loadResults();
         });
 
-        async function loadDeliveries() {
+        async function loadResults() {
+            const dateVal = document.getElementById('filterDate').value;
+            if (!dateVal) return;
+
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = '<div style="text-align: center; padding: 2rem;">Cargando...</div>';
+
             try {
-                // Fetch citations that have at least one 'validado' or 'entregado' study
-                // Ideally we filter better, but supabase js simple query:
-                // We'll fetch recent citas and filter in JS for those having valid/delivered status
-                const { data, error } = await supabaseClient
+                // Parse YYYY-MM-DD manually to create Local Date
+                const [year, month, day] = dateVal.split('-').map(Number);
+
+                const startDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+                const endDate = new Date(year, month - 1, day, 23, 59, 59, 999);
+
+                // Fetch citas with their studies
+                const { data: citas, error } = await supabaseClient
                     .from('citas')
                     .select(`
-                        id, folio_venta, paciente_nombre, fecha_hora, paciente_telefono,
+                        id, folio_venta, folio_atencion, fecha_hora, paciente_nombre, paciente_telefono,
                         citas_estudios (
-                            id, estado_resultado, estudio_id,
-                            estudios_laboratorio(nombre)
+                            id, estado_resultado,
+                            estudios_laboratorio (
+                                id, nombre, area, categoria, es_perfil
+                            )
                         )
                     `)
-                    .order('fecha_hora', { ascending: false })
-                    .limit(50);
+                    .gte('fecha_hora', startDate.toISOString())
+                    .lte('fecha_hora', endDate.toISOString())
+                    .order('fecha_hora', { ascending: false });
 
                 if (error) throw error;
 
-                // Filter logic: Must have studies. at least one is validado or entregado
-                allDeliveries = data.filter(c => {
-                    if (!c.citas_estudios || c.citas_estudios.length === 0) return false;
-                    // Check if HAS ANY valid or delivered
-                    return c.citas_estudios.some(ce => ['validado', 'entregado'].includes(ce.estado_resultado));
-                });
-
-                renderTable(allDeliveries);
-
-            } catch (err) {
-                console.error(err);
-                document.getElementById('deliveryTableBody').innerHTML = `<tr><td colspan="6" style="color:red; text-align:center;">Error al cargar: ${err.message}</td></tr>`;
-            }
-        }
-
-        function renderTable(data) {
-            const tbody = document.getElementById('deliveryTableBody');
-            if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 3rem; color: var(--text-light);">No hay resultados listos para entrega.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = data.map(c => {
-                const isAllDelivered = c.citas_estudios.every(ce => ce.estado_resultado === 'entregado');
-                const hasPending = c.citas_estudios.some(ce => !['validado', 'entregado'].includes(ce.estado_resultado));
-
-                const statusBadge = isAllDelivered
-                    ? `<span class="status-badge status-entregado">✅ Entregado</span>`
-                    : `<span class="status-badge status-validado">⭐ Listo para Entrega</span>`;
-
-                const studiesList = c.citas_estudios.map(ce => ce.estudios_laboratorio?.nombre || 'Estudio').join(', ');
-                const shortStudies = studiesList.length > 50 ? studiesList.substring(0, 50) + '...' : studiesList;
-
-                const date = new Date(c.fecha_hora).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-
-                return `
-                    <tr>
-                        <td style="font-weight: 700;">${c.folio_venta || c.id}</td>
-                        <td>
-                            <div style="font-weight: 600;">${c.paciente_nombre}</div>
-                            <div style="font-size: 0.8rem; color: var(--secondary);">${c.paciente_telefono || ''}</div>
-                        </td>
-                        <td>${date}</td>
-                        <td style="color: var(--secondary); font-size: 0.9rem;" title="${studiesList}">${shortStudies}</td>
-                        <td>${statusBadge}</td>
-                        <td>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <a href="reporte.html?id=${c.id}" target="_blank" class="btn btn-outline" title="Imprimir">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                                </a>
-                                <button onclick="markDelivered(${c.id})" class="btn btn-primary" title="Marcar como Entregado" ${isAllDelivered ? 'disabled style="opacity:0.5"' : ''}>
-                                    Entregar
-                                </button>
-                                <button onclick="sendWhatsApp('${c.paciente_telefono}', '${c.paciente_nombre}', '${c.folio_venta || c.id}')" class="btn btn-icon" style="color: #25D366; border: 1px solid #dcfce7; background: #f0fdfa;">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        async function markDelivered(id) {
-            if (!confirm('¿Confirmar que se han entregado los resultados al paciente?')) return;
-
-            try {
-                // Update all validado to entregado for this cita
-                // First get the studies
-                const { data: studies } = await supabaseClient.from('citas_estudios').select('id').eq('cita_id', id).eq('estado_resultado', 'validado');
-
-                if (studies && studies.length > 0) {
-                    const ids = studies.map(s => s.id);
-                    const { error } = await supabaseClient
-                        .from('citas_estudios')
-                        .update({ estado_resultado: 'entregado' })
-                        .in('id', ids);
-
-                    if (error) throw error;
-                    alert('Resultados marcados como entregados.');
-                    loadDeliveries();
-                } else {
-                    alert('No hay estudios pendientes de entrega (validado) en esta cita.');
+                if (!citas || citas.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; color: #64748b; padding: 3rem;">No se encontraron resultados para esta fecha.</div>';
+                    return;
                 }
 
-            } catch (e) {
-                alert('Error: ' + e.message);
+                let html = `
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>FOLIO</th>
+                            <th>PACIENTE</th>
+                            <th>ÁREAS</th>
+                            <th>ESTADO</th>
+                            <th style="text-align: right;">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+
+                citas.forEach(c => {
+                    const studies = c.citas_estudios || [];
+
+                    // Areas
+                    const areas = new Set();
+                    studies.forEach(s => {
+                        if (s.estudios_laboratorio?.area) areas.add(s.estudios_laboratorio.area);
+                        if (s.estudios_laboratorio?.categoria) areas.add(s.estudios_laboratorio.categoria);
+                    });
+                    if (areas.size === 0) areas.add('General');
+                    const areaStr = Array.from(areas).join(', ');
+
+                    // Check validation status (Ignoring Profile Headers)
+                    const hasStudies = studies.length > 0;
+                    let allValidated = false;
+
+                    if (hasStudies) {
+                        allValidated = studies.every(s => {
+                            const name = (s.estudios_laboratorio?.nombre || '').toLowerCase();
+                            // Check 'es_perfil' flag OR keywords
+                            const isProfile = s.estudios_laboratorio?.es_perfil ||
+                                name.includes('elementos') ||
+                                name.includes('perfil') ||
+                                name.includes('paquete') ||
+                                name.includes('electrolitos');
+
+                            if (isProfile) return true; // Ignore headers
+                            return ['validado', 'entregado'].includes(s.estado_resultado);
+                        });
+                    }
+
+                    const statusHtml = (hasStudies && allValidated)
+                        ? `<span class="status-badge-green"><div style="width: 8px; height: 8px; background: #166534; border-radius: 50%;"></div> COMPLETADO</span>`
+                        : `<span style="background: #f3f4f6; color: #6b7280; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;"><div style="width: 8px; height: 8px; background: #9ca3af; border-radius: 50%;"></div> PENDIENTE</span>`;
+
+                    // Folio
+                    const folio = c.folio_atencion || c.folio_venta || c.id;
+
+                    // Wa link
+                    const phone = c.paciente_telefono;
+                    // TODO: Custom message?
+                    const waLink = phone ? `https://wa.me/52${phone.replace(/\D/g, '')}` : '#';
+
+                    html += `
+                        <tr>
+                            <td><span class="folio-text">${folio}</span></td>
+                            <td style="font-weight: 500;">${c.paciente_nombre}</td>
+                            <td style="color: #64748b; font-size: 0.85rem;">${areaStr}</td>
+                            <td>${statusHtml}</td>
+                            <td style="text-align: right;">
+                                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                                    <button onclick="generatePDF('${c.id}')" class="action-btn pdf">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                            <polyline points="10 9 9 9 8 9"></polyline>
+                                        </svg>
+                                        PDF
+                                    </button>
+                                    <button onclick="sendWhatsApp('${c.paciente_telefono}', '${c.paciente_nombre}', '${c.id}')" class="action-btn whatsapp">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                        </svg>
+                                        WhatsApp
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                html += `</tbody></table>`;
+                container.innerHTML = html;
+
+            } catch (err) {
+                console.error('Error:', err);
+                container.innerHTML = '<div style="text-align: center; color: #ef4444; padding: 2rem;">Ocurrió un error al cargar los resultados.</div>';
             }
         }
 
-        function sendWhatsApp(phone, name, folio) {
-            if (!phone) return alert('No hay teléfono registrado');
+        function sendWhatsApp(phone, name, id) {
+            if (!phone) {
+                alert('El paciente no tiene número de teléfono registrado.');
+                return;
+            }
             const cleanPhone = phone.replace(/\D/g, '');
-            const msg = encodeURIComponent(`Hola ${name}, le informamos que sus resultados del folio ${folio} ya han sido entregados. Gracias por su preferencia.`);
-            window.open(`https://wa.me/52${cleanPhone}?text=${msg}`, '_blank');
+            const message = `Hola ${name}, sus resultados de laboratorio están listos.`;
+            const url = `https://wa.me/52${cleanPhone}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
         }
 
-        function filterTable() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allDeliveries.filter(c =>
-                c.paciente_nombre.toLowerCase().includes(term) ||
-                (c.folio_venta && c.folio_venta.toLowerCase().includes(term))
-            );
-            renderTable(filtered);
+        async function generatePDF(citaId) {
+            // Redirect to reportes view for now as a "print preview"
+            window.open(`reporte.html?id=${citaId}`, '_blank');
         }
     </script>
 </body>

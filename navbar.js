@@ -102,6 +102,10 @@ function injectNavbar() {
                         <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                         Reportes y Analíticas
                     </a>
+                    <a href="entrega.html" class="nav-item" id="navEntrega">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Entrega de Resultados
+                    </a>
                 </div>
             </div>
 
@@ -193,6 +197,8 @@ function setupNavbar() {
         document.getElementById('navResultados')?.classList.add('active');
     } else if (page === 'reportes.html') {
         document.getElementById('navReportes')?.classList.add('active');
+    } else if (page === 'entrega.html') {
+        document.getElementById('navEntrega')?.classList.add('active');
     } else if (page === 'comprobantes.html') {
         document.getElementById('navComprobantes')?.classList.add('active');
     } else if (page === 'configuracion.html') {

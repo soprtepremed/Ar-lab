@@ -428,7 +428,7 @@
         /* Toast */
         .toast-container {
             position: fixed;
-            top: 90px;
+            bottom: 20px;
             right: 20px;
             z-index: 3000;
             display: flex;
@@ -504,6 +504,20 @@
             margin-bottom: 0.5rem;
         }
 
+        /* Patient Sidebar Active State */
+        .patient-card:hover {
+            background-color: #f1f5f9 !important;
+        }
+
+        .patient-card.active {
+            background-color: #e0f2fe !important;
+            /* Light Blue Highlight */
+            border-left: 4px solid #0d9488 !important;
+            /* Primary Color Accent */
+            border-color: #bae6fd !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
         @media (max-width: 768px) {
             .results-grid {
                 grid-template-columns: 1fr;
@@ -516,6 +530,27 @@
             .result-inputs {
                 grid-template-columns: 1fr;
             }
+        }
+
+        @keyframes pulse-gray {
+            0% {
+                box-shadow: 0 0 0 0 rgba(156, 163, 175, 0.7);
+                transform: scale(0.95);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(156, 163, 175, 0);
+                transform: scale(1);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(156, 163, 175, 0);
+                transform: scale(0.95);
+            }
+        }
+
+        .status-pulse {
+            animation: pulse-gray 2s infinite;
         }
     </style>
 </head>
@@ -639,9 +674,9 @@
                                     Cargando...
                                 </h2>
                                 <div
-                                    style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.9rem; color: var(--text-light); margin-top: 0.5rem; font-family: 'Consolas', monospace;">
+                                    style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.9rem; color: #000000; margin-top: 0.5rem; font-family: 'Consolas', monospace; font-weight: 500;">
                                     <span id="captureFolio"
-                                        style="font-weight: 700; color: var(--text-dark); font-family: 'Consolas', monospace;">Folio:
+                                        style="font-weight: 700; color: #000000; font-family: 'Consolas', monospace;">Folio:
                                         ---</span>
                                     <span id="captureLine1">EXP: --- FN: --- EDAD: ---</span>
                                     <span id="captureLine2">SEXO: --- TEL: ---</span>
@@ -655,7 +690,16 @@
                                         <polyline points="17 21 17 13 7 13 7 21"></polyline>
                                         <polyline points="7 3 7 8 15 8"></polyline>
                                     </svg>
-                                    Guardar Todo
+                                    Guardar
+                                </button>
+                                <button class="btn btn-outline" id="btnCaptureInvalidate"
+                                    onclick="invalidateCaptureResults()"
+                                    style="display: none; border-color: #ef4444; color: #ef4444;">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                                        <line x1="12" y1="2" x2="12" y2="12"></line>
+                                    </svg>
+                                    Desvalidar
                                 </button>
                                 <button class="btn btn-success" id="btnCaptureValidate"
                                     onclick="validateCaptureResults()" style="display: none;">
@@ -1178,21 +1222,45 @@
 
             function getStatusBadge(status) {
                 const statusColors = {
-                    'pendiente': '#fbbf24',
-                    'en-proceso': '#3b82f6',
-                    'listo': '#10b981',
-                    'validado': '#6366f1'
+                    'pendiente': '#9ca3af', // Gray
+                    'en-proceso': '#9ca3af', // Gray
+                    'listo': '#9ca3af',      // Gray
+                    'validado': '#10b981',   // Green
+                    'entregado': '#6b7280'   // Dark Gray
                 };
-                const color = statusColors[status] || '#94a3b8';
-                const labels = {
-                    'pendiente': '⏳ PENDIENTE',
-                    'en-proceso': '⚙️ EN PROCESO',
-                    'listo': '✅ LISTO',
-                    'validado': '🔒 VALIDADO'
-                };
-                const label = labels[status] || status;
+                // Fallback
+                if (status === 'validado') statusColors['validado'] = '#10b981';
 
-                return `<div class="status-badge" style="color: ${color}; display: flex; align-items: center; gap: 4px;">${label}</div>`;
+                const color = statusColors[status] || '#9ca3af';
+
+                const labels = {
+                    'pendiente': 'Sin Validar',
+                    'en-proceso': 'Sin Validar',
+                    'listo': 'Sin Validar',
+                    'validado': 'Validado',
+                    'entregado': 'Entregado'
+                };
+                const label = labels[status] || 'Sin Validar';
+
+                // Add pulse if Sin Validar (gray) or Validado (green)
+                const isPending = label === 'Sin Validar';
+                const isValidated = label === 'Validado';
+
+                let pulseClass = '';
+                if (isPending) pulseClass = 'status-pulse';
+                if (isValidated) pulseClass = 'status-pulse-green';
+
+                return `
+                <div title="${label}" class="${pulseClass}" style="
+                    width: 16px; 
+                    height: 16px; 
+                    border-radius: 50%; 
+                    background-color: ${color}; 
+                    cursor: help;
+                    margin-right: 4px;
+                    ${(isPending || isValidated) ? '' : `box-shadow: 0 0 0 2px white, 0 0 0 3px ${color}20;`} 
+                "></div>
+                `;
             }
 
             function renderCaptureValues() {
@@ -1354,7 +1422,21 @@
                             </td>
                             <td style="border: 1px solid #c0c0c0; padding: 4px 8px; vertical-align: middle; opacity: ${showInReport ? '1' : '0.5'};">
                                 <div style="font-weight: 600; color: #000;">
-                                    ${item.estudios_laboratorio?.nombre || item.nombre} ${isCalculated ? '<span title="Calculado Automáticamente" style="font-size:0.75rem; cursor:help;">🧮</span>' : ''}
+                                    ${item.estudios_laboratorio?.nombre || item.nombre} 
+                                    ${isCalculated ? `
+                                        <span title="Fórmula: ${item.estudios_laboratorio?.formula || item.formula || 'Automática'}" 
+                                              style="display: inline-flex; align-items: center; justify-content: center; margin-left: 4px; color: #64748b; cursor: help; vertical-align: middle;">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                                                <line x1="8" y1="6" x2="16" y2="6"></line>
+                                                <line x1="16" y1="14" x2="16" y2="18"></line>
+                                                <path d="M8 14h.01"></path>
+                                                <path d="M12 14h.01"></path>
+                                                <path d="M8 18h.01"></path>
+                                                <path d="M12 18h.01"></path>
+                                            </svg>
+                                        </span>
+                                    ` : ''}
                                 </div>
                                 <div id="note-display-${item.id}" style="font-size: 0.75rem; color: #0f766e; font-style: italic; margin-top: 2px; display: ${item.observaciones ? 'block' : 'none'};">
                                     ${item.observaciones ? 'Nota: ' + item.observaciones : ''}
@@ -1368,7 +1450,8 @@
                                         data-formula="${item.estudios_laboratorio?.formula || item.formula || ''}"
                                         data-status="${item.estado_resultado}"
                                         data-ref="${refText}"
-                                        ${isCalculated ? 'readonly' : ''}
+                                        value="${item.valor_resultado || ''}"
+                                        ${(isCalculated || item.estado_resultado === 'validado' || item.estado_resultado === 'entregado') ? 'readonly' : ''}
                                         oninput="validateInputRange(this); calculateFormulas(); updateCellColor(this);"
                                         onkeydown="
                                             if(event.key==='Enter' || event.key==='ArrowDown'){
@@ -1422,6 +1505,13 @@
                 const canValidate = currentUser && (currentUser.rol === 'admin' || currentUser.rol === 'quimico');
                 if (canValidate) {
                     document.getElementById('btnCaptureValidate').style.display = 'inline-flex';
+                    // Show Invalidate button if there are validated items
+                    const hasValidated = currentCaptureCita.citas_estudios.some(ce => ['validado', 'entregado'].includes(ce.estado_resultado));
+                    if (hasValidated) {
+                        document.getElementById('btnCaptureInvalidate').style.display = 'inline-flex';
+                    } else {
+                        document.getElementById('btnCaptureInvalidate').style.display = 'none';
+                    }
                 }
                 // Trigger validation for existing values
                 document.querySelectorAll('.capture-input').forEach(input => validateInputRange(input));
@@ -1605,15 +1695,18 @@
                 try {
                     await Promise.all(updates);
                     showToast('Resultados guardados exitosamente', 'success');
-                    // Refresh to show updated statuses/colors
-                    loadSingleCita(currentCaptureCita.id);
+                    // Refresh to show updated statuses/colors, waiting for it to complete so validation sees new state
+                    await loadSingleCita(currentCaptureCita.id);
                 } catch (e) {
                     console.error(e);
                     showToast('Error al guardar: ' + e.message, 'error');
                 }
             }
 
-            function validateCaptureResults() {
+            async function validateCaptureResults() {
+                // Auto-save before validation to ensure statuses are updated
+                await saveCaptureResults();
+
                 // Check if there are items to validate
                 const toValidateCount = currentCaptureCita.citas_estudios.filter(ce => ce.estado_resultado === 'listo').length;
 
@@ -1623,13 +1716,86 @@
                 }
 
                 // Open Custom Modal
-                document.getElementById('validationConfirmModal').style.display = 'flex';
-                document.getElementById('valConfirmText').textContent = `¿Desea validar y firmar ${toValidateCount} resultado(s) que están en estado "Listo"?`;
+                const modal = document.getElementById('validationConfirmModal');
+                const title = modal.querySelector('h3');
+                const text = document.getElementById('valConfirmText');
+                const btnAction = modal.querySelector('.btn-primary');
+
+                title.textContent = 'Confirmar Validación';
+                title.style.color = '#1e293b';
+                text.textContent = `¿Desea validar y firmar ${toValidateCount} resultado(s) que están en estado "Listo"?`;
+
+                btnAction.textContent = 'Validar';
+                btnAction.style.background = '#6366f1';
+                btnAction.style.borderColor = '#6366f1';
+                btnAction.onclick = proceedValidation;
+
+                modal.style.display = 'flex';
+            }
+
+            function invalidateCaptureResults() {
+                // Check if there are items to invalidate (validado or entregado)
+                const toInvalidateCount = currentCaptureCita.citas_estudios.filter(ce => ['validado', 'entregado'].includes(ce.estado_resultado)).length;
+
+                if (toInvalidateCount === 0) {
+                    showToast('No hay resultados validados para revertir.', 'info');
+                    return;
+                }
+
+                // Reuse modal or create new confirmation
+                // We'll use the same modal structure but change text and action
+                const modal = document.getElementById('validationConfirmModal');
+                const title = modal.querySelector('h3');
+                const text = document.getElementById('valConfirmText');
+                const btnAction = modal.querySelector('.btn-primary'); // The confirm button
+
+                title.textContent = 'Confirmar Desvalidación';
+                title.style.color = '#ef4444';
+                text.textContent = `¿Desea revertir ${toInvalidateCount} resultado(s) al estado "Listo"? Se habilitará la edición nuevamente.`;
+
+                // Update button style/action
+                btnAction.textContent = 'Desvalidar';
+                btnAction.style.background = '#ef4444';
+                btnAction.style.borderColor = '#ef4444';
+                btnAction.onclick = proceedInvalidation;
+
+                modal.style.display = 'flex';
+            }
+
+            async function proceedInvalidation() {
+                document.getElementById('validationConfirmModal').style.display = 'none';
+
+                // Restore modal defaults for next time (in case validated uses it)
+                // Actually, validateCaptureResults sets its own text, so just ensure onclick is reset if needed or set explicitly there.
+                // It's better to explicitly set onclick in validateCaptureResults too.
+
+                const toInvalidate = currentCaptureCita.citas_estudios
+                    .filter(ce => ['validado', 'entregado'].includes(ce.estado_resultado))
+                    .map(ce => ce.id);
+
+                if (toInvalidate.length === 0) return;
+
+                try {
+                    const { error } = await supabaseClient
+                        .from('citas_estudios')
+                        .update({
+                            estado_resultado: 'pendiente', // User requested return to 'pendiente'
+                            validado_por: null,
+                            fecha_validacion: null
+                        })
+                        .in('id', toInvalidate);
+
+                    if (error) throw error;
+                    showToast(`${toInvalidate.length} resultados desvalidados (pendientes).`, 'success');
+                    await loadSingleCita(currentCaptureCita.id);
+                } catch (e) {
+                    console.error(e);
+                    showToast('Error desvalidando: ' + e.message, 'error');
+                }
             }
 
             async function proceedValidation() {
                 document.getElementById('validationConfirmModal').style.display = 'none';
-
 
                 // Find eligible items
                 const toValidate = [];
@@ -1656,7 +1822,7 @@
 
                     if (error) throw error;
                     showToast(`${toValidate.length} resultados validados.`, 'success');
-                    loadSingleCita(currentCaptureCita.id);
+                    await loadSingleCita(currentCaptureCita.id);
                 } catch (e) {
                     console.error(e);
                     showToast('Error validando: ' + e.message, 'error');

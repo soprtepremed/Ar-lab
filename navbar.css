@@ -3,12 +3,12 @@
     width: 100%;
     background: #1e293b;
     /* --sidebar-bg */
-    height: 60px;
-    /* Further reduced height from 70px */
+    height: 70px;
+    /* Increased height for better spacing */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -20,49 +20,50 @@
 .navbar-brand {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
     text-decoration: none;
     flex-shrink: 0;
+    margin-right: 2rem;
 }
 
 .navbar-logo {
-    height: 40px;
-    /* Reduced from 48px/50px */
+    height: 50px;
+    /* Increased logo size */
     width: auto;
 }
 
 .navbar-nav {
     display: flex;
-    gap: 0.25rem;
-    /* Reduced gap */
+    gap: 2.5rem;
+    /* Significantly increased gap for better distribution */
     height: 100%;
     align-items: center;
     flex: 1;
     justify-content: center;
-    /* Center the nav items */
+    /* Center items in the available space */
 }
 
 /* Dropdown Styles */
 .nav-dropdown {
     position: relative;
-    height: 100%;
+    /* Removed height: 100% to let flex align it properly */
     display: flex;
     align-items: center;
 }
 
 .nav-dropdown-toggle {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
-    font-size: 0.8rem;
-    /* Reduced from 0.9rem */
+    font-size: 1rem;
+    /* Unified font size */
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.35rem;
-    padding: 0.4rem 0.6rem;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
     transition: all 0.2s;
     user-select: none;
-    border-radius: 6px;
+    border-radius: 8px;
     white-space: nowrap;
 }
 
@@ -73,8 +74,9 @@
 }
 
 .nav-dropdown-toggle svg {
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    /* Unified icon size */
+    height: 18px;
     transition: transform 0.2s;
     stroke-width: 2.5;
 }
@@ -85,22 +87,24 @@
 
 .nav-dropdown-menu {
     position: absolute;
-    top: 55px;
-    /* Offset for 60px navbar */
+    top: 150%;
+    /* Push down a bit more */
     left: 50%;
     transform: translateX(-50%) translateY(10px);
+    /* Center relative to parent */
     background: #1e293b;
-    min-width: 200px;
+    min-width: 240px;
     border-radius: 8px;
-    padding: 0.4rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    padding: 0.6rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
     transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
+    gap: 0.25rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1001;
 }
 
 .nav-dropdown.active .nav-dropdown-menu {
@@ -112,13 +116,13 @@
 .nav-item {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.6rem 0.8rem;
-    color: rgba(255, 255, 255, 0.8);
+    gap: 0.8rem;
+    padding: 0.5rem 1rem;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
-    font-weight: 400;
-    font-size: 0.8rem;
-    /* Reduced from 0.9rem */
+    font-weight: 500;
+    font-size: 1rem;
+    /* Unified font size */
     transition: all 0.2s ease;
     white-space: nowrap;
     border-radius: 6px;
@@ -133,12 +137,13 @@
     background: rgba(13, 148, 136, 0.3);
     color: #5eead4;
     /* --primary-light */
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .nav-item svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    /* Unified icon size */
+    height: 18px;
     stroke: currentColor;
     fill: none;
     stroke-width: 2;
@@ -148,16 +153,18 @@
 .navbar-user {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-left: 0.5rem;
-    padding-left: 0.5rem;
+    gap: 0.8rem;
+    margin-left: auto;
+    /* Push to right */
+    padding-left: 1rem;
     border-left: 1px solid rgba(255, 255, 255, 0.15);
     flex-shrink: 0;
 }
 
 .user-avatar {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
+    /* Larger avatar */
     border-radius: 50%;
     background: #0d9488;
     /* --primary */
@@ -166,7 +173,7 @@
     justify-content: center;
     color: white;
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 .user-details {
@@ -176,14 +183,14 @@
 
 .user-info-text {
     color: white;
-    font-weight: 500;
-    font-size: 0.75rem;
+    font-weight: 600;
+    font-size: 0.85rem;
     line-height: 1.2;
 }
 
 .user-role-text {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
 }
 
 .logout-btn {
@@ -191,9 +198,10 @@
     border: none;
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    padding: 0.4rem;
+    padding: 0.5rem;
     border-radius: 8px;
     transition: all 0.2s;
+    margin-left: 0.5rem;
 }
 
 .logout-btn:hover {
@@ -202,8 +210,8 @@
 }
 
 .logout-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     stroke: currentColor;
     fill: none;
     stroke-width: 2;
@@ -211,7 +219,7 @@
 
 /* Global layout adjustment */
 body {
-    padding-top: 60px !important;
+    padding-top: 70px !important;
     /* Navbar height */
 }
 
@@ -221,16 +229,26 @@ body {
 
 /* Specific button for "Inicio" to match dropdown look */
 #navInicio {
-    padding: 0.4rem 0.6rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
     font-weight: 500;
 }
 
 /* Responsive adjustments */
-@media (max-width: 1100px) {
-    .navbar-logo text:not(.brand-name) {
-        display: none;
+@media (max-width: 1200px) {
+    .navbar {
+        padding: 0 1rem;
+    }
+
+    .navbar-nav {
+        gap: 0.5rem;
+    }
+
+    .nav-dropdown-toggle,
+    .nav-item {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
     }
 }
 
@@ -240,6 +258,14 @@ body {
     }
 
     .nav-dropdown-toggle {
-        padding: 0.4rem;
+        padding: 0.5rem;
+    }
+
+    .navbar-user {
+        gap: 0.5rem;
+    }
+
+    .user-details {
+        display: none;
     }
 }
