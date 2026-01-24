@@ -477,7 +477,10 @@
                         <td style="font-weight: 600; color: var(--primary);">#${cita.folio_venta || cita.id.substring(0, 8)}</td>
                         <td>${fecha}</td>
                         <td>
-                            <div style="font-weight: 500; color: #1e293b;">${cita.paciente_nombre}</div>
+                            <div style="font-weight: 500; color: #1e293b;">
+                                ${cita.paciente_nombre}
+                                ${cita.paciente_sexo ? `<span style="font-size: 0.75rem; color: #64748b; font-weight: normal; margin-left:1px;">(${cita.paciente_sexo.charAt(0).toUpperCase()})</span>` : ''}
+                            </div>
                             <div style="font-size: 0.75rem; color: #64748b;">${cita.paciente_telefono || 'S/T'}</div>
                         </td>
                         <td style="font-weight: 700;">$${parseFloat(cita.total || 0).toFixed(2)}</td>

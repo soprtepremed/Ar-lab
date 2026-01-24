@@ -163,7 +163,7 @@ function showDetailsModal(apt, fecha) {
             </span>
             <div>
                 <div class="detail-label">Teléfono</div>
-                <div class="detail-value">${apt.paciente_telefono || 'No registrado'}</div>
+                <div class="detail-value">${apt.paciente_telefono || 'No registrado'} ${apt.paciente_sexo ? `(${apt.paciente_sexo})` : ''}</div>
             </div>
         </div>
         <div class="detail-item">

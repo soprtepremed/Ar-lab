@@ -52,7 +52,7 @@
 
 
         .main-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
         }
@@ -252,23 +252,25 @@
 
         /* Study Selector Styles Updated */
         .estudio-item {
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #f1f5f9;
+            padding: 0.4rem 0.6rem;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             transition: all 0.15s;
-            background: #f8fafc;
-            height: 100%;
+            background: #ffffff;
+            height: auto;
+            position: relative;
         }
 
         .estudio-item:hover {
             background: #f0fdfa;
-            border-color: var(--primary-light);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.1);
+            z-index: 10;
         }
 
         .estudio-item.selected {
@@ -278,50 +280,54 @@
 
         .estudio-nombre {
             font-weight: 600;
-            color: #334155;
+            color: #1e293b;
             display: block;
-            font-size: 0.8rem;
-            line-height: 1.2;
-            margin-bottom: 2px;
+            font-size: 0.75rem;
+            line-height: 1.1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
         }
 
-        .estudio-categoria-tag {
-            font-size: 0.65rem;
+        .estudio-indicaciones-tooltip {
+            font-size: 0.6rem;
             color: #64748b;
-            background: #f1f5f9;
-            padding: 0.1rem 0.4rem;
-            border-radius: 4px;
-            display: inline-block;
+            margin-top: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
         }
 
         .estudio-precio {
             font-weight: 700;
-            color: #0d9488;
-            font-size: 0.8rem;
+            color: var(--primary-dark);
+            font-size: 0.75rem;
         }
 
         .category-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .category-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #475569;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.75rem;
-            padding-bottom: 0.25rem;
-            border-bottom: 2px solid #f1f5f9;
+            letter-spacing: 0.075em;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.2rem;
+            border-bottom: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .studies-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.75rem;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.4rem;
         }
 
         /* Custom Modal Styles */
@@ -512,10 +518,19 @@
                             oninput="normalizeInput(this)">
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr;">
                     <div class="form-group">
                         <label class="form-label">Fecha de Nacimiento *</label>
                         <input type="date" class="form-input" id="fechaNacimiento" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Sexo *</label>
+                        <select class="form-select" id="pacienteSexo" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Teléfono *</label>
@@ -541,12 +556,29 @@
                 </h4>
 
                 <div class="form-group">
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-                        <input type="text" class="form-input" id="buscarEstudio"
+                    <div style="display: flex; gap: 1rem; margin-bottom: 0.5rem;">
+                        <input type="text" class="form-input" id="buscarEstudio" oninput="applyFilters()"
                             placeholder="Buscar estudio por nombre o código..." style="flex: 1;">
-                        <select class="form-select" id="filtroCategoria" style="width: 250px;">
+                        <select class="form-select" id="filtroCategoria" style="width: 250px;"
+                            onchange="applyFilters()">
                             <option value="">Todas las categorías</option>
                         </select>
+                        <button type="button" class="btn btn-primary" onclick="abrirModalEstudioManual()"
+                            style="flex-shrink: 0; padding: 0 1rem; height: auto;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" style="margin:0">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            <span style="margin-left:5px">Estudio Manual</span>
+                        </button>
+                    </div>
+
+                    <div
+                        style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #64748b;">
+                        <input type="checkbox" id="verComponentesOcultos" onchange="applyFilters()">
+                        <label for="verComponentesOcultos" style="cursor: pointer; user-select: none;">Ver componentes
+                            individuales (Precio $0)</label>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
@@ -558,7 +590,7 @@
                                     seleccionar/quitar</span>
                             </label>
                             <div id="listaEstudios"
-                                style="max-height: 500px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 1rem;">
+                                style="max-height: 800px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 1rem;">
                                 <!-- Estudios se cargan dinámicamente en 3 columnas por categoría -->
                             </div>
                         </div>
@@ -606,6 +638,51 @@
 
 
 
+            <!-- Datos de Hospitalización / Segmentación -->
+            <div class="form-section form-section-amber">
+                <h4 class="section-header" style="color: #92400e;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    Ubicación y Segmentación
+                </h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Nº Expediente</label>
+                        <input type="text" class="form-input" id="expedienteNumero" placeholder="Ej: EXP-2024-001">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Servicio / Área</label>
+                        <select class="form-select" id="servicioHospital">
+                            <option value="Laboratorio">Laboratorio (General)</option>
+                            <option value="Urgencias">Urgencias</option>
+                            <option value="Hospitalización">Hospitalización</option>
+                            <option value="Consulta Externa">Consulta Externa</option>
+                            <option value="UCI">UCI (Cuidados Intensivos)</option>
+                            <option value="Quirófano">Quirófano</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Piso / Nivel</label>
+                        <select class="form-select" id="pisoHospital">
+                            <option value="Planta Baja">Planta Baja</option>
+                            <option value="Piso 1">Piso 1</option>
+                            <option value="Piso 2">Piso 2</option>
+                            <option value="Piso 3">Piso 3</option>
+                            <option value="Anexo">Anexo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Cama / Habitación (Opcional)</label>
+                        <input type="text" class="form-input" id="camaHabitacion" placeholder="Ej: 204-B">
+                    </div>
+                </div>
+            </div>
+
             <!-- Médico Referente -->
             <div class="form-section form-section-amber">
                 <h4 class="section-header" style="color: #b45309;">
@@ -624,7 +701,7 @@
                         <div style="flex: 1;">
                             <input type="text" class="form-input" id="medicoReferente"
                                 placeholder="Escribe el nombre del médico..." list="listaMedicos"
-                                oninput="normalizeInput(this)" value="A Quien Corresponda">
+                                oninput="normalizeInput(this)">
                             <datalist id="listaMedicos">
                                 <!-- Médicos se cargan dinámicamente -->
                             </datalist>
@@ -782,6 +859,35 @@
 
     <!-- Hidden Capture Container -->
     <div id="ticketCaptureContainer" style="position: absolute; left: -9999px; top: -9999px;"></div>
+
+    <!-- Modal Estudio Manual -->
+    <div id="modalEstudioManual" class="modal-overlay"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+        <div
+            style="background:white; padding:2.5rem; border-radius:24px; width:95%; max-width:500px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);">
+            <h2
+                style="font-family:'Outfit'; margin-bottom:1.5rem; color:var(--primary-dark); display:flex; align-items:center; gap:10px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+                </svg>
+                Añadir Estudio Manual
+            </h2>
+            <div class="form-group">
+                <label class="form-label">Nombre del Estudio</label>
+                <input type="text" id="manualNombre" class="form-input" placeholder="Ej: Prueba Especial Rara">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Precio ($)</label>
+                <input type="number" id="manualPrecio" class="form-input" placeholder="0.00" step="0.01">
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:2rem;">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalEstudioManual()">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="agregarEstudioManual()">Añadir a la
+                    Cuenta</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Supabase Configuration
@@ -1149,7 +1255,84 @@
                 todosEstudios = data || [];
                 renderEstudiosList();
                 loadCategorias();
+
+                // Verificar si viene de una cotización pendiente
+                checkPendingQuotation();
             } catch (err) { console.error(err); }
+        }
+
+        // Función para precargar datos de cotización
+        function checkPendingQuotation() {
+            try {
+                const pendingQuotationStr = sessionStorage.getItem('pendingQuotation');
+                if (!pendingQuotationStr) return;
+
+                const quotation = JSON.parse(pendingQuotationStr);
+                console.log('Cargando cotización pendiente:', quotation);
+
+                // Precargar nombre del paciente
+                if (quotation.nombre) {
+                    const nombreParts = quotation.nombre.trim().split(' ');
+                    if (nombreParts.length >= 1) {
+                        document.getElementById('primerNombre').value = nombreParts[0] || '';
+                    }
+                    if (nombreParts.length >= 2) {
+                        document.getElementById('segundoNombre').value = nombreParts[1] || '';
+                    }
+                    if (nombreParts.length >= 3) {
+                        document.getElementById('primerApellido').value = nombreParts[2] || '';
+                    }
+                    if (nombreParts.length >= 4) {
+                        document.getElementById('segundoApellido').value = nombreParts.slice(3).join(' ') || '';
+                    }
+                    // Si solo hay 2 partes, probablemente es nombre + apellido
+                    if (nombreParts.length === 2) {
+                        document.getElementById('primerApellido').value = nombreParts[1];
+                        document.getElementById('segundoNombre').value = '';
+                    }
+                }
+
+                // Precargar estudios
+                if (Array.isArray(quotation.estudios) && quotation.estudios.length > 0) {
+                    quotation.estudios.forEach(estCot => {
+                        // Buscar el estudio en el catálogo por ID o por nombre
+                        let estudio = todosEstudios.find(e => e.id === estCot.id);
+                        if (!estudio) {
+                            estudio = todosEstudios.find(e => e.nombre === estCot.nombre);
+                        }
+                        if (estudio && !estudiosSeleccionados.some(s => s.id === estudio.id)) {
+                            estudiosSeleccionados.push(estudio);
+                        }
+                    });
+
+                    // Actualizar vistas
+                    renderEstudiosList();
+                    renderEstudiosSeleccionados();
+                    calcularTotal();
+                }
+
+                // Cambiar título si viene de cotización
+                if (quotation.fromCotizacion) {
+                    const pageTitle = document.getElementById('pageTitle');
+                    if (pageTitle) {
+                        const svg = pageTitle.querySelector('svg').outerHTML;
+                        pageTitle.innerHTML = `${svg} Registro desde Cotización`;
+                    }
+
+                    // Mostrar notificación
+                    showCustomModal({
+                        title: 'Datos Precargados',
+                        message: `Se han cargado los datos de la cotización de "${quotation.nombre}" con ${quotation.estudios?.length || 0} estudio(s). Complete los datos faltantes y confirme el registro.`,
+                        type: 'alert'
+                    });
+                }
+
+                // Limpiar sessionStorage para evitar recargar en futuras visitas
+                sessionStorage.removeItem('pendingQuotation');
+
+            } catch (err) {
+                console.error('Error cargando cotización pendiente:', err);
+            }
         }
 
         async function loadMedicos() {
@@ -1174,13 +1357,28 @@
             });
         }
 
+
+
+        // Wrapper para llamar desde el onchange del checkbox
+        function applyFilters() {
+            renderEstudiosList(
+                document.getElementById('buscarEstudio').value,
+                document.getElementById('filtroCategoria').value
+            );
+        }
+
         function renderEstudiosList(filtro = '', categoria = '') {
             const container = document.getElementById('listaEstudios');
             let estudiosFiltrados = todosEstudios.filter(e => {
                 const nombre = e.nombre || '';
                 const matchNombre = nombre.toLowerCase().includes(filtro.toLowerCase());
                 const matchCategoria = !categoria || e.categoria === categoria;
-                return matchNombre && matchCategoria;
+
+                // Nuevo filtro: Ocultar precio 0 si no está marcado el checkbox
+                const mostrarOcultos = document.getElementById('verComponentesOcultos')?.checked || false;
+                const matchPrecio = mostrarOcultos || parseFloat(e.precio) > 0 || e.es_perfil; // Siempre mostrar perfiles aunque sean $0 (raro pero posible)
+
+                return matchNombre && matchCategoria && matchPrecio;
             });
 
             if (estudiosFiltrados.length === 0) {
@@ -1190,6 +1388,13 @@
 
             // Agrupar por categoría
             const grupos = {};
+
+            // Agregar grupo de favoritos si aplica
+            const frecuentes = estudiosFiltrados.filter(e => e.es_frecuente);
+            if (frecuentes.length > 0 && !filtro && !categoria) {
+                grupos['⭐ MÁS SOLICITADOS'] = frecuentes;
+            }
+
             estudiosFiltrados.forEach(e => {
                 if (!grupos[e.categoria]) grupos[e.categoria] = [];
                 grupos[e.categoria].push(e);
@@ -1197,8 +1402,12 @@
 
             let html = '';
 
-            // Ordenar categorías alfabéticamente
-            const catKeys = Object.keys(grupos).sort();
+            // Ordenar categorías, poniendo favoritos primero
+            const catKeys = Object.keys(grupos).sort((a, b) => {
+                if (a === '⭐ MÁS SOLICITADOS') return -1;
+                if (b === '⭐ MÁS SOLICITADOS') return 1;
+                return a.localeCompare(b);
+            });
 
             catKeys.forEach(cat => {
                 html += `
@@ -1217,16 +1426,19 @@
                     const precio = parseFloat(est.precio || 0).toFixed(2);
 
                     html += `
-                        <div class="estudio-item ${isSelected ? 'selected' : ''}" onclick="toggleEstudio('${est.id}')">
-                            <div style="flex: 1;">
-                                <span class="estudio-nombre">${est.nombre}</span>
-                                <div style="font-size: 0.65rem; color: #64748b; margin-top: 1px; line-height: 1.1;">
-                                    ${est.indicaciones ? est.indicaciones.substring(0, 40) + (est.indicaciones.length > 40 ? '...' : '') : 'Sin indicaciones'}
+                        <div class="estudio-item ${isSelected ? 'selected' : ''}" onclick="toggleEstudio('${est.id}')" title="${est.indicaciones || 'Sin indicaciones'}">
+                            <div style="flex: 1; overflow: hidden;">
+                                <div style="display: flex; align-items: center; gap: 4px;">
+                                    <span class="estudio-nombre">${est.nombre}</span>
+                                    ${est.es_perfil ? '<span style="font-size: 0.55rem; background: #e0f2fe; color: #0369a1; padding: 0 4px; border-radius: 4px; font-weight: bold;">PERFIL</span>' : ''}
+                                </div>
+                                <div class="estudio-indicaciones-tooltip">
+                                    ${est.indicaciones || 'Sin indicaciones'}
                                 </div>
                             </div>
-                            <div style="text-align: right; margin-left: 0.5rem;">
+                            <div style="text-align: right; margin-left: 0.5rem; flex-shrink: 0;">
+                                <div style="font-size: 0.5rem; color: #94a3b8; font-family: monospace; line-height: 1;">${est.codigo || ''}</div>
                                 <div class="estudio-precio">$${precio}</div>
-                                <div style="font-size: 0.6rem; color: #94a3b8; font-family: monospace;">${est.codigo || ''}</div>
                             </div>
                         </div>
                     `;
@@ -1284,15 +1496,32 @@
             container.innerHTML = html;
         }
 
+
+
         function renderMedicosDatalist() {
             const datalist = document.getElementById('listaMedicos');
-            datalist.innerHTML = '';
+            datalist.innerHTML = '<option value="A Quien Corresponda">';
             todosMedicos.forEach(med => {
-                datalist.innerHTML += `<option value="${med.nombre}">`;
+                if (med.nombre !== 'A Quien Corresponda') {
+                    datalist.innerHTML += `<option value="${med.nombre}">`;
+                }
             });
+
+            // Set default if empty
+            const input = document.getElementById('medicoReferente');
+            if (!input.value) input.value = 'A Quien Corresponda';
         }
 
         function setupEstudioSearch() {
+            // Medico Input Focus UX
+            const medicoInput = document.getElementById('medicoReferente');
+            medicoInput.addEventListener('focus', function () {
+                if (this.value === 'A Quien Corresponda') this.value = '';
+            });
+            medicoInput.addEventListener('blur', function () {
+                if (this.value.trim() === '') this.value = 'A Quien Corresponda';
+            });
+
             document.getElementById('buscarEstudio').addEventListener('input', (e) => {
                 renderEstudiosList(e.target.value, document.getElementById('filtroCategoria').value);
             });
@@ -1345,6 +1574,46 @@
 
             if (cambioVenta < 0) cambioEl.style.color = '#ef4444';
             else cambioEl.style.color = '#0f766e';
+        }
+
+        // --- Manual Study Functions ---
+        function abrirModalEstudioManual() {
+            document.getElementById('modalEstudioManual').style.display = 'flex';
+            document.getElementById('manualNombre').focus();
+        }
+
+        function cerrarModalEstudioManual() {
+            document.getElementById('modalEstudioManual').style.display = 'none';
+            document.getElementById('manualNombre').value = '';
+            document.getElementById('manualPrecio').value = '';
+        }
+
+        function agregarEstudioManual() {
+            const nombre = document.getElementById('manualNombre').value.trim();
+            const precio = parseFloat(document.getElementById('manualPrecio').value) || 0;
+
+            if (!nombre) {
+                alert('Ingrese el nombre del estudio');
+                return;
+            }
+
+            const estudioManual = {
+                id: 'manual-' + Date.now(),
+                nombre: nombre + ' (Manual)',
+                precio: precio,
+                categoria: 'MANUAL',
+                codigo: 'MANUAL',
+                indicaciones: 'Estudio añadido manualmente'
+            };
+
+            estudiosSeleccionados.push(estudioManual);
+            cerrarModalEstudioManual();
+            renderEstudiosList(
+                document.getElementById('buscarEstudio').value,
+                document.getElementById('filtroCategoria').value
+            );
+            renderEstudiosSeleccionados();
+            calcularTotal();
         }
 
         function generateTicket(citaData, folio) {
@@ -1455,110 +1724,61 @@
 
         async function sendWhatsAppMessage(citaData, folio) {
             const telefono = citaData.paciente_telefono.replace(/\D/g, '');
-            if (!telefono) return;
+            if (!telefono) {
+                alert('El paciente no tiene un número de teléfono válido.');
+                return;
+            }
 
-            // Mostrar aviso de que se está capturando
-            showCustomModal({
-                title: 'WhatsApp e Imagen',
-                message: 'Estamos generando una captura del ticket real. Se copiará a tu portapapeles automáticamente. Solo tendrás que "PEGAR" (Ctrl+V) en WhatsApp.',
-                type: 'alert',
-                onConfirm: async () => {
-                    await captureAndShareTicket(citaData, folio, telefono);
+            // Formatear datos para el mensaje
+            const fechaObj = new Date(citaData.fecha_hora);
+            const fechaLegible = fechaObj.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const horaLegible = fechaObj.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const pacienteNombre = citaData.paciente_nombre.split(' ')[0]; // Solo primer nombre
+
+            // Construir lista de estudios y sus indicaciones
+            let estudiosLista = "";
+            let indicacionesSet = new Set();
+
+            estudiosSeleccionados.forEach(est => {
+                estudiosLista += `• ${est.nombre}\n`;
+                if (est.indicaciones && est.indicaciones.trim() !== '' && est.indicaciones !== 'Sin indicaciones') {
+                    indicacionesSet.add(est.indicaciones.trim());
                 }
             });
+
+            let indicacionesTexto = "";
+            if (indicacionesSet.size > 0) {
+                indicacionesTexto = "\n⚠️ *Indicaciones Generales:*\n";
+                indicacionesSet.forEach(ind => {
+                    indicacionesTexto += `• ${ind}\n`;
+                });
+            } else {
+                indicacionesTexto = "\n⚠️ *Indicaciones:* Sin indicaciones especiales.\n";
+            }
+
+            // Construir mensaje estructurado
+            const mensaje = `👋 Hola *${pacienteNombre}*, confirmamos tu cita en *${currentLabConfig.nombre_laboratorio}*.\n\n` +
+                `✅ *Detalles de la Cita:*\n` +
+                `📅 Fecha: ${fechaLegible}\n` +
+                `⏰ Hora: ${horaLegible}\n\n` +
+                `🔬 *Estudios Solicitados:*\n${estudiosLista}` +
+                `${indicacionesTexto}\n` +
+                `📍 *Ubicación:*\n${currentLabConfig.direccion}\n\n` +
+                `📞 Tel: ${currentLabConfig.telefono}\n\n` +
+                `¡Te esperamos!`;
+
+            // Codificar y abrir WhatsApp
+            const waUrl = `https://wa.me/52${telefono}?text=${encodeURIComponent(mensaje)}`;
+            window.open(waUrl, '_blank');
+
+            // Redirigir al dashboard después de abrir WhatsApp
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
         }
 
-        async function captureAndShareTicket(citaData, folio, telefono) {
-            const container = document.getElementById('ticketCaptureContainer');
-            const fecha = new Date().toLocaleString('es-MX');
-            const paciente = citaData.paciente_nombre;
-            const medicoStr = document.getElementById('medicoReferente').value;
-            const medico = medicoStr ? medicoStr : 'Particular / Referencia General';
-            const metodoPago = metodoPagoActual.toUpperCase();
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=Folio:${folio}|Paciente:${paciente}`;
+        // Función captureAndShareTicket eliminada/reemplazada por la lógica de texto anterior
 
-            const itemsHtml = estudiosSeleccionados.map(est => `
-                <div style="border-bottom: 1px dashed #ccc; padding: 10px 0;">
-                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 14px;">
-                        <span>${est.nombre}</span>
-                        <span>$${parseFloat(est.precio).toFixed(2)}</span>
-                    </div>
-                    <div style="font-size: 12px; color: #000; margin-top: 4px;">
-                        <strong style="text-decoration: underline;">INDICACIONES:</strong> ${est.indicaciones || 'Sin indicaciones especiales.'}
-                    </div>
-                </div>
-            `).join('');
-
-            container.innerHTML = `
-                <div id="realTicketBody" style="width: 380px; background: white; padding: 30px; font-family: 'Courier New', monospace; color: #000; border: 1px solid #eee;">
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <div style="font-size: 26px; font-weight: bold; color: #0f766e;">${currentLabConfig.nombre_laboratorio}</div>
-                        <div style="font-size: 14px; font-weight: bold; margin-top: 5px;">LABORATORIO CLÍNICO</div>
-                        <div style="margin-top: 10px; font-size: 13px;">Folio: #${folio} | ${fecha}</div>
-                    </div>
-                    
-                    <div style="border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 10px 0; margin-bottom: 15px; font-size: 14px; line-height: 1.5;">
-                        <strong>PACIENTE:</strong> ${paciente}<br>
-                        <strong>MÉDICO:</strong> ${medico}<br>
-                        <strong>PAGO:</strong> ${metodoPago}
-                    </div>
-
-                    <div style="margin-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; font-weight: bold; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 5px;">
-                            <span>CONCEPTO</span>
-                            <span>IMPORTE</span>
-                        </div>
-                        ${itemsHtml}
-                    </div>
-
-                    <div style="border-top: 2px solid #000; padding-top: 10px; font-size: 16px;">
-                        <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                            <span>NETO A PAGAR:</span>
-                            <span>$${totalVenta.toFixed(2)}</span>
-                        </div>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 25px;">
-                        <img src="${qrUrl}" style="width: 100px; height: 100px;">
-                        <div style="font-size: 10px; margin-top: 5px;">Valida tu folio aquí</div>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 30px; font-size: 11px; border-top: 1px dashed #000; padding-top: 15px;">
-                        <div style="font-weight: bold; font-size: 13px; margin-bottom: 5px;">GRACIAS POR SU CONFIANZA</div>
-                        <div>${currentLabConfig.responsable_sanitario}</div>
-                        <div>Céd. Prof. ${currentLabConfig.cedula_profesional}</div>
-                        <div style="margin-top: 5px;">${currentLabConfig.direccion}</div>
-                    </div>
-                </div>
-            `;
-
-            // Dar un momento para que el QR cargue
-            setTimeout(async () => {
-                try {
-                    const canvas = await html2canvas(container.querySelector('#realTicketBody'), {
-                        backgroundColor: '#ffffff',
-                        scale: 2
-                    });
-
-                    canvas.toBlob(async (blob) => {
-                        try {
-                            const item = new ClipboardItem({ "image/png": blob });
-                            await navigator.clipboard.write([item]);
-
-                            // Abrir WhatsApp con un mensaje corto
-                            const mensaje = `Hola *${paciente.split(' ')[0]}*, adjunto el comprobante oficial de tu registro en *${currentLabConfig.nombre_laboratorio}*. (Pega la imagen ahora con Ctrl+V)`;
-                            const waUrl = `https://wa.me/52${telefono}?text=${encodeURIComponent(mensaje)}`;
-                            window.open(waUrl, '_blank');
-                        } catch (err) {
-                            console.error("Error copiando al portapapeles:", err);
-                            alert("No se pudo copiar la imagen automáticamente. Abre el ticket e imprímelo manualmente.");
-                        }
-                    });
-                } catch (err) {
-                    console.error("Error capturando ticket:", err);
-                }
-            }, 500);
-        }
 
         /* Modal Functionality */
         function showCustomModal({ title, message, type = 'alert', onConfirm, onCancel }) {
@@ -1614,19 +1834,24 @@
                 const nombreCompleto = `${primerNombre} ${segundoNombre} ${primerApellido} ${segundoApellido}`.replace(/\s+/g, ' ').trim();
                 const medicoActual = document.getElementById('medicoReferente').value;
                 const folioVenta = Math.floor(Date.now() / 1000);
+                const expedienteNumero = document.getElementById('expedienteNumero').value;
+                const servicio = document.getElementById('servicioHospital').value;
+                const piso = document.getElementById('pisoHospital').value;
+                const cama = document.getElementById('camaHabitacion').value;
 
                 const appointmentData = {
                     paciente_nombre: nombreCompleto,
                     paciente_telefono: document.getElementById('patientPhone').value,
                     fecha_hora: fechaHora,
                     tipo_servicio: 'laboratorio',
-                    notas: document.getElementById('appointmentNotes').value || null,
+                    notas: (document.getElementById('diagnostico').value || '') + (cama ? ` | Cama: ${cama}` : ''),
                     estado: 'pendiente',
                     primer_nombre: primerNombre,
                     segundo_nombre: segundoNombre || null,
                     primer_apellido: primerApellido,
                     segundo_apellido: segundoApellido || null,
                     fecha_nacimiento: document.getElementById('fechaNacimiento').value,
+                    paciente_sexo: document.getElementById('pacienteSexo').value,
                     diagnostico: document.getElementById('diagnostico').value || null,
                     total: totalVenta,
                     subtotal: totalVenta,
@@ -1634,9 +1859,18 @@
                     metodo_pago: metodoPagoActual,
                     folio_venta: folioVenta,
                     medico_referente_nombre: medicoActual,
+                    medico_nombre: medicoActual, // También guardamos en la nueva columna
                     comprobante_notas: document.getElementById('comprobanteNotas').value || null,
                     comprobante_comentarios: document.getElementById('comprobanteComentarios').value || null,
-                    operador_pago: currentUser ? (currentUser.nombre || currentUser.email) : 'S/I'
+                    operador_pago: currentUser ? (currentUser.nombre || currentUser.email) : 'S/I',
+                    creado_por: currentUser ? currentUser.id : null,
+                    expediente_numero: expedienteNumero || null,
+                    // Map UI 'Servicio/Area' dropdown to DB 'procedencia' as it contains values like Urgencias, Consulta Externa
+                    procedencia: servicio || 'CONSULTA EXTERNA',
+                    // Default servicio to Laboratorio since we don't have a specific input, or user can update later
+                    servicio: 'LABORATORIO',
+                    cama: cama || null, // Now saving to own column
+                    piso: piso || null
                 };
 
                 try {
@@ -1671,33 +1905,34 @@
                     const urlParams = new URLSearchParams(window.location.search);
                     const isDirectMode = urlParams.get('mode') === 'directo';
 
-                    setTimeout(() => {
-                        if (isDirectMode) {
-                            // In direct mode, just show success and go to dashboard
-                            showCustomModal({
-                                title: '¡Venta Registrada!',
-                                message: 'El paciente ha sido registrado exitosamente.',
-                                type: 'alert',
-                                onConfirm: () => {
+                    // Removed setTimeout for immediate feedback
+                    if (isDirectMode) {
+                        // In direct mode, just show success and go to dashboard
+                        showCustomModal({
+                            title: '¡Venta Registrada!',
+                            message: 'El paciente ha sido registrado exitosamente.',
+                            type: 'alert',
+                            onConfirm: () => {
+                                setTimeout(() => {
                                     window.location.href = 'dashboard.html';
-                                }
-                            });
-                        } else {
-                            // In appointment mode, ask about WhatsApp
-                            showCustomModal({
-                                title: '¡Cita Guardada!',
-                                message: '¿Deseas enviar la confirmación por WhatsApp al paciente?',
-                                type: 'confirm',
-                                onConfirm: () => {
-                                    sendWhatsAppMessage(appointmentData, folioVenta);
-                                    window.location.href = 'dashboard.html';
-                                },
-                                onCancel: () => {
-                                    window.location.href = 'dashboard.html';
-                                }
-                            });
-                        }
-                    }, 1000);
+                                }, 500);
+                            }
+                        });
+                    } else {
+                        // In appointment mode, ask about WhatsApp
+                        showCustomModal({
+                            title: '¡Cita Guardada!',
+                            message: '¿Deseas enviar la confirmación por WhatsApp al paciente?',
+                            type: 'confirm',
+                            onConfirm: () => {
+                                sendWhatsAppMessage(appointmentData, folioVenta);
+                                // La redirección ocurrirá después de enviar el mensaje
+                            },
+                            onCancel: () => {
+                                window.location.href = 'dashboard.html';
+                            }
+                        });
+                    }
 
 
                 } catch (err) {

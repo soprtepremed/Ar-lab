@@ -24,14 +24,14 @@ Publishable Key (Anon): sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd
 ### Conexión Directa PostgreSQL
 
 ```
-Host: db.ebihobjrwcwtjfazcjmv.supabase.co
-Port: 5432
+Host: aws-1-us-east-2.pooler.supabase.com
+Port: 6543
 Database: postgres
-User: postgres
+User: postgres.ebihobjrwcwtjfazcjmv
 Password: RDF6lvPNdCZWFeAT
 
 URI Completa:
-postgresql://postgres:RDF6lvPNdCZWFeAT@db.ebihobjrwcwtjfazcjmv.supabase.co:5432/postgres
+postgresql://postgres.ebihobjrwcwtjfazcjmv:RDF6lvPNdCZWFeAT@aws-1-us-east-2.pooler.supabase.com:6543/postgres
 ```
 
 ---
@@ -40,16 +40,16 @@ postgresql://postgres:RDF6lvPNdCZWFeAT@db.ebihobjrwcwtjfazcjmv.supabase.co:5432/
 
 ### Método 1: Node.js con pg (RECOMENDADO)
 
-Si necesitas ejecutar SQL directamente en Supabase, usa este script con Node.js:
+Si necesitas ejecutar SQL directamente en Supabase desde una red sin IPv6, usa este script con Node.js:
 
 ```javascript
 const { Client } = require('pg');
 
 const client = new Client({
-    host: 'db.ebihobjrwcwtjfazcjmv.supabase.co',
-    port: 5432,
+    host: 'aws-1-us-east-2.pooler.supabase.com',
+    port: 6543,
     database: 'postgres',
-    user: 'postgres',
+    user: 'postgres.ebihobjrwcwtjfazcjmv',
     password: 'RDF6lvPNdCZWFeAT',
     ssl: { rejectUnauthorized: false }
 });

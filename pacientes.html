@@ -49,6 +49,58 @@
             padding: 2rem;
         }
 
+        /* Filter Row */
+        .filters-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .filter-item label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-select,
+        .filter-input-sm {
+            padding: 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            background: #f8fafc;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .filter-select:focus,
+        .filter-input-sm:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .action-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -178,104 +230,7 @@
             color: var(--text-light);
         }
 
-        /* Table Layout & Spacing */
-        .table-container {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border);
-            overflow: hidden;
-            margin-top: 1.5rem;
-        }
-
-        .table-header {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 2px solid #f1f5f9;
-            background: #ffffff;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        th {
-            text-align: left;
-            padding: 1rem 1.25rem;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-light);
-            font-weight: 700;
-            background: #f8fafc;
-            border-bottom: 1px solid var(--border);
-        }
-
-        td {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 0.9rem;
-            vertical-align: middle;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover {
-            background: #fdfdfd;
-        }
-
-        /* Column Widths */
-        th:nth-child(1),
-        td:nth-child(1) {
-            width: 30%;
-        }
-
-        /* Paciente */
-        th:nth-child(2),
-        td:nth-child(2) {
-            width: 22%;
-        }
-
-        /* Contacto */
-        th:nth-child(3),
-        td:nth-child(3) {
-            width: 18%;
-        }
-
-        /* Última Visita */
-        th:nth-child(4),
-        td:nth-child(4) {
-            width: 18%;
-        }
-
-        /* Expediente */
-        th:nth-child(5),
-        td:nth-child(5) {
-            width: 12%;
-            text-align: center;
-        }
-
-        /* Acciones */
-
-        /* Patient Table UI Components */
-        .patient-name {
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 0.95rem;
-        }
-
-        .patient-phone {
-            color: var(--text-light);
-            font-size: 0.85rem;
-            font-family: monospace;
-        }
-
+        /* UI Components */
         .badge {
             display: inline-flex;
             align-items: center;
@@ -291,102 +246,240 @@
             border: 1px solid #bbf7d0;
         }
 
-        .action-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: white;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            color: var(--text-light);
-        }
-
-        .action-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-1px);
-        }
-
-        .action-btn svg {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-        }
-
-        .patient-cell {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
         .patient-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            background: #f0fdfa;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
             color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.75rem;
-            border: 1px solid #ccfbf1;
+            font-size: 1.1rem;
+            border: 1px solid #99f6e4;
+            font-family: 'Outfit', sans-serif;
+            flex-shrink: 0;
         }
 
-        .whatsapp-btn {
-            background: #25d366;
-            color: white;
-            padding: 0.3rem 0.5rem;
-            border-radius: 5px;
-            text-decoration: none;
-            display: inline-flex;
+        /* Patients List (Rows) */
+        .patients-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .patient-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: all 0.2s;
+            gap: 1.5rem;
+            position: relative;
         }
 
-        .whatsapp-btn:hover {
-            background: #128c7e;
-            transform: translateY(-1px);
+        .patient-card:hover {
+            border-color: var(--primary-light);
+            background: #fcfdfd;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transform: translateX(5px);
         }
 
-        .whatsapp-btn svg {
-            width: 14px;
-            height: 14px;
-            fill: currentColor;
-        }
-
-        /* Folder UI */
-        .folder-header {
-            background: #f8fafc;
-            padding: 1.25rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
+        .patient-main-info {
+            min-width: 280px;
             display: flex;
             align-items: center;
             gap: 1rem;
+        }
+
+        .patient-card-info h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        .patient-card-info p {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.2rem;
+        }
+
+        .patient-card-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            padding: 0;
+        }
+
+        .info-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .info-label {
+            font-size: 0.65rem;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .info-value {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .patient-card-footer {
+            margin: 0;
+            display: flex;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .btn-compact {
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-view-sm {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-view-sm:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .wa-sm-btn {
+            background: #25d366;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .wa-sm-btn:hover {
+            background: #128c7e;
+        }
+
+        /* Modal Historial */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 24px;
+            max-width: 800px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: #f8fafc;
+            z-index: 10;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        /* Folder UI in Modal */
+        .folder-header {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
             border: 1px solid var(--border);
         }
 
         .folder-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
             background: var(--primary);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 700;
         }
 
@@ -412,7 +505,6 @@
             padding: 1.25rem;
             margin-bottom: 1.5rem;
             position: relative;
-            transition: transform 0.2s;
         }
 
         .visit-card::before {
@@ -428,29 +520,15 @@
             box-shadow: 0 0 0 3px #f0fdfa;
         }
 
-        .visit-card:hover {
-            transform: translateX(5px);
-            border-color: var(--primary-light);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
         .visit-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         .visit-date {
             font-weight: 700;
             color: var(--text-dark);
-        }
-
-        .visit-id {
-            font-size: 0.75rem;
-            color: var(--text-light);
-            background: #f1f5f9;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
         }
 
         .visit-details {
@@ -468,12 +546,95 @@
             font-size: 0.7rem;
             color: var(--text-light);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
         .detail-value {
             font-weight: 600;
             color: var(--text-dark);
+        }
+
+        .visit-studies {
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--border);
+        }
+
+        .study-tag {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            color: #1e293b;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .study-tag:hover {
+            border-color: var(--primary-light);
+            background: #f0fdfa;
+            transform: translateX(3px);
+        }
+
+        .study-tag svg {
+            color: var(--primary);
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .patient-card {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .patient-card-body {
+                width: 100%;
+                order: 3;
+                justify-content: space-between;
+                border-top: 1px solid #f1f5f9;
+                padding-top: 0.75rem;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 16px;
+            border: 1px dashed var(--border);
+            margin-top: 1.5rem;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            stroke: var(--text-light);
+            fill: none;
+            stroke-width: 1.5;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+            max-width: 300px;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -494,21 +655,51 @@
                 </svg>
                 Gestión de Pacientes
             </h1>
-            <a href="nueva_cita.html?mode=directo" class="btn btn-primary">
+            <button onclick="openDirectEntryModal()" class="btn btn-primary"
+                style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); border: none; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);">
                 <svg viewBox="0 0 24 24">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                     <circle cx="9" cy="7" r="4" />
                     <line x1="19" y1="8" x2="19" y2="14" />
                     <line x1="16" y1="11" x2="22" y2="11" />
                 </svg>
-                Nuevo Paciente
-            </a>
+                Registro de Paciente
+            </button>
         </header>
 
-        <!-- Search -->
+        <!-- Search & Advanced Filters -->
         <div class="search-bar">
             <input type="text" class="search-input" id="searchInput"
-                placeholder="Buscar paciente por nombre, teléfono..." oninput="loadPacientes()">
+                placeholder="Buscar por Nombre, Teléfono o Nº Expediente..." oninput="loadPacientes()">
+        </div>
+
+        <div class="filters-row">
+            <div class="filter-item">
+                <label>Servicio / Área</label>
+                <select class="filter-select" id="filterServicio" onchange="loadPacientes()">
+                    <option value="">Todos los servicios</option>
+                    <option value="Laboratorio">Laboratorio</option>
+                    <option value="Urgencias">Urgencias</option>
+                    <option value="Hospitalización">Hospitalización</option>
+                    <option value="Consulta Externa">Consulta Externa</option>
+                    <option value="UCI">UCI</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label>Piso / Nivel</label>
+                <select class="filter-select" id="filterPiso" onchange="loadPacientes()">
+                    <option value="">Todos los pisos</option>
+                    <option value="Piso 1">Piso 1</option>
+                    <option value="Piso 2">Piso 2</option>
+                    <option value="Piso 3">Piso 3</option>
+                    <option value="Planta Baja">Planta Baja</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label>Médico Tratante</label>
+                <input type="text" class="filter-input-sm" id="filterMedico" placeholder="Nombre del médico..."
+                    oninput="loadPacientes()">
+            </div>
         </div>
 
         <!-- Stats -->
@@ -566,41 +757,28 @@
             </div>
         </div>
 
-        <!-- Patients Table -->
-        <div class="table-container">
-            <div class="table-header">
-                <h2>Lista de Pacientes</h2>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Paciente</th>
-                        <th>Contacto</th>
-                        <th>Última Visita</th>
-                        <th>Expediente</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="pacientesTableBody"></tbody>
-            </table>
-            <div id="emptyState" class="empty-state" style="display: none;">
-                <svg viewBox="0 0 24 24">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                </svg>
-                <h3>Sin pacientes registrados</h3>
-                <p>Registra tu primera cita para empezar a construir tu base de pacientes.</p>
-            </div>
+        <!-- Main View Container -->
+        <div id="patientsContainer" class="patients-grid">
+            <!-- Cards will be loaded here -->
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <svg viewBox="0 0 24 24" width="80" height="80" stroke="currentColor" stroke-width="1.5" fill="none">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+            </svg>
+            <h3>Sin pacientes registrados</h3>
+            <p>Registra tu primera cita para empezar a construir tu base de pacientes.</p>
         </div>
     </main>
 
     <!-- Modal Historial -->
     <div id="modalHistorial" class="modal-overlay">
-        <div class="modal" style="max-width: 800px;">
+        <div class="modal">
             <div class="modal-header">
                 <h3 class="modal-title">Expediente Clínico</h3>
                 <button class="modal-close" onclick="cerrarModal()">
-                    <svg viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18" />
                         <line x1="6" y1="6" x2="18" y2="18" />
                     </svg>
@@ -635,46 +813,71 @@
 
         async function loadPacientes() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filterServicio = document.getElementById('filterServicio').value;
+            const filterPiso = document.getElementById('filterPiso').value;
+            const filterMedico = document.getElementById('filterMedico').value.toLowerCase();
+
             try {
-                const { data, error } = await supabaseClient
+                // Load studies for direct entry dropdown if not loaded
+                if (todosEstudios.length === 0) loadAllStudies();
+                let query = supabaseClient
                     .from('citas')
-                    .select('paciente_nombre, paciente_telefono, fecha_hora, total, id')
+                    .select(`
+                        id, paciente_nombre, paciente_telefono, paciente_sexo, fecha_hora, total, servicio, piso, medico_nombre, expediente_numero,
+                        citas_estudios(
+                            estudios_laboratorio(nombre)
+                        )
+                    `)
                     .order('fecha_hora', { ascending: false });
 
+                // Aplicar filtros de base de datos si es posible o filtrar en JS para mayor flexibilidad de "fuzzy search"
+                const { data, error } = await query;
                 if (error) throw error;
 
                 const pacientesMap = {};
                 data.forEach(cita => {
-                    // Normalizamos el nombre para agrupar (sin importar mayúsculas/minúsculas)
                     const nombreNormal = (cita.paciente_nombre || 'Sin Nombre').trim().toLowerCase();
 
-                    if (!pacientesMap[nombreNormal]) {
-                        pacientesMap[nombreNormal] = {
-                            nombre: cita.paciente_nombre.trim(), // Guardamos el nombre "bonito"
-                            telefono: cita.paciente_telefono,
-                            ultimaVisita: cita.fecha_hora,
-                            visitas: 0,
-                            citas: []
-                        };
-                    }
-                    pacientesMap[nombreNormal].visitas++;
-                    pacientesMap[nombreNormal].citas.push(cita);
+                    // Filtrado Lógico Avanzado
+                    let match = true;
 
-                    // Asegurar que guardamos la visita más reciente como referencia de fecha
-                    if (new Date(cita.fecha_hora) > new Date(pacientesMap[nombreNormal].ultimaVisita)) {
-                        pacientesMap[nombreNormal].ultimaVisita = cita.fecha_hora;
+                    if (searchTerm) {
+                        const nameMatch = nombreNormal.includes(searchTerm);
+                        const phoneMatch = cita.paciente_telefono && cita.paciente_telefono.includes(searchTerm);
+                        const expMatch = cita.expediente_numero && cita.expediente_numero.toLowerCase().includes(searchTerm);
+                        if (!nameMatch && !phoneMatch && !expMatch) match = false;
+                    }
+
+                    if (match && filterServicio && cita.servicio !== filterServicio) match = false;
+                    if (match && filterPiso && cita.piso !== filterPiso) match = false;
+                    if (match && filterMedico && (!cita.medico_nombre || !cita.medico_nombre.toLowerCase().includes(filterMedico))) match = false;
+
+                    if (match) {
+                        if (!pacientesMap[nombreNormal]) {
+                            pacientesMap[nombreNormal] = {
+                                nombre: cita.paciente_nombre.trim(),
+                                telefono: cita.paciente_telefono,
+                                sexo: cita.paciente_sexo,
+                                ultimaVisita: cita.fecha_hora,
+                                servicio: cita.servicio,
+                                piso: cita.piso,
+                                medico: cita.medico_nombre,
+                                expediente: cita.expediente_numero,
+                                visitas: 0,
+                                citas: []
+                            };
+                        }
+                        pacientesMap[nombreNormal].visitas++;
+                        pacientesMap[nombreNormal].citas.push(cita);
+
+                        if (new Date(cita.fecha_hora) > new Date(pacientesMap[nombreNormal].ultimaVisita)) {
+                            pacientesMap[nombreNormal].ultimaVisita = cita.fecha_hora;
+                        }
                     }
                 });
 
                 allPacientes = Object.values(pacientesMap);
-                let filtered = allPacientes;
-                if (searchTerm) {
-                    filtered = allPacientes.filter(p =>
-                        p.nombre.toLowerCase().includes(searchTerm) ||
-                        (p.telefono && p.telefono.includes(searchTerm))
-                    );
-                }
-                renderPacientes(filtered);
+                renderPacientes(allPacientes);
                 document.getElementById('totalPacientes').textContent = allPacientes.length;
             } catch (err) {
                 console.error('Error loading pacientes:', err);
@@ -682,50 +885,79 @@
         }
 
         function renderPacientes(pacientes) {
-            const tbody = document.getElementById('pacientesTableBody');
+            const container = document.getElementById('patientsContainer');
             const emptyState = document.getElementById('emptyState');
 
             if (pacientes.length === 0) {
-                tbody.innerHTML = '';
+                container.innerHTML = '';
                 emptyState.style.display = 'block';
                 return;
             }
             emptyState.style.display = 'none';
-            tbody.innerHTML = pacientes.map(p => {
-                const fechaUltima = new Date(p.ultimaVisita).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
-                const initials = p.nombre.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
-                // Limpiar teléfono para WhatsApp
+            container.innerHTML = pacientes.map(p => {
+                const fechaUltima = new Date(p.ultimaVisita).toLocaleDateString('es-MX', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                });
+
+                // Icon selection based on gender
+                let patientIcon = '';
+                if (p.sexo === 'Masculino') {
+                    patientIcon = `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+                } else if (p.sexo === 'Femenino') {
+                    patientIcon = `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="2.5"><circle cx="12" cy="7" r="4"/><path d="M12 11v8M9 15h6"/></svg>`;
+                } else {
+                    patientIcon = `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+                }
+
+                // WhatsApp Link
                 const cleanPhone = p.telefono ? p.telefono.replace(/\D/g, '') : '';
                 const waLink = cleanPhone ? `https://wa.me/52${cleanPhone}` : '#';
 
                 return `
-                    <tr>
-                        <td>
-                            <div class="patient-cell">
-                                <div class="patient-avatar">${initials}</div>
-                                <div class="patient-name">${p.nombre}</div>
+                    <div class="patient-card">
+                        <div class="patient-main-info">
+                            <div class="patient-avatar" style="background: #f1f5f9; color: #64748b; border-color: #e2e8f0;">
+                                ${patientIcon}
                             </div>
-                        </td>
-                        <td>
-                            <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-                                <span class="patient-phone">${p.telefono || 'Sin teléfono'}</span>
-                                ${p.telefono ? `
-                                    <a href="${waLink}" target="_blank" class="whatsapp-btn">
-                                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                                        WhatsApp
-                                    </a>
-                                ` : ''}
+                            <div class="patient-card-info">
+                                <h3>${p.nombre}</h3>
+                                <p>
+                                    <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    ${p.sexo || 'Sin registro'} | Exp: ${p.expediente || 'S/N'}
+                                </p>
                             </div>
-                        </td>
-                        <td>${fechaUltima}</td>
-                        <td><span class="badge success">${p.visitas} visita(s)</span></td>
-                        <td>
-                            <button class="action-btn" onclick="verHistorial('${p.nombre.replace(/'/g, "\\'")}')" title="Ver Expediente">
-                                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        
+                        <div class="patient-card-body">
+                            <div class="info-col">
+                                <span class="info-label">Servicio</span>
+                                <span class="info-value" style="color: var(--primary);">${p.servicio || 'General'}</span>
+                            </div>
+                            <div class="info-col">
+                                <span class="info-label">Piso / Ubicación</span>
+                                <span class="info-value">${p.piso || 'N/A'}</span>
+                            </div>
+                            <div class="info-col">
+                                <span class="info-label">Médico Tratante</span>
+                                <span class="info-value">${p.medico || 'No asignado'}</span>
+                            </div>
+                        </div>
+
+                        <div class="patient-card-footer">
+                            <button class="btn-compact btn-view-sm" onclick="verHistorial('${p.nombre.replace(/'/g, "\\'")}')">
+                                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                                Expediente
                             </button>
-                        </td>
-                    </tr>
+                            ${p.telefono ? `
+                                <a href="${waLink}" target="_blank" class="btn-compact wa-sm-btn" title="Enviar WhatsApp">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                </a>
+                            ` : ''}
+                        </div>
+                    </div>
                 `;
             }).join('');
         }
@@ -751,16 +983,32 @@
             const paciente = allPacientes.find(p => p.nombre === nombrePaciente);
             if (!paciente) return;
 
-            const initials = paciente.nombre.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            // Icon selection based on gender for modal
+            let patientIcon = '';
+            if (paciente.sexo === 'Masculino') {
+                patientIcon = `<svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+            } else if (paciente.sexo === 'Femenino') {
+                patientIcon = `<svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" fill="none" stroke-width="2.5"><circle cx="12" cy="7" r="4"/><path d="M12 11v8M9 15h6"/></svg>`;
+            } else {
+                patientIcon = `<svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+            }
 
             let modalContent = `
                 <div class="folder-header">
-                    <div class="folder-avatar">${initials}</div>
+                    <div class="folder-avatar" style="background: #f1f5f9; color: #64748b; border-color: #e2e8f0; border-style: solid; border-width: 1px;">
+                        ${patientIcon}
+                    </div>
                     <div>
                         <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">${paciente.nombre}</h2>
-                        <p style="color: var(--text-light);">${paciente.telefono || 'Sin teléfono'} • ${paciente.visitas} visitas totales</p>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">
+                            <strong>${paciente.sexo || 'Sin Sexo Registrado'}</strong> • 
+                            ${paciente.telefono || 'Sin teléfono'} • 
+                            <span class="badge success" style="padding: 2px 10px;">${paciente.visitas} visitas totales</span>
+                        </p>
                     </div>
                 </div>
+                
+                <h3 style="margin-bottom: 1.5rem; font-family: 'Outfit'; color: var(--text-dark); border-left: 4px solid var(--primary); padding-left: 10px;">Línea de Vida (Historial)</h3>
                 <div class="visit-timeline">
             `;
 
@@ -770,8 +1018,8 @@
                 return `
                     <div class="visit-card">
                         <div class="visit-header">
-                            <div class="visit-date">${fecha}</div>
-                            <div class="visit-id">Folio: #${cita.id.toString().padStart(5, '0')}</div>
+                            <div class="visit-date" style="text-transform: capitalize;">${fecha}</div>
+                            <div class="visit-id" style="font-family: monospace; font-weight: bold;">#${cita.id.toString().substring(0, 8)}</div>
                         </div>
                         <div class="visit-details">
                             <div class="detail-item">
@@ -780,11 +1028,27 @@
                             </div>
                             <div class="detail-item">
                                 <span class="detail-label">Importe</span>
-                                <span class="detail-value">$${(cita.total || 0).toFixed(2)}</span>
+                                <span class="detail-value" style="color: var(--primary-dark);">$${(cita.total || 0).toFixed(2)}</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Capturado por</span>
-                                <span class="detail-value">Sistema Arlab</span>
+                                <span class="detail-label">Atención</span>
+                                <span class="detail-value">${cita.servicio || 'Laboratorio'}</span>
+                            </div>
+                        </div>
+                        <div class="visit-studies">
+                            <span class="detail-label" style="display: block; margin-bottom: 0.75rem;">Estudios Realizados</span>
+                            <div class="studies-list-vertical">
+                                ${cita.citas_estudios && cita.citas_estudios.length > 0
+                        ? cita.citas_estudios.map(ce => `
+                                        <div class="study-tag">
+                                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="3">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                            ${ce.estudios_laboratorio ? ce.estudios_laboratorio.nombre : 'Estudio Manual'}
+                                        </div>
+                                    `).join('')
+                        : '<span style="font-size: 0.75rem; color: var(--text-light); italic;">No hay registro de estudios</span>'
+                    }
                             </div>
                         </div>
                     </div>
@@ -797,13 +1061,272 @@
             document.getElementById('modalHistorial').classList.add('active');
         }
 
-        function cerrarModal() { document.getElementById('modalHistorial').classList.remove('active'); }
+        let todosEstudios = [];
+        let estudiosSeleccionadosDirecto = [];
 
-        document.getElementById('searchInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') loadPacientes(); });
+        async function loadAllStudies() {
+            try {
+                const { data, error } = await supabaseClient.from('estudios_laboratorio').select('*').order('nombre');
+                if (error) throw error;
+                todosEstudios = data || [];
+            } catch (err) { console.error('Error loading studies:', err); }
+        }
+
+        function openDirectEntryModal() {
+            document.getElementById('directEntryModal').classList.add('active');
+            estudiosSeleccionadosDirecto = [];
+            renderDirectStudiesSeleccionados();
+            renderDirectStudiesList();
+        }
+
+        function closeDirectEntryModal() {
+            document.getElementById('directEntryModal').classList.remove('active');
+        }
+
+        function renderDirectStudiesList() {
+            const search = document.getElementById('searchStudyDirect').value.toLowerCase();
+            const container = document.getElementById('studiesSourceList');
+
+            const filtered = todosEstudios.filter(e => e.nombre.toLowerCase().includes(search)).slice(0, 15);
+
+            container.innerHTML = filtered.map(e => `
+                <div class="study-tag" style="cursor: pointer; background: white; border: 1px solid #e2e8f0; color: var(--text-dark);" onclick="addStudyDirect('${e.id}')">
+                    ${e.nombre} <span style="color: var(--primary); margin-left: 5px;">$${e.precio}</span>
+                </div>
+            `).join('');
+        }
+
+        function addStudyDirect(id) {
+            const study = todosEstudios.find(e => e.id === id);
+            if (study && !estudiosSeleccionadosDirecto.find(s => s.id === id)) {
+                estudiosSeleccionadosDirecto.push(study);
+                renderDirectStudiesSeleccionados();
+            }
+        }
+
+        function removeStudyDirect(id) {
+            estudiosSeleccionadosDirecto = estudiosSeleccionadosDirecto.filter(s => s.id !== id);
+            renderDirectStudiesSeleccionados();
+        }
+
+        function renderDirectStudiesSeleccionados() {
+            const container = document.getElementById('selectedStudiesDirect');
+            container.innerHTML = estudiosSeleccionadosDirecto.map(s => `
+                <div class="study-tag" style="background: var(--primary); color: white; border: none;">
+                    ${s.nombre}
+                    <span style="cursor: pointer; margin-left: 8px; opacity: 0.8;" onclick="removeStudyDirect('${s.id}')">&times;</span>
+                </div>
+            `).join('');
+
+            const total = estudiosSeleccionadosDirecto.reduce((sum, s) => sum + (parseFloat(s.precio) || 0), 0);
+            document.getElementById('totalDirect').textContent = total.toFixed(2);
+        }
+
+        async function saveDirectEntry() {
+            const btn = document.querySelector('.btn-save-direct');
+            const originalText = btn.innerHTML;
+
+            try {
+                const nombre = document.getElementById('directNombre').value;
+                const sexo = document.getElementById('directSexo').value;
+                const expediente = document.getElementById('directExpediente').value;
+                const servicio = document.getElementById('directServicio').value;
+                const piso = document.getElementById('directPiso').value;
+                const cama = document.getElementById('directCama').value;
+                const diagnostico = document.getElementById('directDiagnostico').value;
+
+                if (!nombre || estudiosSeleccionadosDirecto.length === 0) {
+                    alert('Por favor ingrese al menos el nombre y un estudio.');
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loader-sm"></span> Guardando...';
+
+                const total = estudiosSeleccionadosDirecto.reduce((sum, s) => sum + (parseFloat(s.precio) || 0), 0);
+
+                let notasFinales = '';
+                if (cama) notasFinales += `Cama: ${cama}. `;
+                if (diagnostico) notasFinales += `Dx: ${diagnostico}`;
+
+                // Insert appointment
+                const { data: cita, error: errorCita } = await supabaseClient
+                    .from('citas')
+                    .insert([{
+                        paciente_nombre: nombre,
+                        paciente_sexo: sexo,
+                        expediente_numero: expediente,
+                        servicio: servicio,
+                        piso: piso,
+                        medico_nombre: medico,
+                        notas: notasFinales,
+                        total: total,
+                        pagado: 0,
+                        saldo: total,
+                        fecha_hora: new Date().toISOString(),
+                        estado: 'En Proceso'
+                    }])
+                    .select()
+                    .single();
+
+                if (errorCita) throw errorCita;
+
+                // Insert studies mapping
+                const studiesToInsert = estudiosSeleccionadosDirecto.map(s => ({
+                    cita_id: cita.id,
+                    estudio_id: s.id,
+                    precio_aplicado: s.precio
+                }));
+
+                const { error: errorEstudios } = await supabaseClient
+                    .from('citas_estudios')
+                    .insert(studiesToInsert);
+
+                if (errorEstudios) throw errorEstudios;
+
+                closeDirectEntryModal();
+                loadPacientes(); // Refresh list
+
+                alert('Ingreso directo registrado correctamente.');
+
+            } catch (err) {
+                console.error('Error in saveDirectEntry:', err);
+                alert('Error al guardar el ingreso: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalHistorial').classList.remove('active');
+        }
     </script>
-</body>
+    <!-- Modal Nuevo Ingreso Directo -->
+    <div id="directEntryModal" class="modal-overlay">
+        <div class="modal" style="max-width: 900px;">
+            <div class="modal-header">
+                <div>
+                    <h1 class="modal-title" style="margin:0;">Registrar Paciente (Ingreso Directo)</h1>
+                    <p style="margin:0; font-size: 0.8rem; color: var(--text-light);">Urgencias / Hospitalización / UCI
+                    </p>
+                </div>
+                <button class="modal-close" onclick="closeDirectEntryModal()">&times;</button>
+            </div>
 
-</html>
+            <div class="modal-body" style="padding: 2rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+
+                    <div style="grid-column: 1 / -1;">
+                        <label class="info-label">Nombre Completo del Paciente</label>
+                        <input type="text" id="directNombre" class="filter-input-sm"
+                            style="width: 100%; height: 45px; font-size: 1rem; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 1rem;"
+                            placeholder="Ej: Juan Antonio Pérez G.">
+                    </div>
+
+                    <div>
+                        <label class="info-label">Sexo</label>
+                        <select id="directSexo" class="filter-select"
+                            style="width: 100%; height: 45px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 0.5rem;">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="info-label">Nº Expediente</label>
+                        <input type="text" id="directExpediente" class="filter-input-sm"
+                            style="width: 100%; height: 45px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 1rem;"
+                            placeholder="S/N">
+                    </div>
+
+                    <div>
+                        <label class="info-label">Servicio / Área</label>
+                        <select id="directServicio" class="filter-select"
+                            style="width: 100%; height: 45px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 0.5rem;">
+                            <option value="Urgencias">Urgencias</option>
+                            <option value="Hospitalización">Hospitalización</option>
+                            <option value="UCI">UCI</option>
+                            <option value="Consulta Externa">Consulta Externa</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="info-label">Piso / Nivel</label>
+                        <select id="directPiso" class="filter-select"
+                            style="width: 100%; height: 45px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 0.5rem;">
+                            <option value="Planta Baja">Planta Baja</option>
+                            <option value="Piso 1">Piso 1</option>
+                            <option value="Piso 2">Piso 2</option>
+                            <option value="Piso 3">Piso 3</option>
+                            <option value="Anexo">Anexo</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="info-label">Cama / Habitación</label>
+                        <input type="text" id="directCama" class="filter-input-sm"
+                            style="width: 100%; height: 45px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 1rem;"
+                            placeholder="Ej: 214-B">
+                    </div>
+
+                    <div>
+                        <label class="info-label">Médico Tratante</label>
+                        <input type="text" id="directMedico" class="filter-input-sm"
+                            style="width: 100%; height: 45px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 1rem;"
+                            placeholder="Nombre del médico">
+                    </div>
+
+                    <div style="grid-column: 1 / -1;">
+                        <label class="info-label">Diagnóstico / Motivo de Ingreso</label>
+                        <textarea id="directDiagnostico" class="filter-input-sm"
+                            style="width: 100%; height: 80px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.75rem 1rem; resize: none;"
+                            placeholder="Describa el diagnóstico o motivo..."></textarea>
+                    </div>
+
+                    <div
+                        style="grid-column: 1 / -1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem;">
+                        <label class="info-label"
+                            style="margin-bottom: 0.75rem; display: block; font-weight: 700;">Estudios a
+                            Realizar</label>
+                        <input type="text" id="searchStudyDirect" class="filter-input-sm"
+                            style="width: 100%; height: 45px; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0 1rem; margin-bottom: 1rem;"
+                            placeholder="🔍 Buscar estudio (ej: Glucosa, Biometría...)"
+                            oninput="renderDirectStudiesList()">
+
+                        <div id="studiesSourceList"
+                            style="display: flex; flex-wrap: wrap; gap: 0.5rem; max-height: 120px; overflow-y: auto; margin-bottom: 1rem;">
+                            <!-- Dinámico -->
+                        </div>
+
+                        <div id="selectedStudiesDirect"
+                            style="display: flex; flex-wrap: wrap; gap: 0.5rem; min-height: 50px; padding: 0.75rem; background: white; border-radius: 10px; border: 1px solid #e2e8f0;">
+                            <!-- Seleccionados -->
+                        </div>
+                    </div>
+
+                    <div
+                        style="grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; padding-top: 1.5rem; border-top: 1px solid #f1f5f9; margin-top: 1rem;">
+                        <div>
+                            <span style="font-size: 0.85rem; color: var(--text-light);">Importe Est.:</span>
+                            <div style="font-size: 1.75rem; font-weight: 800; color: var(--primary);">$<span
+                                    id="totalDirect">0.00</span></div>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="btn btn-view-sm"
+                                style="padding: 0 1.5rem; height: 50px; border-radius: 12px;"
+                                onclick="closeDirectEntryModal()">Cancelar</button>
+                            <button class="btn btn-primary btn-save-direct"
+                                style="padding: 0 2.5rem; height: 50px; border-radius: 12px; background: var(--primary); border: none; font-weight: 700;"
+                                onclick="saveDirectEntry()">Confirmar Registro</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

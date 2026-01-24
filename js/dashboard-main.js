@@ -301,17 +301,129 @@ function renderAppointmentsList() {
                 <div class="patient-info">
                     <div class="patient-avatar" style="width: 30px; height: 30px; font-size: 0.75rem;">${apt.paciente_nombre.charAt(0).toUpperCase()}</div>
                     <div>
-                        <div class="patient-name" style="font-size: 0.85rem;">${apt.paciente_nombre}</div>
+                        <div class="patient-name" style="font-size: 0.85rem;">
+                            ${apt.paciente_nombre} 
+                            ${apt.paciente_sexo ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: normal; margin-left: 4px;">(${apt.paciente_sexo.charAt(0)})</span>` : ''}
+                        </div>
                         <div class="patient-phone">${apt.paciente_telefono || ''}</div>
                     </div>
                 </div>
             </td>
             <td style="font-size: 0.8rem; color: #64748b;">
-                ${apt.estudios && apt.estudios.length > 0
-                ? apt.estudios.map(e => `<span style="display: inline-block; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 12px; margin: 2px; font-size: 0.75rem;">${e.codigo || ''} ${e.nombre}</span>`).join('')
-                : '<span style="color: #94a3b8; font-style: italic;">Sin estudios</span>'}
+                ${(() => {
+                if (!apt.estudios || apt.estudios.length === 0) return '<span style="color: #94a3b8; font-style: italic;">Sin estudios</span>';
+
+                // 1. Group by "nombre" as a proxy for "Profile" since we don't have a parent ID clearly in the frontend model
+                // Logic: Some are Profiles (QS45, BH), others are analytes.
+                // Heuristic: If we have many items, we should condense.
+                // Better approach requested by User: "Opcion de ver los perfiles y al momento de dar click ver los analitos"
+
+                // Since the current data model seems flat (cita_estudios link to estudios_laboratorio), 
+                // and "QS5" returns *multiple rows* if the backend expanded them, OR returns *one row* if it's the profile order.
+                // Based on the screenshot: "QS5 Quimica Sanguinea" is visible, AND "UREA", "BUN" are visible.
+                // This implies the 'estudios' array contains BOTH the Profile Wrapper AND the individual elements (likely inserted by backend logic).
+
+                // Simple grouping strategy: 
+                // Any study with a code starting with 'QS', 'BH', 'EGO' etc might be a profile.
+                // OR we just map everything but hide excess?
+                // User Request: "Group by Profile".
+
+                // Let's create a visual component that Toggles.
+                // We will show the first 2-3 items or just the "Main" ones.
+                // Actually, let's wrap them all in a container that allows specific expansion.
+
+                const visibleStudies = apt.estudios;
+                const limit = 1; /* Showing only 1 improves grouping feel */
+                const count = visibleStudies.length;
+
+                // Create unique ID for this row's details
+                const detailsId = `studies-details-${apt.id}`;
+
+                // Render simplified view
+                let badges = visibleStudies.slice(0, limit).map(e =>
+                    `<span class="study-badge-simple">${e.codigo || ''} ${e.nombre}</span>`
+                ).join('');
+
+                if (count > limit) {
+                    badges += `<span class="study-badge-more" onclick="toggleStudyDetails('${detailsId}', this)">+${count - limit} más...</span>`;
+                }
+
+                // Render hidden details popover
+                const allBadges = visibleStudies.map(e =>
+                    `<div class="study-detail-item">${e.codigo || ''} ${e.nombre}</div>`
+                ).join('');
+
+                return `
+                        <div class="studies-container">
+                            <div class="studies-preview">${badges}</div>
+                            <div id="${detailsId}" class="studies-popover" style="display:none;">
+                                <div class="popover-header">Estudios Solicitados <span class="popover-close" onclick="toggleStudyDetails('${detailsId}')">×</span></div>
+                                <div class="popover-content">${allBadges}</div>
+                            </div>
+                        </div>
+                    `;
+            })()}
             </td>
-            <td>${statusLabels[apt.estado] || apt.status}</td>
+            <td>
+                <!-- Visual Semantic Status -->
+                ${(() => {
+                // Status Mapping
+                const s = apt.estado || 'pendiente';
+                let step = 0;
+                let label = 'Pendiente';
+
+                // Update Labels based on user feedback
+                if (['confirmada', 'llamado'].includes(s)) { step = 1; label = 'Llamado'; }
+                else if (['en_proceso', 'verificada'].includes(s)) { step = 2; label = 'Toma Muestra'; }
+                else if (['completada', 'entregada'].includes(s)) { step = 3; label = 'Resultados'; }
+
+                const getIcon = (stepIndex) => {
+                    const active = step >= stepIndex;
+                    const color = active ? '#10b981' : '#cbd5e1';
+
+                    // Icons logic
+                    let iconSvg = '';
+                    if (stepIndex === 1) {
+                        // Megaphone / User Calling
+                        iconSvg = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="${active ? '#fff' : '#64748b'}" fill="none" stroke-width="2"><path d="M12 2C7.03 2 3 6.03 3 11v2h2l2 4h10l2-4h2v-2c0-4.97-4.03-9-9-9z"></path></svg>`;
+                        // Simplified Bell/Speaker
+                        iconSvg = `<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+                    } else if (stepIndex === 2) {
+                        // Drop / Syringe
+                        iconSvg = `<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 2.69l5.74 5.74c.98.98 1.62 2.27 1.8 3.65.25 1.95-.51 3.96-2.07 5.25C15.86 18.66 13.93 19.34 12 19s-3.76-1.28-5.07-2.61c-1.63-1.64-2.14-4.08-1.35-6.28.53-1.46 1.55-2.73 2.87-3.64L12 2.69z"></path></svg>`;
+                    } else if (stepIndex === 3) {
+                        // File / Check
+                        iconSvg = `<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>`;
+                    }
+
+                    // Circle container style
+                    return `
+                    <div class="status-step-icon ${active ? 'active' : ''}" style="
+                        width: 24px; height: 24px; 
+                        border-radius: 50%; 
+                        background: ${active ? '#10b981' : '#f1f5f9'}; 
+                        color: ${active ? '#fff' : '#94a3b8'};
+                        display: flex; align-items: center; justify-content: center;
+                        border: 1px solid ${active ? '#10b981' : '#e2e8f0'};
+                    ">
+                        ${iconSvg}
+                    </div>`;
+                };
+
+                return `
+                    <div class="status-progress-wrapper" style="display:flex; flex-direction:column; gap:6px;">
+                        <div class="status-progress-container" style="gap:12px;">
+                            ${getIcon(1)}
+                            <div style="flex:1; height:2px; background:${step >= 2 ? '#10b981' : '#e2e8f0'}; border-radius:2px;"></div>
+                            ${getIcon(2)}
+                            <div style="flex:1; height:2px; background:${step >= 3 ? '#10b981' : '#e2e8f0'}; border-radius:2px;"></div>
+                            ${getIcon(3)}
+                        </div>
+                        <span style="font-size:0.65rem; color:${step > 0 ? '#059669' : '#94a3b8'}; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">${label}</span>
+                    </div>
+                   `;
+            })()}
+            </td>
             <td>
                 <div class="action-btns">
                     <button class="action-btn" onclick="showDetailsModal(allAppointments.find(a => a.id === '${apt.id}'), '${time}')" title="Ver Detalles">
@@ -409,6 +521,7 @@ async function saveAppointment(event) {
         primer_apellido: primerApellido,
         segundo_apellido: segundoApellido || null,
         fecha_nacimiento: document.getElementById('fechaNacimiento').value,
+        paciente_sexo: document.getElementById('pacienteSexo') ? document.getElementById('pacienteSexo').value : null,
         diagnostico: document.getElementById('diagnostico').value || null,
 
         total: totalVenta,
@@ -808,10 +921,9 @@ function generateTicket(citaData, folio) {
 
 // UI NAVIGATION HELPERS
 // UI NAVIGATION HELPERS
-// UI NAVIGATION HELPERS
 function switchView(viewName) {
     // Lista explícita de IDs de vistas
-    const allViews = ['viewInicio', 'viewCitas', 'viewPacientes', 'viewResultados', 'viewConfiguracion', 'viewAnalitica', 'viewProcesoAnalitico', 'viewCotizaciones', 'viewPosAnalitica'];
+    const allViews = ['viewInicio', 'viewCitas', 'viewPacientes', 'viewResultados', 'viewConfiguracion', 'viewAnalitica', 'viewProcesoAnalitico', 'viewCotizaciones'];
 
     // 1. Ocultar todas las vistas primero
     allViews.forEach(id => {
@@ -826,11 +938,10 @@ function switchView(viewName) {
     // Handle special case where 'analitica' refers to pre-analytical waiting room
     let targetId = 'view' + normalized.charAt(0).toUpperCase() + normalized.slice(1);
 
-    // Special handling for underscore names if needed
+    // Special handling for underscore names if needed, but since we use 'viewProcesoAnalitico' (camelCase in HTML ID) vs 'proceso_analitico' (snake_case in URL param), 
+    // the automated conversion 'viewProceso_analitico' won't match 'viewProcesoAnalitico'.
     if (normalized === 'proceso_analitico') {
         targetId = 'viewProcesoAnalitico';
-    } else if (normalized === 'pos_analitica') {
-        targetId = 'viewPosAnalitica';
     }
 
     // 3. Mostrar la vista destino
@@ -847,8 +958,7 @@ function switchView(viewName) {
             'configuracion': 'Configuración del Sistema',
             'analitica': 'Fase Pre-Analítica - Sala de Espera',
             'proceso_analitico': 'Fase Analítica - Procesamiento de Muestras',
-            'cotizaciones': 'Cotizador de Servicios',
-            'pos_analitica': 'Fase Pos-Analítica - Entrega de Resultados'
+            'cotizaciones': 'Cotizador de Servicios'
         };
         const titleEl = document.getElementById('pageTitle');
         if (titleEl) {
@@ -858,7 +968,7 @@ function switchView(viewName) {
         // Controlar visibilidad de botones de acción (Nuevo Paciente, Nueva Cita)
         const topBarActions = document.querySelector('.top-bar-actions');
         if (topBarActions) {
-            if (normalized === 'analitica' || normalized === 'proceso_analitico' || normalized === 'cotizaciones' || normalized === 'pos_analitica') {
+            if (normalized === 'analitica' || normalized === 'proceso_analitico' || normalized === 'cotizaciones') {
                 topBarActions.style.display = 'none';
             } else {
                 topBarActions.style.display = 'flex';
@@ -872,10 +982,7 @@ function switchView(viewName) {
             loadFaseAnalitica();
         } else if (normalized === 'cotizaciones') {
             if (typeof initCotizadorView === 'function') initCotizadorView();
-        } else if (normalized === 'pos_analitica') {
-            if (typeof loadPosAnalitica === 'function') loadPosAnalitica();
         }
-
 
     } else {
         console.warn('View not found:', viewName, targetId);
@@ -946,3 +1053,80 @@ if ('speechSynthesis' in window) {
         window.speechSynthesis.getVoices();
     };
 }
+
+// ==========================================
+// FILTRO SALA DE ESPERA (búsqueda sin tildes)
+// ==========================================
+
+// Función para normalizar texto (quitar tildes y convertir a minúsculas)
+function normalizarTexto(texto) {
+    if (!texto) return '';
+    return texto
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, ''); // Elimina diacríticos (tildes, acentos)
+}
+
+// Variable para almacenar los datos originales de la worklist
+let workListDataOriginal = [];
+
+// Función de filtrado para Sala de Espera
+function filterSalaEspera(searchTerm) {
+    const tbody = document.getElementById('workListTableBody');
+    if (!tbody) return;
+
+    const rows = tbody.querySelectorAll('tr');
+    const searchNormalized = normalizarTexto(searchTerm);
+
+    if (!searchTerm || searchTerm.trim() === '') {
+        // Mostrar todas las filas
+        rows.forEach(row => {
+            row.style.display = '';
+        });
+        return;
+    }
+
+    rows.forEach(row => {
+        // Buscar en todas las celdas de la fila
+        const textoFila = normalizarTexto(row.textContent);
+
+        if (textoFila.includes(searchNormalized)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    // Actualizar contador visible
+    const visibleRows = tbody.querySelectorAll('tr:not([style*="display: none"])');
+    const countEl = document.getElementById('workListCount');
+    if (countEl) {
+        const totalRows = tbody.querySelectorAll('tr').length;
+        if (searchTerm.trim() !== '') {
+            countEl.textContent = `${visibleRows.length}/${totalRows}`;
+        }
+    }
+}
+
+// --- UI HELPERS ---
+
+function toggleStudyDetails(id, triggerEl) {
+    const popover = document.getElementById(id);
+    if (!popover) return;
+
+    // Toggle current
+    if (popover.style.display === 'none') {
+        // Close others first
+        document.querySelectorAll('.studies-popover').forEach(el => el.style.display = 'none');
+        popover.style.display = 'block';
+    } else {
+        popover.style.display = 'none';
+    }
+}
+
+// Close popovers on click outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.studies-container')) {
+        document.querySelectorAll('.studies-popover').forEach(el => el.style.display = 'none');
+    }
+});
