@@ -103,20 +103,6 @@ function injectNavbar() {
                     </svg>
                 </div>
                 <div class="nav-dropdown-menu">
-                    <a href="#" onclick="switchViewNav('pos_analitica'); return false;" class="nav-item" id="navPosAnalitica">
-                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                        Entrega de Resultados
-                    </a>
-                    <a href="reportes.html" class="nav-item" id="navReportes">
-                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                        Reportes y Analíticas
-                    </a>
                     <a href="entrega.html" class="nav-item" id="navEntrega">
                         <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                         Entrega de Resultados

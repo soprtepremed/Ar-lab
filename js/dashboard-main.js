@@ -434,8 +434,8 @@ function renderAppointmentsList() {
                         <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     </button>
                     ` : ''}
-                    <button class="action-btn" onclick="updateStatus('${apt.id}', 'completada')" title="Completar">
-                        <svg viewBox="0 0 24 24" width="14" height="14"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <button class="action-btn" onclick="reimprimirEtiquetasCita('${apt.id}')" title="Reimprimir Etiquetas" style="width: 28px; height: 28px; color: #b45309; border-color: #fcd34d; background: #fef3c7;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                     </button>
 
                 </div>
@@ -590,6 +590,47 @@ async function updateStatus(id, status) {
     } catch (err) {
         console.error('Error updating status:', err);
         showToast('Error al actualizar el estado', 'error');
+    }
+}
+
+// --- REIMPRESIÓN DE ETIQUETAS ---
+async function reimprimirEtiquetasCita(citaId) {
+    try {
+        // Fetch cita with estudios
+        const { data: cita, error } = await supabaseClient
+            .from('citas')
+            .select('*')
+            .eq('id', citaId)
+            .single();
+
+        if (error) throw error;
+        if (!cita) {
+            showToast('No se encontró la cita', 'error');
+            return;
+        }
+
+        // Fetch estudios with tubo_recipiente
+        const { data: estudiosData } = await supabaseClient
+            .from('citas_estudios')
+            .select(`
+                estudios_laboratorio (nombre, codigo, tubo_recipiente)
+            `)
+            .eq('cita_id', citaId);
+
+        if (estudiosData) {
+            cita.estudios = estudiosData.map(item => item.estudios_laboratorio);
+        }
+
+        // Use the mostrarModalEtiquetas function from dashboard-worklist-v2.js
+        if (typeof mostrarModalEtiquetas === 'function') {
+            mostrarModalEtiquetas(cita);
+        } else {
+            showToast('Función de etiquetas no disponible', 'error');
+        }
+
+    } catch (err) {
+        console.error('Error reimprimiendo etiquetas:', err);
+        showToast('Error al cargar datos para etiquetas: ' + err.message, 'error');
     }
 }
 

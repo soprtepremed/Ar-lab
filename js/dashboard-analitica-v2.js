@@ -580,7 +580,12 @@ function generarVentanaImpresionEtiquetas(estudiosAImprimir) {
     const tubesMap = new Map(); // 'Rojo' -> [Estudio1, Estudio2]
 
     estudiosAImprimir.forEach(est => {
-        const rawTubes = est.tubo_recipiente ? est.tubo_recipiente.split(',') : ['Tubo Indefinido'];
+        // Get tube type(s) - handle empty or null
+        let rawTubes = ['SIN TUBO'];
+        if (est.tubo_recipiente && est.tubo_recipiente.trim()) {
+            rawTubes = est.tubo_recipiente.split(',');
+        }
+
         rawTubes.forEach(t => {
             const tubeType = t.trim();
             if (!tubesMap.has(tubeType)) tubesMap.set(tubeType, []);

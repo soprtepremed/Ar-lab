@@ -1030,14 +1030,19 @@ Alto: > 240"></textarea>
             tbody.innerHTML = filtered.map(e => `
                 <tr>
                     <td style="text-align: center;">
-                        <span class="frequent-star ${e.es_frecuente ? 'active' : ''}" onclick="toggleFrequent(${e.id}, ${e.es_frecuente})">★</span>
+                        <span class="frequent-star ${e.es_frecuente ? 'active' : ''}" onclick="toggleFrequent('${e.id}', ${e.es_frecuente})">★</span>
                     </td>
                     <td style="font-family: monospace; font-weight: 600; color: #334155;">${e.codigo || '-'}</td>
                     <td><div style="font-weight: 500;">${e.nombre}</div></td>
                     <td><span class="status-badge" style="background: #f1f5f9; color: #475569;">${e.categoria}</span></td>
                     <td style="font-weight: 600;">$${e.precio}</td>
                     <td>
-                        <button class="btn-icon" onclick="openEstudioModal(${e.id})">✎</button>
+                        <button class="btn-icon btn-icon-primary" onclick="openEstudioModal('${e.id}')" title="Editar">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </button>
                     </td>
                 </tr>
             `).join('');
@@ -1068,7 +1073,12 @@ Alto: > 240"></textarea>
                     <td style="font-size: 0.8rem; color: #64748b;">${e.indicaciones ? 'Ver detalles' : 'N/A'}</td>
                     <td style="font-weight: 600;">$${e.precio}</td>
                     <td>
-                        <button class="btn-icon" onclick="openPerfilModal(${e.id})">✎</button>
+                        <button class="btn-icon btn-icon-primary" onclick="openPerfilModal('${e.id}')" title="Editar">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </button>
                     </td>
                 </tr>
             `).join('');

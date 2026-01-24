@@ -453,19 +453,28 @@ function mostrarModalEtiquetas(cita) {
 
     container.innerHTML = '';
 
-    // Group studies by Tube
-    const tubesMap = new Map(); // 'Rojo' -> [Estudio1, Estudio2]
+    // Group studies by Tube - store full study objects
+    const tubesMap = new Map(); // 'Rojo' -> [{nombre, codigo}, ...]
 
     // Default fallback if no tubes
     if (!cita.estudios || cita.estudios.length === 0) {
-        tubesMap.set('General', ['Muestra General']);
+        tubesMap.set('MUESTRA', [{ nombre: 'General', codigo: 'GEN' }]);
     } else {
         cita.estudios.forEach(est => {
-            const rawTubes = est.tubo_recipiente ? est.tubo_recipiente.split(',') : ['Tubo Indefinido'];
+            // Get tube type(s) - handle empty or null
+            let rawTubes = ['SIN TUBO'];
+            if (est.tubo_recipiente && est.tubo_recipiente.trim()) {
+                rawTubes = est.tubo_recipiente.split(',');
+            }
+
             rawTubes.forEach(t => {
                 const tubeType = t.trim();
                 if (!tubesMap.has(tubeType)) tubesMap.set(tubeType, []);
-                tubesMap.get(tubeType).push(est.nombre);
+                // Store full study object for code access
+                tubesMap.get(tubeType).push({
+                    nombre: est.nombre,
+                    codigo: est.codigo || ''
+                });
             });
         });
     }
@@ -476,19 +485,24 @@ function mostrarModalEtiquetas(cita) {
         tubeIndex++;
         const tubeCode = `${cita.folio_atencion}-${tubeIndex}`; // Ex: 260119-01-1
 
-        // Ensure studies are unique
-        const uniqueStudies = [...new Set(studies)];
+        // Ensure studies are unique by codigo or nombre
+        const seen = new Set();
+        const uniqueStudies = studies.filter(s => {
+            const key = s.codigo || s.nombre;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
 
-        // Get study codes instead of full names
+        // Get study codes - prioritize codigo, then abbreviate nombre
         const studyCodes = uniqueStudies.map(s => {
-            // If we have the study object with codigo, use it. Otherwise extract initials.
-            if (typeof s === 'object' && s.codigo) return s.codigo;
-            // If it's a string (study name), create initials
-            if (typeof s === 'string') {
-                // Take first letters of each word
-                return s.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 4);
+            if (s.codigo && s.codigo.trim()) return s.codigo.toUpperCase();
+            // Create 3-4 letter abbreviation from name
+            const words = s.nombre.split(' ').filter(w => w.length > 2);
+            if (words.length >= 2) {
+                return (words[0].substring(0, 2) + words[1].substring(0, 2)).toUpperCase();
             }
-            return 'EST';
+            return s.nombre.substring(0, 4).toUpperCase();
         });
         const studyCodesStr = studyCodes.join(', ');
 
@@ -604,9 +618,10 @@ function imprimirEtiquetas() {
                 page-break-after: always;
                 display: flex;
                 flex-direction: column;
-                padding: 1.5mm 2mm;
+                padding: 1mm 1.5mm;
                 background: white;
                 overflow: hidden;
+                justify-content: space-between;
             }
 
             .label-header {
@@ -641,11 +656,11 @@ function imprimirEtiquetas() {
 
             .barcode-area {
                 width: 100%;
-                height: 8mm; /* Reducido ligeramente para dar espacio al nombre */
+                height: 5mm;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 0.5mm 0;
+                margin: 0.3mm 0;
             }
 
             .barcode-svg {
@@ -654,25 +669,43 @@ function imprimirEtiquetas() {
             }
 
             .folio-box {
-                font-size: 11pt;
+                font-size: 8pt;
                 font-weight: 800;
                 text-align: center;
                 background: #000;
                 color: #fff;
                 width: 100%;
                 padding: 0.3mm 0;
-                border: 0.5mm solid #000;
-                letter-spacing: 0.5mm;
+                letter-spacing: 0.3mm;
                 line-height: 1;
+                border-radius: 0.5mm;
             }
 
             .label-info {
-                font-size: 7pt;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 6.5pt;
                 font-weight: 700;
+                margin-top: 0.3mm;
+                gap: 1mm;
+            }
+
+            .tube-tag {
+                background: #e0e0e0;
+                padding: 0.2mm 1mm;
+                border-radius: 0.5mm;
+                border: 0.2mm solid #888;
+                font-weight: 800;
+                white-space: nowrap;
+            }
+
+            .studies-text {
+                flex: 1;
+                text-align: right;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                margin-top: 0.5mm;
             }
 
             @media print {
@@ -685,13 +718,15 @@ function imprimirEtiquetas() {
     const labels = container.querySelectorAll('.print-content');
     labels.forEach(lbl => {
         // Extraer datos para reconstruir con dimensiones exactas
-        const name = lbl.querySelector('.patient-name')?.innerText || lbl.querySelector('div[style*="font-weight: 700"]')?.innerText;
-        const dobArr = (lbl.querySelector('.patient-dob')?.innerText || lbl.querySelector('div[style*="font-size: 8px"]')?.innerText).split('/');
-        // Asegurar formato de fecha corto si es necesario, pero mantener el del label original
-        const dob = dobArr.join('/');
+        const name = lbl.querySelector('.patient-name')?.innerText || lbl.querySelector('div[style*="font-weight: 700"]')?.innerText || 'PACIENTE';
+        const dobEl = lbl.querySelector('.patient-dob') || lbl.querySelector('div[style*="font-size: 8px"]');
+        const dob = dobEl?.innerText?.trim() || 'N/A';
 
-        const folio = lbl.querySelector('.folio-box')?.innerText.trim() || lbl.querySelector('div[style*="font-size: 13px"]')?.innerText.trim();
-        const info = lbl.querySelector('.label-info')?.innerText || lbl.querySelector('div[style*="font-size: 9px"]')?.innerText;
+        const folio = lbl.querySelector('.folio-box')?.innerText.trim() || lbl.querySelector('div[style*="font-size: 13px"]')?.innerText.trim() || 'N/A';
+        const info = lbl.querySelector('.label-info')?.innerText || lbl.querySelector('div[style*="font-size: 9px"]')?.innerText || '';
+
+        // Parse tube and studies from info (format: "TUBO | ESTUDIO1, ESTUDIO2")
+        const [tubeType, studiesStr] = info.split('|').map(s => s?.trim() || '');
 
         win.document.write(`
             <div class="label-wrapper">
@@ -703,13 +738,16 @@ function imprimirEtiquetas() {
                     <svg class="print-barcode" data-code="${folio}"></svg>
                 </div>
                 <div class="folio-box">${folio}</div>
-                <div class="label-info">${info}</div>
+                <div class="label-info">
+                    <span class="tube-tag">${tubeType || 'TUBO'}</span>
+                    <span class="studies-text">${studiesStr || ''}</span>
+                </div>
             </div>
         `);
     });
 
     win.document.write(`
-        <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"><\/script>
         <script>
             window.onload = function() {
                 const barcodes = document.querySelectorAll('.print-barcode');
@@ -717,8 +755,8 @@ function imprimirEtiquetas() {
                     JsBarcode(bc, bc.getAttribute('data-code'), {
                         format: "CODE128",
                         lineColor: "#000",
-                        width: 2,
-                        height: 35,
+                        width: 1.5,
+                        height: 18,
                         displayValue: false,
                         margin: 0
                     });
@@ -729,7 +767,7 @@ function imprimirEtiquetas() {
                     window.close();
                 }, 400);
             };
-        </script>
+        <\/script>
     </body></html>`);
     win.document.close();
 }

@@ -291,6 +291,193 @@
                 padding: 1rem;
             }
         }
+
+        /* Patient Details Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 95%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #0d9488;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .detail-item {
+            background: #f8fafc;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border-left: 3px solid #0d9488;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-top: 0.25rem;
+        }
+
+        .studies-list {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .study-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .study-item:last-child {
+            border-bottom: none;
+        }
+
+        .study-name {
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .study-price {
+            font-weight: 700;
+            color: #0f766e;
+        }
+
+        .modal-footer {
+            padding: 1rem 2rem 1.5rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn-modal {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-modal-primary {
+            background: #0d9488;
+            color: white;
+        }
+
+        .btn-modal-primary:hover {
+            background: #0f766e;
+        }
+
+        .btn-modal-secondary {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .btn-modal-secondary:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .action-btn-view {
+            background: #3b82f6 !important;
+        }
+
+        .action-btn-view:hover {
+            background: #2563eb !important;
+        }
     </style>
 </head>
 
@@ -381,6 +568,35 @@
         </div>
     </main>
 
+    <!-- Patient Details Modal -->
+    <div id="patientDetailsModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalPatientName">Detalles del Paciente</h3>
+                <button class="modal-close" onclick="closePatientModal()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="patientDetailsBody">
+                <!-- Content loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-modal-secondary" onclick="closePatientModal()">Cerrar</button>
+                <button class="btn-modal btn-modal-primary" onclick="reprintFromModal()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    Reimprimir Ticket
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -410,10 +626,13 @@
                 }
             }
 
-            // Set default dates (Today)
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('dateStart').value = today;
-            document.getElementById('dateEnd').value = today;
+            // Set default date: Start = today (local), End = empty
+            const now = new Date();
+            const localToday = now.getFullYear() + '-' +
+                String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                String(now.getDate()).padStart(2, '0');
+            document.getElementById('dateStart').value = localToday;
+            document.getElementById('dateEnd').value = ''; // Empty by default
 
             loadComprobantes();
         });
@@ -488,6 +707,12 @@
                         <td style="text-transform: capitalize;">${cita.metodo_pago || '---'}</td>
                         <td style="text-align: right;">
                             <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                                <button class="action-btn action-btn-view" title="Ver Detalles" onclick="viewPatientDetails('${cita.id}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    </svg>
+                                </button>
                                 <button class="action-btn" title="Reimprimir Ticket" onclick="reprintTicket('${cita.id}')">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <polyline points="6 9 6 2 18 2 18 9"></polyline>
@@ -505,6 +730,171 @@
                 loader.style.display = 'none';
                 console.error('Error loading:', err);
                 alert('Ocurrió un error al cargar los comprobantes.');
+            }
+        }
+
+        // ========== Patient Details Modal Functions ==========
+        let currentModalCitaId = null;
+
+        async function viewPatientDetails(appointmentId) {
+            currentModalCitaId = appointmentId;
+
+            try {
+                const { data: cita, error } = await supabaseClient
+                    .from('citas')
+                    .select('*, citas_estudios(estudio_id, estudios_laboratorio(*))')
+                    .eq('id', appointmentId)
+                    .single();
+
+                if (error) throw error;
+                if (!cita) return;
+
+                const fecha = new Date(cita.fecha_hora).toLocaleString('es-MX', {
+                    weekday: 'long',
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                const folio = cita.folio_venta || cita.id.substring(0, 8);
+
+                // Calculate age from fecha_nacimiento if available
+                let edad = '---';
+                if (cita.fecha_nacimiento) {
+                    const birthDate = new Date(cita.fecha_nacimiento);
+                    const today = new Date();
+                    let years = today.getFullYear() - birthDate.getFullYear();
+                    const monthDiff = today.getMonth() - birthDate.getMonth();
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                        years--;
+                    }
+                    edad = years + ' años';
+                }
+
+                // Build studies list HTML
+                const studiesHtml = cita.citas_estudios.map(rel => {
+                    const est = rel.estudios_laboratorio;
+                    return `
+                        <div class="study-item">
+                            <span class="study-name">${est.nombre}</span>
+                            <span class="study-price">$${parseFloat(est.precio || 0).toFixed(2)}</span>
+                        </div>
+                    `;
+                }).join('') || '<p style="color: #64748b; text-align: center; padding: 1rem;">Sin estudios registrados</p>';
+
+                // Update modal content
+                document.getElementById('modalPatientName').textContent = cita.paciente_nombre;
+                document.getElementById('patientDetailsBody').innerHTML = `
+                    <div class="detail-section">
+                        <div class="detail-section-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            Datos del Paciente
+                        </div>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">Nombre Completo</div>
+                                <div class="detail-value">${cita.paciente_nombre}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Teléfono</div>
+                                <div class="detail-value">${cita.paciente_telefono || 'Sin registro'}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Sexo</div>
+                                <div class="detail-value">${cita.paciente_sexo || 'No especificado'}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Edad</div>
+                                <div class="detail-value">${edad}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Fecha de Nacimiento</div>
+                                <div class="detail-value">${cita.fecha_nacimiento || '---'}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Diagnóstico</div>
+                                <div class="detail-value">${cita.diagnostico || 'No especificado'}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="detail-section-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="6" width="20" height="12" rx="2"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            Información del Comprobante
+                        </div>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">Folio</div>
+                                <div class="detail-value" style="color: #0d9488;">#${folio}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Fecha y Hora</div>
+                                <div class="detail-value" style="text-transform: capitalize;">${fecha}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Estado</div>
+                                <div class="detail-value">
+                                    <span class="status-badge status-${cita.estado}" style="font-size: 0.85rem;">${cita.estado}</span>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Método de Pago</div>
+                                <div class="detail-value" style="text-transform: capitalize;">${cita.metodo_pago || '---'}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Médico Referente</div>
+                                <div class="detail-value">${cita.medico_referente_nombre || 'Particular'}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Servicio/Área</div>
+                                <div class="detail-value">${cita.servicio || 'Laboratorio'}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="detail-section-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                            Estudios Solicitados (${cita.citas_estudios.length})
+                        </div>
+                        <div class="studies-list">
+                            ${studiesHtml}
+                            <div class="study-item" style="border-top: 2px solid #0d9488; margin-top: 0.5rem; padding-top: 0.75rem;">
+                                <span class="study-name" style="font-weight: 700;">TOTAL</span>
+                                <span class="study-price" style="font-size: 1.1rem;">$${parseFloat(cita.total || 0).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Show modal
+                document.getElementById('patientDetailsModal').classList.add('active');
+
+            } catch (err) {
+                console.error('Error loading patient details:', err);
+                alert('No se pudieron cargar los detalles del paciente.');
+            }
+        }
+
+        function closePatientModal() {
+            document.getElementById('patientDetailsModal').classList.remove('active');
+            currentModalCitaId = null;
+        }
+
+        function reprintFromModal() {
+            if (currentModalCitaId) {
+                reprintTicket(currentModalCitaId);
             }
         }
 
