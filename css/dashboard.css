@@ -1137,3 +1137,197 @@ tr:hover td {
     z-index: 10;
     pointer-events: none;
 }
+
+/* =========================================
+   Quick Actions & Customization (New)
+   ========================================= */
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+    /* Space from widgets */
+}
+
+.action-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: all 0.2s ease;
+    border: 1px solid var(--border);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+}
+
+.action-card svg {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0.75rem;
+    stroke: currentColor;
+}
+
+.action-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Customizer Modal specific */
+.customizer-option {
+    user-select: none;
+}
+
+.customizer-option:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+/* =========================================
+   Study Grouping & Popovers
+   ========================================= */
+
+.studies-container {
+    position: relative;
+    display: inline-block;
+}
+
+.studies-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.study-badge-simple {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.study-badge-more {
+    display: inline-block;
+    background: #f1f5f9;
+    color: #64748b;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    border: 1px dashed #cbd5e1;
+}
+
+.study-badge-more:hover {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.studies-popover {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+    margin-top: 8px;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.popover-header {
+    background: #f8fafc;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px 8px 0 0;
+}
+
+.popover-close {
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    color: #94a3b8;
+}
+
+.popover-close:hover {
+    color: #ef4444;
+}
+
+.popover-content {
+    padding: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.study-detail-item {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+.study-detail-item:last-child {
+    border-bottom: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.customizer-option input:checked+span {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+/* =========================================
+   Status Progress Dots
+   ========================================= */
+
+.status-progress-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.status-dot:hover {
+    transform: scale(2.0);
+}

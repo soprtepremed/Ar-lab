@@ -319,93 +319,104 @@
 </head>
 
 <body>
-    <!-- Visual Side (Left) -->
-    <div id="visual-side">
+    <!-- Visual Side (Full Screen Background) -->
+    <div id="visual-side" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
         <canvas id="networkCanvas"></canvas>
     </div>
 
-    <!-- Login Side (Right) -->
-    <div id="login-side">
-        <div class="login-content">
-            <div class="brand-header">
-                <!-- Using the SVG logic for logo if image fails, or keep the image -->
-                <!-- Since previous code used arlab_logo.png, we keep it but also fallback or style it -->
-                <svg viewBox="0 0 180 60" style="height: 60px; width: auto; display: block; margin-bottom: 1rem;">
-                    <defs>
-                        <linearGradient id="flaskGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#2dd4bf" />
-                            <stop offset="100%" style="stop-color:#0d9488" />
-                        </linearGradient>
-                    </defs>
-                    <g transform="translate(10,5)">
-                        <path d="M15 8 L15 22 L5 42 Q3 46 6 48 L34 48 Q37 46 35 42 L25 22 L25 8 Z"
-                            fill="url(#flaskGrad2)" stroke="#14b8a6" stroke-width="1.5" />
-                        <rect x="13" y="2" width="14" height="8" rx="2" fill="url(#flaskGrad2)" stroke="#14b8a6"
-                            stroke-width="1.5" />
-                        <path d="M8 38 Q10 35 15 36 Q20 38 25 35 Q30 33 32 38 L30 45 Q28 47 20 47 Q12 47 10 45 Z"
-                            fill="#5eead4" opacity="0.6" />
-                        <circle cx="15" cy="40" r="2" fill="white" opacity="0.7" />
-                        <circle cx="22" cy="38" r="1.5" fill="white" opacity="0.5" />
-                        <circle cx="18" cy="43" r="1" fill="white" opacity="0.6" />
-                        <text x="20" y="32" font-family="Outfit, sans-serif" font-size="12" font-weight="700"
-                            fill="white" text-anchor="middle">Ar</text>
-                    </g>
-                    <text x="60" y="38" font-family="Outfit, sans-serif" font-size="28" font-weight="700"
-                        fill="#334155">Ar</text>
-                    <text x="92" y="38" font-family="Outfit, sans-serif" font-size="28" font-weight="400"
-                        fill="#0d9488">lab</text>
-                </svg>
-                <div class="login-title">Iniciar sesión</div>
-                <div class="login-subtitle">Bienvenido a su sistema de gestión</div>
-            </div>
+    <!-- Login Side (Glassmorphic Overlay) -->
+    <div id="login-side"
+        style="position: relative; z-index: 10; width: 100%; height: 100%; background: transparent; display: flex; align-items: center; justify-content: flex-end; padding-right: 5%;">
+        <!-- Glass Card -->
+        <div
+            style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); padding: 3rem; border-radius: 16px; width: 450px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);">
+            <div class="login-content">
+                <div class="brand-header" style="text-align: center; margin-bottom: 2rem;">
 
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <input type="text" id="username" class="form-input" placeholder="Usuario" required
-                        autocomplete="username">
+                    <!-- INLINE SVG LOGO (No Background, High Definition) -->
+                    <svg viewBox="0 0 300 100"
+                        style="height: 100px; width: auto; display: inline-block; margin-bottom: 0.5rem;">
+                        <!-- Icon: Teal Flask -->
+                        <g transform="translate(30,10)">
+                            <!-- Flask Body -->
+                            <path d="M30 0 L50 0 L50 20 L75 70 Q80 80 70 80 L10 80 Q0 80 5 70 L30 20 Z" fill="#0d9488"
+                                stroke="#0f766e" stroke-width="2" />
+                            <!-- Flask Rim -->
+                            <rect x="25" y="-5" width="30" height="7" rx="2" fill="#0d9488" stroke="#0f766e"
+                                stroke-width="2" />
+                            <!-- Liquid Level -->
+                            <path d="M15 60 Q40 65 65 60 L70 70 Q75 75 70 75 L10 75 Q5 75 10 70 Z" fill="#5eead4"
+                                opacity="0.4" />
+                            <!-- Text 'Ar' inside Flask -->
+                            <text x="40" y="55" font-family="Arial, sans-serif" font-weight="bold" font-size="24"
+                                fill="white" text-anchor="middle">Ar</text>
+                        </g>
+
+                        <!-- Text: Arlab -->
+                        <text x="110" y="62" font-family="Arial, sans-serif" font-weight="bold" font-size="50"
+                            fill="#1e293b">Ar</text>
+                        <text x="170" y="62" font-family="Arial, sans-serif" font-weight="normal" font-size="50"
+                            fill="#0d9488">lab</text>
+
+                        <!-- Subtitle -->
+                        <text x="112" y="85" font-family="Arial, sans-serif" font-weight="normal" font-size="12"
+                            fill="#64748b" letter-spacing="2">GESTIÓN DE LABORATORIO</text>
+                    </svg>
+
+                    <div class="login-title" style="margin-top: 10px;">Iniciar sesión</div>
+                    <div class="login-subtitle">Bienvenido a su sistema de gestión</div>
                 </div>
 
-                <div class="form-group">
-                    <div class="password-container">
-                        <input type="password" id="password" class="form-input" placeholder="Contraseña" required
-                            autocomplete="current-password">
-                        <button type="button" class="password-toggle" onclick="togglePassword()"
-                            aria-label="Mostrar contraseña">
-                            <svg id="eyeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none"
-                                stroke="currentColor" stroke-width="2">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg>
-                            <svg id="eyeOffIcon" viewBox="0 0 24 24" width="20" height="20" fill="none"
-                                stroke="currentColor" stroke-width="2" style="display: none;">
-                                <path
-                                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
-                                </path>
-                                <line x1="1" y1="1" x2="23" y2="23"></line>
-                            </svg>
-                        </button>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <input type="text" id="username" class="form-input" placeholder="Usuario" required
+                            autocomplete="username" style="background: rgba(255,255,255,0.9);">
                     </div>
-                </div>
 
-                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                    <div class="form-group">
+                        <div class="password-container">
+                            <input type="password" id="password" class="form-input" placeholder="Contraseña" required
+                                autocomplete="current-password" style="background: rgba(255,255,255,0.9);">
+                            <button type="button" class="password-toggle" onclick="togglePassword()"
+                                aria-label="Mostrar contraseña">
+                                <svg id="eyeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg id="eyeOffIcon" viewBox="0 0 24 24" width="20" height="20" fill="none"
+                                    stroke="currentColor" stroke-width="2" style="display: none;">
+                                    <path
+                                        d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                    </path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
 
-                <button type="submit" class="submit-btn">Ingresar</button>
+                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
 
-                <div style="text-align: center;">
-                    <a href="https://wa.me/5219611062651" target="_blank" class="support-link">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                            <path
-                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                        </svg>
-                        Contactar Soporte
-                    </a>
-                </div>
+                    <button type="submit" class="submit-btn"
+                        style="box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.4);">Ingresar</button>
 
-                <div class="login-footer">
-                    <div class="brand-text">Ar Lab</div>
-                    <div>Copyright 2026 - Gestión de Laboratorios</div>
-                </div>
-            </form>
+                    <div style="text-align: center;">
+                        <a href="https://wa.me/5219611062651" target="_blank" class="support-link"
+                            style="background: rgba(255,255,255,0.8);">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                            </svg>
+                            Contactar Soporte
+                        </a>
+                    </div>
+
+                    <div class="login-footer">
+                        <div class="brand-text">Ar Lab</div>
+                        <div>Copyright 2026 - Gestión de Laboratorios</div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -439,69 +450,30 @@
         const visualSide = document.getElementById('visual-side');
         const ctx = canvas.getContext('2d');
         let width, height;
-        let particles = [];
-        let formulas = [];
+        let molecules = [];
 
-        // Chemistry formulas
-        const chemistryFormulas = [
-            'H₂O', 'NaCl', 'CO₂', 'H₂SO₄', 'NaOH', 'HCl', 'NH₃', 'C₆H₁₂O₆',
-            'CaCO₃', 'Fe₂O₃', 'KMnO₄', 'CH₄', 'C₂H₅OH', 'HNO₃', 'Na₂CO₃',
-            'MgCl₂', 'Al₂O₃', 'K₂SO₄', 'CuSO₄', 'ZnO', 'Pb(NO₃)₂', 'AgNO₃',
-            'pH', 'ATP', 'DNA', 'RNA', 'O₂', 'N₂', 'Cl₂', 'H₂'
-        ];
-
-        // Config
-        const particleCount = 60;
-        const formulaCount = 20;
-        const connectionDistance = 150;
-        const moveSpeed = 0.5;
-        const particleColor = 'rgba(144, 224, 239, 0.5)';
-        const lineColor = 'rgba(72, 202, 228, 0.25)';
+        // Stoichiometric / Chemical configuration
+        const moleculeCount = 20;
+        const linkDistance = 180;
+        const moleculeSpeed = 0.4;
 
         function resize() {
-            // Resize canvas to match the visual-side div, not window
             width = canvas.width = visualSide.clientWidth;
             height = canvas.height = visualSide.clientHeight;
-            initParticles();
-            initFormulas();
+            initMolecules();
         }
 
-        class Particle {
+        class HexMolecule {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * moveSpeed;
-                this.vy = (Math.random() - 0.5) * moveSpeed;
-                this.size = Math.random() * 2.5 + 1;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = particleColor;
-                ctx.fill();
-            }
-        }
-
-        class Formula {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.text = chemistryFormulas[Math.floor(Math.random() * chemistryFormulas.length)];
-                this.fontSize = Math.random() * 14 + 12;
+                this.vx = (Math.random() - 0.5) * moleculeSpeed;
+                this.vy = (Math.random() - 0.5) * moleculeSpeed;
+                this.radius = Math.random() * 20 + 25; // Size of hexagon
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.005;
                 this.opacity = Math.random() * 0.3 + 0.1;
-                this.rotation = (Math.random() - 0.5) * 0.3;
-                this.rotationSpeed = (Math.random() - 0.5) * 0.002;
+                this.bonds = Math.floor(Math.random() * 3) + 1; // 1, 2 or 3 internal bonds depending on complexity
             }
 
             update() {
@@ -509,65 +481,94 @@
                 this.y += this.vy;
                 this.rotation += this.rotationSpeed;
 
-                if (this.x < -50) this.x = width + 50;
-                if (this.x > width + 50) this.x = -50;
-                if (this.y < -50) this.y = height + 50;
-                if (this.y > height + 50) this.y = -50;
+                if (this.x < -100) this.x = width + 100;
+                if (this.x > width + 100) this.x = -100;
+                if (this.y < -100) this.y = height + 100;
+                if (this.y > height + 100) this.y = -100;
             }
 
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation);
-                ctx.font = `${this.fontSize}px 'Roboto', monospace`;
-                ctx.fillStyle = `rgba(202, 240, 248, ${this.opacity})`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(this.text, 0, 0);
-                ctx.restore();
+            drawHexagon(x, y, r, angle) {
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const theta = angle + (i * Math.PI * 2) / 6;
+                    const hx = x + r * Math.cos(theta);
+                    const hy = y + r * Math.sin(theta);
+                    if (i === 0) ctx.moveTo(hx, hy);
+                    else ctx.lineTo(hx, hy);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = `rgba(144, 224, 239, ${this.opacity})`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Draw inner ring or double bonds specific to chemistry
+                if (this.bonds > 1) {
+                    ctx.beginPath();
+                    const innerR = r * 0.7;
+                    for (let i = 0; i < 6; i++) {
+                        const theta = angle + (i * Math.PI * 2) / 6;
+                        const hx = x + innerR * Math.cos(theta);
+                        const hy = y + innerR * Math.sin(theta);
+                        if (i === 0) ctx.moveTo(hx, hy);
+                        else ctx.lineTo(hx, hy);
+                    }
+                    ctx.closePath();
+                    ctx.strokeStyle = `rgba(144, 224, 239, ${this.opacity * 0.5})`;
+                    ctx.stroke();
+                }
+
+                // Atoms at vertices
+                for (let i = 0; i < 6; i++) {
+                    const theta = angle + (i * Math.PI * 2) / 6;
+                    const ax = x + r * Math.cos(theta);
+                    const ay = y + r * Math.sin(theta);
+                    ctx.beginPath();
+                    ctx.arc(ax, ay, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(202, 240, 248, ${this.opacity * 1.5})`;
+                    ctx.fill();
+                }
             }
         }
 
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function initFormulas() {
-            formulas = [];
-            for (let i = 0; i < formulaCount; i++) {
-                formulas.push(new Formula());
+        function initMolecules() {
+            molecules = [];
+            for (let i = 0; i < moleculeCount; i++) {
+                molecules.push(new HexMolecule());
             }
         }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
 
-            formulas.forEach(f => {
-                f.update();
-                f.draw();
+            molecules.forEach(m => {
+                m.update();
+                m.drawHexagon(m.x, m.y, m.radius, m.rotation);
             });
 
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
+            // Draw stoichiometric connections (Bonds forming)
+            for (let i = 0; i < molecules.length; i++) {
+                for (let j = i + 1; j < molecules.length; j++) {
+                    const dx = molecules[i].x - molecules[j].x;
+                    const dy = molecules[i].y - molecules[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < connectionDistance) {
+                    if (distance < linkDistance) {
                         ctx.beginPath();
-                        ctx.strokeStyle = lineColor;
-                        ctx.lineWidth = 1 - distance / connectionDistance;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(72, 202, 228, ${(1 - distance / linkDistance) * 0.3})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(molecules[i].x, molecules[i].y);
+                        ctx.lineTo(molecules[j].x, molecules[j].y);
                         ctx.stroke();
+
+                        // Bond indicator (little text or circle in middle of bond)
+                        if (distance < linkDistance * 0.5) {
+                            ctx.beginPath();
+                            const midX = (molecules[i].x + molecules[j].x) / 2;
+                            const midY = (molecules[i].y + molecules[j].y) / 2;
+                            ctx.arc(midX, midY, 1.5, 0, Math.PI * 2);
+                            ctx.fillStyle = `rgba(255, 255, 255, 0.2)`;
+                            ctx.fill();
+                        }
                     }
                 }
             }
@@ -581,9 +582,11 @@
 
         function showModal(message) {
             const modal = document.getElementById('errorModal');
-            const msgElement = document.getElementById('modalMessage');
-            if (modal && msgElement) {
-                msgElement.textContent = message;
+            if (modal) {
+                // ... use textContent or a specific el
+                // Simple version
+                const p = modal.querySelector('p');
+                if (p) p.textContent = message;
                 modal.classList.add('active');
             }
         }

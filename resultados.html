@@ -754,17 +754,23 @@
                 // Always load the list (for sidebar or list view)
                 await loadCitasConEstudios();
 
-                if (citaId) {
-                    // Single Patient Mode
+                if (true) {
+                    // Force Split View Mode Always
                     document.querySelector('.filters-bar').style.display = 'none';
                     document.getElementById('resultsGrid').style.display = 'none';
                     document.getElementById('emptyState').style.display = 'none';
                     document.getElementById('captureSection').style.display = 'block';
 
-                    // Hide page title in capture mode to save space/reduce noise
+                    // Hide page title in capture mode
                     document.querySelector('.page-header').style.display = 'none';
 
-                    loadSingleCita(citaId);
+                    if (citaId) {
+                        loadSingleCita(citaId);
+                    } else {
+                        // If no ID, ensure sidebar is loaded and maybe select first? 
+                        // Or just wait for user to select from sidebar.
+                        // renderSidebarList called in loadCitasConEstudios
+                    }
                 }
             });
 

@@ -6,28 +6,20 @@ function injectNavbar() {
     const navbarHTML = `
     <nav class="navbar">
         <a href="dashboard.html" class="navbar-brand">
-            <svg viewBox="0 0 180 60" class="navbar-logo">
-                <defs>
-                    <linearGradient id="flaskGradNavBar" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#2dd4bf" />
-                        <stop offset="100%" style="stop-color:#0d9488" />
-                    </linearGradient>
-                </defs>
-                <g transform="translate(10,5)">
-                    <path d="M15 8 L15 22 L5 42 Q3 46 6 48 L34 48 Q37 46 35 42 L25 22 L25 8 Z"
-                        fill="url(#flaskGradNavBar)" stroke="#14b8a6" stroke-width="1.5" />
-                    <rect x="13" y="2" width="14" height="8" rx="2" fill="url(#flaskGradNavBar)" stroke="#14b8a6"
-                        stroke-width="1.5" />
-                    <path d="M8 38 Q10 35 15 36 Q20 38 25 35 Q30 33 32 38 L30 45 Q28 47 20 47 Q12 47 10 45 Z"
-                        fill="#5eead4" opacity="0.6" />
-                    <circle cx="15" cy="40" r="2" fill="white" opacity="0.7" />
-                    <circle cx="22" cy="38" r="1.5" fill="white" opacity="0.5" />
-                    <text x="20" y="32" font-family="Outfit, sans-serif" font-size="12" font-weight="700" fill="white"
-                        text-anchor="middle">Ar</text>
+            <svg viewBox="0 0 300 100" class="navbar-logo" style="height: 55px; width: auto; filter: drop-shadow(0 0 2px rgba(45, 212, 191, 0.5));">
+                <g transform="translate(30,10)">
+                    <!-- Neon Flask Body: No Fill, Thick Stroke -->
+                    <path d="M30 0 L50 0 L50 20 L75 70 Q80 80 70 80 L10 80 Q0 80 5 70 L30 20 Z" 
+                          fill="none" stroke="#2dd4bf" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="25" y="-5" width="30" height="7" rx="2" fill="none" stroke="#2dd4bf" stroke-width="5"/>
+                    
+                    <!-- Text 'Ar' inside Flask: White -->
+                    <text x="40" y="58" font-family="Arial, sans-serif" font-weight="bold" font-size="28" fill="white" text-anchor="middle">Ar</text>
                 </g>
-                <text x="60" y="28" font-family="Outfit, sans-serif" font-size="22" font-weight="700" fill="white">Ar</text>
-                <text x="85" y="28" font-family="Outfit, sans-serif" font-size="22" font-weight="400" fill="#2dd4bf">lab</text>
-                <text x="60" y="45" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Gestión de Laboratorio</text>
+                <!-- Text: Ar (White) lab (Neon) -->
+                <text x="115" y="65" font-family="Arial, sans-serif" font-weight="bold" font-size="52" fill="white">Ar</text>
+                <text x="175" y="65" font-family="Arial, sans-serif" font-weight="normal" font-size="52" fill="#2dd4bf">lab</text>
+                <text x="117" y="88" font-family="Arial, sans-serif" font-weight="normal" font-size="11" fill="rgba(255,255,255,0.6)" letter-spacing="3">GESTIÓN DE LABORATORIO</text>
             </svg>
         </a>
 
@@ -40,6 +32,19 @@ function injectNavbar() {
                 </svg>
                 Inicio
             </a>
+
+            <!-- Favoritos (New) -->
+            <div id="navFavoritos" class="nav-dropdown" style="display:none;" onclick="toggleDropdown(this)">
+                <div class="nav-dropdown-toggle">
+                    <span>Favoritos</span>
+                    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="nav-dropdown-menu" id="navFavoritosMenu">
+                    <!-- Dynamic Favorites -->
+                </div>
+            </div>
 
             <!-- Fase Pre-Analítica -->
             <div id="probMuestras" class="nav-dropdown" onclick="toggleDropdown(this)">
@@ -272,3 +277,81 @@ if (document.readyState === 'loading') {
 } else {
     injectNavbar();
 }
+
+/**
+ * NEW: Render Favorites based on LocalStorage
+ * Relies on logic similar to dashboard-customizer.js, but duplicated here 
+ * or shared if we extracted it to a common file (TODO).
+ * For now, we will read the same Key.
+ */
+function renderNavbarFavorites() {
+    const container = document.getElementById('navFavoritos');
+    const menu = document.getElementById('navFavoritosMenu');
+    if (!container || !menu) return;
+
+    const PREF_KEY = 'arlab_shortcuts_prefs';
+    const saved = localStorage.getItem(PREF_KEY);
+
+    // If no prefs, or empty, hide "Favoritos"
+    if (!saved) {
+        container.style.display = 'none';
+        return;
+    }
+
+    const selectedIds = JSON.parse(saved);
+    if (selectedIds.length === 0) {
+        container.style.display = 'none';
+        return;
+    }
+
+    // We do need the module definitions. 
+    // Since we can't easily import inside this simple script structure without modules,
+    // we will define a minimal set here or rely on the fact that dashboard-customizer might be loaded.
+    // Safeguard: If dashboard-customizer is loaded, use its data? 
+    // Better approach: Define a minimal map here to avoid dependencies errors if customizer isn't present.
+
+    // Quick Map matching the IDs in dashboard-customizer.js
+    const MAP = {
+        'new_appointment': { title: 'Nueva Cita', link: 'nueva_cita.html' },
+        'register_patient': { title: 'Reg. Paciente', link: 'nueva_cita.html?mode=directo' },
+        'delivery': { title: 'Entrega', link: 'entrega.html' },
+        'worklist': { title: 'Sala Espera', link: 'dashboard.html?view=analitica' },
+        'processing': { title: 'Procesamiento', link: 'dashboard.html?view=proceso_analitico' },
+        'results': { title: 'Resultados', link: 'resultados.html' },
+        'quotes': { title: 'Cotizaciones', link: 'dashboard.html?view=cotizaciones' },
+        'reports': { title: 'Reportes', link: 'reportes.html' }
+    };
+
+    let html = '';
+    selectedIds.forEach(id => {
+        const item = MAP[id];
+        if (item) {
+            html += `<a href="${item.link}" class="nav-item">
+                        <!-- Icon could be generic or specific -->
+                        <span style="width:6px; height:6px; background:#2dd4bf; border-radius:50%; margin-right:8px;"></span>
+                        ${item.title}
+                     </a>`;
+        }
+    });
+
+    // Add "Edit" link
+    if (window.location.pathname.endsWith('dashboard.html') || window.location.pathname === '/') {
+        html += `<a href="#" onclick="openCustomizeModal(); return false;" class="nav-item" style="color:#64748b; font-size: 0.8rem; border-top:1px solid #eee; margin-top:4px;">
+                    <svg viewBox="0 0 24 24" width="12" height="12" style="margin-right:6px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    Personalizar
+                </a>`;
+    }
+
+    menu.innerHTML = html;
+    container.style.display = 'block';
+}
+
+// Hook into setupNavbar to trigger this
+const originalSetup = setupNavbar;
+setupNavbar = function () {
+    originalSetup();
+    renderNavbarFavorites();
+};
+
+// Listen for updates from dashboard-customizer
+window.addEventListener('shortcuts-updated', renderNavbarFavorites);
