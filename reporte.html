@@ -294,21 +294,30 @@
                     cita.citas_estudios.sort((a, b) => a.id - b.id);
                 }
 
-                // Calculate Release Date (Latest validation)
-                let maxDate = null;
-                if (cita.citas_estudios) {
-                    cita.citas_estudios.forEach(ce => {
-                        // Assuming 'updated_at' or we can add 'fecha_validacion' if exists. 
-                        // For now using the latest relevant timestamp available.
-                        // If fecha_validacion exists in DB use that, else fallback.
-                        // Since I don't recall seeing fecha_validacion in my last schema update, I'll use updated_at if available or just fallback to NOW for this iteration until user confirms column name.
-                        // WAIT: User said "fecha en que valido". 
-                        // I will pass the whole studies array to renderReport to calculate it there if needed or just use current time if metadata is missing.
-                        // Actually, I'll stick to 'Now' for this specific step but add the sorting which is critical.
-                    });
+                // --- FETCH PROFILE MAPPING ---
+                let profileMap = {};
+                let orderMap = {};
+                const profileStudies = cita.citas_estudios.filter(ce => ce.estudios_laboratorio?.es_perfil);
+
+                if (profileStudies.length > 0) {
+                    const profileIds = profileStudies.map(ce => ce.estudios_laboratorio.id);
+                    const { data: mapping } = await supabaseClient
+                        .from('estudio_componentes')
+                        .select('perfil_id, componente_id, orden')
+                        .in('perfil_id', profileIds);
+
+                    if (mapping) {
+                        mapping.forEach(m => {
+                            const profile = profileStudies.find(ps => ps.estudios_laboratorio.id === m.perfil_id);
+                            if (profile) {
+                                profileMap[m.componente_id] = profile.estudios_laboratorio.nombre;
+                                orderMap[m.componente_id] = m.orden || 999;
+                            }
+                        });
+                    }
                 }
 
-                renderReport(cita, labInfo);
+                renderReport(cita, labInfo, profileMap, orderMap);
 
             } catch (e) {
                 console.error(e);
@@ -328,7 +337,7 @@
             return age;
         }
 
-        function renderReport(cita, lab) {
+        function renderReport(cita, lab, profileMap = {}, orderMap = {}) {
             // Helper Dates
             const fechaIngresoObj = new Date(cita.fecha_hora);
             const fechaIngreso = fechaIngresoObj.toLocaleString('es-MX', {
@@ -360,45 +369,93 @@
                 edad = calculateAge(cita.fecha_nacimiento) || '--';
             }
 
-            // Generate rows with Profile Header Logic
-            const studies = cita.citas_estudios || [];
-            let rowsHtml = '';
+            // --- GROUP STUDIES BY PROFILES OR CATEGORY ---
+            const allStudies = cita.citas_estudios || [];
 
-            studies.forEach(s => {
+            // Filter out profile parent items (es_perfil = true) - we'll show them as headers
+            const componentStudies = allStudies.filter(s => !s.estudios_laboratorio?.es_perfil);
+
+            // Group by profile name (for profile components) or by category (for individual studies)
+            const groups = {};
+
+            componentStudies.forEach(s => {
+                const estId = s.estudios_laboratorio?.id;
                 const est = s.estudios_laboratorio || {};
-                const nombre = est.nombre || 'Estudio desconocido';
-                // Use DB value or default
-                const metodo = est.metodo || 'Espectofotometría';
-                let res = s.valor_resultado || 'PENDIENTE';
-                let ref = est.rango_referencia || 'No especificado';
-                let unidad = est.unidad || '-';
 
-                // Profile Header Logic
-                const isProfileHeader = est.es_perfil === true;
-                let rowStyle = '';
-                let nameStyle = 'font-weight:700; color:#000;';
-                let methodStyle = 'display:block; font-size:7pt; color:#64748b; margin-top:2px; font-style:italic;';
+                // Check if study belongs to a profile
+                let groupName = profileMap[estId];
+                let isProfile = !!groupName;
 
-                if (isProfileHeader) {
-                    res = ''; // Clear result for header
-                    unidad = '';
-                    ref = '';
-                    rowStyle = 'background-color: #f9fafb; border-bottom: 2px solid #e5e7eb;';
-                    // Hide methodology for headers
-                    methodStyle = 'display:none;';
+                // If not in a profile, group by category/area
+                if (!groupName) {
+                    groupName = est.categoria || est.area || 'Otros Estudios';
                 }
 
+                if (!groups[groupName]) {
+                    groups[groupName] = {
+                        isProfile: isProfile,
+                        studies: []
+                    };
+                }
+
+                // Add order for sorting within profile
+                s._order = orderMap[estId] || 999;
+                groups[groupName].studies.push(s);
+            });
+
+            // Sort items within each group by order
+            Object.keys(groups).forEach(key => {
+                groups[key].studies.sort((a, b) => a._order - b._order);
+            });
+
+            // Generate rows HTML with group headers
+            let rowsHtml = '';
+
+            // Sort groups: profiles first, then categories alphabetically
+            const groupKeys = Object.keys(groups).sort((a, b) => {
+                const aIsProfile = groups[a].isProfile;
+                const bIsProfile = groups[b].isProfile;
+                // Profiles first
+                if (aIsProfile && !bIsProfile) return -1;
+                if (!aIsProfile && bIsProfile) return 1;
+                return a.localeCompare(b);
+            });
+
+            groupKeys.forEach(groupKey => {
+                const groupData = groups[groupKey];
+                const studies = groupData.studies;
+                if (studies.length === 0) return;
+
+                // Add group header row
                 rowsHtml += `
-                    <tr style="${rowStyle}">
-                        <td class="col-prueba">
-                            <span style="${nameStyle}">${nombre}</span>
-                            <span style="${methodStyle}">Metodología: ${metodo.toUpperCase()}</span>
+                    <tr style="background-color: #f3f4f6; border-bottom: 2px solid #cbd5e1;">
+                        <td colspan="4" style="font-weight:700; color:#1e293b; padding: 8px 5px; font-size: 9pt;">
+                            ${groupKey}
                         </td>
-                        <td class="col-resultado">${res}</td>
-                        <td class="col-unidad">${unidad}</td>
-                        <td class="col-ref">${ref}</td>
                     </tr>
                 `;
+
+                // Add study rows
+                studies.forEach(s => {
+                    const est = s.estudios_laboratorio || {};
+                    const nombre = est.nombre || 'Estudio desconocido';
+                    const metodo = est.metodo || 'ESPECTOFOTOMETRÍA';
+                    let res = s.valor_resultado || 'PENDIENTE';
+                    let ref = est.rango_referencia || '-';
+                    let unidad = est.unidad || '-';
+
+                    rowsHtml += `
+                        <tr>
+                            <td class="col-prueba" style="padding-left: 15px;">
+                                <span style="font-weight:700; color:#000;">${nombre}</span>
+                                <span style="display:block; font-size:7pt; color:#64748b; margin-top:2px; font-style:italic;">Metodología: ${metodo.toUpperCase()}</span>
+                            </td>
+                            <td class="col-resultado">${res}</td>
+                            <td class="col-unidad">${unidad}</td>
+                            <td class="col-ref">${ref}</td>
+                        </tr>
+                    `;
+                });
             });
 
             const html = `

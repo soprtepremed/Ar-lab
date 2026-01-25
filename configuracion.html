@@ -572,23 +572,22 @@
                 <div class="form-row">
                     <div class="form-group" style="position: relative;">
                         <label class="form-label">Categoría *</label>
-                        <input type="text" id="estCategoria" class="form-input" required autocomplete="off"
-                            onfocus="showCategorySuggestions()"
-                            oninput="filterCategorySuggestions(); suggestCodePrefix()" onchange="suggestCodePrefix()">
-                        <div id="catSuggestions" style="
-                            position: absolute;
-                            top: 100%;
-                            left: 0;
-                            right: 0;
-                            background: white;
-                            border: 1px solid var(--border);
-                            border-radius: 0 0 8px 8px;
-                            max-height: 200px;
-                            overflow-y: auto;
-                            z-index: 100;
-                            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                            display: none;
-                        "></div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="estCategoria" class="form-input" required style="flex: 1;"
+                                onchange="onCategoriaChange()">
+                                <option value="">-- Seleccione categoría --</option>
+                                <!-- Categories will be populated dynamically -->
+                            </select>
+                            <button type="button" class="btn btn-secondary"
+                                style="padding: 0.5rem 0.75rem; font-size: 1.2rem;" onclick="showAddCategoryInput()"
+                                title="Agregar nueva categoría">+</button>
+                        </div>
+                        <!-- Hidden input for new category -->
+                        <div id="newCategoryRow" style="display: none; margin-top: 0.5rem;">
+                            <input type="text" id="estCategoriaNew" class="form-input" placeholder="Nueva categoría..."
+                                style="border-color: #0d9488;">
+                            <small style="color: #0d9488;">Escribe el nombre de la nueva categoría</small>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Precio ($) *</label>
@@ -724,7 +723,8 @@ Alto: > 240"></textarea>
                         </span>
                     </label>
                     <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                        <input type="checkbox" id="estPerfil" onchange="togglePerfilSection()">
+                        <input type="checkbox" id="estPerfil"
+                            onchange="togglePerfilSection(); updateBelongsToProfileVisibility();">
                         <span style="display: inline-flex; align-items: center; gap: 0.25rem;">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -737,6 +737,40 @@ Alto: > 240"></textarea>
                             Es un Perfil (Paquete)
                         </span>
                     </label>
+                </div>
+
+                <!-- Section for assigning study to an existing profile -->
+                <div id="belongsToProfileSection" style="margin-bottom: 1.5rem;">
+                    <!-- Checkbox to enable profile assignment -->
+                    <label
+                        style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-bottom: 0.75rem;">
+                        <input type="checkbox" id="chkBelongsToProfile" onchange="toggleProfileDropdown()">
+                        <span
+                            style="display: inline-flex; align-items: center; gap: 0.5rem; color: #92400e; font-weight: 500;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <line x1="20" y1="8" x2="20" y2="14"></line>
+                                <line x1="23" y1="11" x2="17" y2="11"></line>
+                            </svg>
+                            Este estudio pertenece a un Perfil existente
+                        </span>
+                    </label>
+
+                    <!-- Dropdown (hidden by default) -->
+                    <div id="profileDropdownContainer"
+                        style="display: none; background: #fffbeb; padding: 1rem; border-radius: 12px; border: 1px solid #fde68a;">
+                        <label class="form-label" style="color: #92400e;">Selecciona el Perfil:</label>
+                        <select id="belongsToProfile" class="form-input" style="width: 100%;"
+                            onchange="onProfileBelongsChange()">
+                            <option value="">-- Seleccione el perfil --</option>
+                        </select>
+                        <p id="profileCodeHint"
+                            style="font-size: 0.75rem; color: #78716c; margin-top: 0.5rem; display: none;">
+                            💡 Código sugerido basado en el perfil: <strong id="suggestedCode"></strong>
+                        </p>
+                    </div>
                 </div>
 
                 <div id="perfilSection"
@@ -1147,7 +1181,161 @@ Alto: > 240"></textarea>
                     }
                 }
             }
+
+            // Populate profile dropdown and show/hide section
+            populateProfileDropdown();
+            updateBelongsToProfileVisibility();
+
+            // Populate category dropdown
+            populateCategoryDropdown();
+            document.getElementById('newCategoryRow').style.display = 'none';
+            document.getElementById('estCategoriaNew').value = '';
+
             modal.style.display = 'flex';
+        }
+
+        // Populate category dropdown with unique categories from existing studies
+        function populateCategoryDropdown() {
+            const select = document.getElementById('estCategoria');
+            const currentValue = select.value;
+
+            // Get unique categories from all studies
+            const uniqueCategories = [...new Set(
+                todosEstudios
+                    .map(e => e.categoria)
+                    .filter(c => c && c.trim() !== '')
+            )].sort();
+
+            // Rebuild dropdown
+            select.innerHTML = '<option value="">-- Seleccione categoría --</option>';
+            uniqueCategories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                select.appendChild(option);
+            });
+
+            // Restore value if it existed
+            if (currentValue) {
+                select.value = currentValue;
+            }
+        }
+
+        // Show input for adding new category
+        function showAddCategoryInput() {
+            const row = document.getElementById('newCategoryRow');
+            row.style.display = row.style.display === 'none' ? 'block' : 'none';
+            if (row.style.display === 'block') {
+                document.getElementById('estCategoriaNew').focus();
+                // Clear dropdown selection when adding new
+                document.getElementById('estCategoria').value = '';
+            }
+        }
+
+        // Handle category dropdown change
+        function onCategoriaChange() {
+            const select = document.getElementById('estCategoria');
+            if (select.value) {
+                // If a category is selected from dropdown, hide the new category input
+                document.getElementById('newCategoryRow').style.display = 'none';
+                document.getElementById('estCategoriaNew').value = '';
+            }
+        }
+
+        // Get the final category value (from dropdown or new input)
+        function getFinalCategory() {
+            const newCat = document.getElementById('estCategoriaNew').value.trim();
+            if (newCat) {
+                return newCat;
+            }
+            return document.getElementById('estCategoria').value;
+        }
+
+        // Populate the "belongs to profile" dropdown with existing profiles
+        function populateProfileDropdown() {
+            const select = document.getElementById('belongsToProfile');
+            // Keep only the first option (no profile)
+            select.innerHTML = '<option value="">-- No pertenece a ningún perfil (Estudio independiente) --</option>';
+
+            // Add all profiles (studies with es_perfil = true)
+            const profiles = todosEstudios.filter(e => e.es_perfil === true);
+            profiles.forEach(p => {
+                const option = document.createElement('option');
+                option.value = p.id;
+                option.textContent = `${p.codigo || '---'} - ${p.nombre}`;
+                option.dataset.codigo = p.codigo || '';
+                select.appendChild(option);
+            });
+        }
+
+        // Show/hide the "belongs to profile" section based on the "Es un Perfil" checkbox
+        function updateBelongsToProfileVisibility() {
+            const esPerfil = document.getElementById('estPerfil').checked;
+            const section = document.getElementById('belongsToProfileSection');
+
+            // If this IS a profile, hide the "belongs to" section (profiles don't belong to other profiles)
+            section.style.display = esPerfil ? 'none' : 'block';
+
+            // Reset selection when hiding
+            if (esPerfil) {
+                document.getElementById('chkBelongsToProfile').checked = false;
+                document.getElementById('profileDropdownContainer').style.display = 'none';
+                document.getElementById('belongsToProfile').value = '';
+                document.getElementById('profileCodeHint').style.display = 'none';
+            }
+        }
+
+        // Toggle profile dropdown visibility based on checkbox
+        function toggleProfileDropdown() {
+            const chk = document.getElementById('chkBelongsToProfile');
+            const container = document.getElementById('profileDropdownContainer');
+
+            if (chk.checked) {
+                container.style.display = 'block';
+                // Trigger onChange to update code if profile is already selected
+                onProfileBelongsChange();
+            } else {
+                container.style.display = 'none';
+                // Clear selection when unchecking
+                document.getElementById('belongsToProfile').value = '';
+                document.getElementById('profileCodeHint').style.display = 'none';
+            }
+        }
+
+        // Handle profile dropdown change - suggest code
+        function onProfileBelongsChange() {
+            const select = document.getElementById('belongsToProfile');
+            const hint = document.getElementById('profileCodeHint');
+            const suggestedCode = document.getElementById('suggestedCode');
+            const codigoInput = document.getElementById('estCodigo');
+
+            if (select.value) {
+                const selectedOption = select.options[select.selectedIndex];
+                const profileCodigo = selectedOption.dataset.codigo || '';
+
+                // Count existing components for this profile to suggest next code
+                const profileId = select.value;
+
+                // Suggest code format: PROFILE_CODE-N (e.g., QS6-1, QS6-2)
+                const existingCodes = todosEstudios
+                    .filter(e => e.codigo && e.codigo.startsWith(profileCodigo + '-'))
+                    .map(e => parseInt(e.codigo.split('-').pop()) || 0);
+
+                const nextNum = existingCodes.length > 0 ? Math.max(...existingCodes) + 1 : 1;
+                const suggestion = profileCodigo ? `${profileCodigo}-${nextNum}` : '';
+
+                suggestedCode.textContent = suggestion;
+                hint.style.display = suggestion ? 'block' : 'none';
+
+                // ALWAYS update code when profile changes (real-time update)
+                if (suggestion) {
+                    codigoInput.value = suggestion;
+                }
+            } else {
+                hint.style.display = 'none';
+                // Clear code if no profile selected (optional: user may want to keep it)
+                // codigoInput.value = '';
+            }
         }
 
         function closeEstudioModal() {
@@ -1167,7 +1355,7 @@ Alto: > 240"></textarea>
                 const data = {
                     codigo: document.getElementById('estCodigo').value.toUpperCase(),
                     nombre: document.getElementById('estNombre').value,
-                    categoria: document.getElementById('estCategoria').value,
+                    categoria: getFinalCategory(),
                     precio: parseFloat(document.getElementById('estPrecio').value),
                     tipo_muestra: document.getElementById('estMuestra').value,
                     tubo_recipiente: document.getElementById('estTubo').value,
@@ -1195,9 +1383,47 @@ Alto: > 240"></textarea>
                 if (id) {
                     await supabaseClient.from('estudios_laboratorio').update(data).eq('id', id);
                 } else {
-                    await supabaseClient.from('estudios_laboratorio').insert(data);
+                    // Insert the new study
+                    const { data: inserted, error: insertError } = await supabaseClient
+                        .from('estudios_laboratorio')
+                        .insert(data)
+                        .select('id')
+                        .single();
+
+                    if (insertError) throw insertError;
+
+                    // If a profile was selected, link this study to the profile
+                    const belongsToProfile = document.getElementById('belongsToProfile').value;
+                    if (belongsToProfile && inserted) {
+                        // Get the current max order for this profile
+                        const { data: maxOrderData } = await supabaseClient
+                            .from('estudio_componentes')
+                            .select('orden')
+                            .eq('perfil_id', belongsToProfile)
+                            .order('orden', { ascending: false })
+                            .limit(1);
+
+                        const nextOrder = (maxOrderData && maxOrderData.length > 0) ? (maxOrderData[0].orden + 1) : 1;
+
+                        // Insert the component link
+                        const { error: linkError } = await supabaseClient
+                            .from('estudio_componentes')
+                            .insert({
+                                perfil_id: belongsToProfile,
+                                componente_id: inserted.id,
+                                orden: nextOrder
+                            });
+
+                        if (linkError) {
+                            console.error('Error linking to profile:', linkError);
+                            showToast('Estudio guardado pero no se pudo vincular al perfil', 'warning');
+                        } else {
+                            showToast('Estudio guardado y vinculado al perfil', 'success');
+                        }
+                    } else {
+                        showToast('Estudio guardado', 'success');
+                    }
                 }
-                showToast('Estudio guardado', 'success');
                 closeEstudioModal();
                 loadEstudios();
             } catch (err) {
@@ -1236,7 +1462,10 @@ Alto: > 240"></textarea>
             componentesPerfilActual = [];
 
             if (id) {
-                const est = todosEstudios.find(e => e.id === id);
+                // Use loose equality for ID comparison (string vs number/UUID)
+                const est = todosEstudios.find(e => e.id == id);
+                console.log('Editing profile:', id, 'Found:', est);
+
                 if (est) {
                     document.getElementById('perfilCodigo').value = est.codigo || '';
                     document.getElementById('perfilNombre').value = est.nombre || '';
@@ -1244,16 +1473,19 @@ Alto: > 240"></textarea>
                     document.getElementById('perfilPrecio').value = est.precio || '';
                     document.getElementById('perfilIndicaciones').value = est.indicaciones || '';
 
-                    const { data: comps } = await supabaseClient
+                    // Fetch existing components with their order
+                    const { data: comps, error } = await supabaseClient
                         .from('estudio_componentes')
-                        .select('componente_id, orden, estudios_laboratorio(id, nombre)')
+                        .select('componente_id, orden, estudios_laboratorio:componente_id(id, nombre)')
                         .eq('perfil_id', id)
                         .order('orden');
 
-                    if (comps) {
+                    console.log('Profile components:', comps, 'Error:', error);
+
+                    if (comps && comps.length > 0) {
                         componentesPerfilActual = comps.map(c => ({
-                            id: c.estudios_laboratorio.id,
-                            nombre: c.estudios_laboratorio.nombre
+                            id: c.componente_id,
+                            nombre: c.estudios_laboratorio?.nombre || 'Estudio no encontrado'
                         }));
                     }
                 }
@@ -1294,14 +1526,56 @@ Alto: > 240"></textarea>
 
         function addCustomCompPerfil() { document.getElementById('buscCompPerfil').focus(); }
 
+        // Drag and drop state
+        let draggedIndex = null;
+
         function renderCompListPerfil() {
             const div = document.getElementById('compListPerfil');
             div.innerHTML = componentesPerfilActual.map((c, idx) => `
-                <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px;">
-                    <div><span style="color: var(--primary); font-weight: bold;">${idx + 1}.</span> ${c.nombre}</div>
+                <div class="comp-item" draggable="true" 
+                     ondragstart="handleDragStart(event, ${idx})" 
+                     ondragover="handleDragOver(event)" 
+                     ondrop="handleDrop(event, ${idx})"
+                     ondragend="handleDragEnd(event)"
+                     style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: grab; transition: all 0.2s;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="color: #94a3b8; cursor: grab;">☰</span>
+                        <span><span style="color: var(--primary); font-weight: bold;">${idx + 1}.</span> ${c.nombre}</span>
+                    </div>
                     <button class="btn-icon" style="color: #ef4444; border-color: #fee2e2;" onclick="removeCompPerfil(${idx})">×</button>
                 </div>
             `).join('');
+        }
+
+        function handleDragStart(e, idx) {
+            draggedIndex = idx;
+            e.target.style.opacity = '0.5';
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            e.currentTarget.style.borderTop = '3px solid #0d9488';
+        }
+
+        function handleDrop(e, dropIdx) {
+            e.preventDefault();
+            e.currentTarget.style.borderTop = '';
+
+            if (draggedIndex !== null && draggedIndex !== dropIdx) {
+                // Reorder the array
+                const item = componentesPerfilActual.splice(draggedIndex, 1)[0];
+                componentesPerfilActual.splice(dropIdx, 0, item);
+                renderCompListPerfil();
+            }
+        }
+
+        function handleDragEnd(e) {
+            e.target.style.opacity = '1';
+            draggedIndex = null;
+            // Reset all border highlights
+            document.querySelectorAll('.comp-item').forEach(el => el.style.borderTop = '');
         }
 
         function removeCompPerfil(idx) {

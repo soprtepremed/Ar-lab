@@ -683,6 +683,15 @@
                                 </div>
                             </div>
                             <div class="actions">
+                                <button class="btn btn-outline" onclick="openPrintPreview()"
+                                    style="border-color: #6366f1; color: #6366f1;"
+                                    title="Vista previa sin marcar como impreso">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    Vista Previa
+                                </button>
                                 <button class="btn btn-primary" onclick="saveCaptureResults()">
                                     <svg viewBox="0 0 24 24">
                                         <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z">
@@ -1798,6 +1807,17 @@
                     console.error(e);
                     showToast('Error desvalidando: ' + e.message, 'error');
                 }
+            }
+
+            // Open print preview without marking as printed (observation mode)
+            function openPrintPreview() {
+                if (!currentCaptureCita) {
+                    showToast('Selecciona un paciente primero', 'error');
+                    return;
+                }
+                // Open reporte.html in new window with preview=1 to indicate preview mode
+                const previewUrl = `reporte.html?id=${currentCaptureCita.id}&preview=1`;
+                window.open(previewUrl, '_blank', 'width=900,height=700,menubar=no,toolbar=no,location=no,status=no');
             }
 
             async function proceedValidation() {

@@ -219,8 +219,12 @@
         const supabaseKey = 'sb_publishable_31x2oYQjyxNJ2otN6TF-Kw_5VGXaGJd';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Set default date to today
-        document.getElementById('filterDate').valueAsDate = new Date();
+        // Set default date to today (local time)
+        const today = new Date();
+        const localDate = today.getFullYear() + '-' +
+            String(today.getMonth() + 1).padStart(2, '0') + '-' +
+            String(today.getDate()).padStart(2, '0');
+        document.getElementById('filterDate').value = localDate;
 
         // Load initially
         window.addEventListener('load', () => {

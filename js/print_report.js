@@ -217,10 +217,15 @@ async function loadReport() {
         document.getElementById('loading').style.display = 'none';
         document.getElementById('reportContent').style.display = 'block';
 
-        // Auto print after a short delay to ensure rendering
-        setTimeout(() => {
-            window.print();
-        }, 1000);
+        // Check if preview mode (don't auto-print in preview mode)
+        const isPreview = params.get('preview') === '1';
+
+        if (!isPreview) {
+            // Auto print after a short delay to ensure rendering
+            setTimeout(() => {
+                window.print();
+            }, 1000);
+        }
 
     } catch (err) {
         console.error(err);
