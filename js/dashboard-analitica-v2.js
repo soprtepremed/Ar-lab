@@ -263,9 +263,9 @@ function renderAnaliticaTable(pacientes, tbody, categoryFilter = 'all') {
             const totalEstudios = estudios.length;
 
             estudiosHtml += `
-                <span style="display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; border: 1px solid #e2e8f0; background: white;"
+                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 2px 5px; border-radius: 3px; font-size: 0.6rem; border: 1px solid #e2e8f0; background: white;"
                     title="${cat}: ${totalEstudios} estudio(s) - ${estadoLabels[estadoArea]}">
-                    <span style="width: 10px; height: 10px; border-radius: 50%; background: ${color};"></span>
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: ${color};"></span>
                     <span style="font-weight: 500; color: #334155;">${cat}</span>
                 </span>
             `;
@@ -275,25 +275,26 @@ function renderAnaliticaTable(pacientes, tbody, categoryFilter = 'all') {
 
         html += `
             <tr>
-                <td style="font-family: 'Consolas', 'Courier New', monospace; font-weight: 700; color: #000; font-size: 0.85rem;">${paciente.folio || 'N/A'}</td>
-                <td>
-                    <div style="font-weight: 500; color: #1e293b;">
+                <td style="padding: 6px 8px; white-space: nowrap;">
+                    <div style="font-family: 'Consolas', monospace; font-weight: 700; color: #000; font-size: 0.7rem;">${paciente.folio || 'N/A'}</div>
+                </td>
+                <td style="padding: 6px 8px;">
+                    <div style="font-weight: 500; color: #1e293b; font-size: 0.75rem;">
                         <a href="resultados.html?id=${paciente.citaIds[0]}" target="_self" style="text-decoration: none; color: inherit; cursor: pointer;" onmouseover="this.style.color='#0d9488'" onmouseout="this.style.color='inherit'">
                             ${paciente.nombre}
                         </a>
-                        ${paciente.paciente_sexo ? `<span style="font-size: 0.75rem; color: #64748b; font-weight: normal; margin-left: 5px;">(${paciente.paciente_sexo.charAt(0)})</span>` : ''}
                     </div>
-                    <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 3px; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                        ${fechaNac ? `<span style="display: inline-flex; align-items: center; gap: 3px;"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${fechaNac}</span>` : ''}
-                        ${paciente.telefono ? `<span style="display: inline-flex; align-items: center; gap: 3px;"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>${paciente.telefono}</span>` : ''}
+                    <div style="font-size: 0.6rem; color: #94a3b8; margin-top: 2px; display: flex; align-items: center; gap: 6px;">
+                        ${fechaNac ? `<span style="display: inline-flex; align-items: center; gap: 2px;"><svg viewBox="0 0 24 24" width="9" height="9" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${fechaNac}</span>` : ''}
+                        ${paciente.telefono ? `<span style="display: inline-flex; align-items: center; gap: 2px;"><svg viewBox="0 0 24 24" width="9" height="9" stroke="currentColor" fill="none" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>${paciente.telefono}</span>` : ''}
                     </div>
                 </td>
-                <td>${estudiosHtml}</td>
-                <td>
-                    <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
+                <td style="padding: 6px 8px;">${estudiosHtml}</td>
+                <td style="padding: 6px 8px;">
+                    <div style="display: flex; gap: 4px; flex-wrap: wrap;">
                         <button onclick="abrirModalEtiquetasPorFolio('${paciente.folio}')" title="Imprimir etiquetas"
-                            style="background: #fef3c7; border: none; padding: 0.4rem 0.6rem; border-radius: 4px; font-size: 0.7rem; color: #b45309; cursor: pointer; display: flex; align-items: center; gap: 0.2rem;">
-                            <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2">
+                            style="background: #fef3c7; border: none; padding: 4px 6px; border-radius: 4px; font-size: 0.6rem; color: #b45309; cursor: pointer; display: flex; align-items: center; gap: 2px;">
+                            <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" fill="none" stroke-width="2">
                                 <path d="M6 9V2h12v7"></path>
                                 <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                                 <rect x="6" y="14" width="12" height="8"></rect>
@@ -301,8 +302,8 @@ function renderAnaliticaTable(pacientes, tbody, categoryFilter = 'all') {
                             Etiquetas
                         </button>
                         <button onclick="procesarTodosPaciente('${paciente.citaIds[0]}')" title="Liberar todos"
-                            style="background: #dbeafe; border: none; padding: 0.4rem 0.6rem; border-radius: 4px; font-size: 0.7rem; color: #1d4ed8; cursor: pointer; display: flex; align-items: center; gap: 0.2rem;">
-                            <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2">
+                            style="background: #dbeafe; border: none; padding: 4px 6px; border-radius: 4px; font-size: 0.6rem; color: #1d4ed8; cursor: pointer; display: flex; align-items: center; gap: 2px;">
+                            <svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" fill="none" stroke-width="2">
                                 <path d="M20 6L9 17l-5-5"></path>
                             </svg>
                             Liberar

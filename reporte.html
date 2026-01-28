@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de Resultados - Ar Lab</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <!-- Using Roboto for that clean, medical report look -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -75,10 +76,30 @@
             width: 210mm;
             min-height: 297mm;
             margin: 0 auto;
-            background: white;
+            background-color: white;
+            /* Fondo movido a elemento <img> para forzar impresión */
+            position: relative;
+            overflow: hidden;
+
             padding: 10mm 15mm;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Fondo forzado para impresión/PDF */
+        .print-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Asegurar que el contenido esté encima del fondo */
+        .report-content-wrapper {
             position: relative;
+            z-index: 1;
         }
 
         /* HEADER */
@@ -141,6 +162,18 @@
             border-collapse: collapse;
             font-size: 9pt;
             margin-bottom: 20px;
+        }
+
+        /* Evitar cortes de página en filas */
+        .results-table tr {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        /* Evitar corte después del encabezado de perfil */
+        .results-table tr.profile-header-row {
+            page-break-after: avoid;
+            break-after: avoid;
         }
 
         .results-table thead th {
@@ -228,6 +261,27 @@
                 margin: 0;
                 width: 100%;
                 height: auto;
+                min-height: auto;
+            }
+
+            /* Forzar paginación limpia */
+            .results-table tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .results-table thead {
+                display: table-header-group;
+            }
+
+            .section-header {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+
+            .footer-section {
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
         }
     </style>
@@ -280,7 +334,7 @@
                     .select(`
                         *,
                         citas_estudios (
-                            id, valor_resultado, estado_resultado, resultado,
+                            id, valor_resultado, estado_resultado, resultado, mostrar_en_reporte,
                             estudios_laboratorio ( id, nombre, area, categoria, es_perfil, rango_referencia, metodo, unidad )
                         )
                     `)
@@ -372,8 +426,14 @@
             // --- GROUP STUDIES BY PROFILES OR CATEGORY ---
             const allStudies = cita.citas_estudios || [];
 
-            // Filter out profile parent items (es_perfil = true) - we'll show them as headers
-            const componentStudies = allStudies.filter(s => !s.estudios_laboratorio?.es_perfil);
+            // Filter out profile parent items (es_perfil = true) AND studies with mostrar_en_reporte = false
+            const componentStudies = allStudies.filter(s => {
+                // Excluir perfiles padre
+                if (s.estudios_laboratorio?.es_perfil) return false;
+                // Excluir estudios con casilla desmarcada (no deben aparecer en reporte)
+                if (s.mostrar_en_reporte === false) return false;
+                return true;
+            });
 
             // Group by profile name (for profile components) or by category (for individual studies)
             const groups = {};
@@ -589,10 +649,18 @@
 
             // Adjust options to handle margins better for strict layout
             const opt = {
-                margin: [0, 0, 0, 0], // No parsing margin, let CSS handle pading
+                margin: [0, 0, 0, 0], // No parsing margin, let CSS handle padding
                 filename: `Reporte_${CITA_ID}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    letterRendering: true,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    allowTaint: true,
+                    foreignObjectRendering: true
+                },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 

@@ -298,14 +298,18 @@ function renderAppointmentsList() {
                 </div>
             </td>
             <td>
-                <div class="patient-info">
-                    <div class="patient-avatar" style="width: 30px; height: 30px; font-size: 0.75rem;">${apt.paciente_nombre.charAt(0).toUpperCase()}</div>
-                    <div>
-                        <div class="patient-name" style="font-size: 0.85rem;">
+                <div class="patient-info" style="align-items: flex-start;">
+                    <div class="patient-avatar" style="width: 32px; height: 32px; font-size: 0.75rem; flex-shrink: 0;">${apt.paciente_nombre.charAt(0).toUpperCase()}</div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div class="patient-name" style="font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             ${apt.paciente_nombre} 
-                            ${apt.paciente_sexo ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: normal; margin-left: 4px;">(${apt.paciente_sexo.charAt(0)})</span>` : ''}
+                            ${apt.paciente_sexo ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: normal;">(${apt.paciente_sexo.charAt(0).toUpperCase()})</span>` : ''}
                         </div>
-                        <div class="patient-phone">${apt.paciente_telefono || ''}</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.25rem; font-size: 0.65rem; color: #64748b;">
+                            ${apt.expediente_numero ? `<span title="Expediente" style="display: inline-flex; align-items: center; gap: 3px; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1e40af" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>${apt.expediente_numero}</span>` : ''}
+                            ${apt.fecha_nacimiento ? `<span title="Fecha Nacimiento" style="display: inline-flex; align-items: center; gap: 3px; background: #fef3c7; padding: 2px 6px; border-radius: 4px; color: #92400e;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${new Date(apt.fecha_nacimiento + 'T00:00:00').toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' })}</span>` : ''}
+                            ${apt.cama ? `<span title="Habitación/Cama" style="display: inline-flex; align-items: center; gap: 3px; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0c4a6e;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#0369a1" stroke-width="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>${apt.cama}</span>` : ''}
+                        </div>
                     </div>
                 </div>
             </td>
@@ -328,40 +332,34 @@ function renderAppointmentsList() {
                 // OR we just map everything but hide excess?
                 // User Request: "Group by Profile".
 
-                // Let's create a visual component that Toggles.
-                // We will show the first 2-3 items or just the "Main" ones.
-                // Actually, let's wrap them all in a container that allows specific expansion.
-
+                // Let's create an accordion style component
                 const visibleStudies = apt.estudios;
-                const limit = 1; /* Showing only 1 improves grouping feel */
                 const count = visibleStudies.length;
+                const detailsId = `studies-accordion-${apt.id}`;
 
-                // Create unique ID for this row's details
-                const detailsId = `studies-details-${apt.id}`;
-
-                // Render simplified view
-                let badges = visibleStudies.slice(0, limit).map(e =>
-                    `<span class="study-badge-simple">${e.codigo || ''} ${e.nombre}</span>`
-                ).join('');
-
-                if (count > limit) {
-                    badges += `<span class="study-badge-more" onclick="toggleStudyDetails('${detailsId}', this)">+${count - limit} más...</span>`;
-                }
-
-                // Render hidden details popover
-                const allBadges = visibleStudies.map(e =>
-                    `<div class="study-detail-item">${e.codigo || ''} ${e.nombre}</div>`
-                ).join('');
+                // Build accordion items
+                const accordionItems = visibleStudies.map((e, idx) => `
+                    <div class="accordion-study-item">
+                        <span class="accordion-study-code">${e.codigo || '---'}</span>
+                        <span class="accordion-study-name">${e.nombre}</span>
+                    </div>
+                `).join('');
 
                 return `
-                        <div class="studies-container">
-                            <div class="studies-preview">${badges}</div>
-                            <div id="${detailsId}" class="studies-popover" style="display:none;">
-                                <div class="popover-header">Estudios Solicitados <span class="popover-close" onclick="toggleStudyDetails('${detailsId}')">×</span></div>
-                                <div class="popover-content">${allBadges}</div>
+                    <div class="studies-accordion">
+                        <div class="accordion-header" onclick="toggleAccordion('${detailsId}', this)">
+                            <div class="accordion-summary">
+                                <span class="accordion-icon">🧪</span>
+                                <span class="accordion-count">${count}</span>
+                                <span class="accordion-label">estudio${count !== 1 ? 's' : ''}</span>
                             </div>
+                            <span class="accordion-arrow" id="arrow-${detailsId}">▼</span>
                         </div>
-                    `;
+                        <div id="${detailsId}" class="accordion-body" style="display:none;">
+                            ${accordionItems}
+                        </div>
+                    </div>
+                `;
             })()}
             </td>
             <td>
@@ -1156,12 +1154,50 @@ function toggleStudyDetails(id, triggerEl) {
     if (!popover) return;
 
     // Toggle current
-    if (popover.style.display === 'none') {
+    if (popover.style.display === 'none' || !popover.style.display) {
         // Close others first
         document.querySelectorAll('.studies-popover').forEach(el => el.style.display = 'none');
+
+        // Posicionar el popover cerca del elemento que lo activa
+        if (triggerEl) {
+            const rect = triggerEl.getBoundingClientRect();
+            const popoverHeight = 200; // estimado
+            const viewportHeight = window.innerHeight;
+
+            // Decidir si mostrar arriba o abajo
+            let top = rect.bottom + 8;
+            if (rect.bottom + popoverHeight > viewportHeight) {
+                // No cabe abajo, mostrar arriba
+                top = rect.top - popoverHeight - 8;
+                if (top < 0) top = 10; // Si tampoco cabe arriba, forzar arriba
+            }
+
+            popover.style.top = top + 'px';
+            popover.style.left = Math.max(10, rect.left - 50) + 'px';
+        }
+
         popover.style.display = 'block';
     } else {
         popover.style.display = 'none';
+    }
+}
+
+// Toggle Accordion for studies
+function toggleAccordion(id, headerEl) {
+    const body = document.getElementById(id);
+    const arrow = document.getElementById('arrow-' + id);
+    if (!body) return;
+
+    const isOpen = body.style.display !== 'none';
+
+    if (isOpen) {
+        body.style.display = 'none';
+        if (arrow) arrow.textContent = '▼';
+        if (headerEl) headerEl.classList.remove('open');
+    } else {
+        body.style.display = 'block';
+        if (arrow) arrow.textContent = '▲';
+        if (headerEl) headerEl.classList.add('open');
     }
 }
 

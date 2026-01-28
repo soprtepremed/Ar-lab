@@ -121,33 +121,34 @@ body {
 /* Cards & Stats */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .stat-card {
     background: var(--card-bg);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .stat-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .stat-icon svg {
-    width: 28px;
-    height: 28px;
+    width: 18px;
+    height: 18px;
     stroke: currentColor;
     fill: none;
     stroke-width: 2;
@@ -174,15 +175,17 @@ body {
 }
 
 .stat-info h3 {
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-dark);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
+    line-height: 1.2;
 }
 
 .stat-info p {
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     color: var(--text-light);
+    margin-top: 0.1rem;
 }
 
 /* Tables */
@@ -1239,17 +1242,16 @@ tr:hover td {
 }
 
 .studies-popover {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
+    position: fixed;
+    z-index: 9999;
     background: white;
     border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    min-width: 250px;
-    margin-top: 8px;
+    border-radius: 10px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    min-width: 280px;
+    max-width: 350px;
     animation: fadeIn 0.15s ease-out;
+    /* Se posicionará con JS */
 }
 
 .popover-header {
@@ -1330,4 +1332,106 @@ tr:hover td {
 
 .status-dot:hover {
     transform: scale(2.0);
+}
+
+/* =========================================
+   Studies Accordion
+   ========================================= */
+
+.studies-accordion {
+    width: 100%;
+}
+
+.accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid #99f6e4;
+    transition: all 0.2s ease;
+}
+
+.accordion-header:hover {
+    background: linear-gradient(135deg, #ccfbf1 0%, #bae6fd 100%);
+    border-color: #5eead4;
+}
+
+.accordion-header.open {
+    border-radius: 8px 8px 0 0;
+    border-bottom-color: transparent;
+}
+
+.accordion-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.accordion-icon {
+    font-size: 0.9rem;
+}
+
+.accordion-count {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f766e;
+}
+
+.accordion-label {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.accordion-arrow {
+    font-size: 0.65rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+}
+
+.accordion-body {
+    background: white;
+    border: 1px solid #99f6e4;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 0.5rem;
+    animation: accordionOpen 0.2s ease-out;
+}
+
+@keyframes accordionOpen {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        max-height: 300px;
+    }
+}
+
+.accordion-study-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    transition: background 0.15s;
+}
+
+.accordion-study-item:hover {
+    background: #f0fdfa;
+}
+
+.accordion-study-code {
+    font-weight: 600;
+    color: #0d9488;
+    min-width: 70px;
+}
+
+.accordion-study-name {
+    color: #334155;
 }

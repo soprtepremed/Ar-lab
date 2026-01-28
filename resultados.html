@@ -10,6 +10,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="css/performance.css">
     <script src="navbar.js" defer></script>
     <style>
         :root {
@@ -742,6 +743,84 @@
             let currentProfileMap = {}; // Maps component_id -> profile_name
             let currentOrderMap = {}; // Maps component_id -> order
             let currentUser = null;
+            let cachedReferences = {}; // Cache para referencias por edad
+
+            // Función para calcular edad en días
+            function calcularEdadEnDias(fechaNacimiento) {
+                if (!fechaNacimiento) return null;
+                const dob = new Date(fechaNacimiento);
+                const diff = Date.now() - dob.getTime();
+                return Math.floor(diff / (1000 * 60 * 60 * 24));
+            }
+
+            // Función para obtener referencia por edad desde Supabase
+            async function obtenerReferenciaPorEdad(estudioId, edadDias, sexo = null) {
+                const cacheKey = `${estudioId}-${edadDias}-${sexo || 'N'}`;
+                if (cachedReferences[cacheKey]) return cachedReferences[cacheKey];
+
+                try {
+                    // Consultar directamente la tabla valores_referencia
+                    let query = supabaseClient
+                        .from('valores_referencia')
+                        .select('*')
+                        .eq('estudio_id', estudioId);
+
+                    // Filtrar por edad si está disponible
+                    if (edadDias !== null) {
+                        query = query.or(`edad_min_dias.is.null,edad_min_dias.lte.${edadDias}`)
+                            .or(`edad_max_dias.is.null,edad_max_dias.gte.${edadDias}`);
+                    }
+
+                    // Filtrar por sexo si está disponible
+                    if (sexo) {
+                        query = query.or(`sexo.is.null,sexo.eq.${sexo}`);
+                    }
+
+                    query = query.order('orden', { ascending: true }).limit(1);
+
+                    const { data, error } = await query;
+
+                    if (error || !data || data.length === 0) {
+                        // Si no hay referencia por edad, buscar referencia general
+                        const { data: generalRef } = await supabaseClient
+                            .from('valores_referencia')
+                            .select('*')
+                            .eq('estudio_id', estudioId)
+                            .is('edad_min_dias', null)
+                            .is('edad_max_dias', null)
+                            .limit(1);
+
+                        if (generalRef && generalRef.length > 0) {
+                            const ref = generalRef[0];
+                            let refText = '';
+                            if (ref.valor_min !== null && ref.valor_max !== null) {
+                                refText = `${ref.valor_min} - ${ref.valor_max}`;
+                            } else if (ref.valor_texto) {
+                                refText = ref.valor_texto;
+                            }
+                            if (ref.descripcion) refText += ` (${ref.descripcion})`;
+                            cachedReferences[cacheKey] = refText;
+                            return refText;
+                        }
+                        return null;
+                    }
+
+                    const ref = data[0];
+                    let refText = '';
+                    if (ref.valor_min !== null && ref.valor_max !== null) {
+                        refText = `${ref.valor_min} - ${ref.valor_max}`;
+                    } else if (ref.valor_texto) {
+                        refText = ref.valor_texto;
+                    }
+                    if (ref.descripcion) refText += ` (${ref.descripcion})`;
+
+                    cachedReferences[cacheKey] = refText;
+                    return refText;
+                } catch (e) {
+                    console.log('No age-specific ref for', estudioId, e);
+                    return null;
+                }
+            }
 
             document.addEventListener('DOMContentLoaded', async () => {
                 checkAuth();
@@ -1387,11 +1466,11 @@
                                 <th style="border: 1px solid #c0c0c0; padding: 4px; text-align: center; width: 40px;" title="Incluir en Reporte">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 </th>
-                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: left; width: auto; color: #333; font-weight: 600;">${isProfile ? '' : 'ESTUDIO'}</th>
-                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: left; width: 20%; color: #333; font-weight: 600;">RESULTADO</th>
-                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; width: 10%; color: #333; font-weight: 600;">UNIDADES</th>
-                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; width: 25%; color: #333; font-weight: 600;">VALORES DE REFERENCIA</th>
-                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; width: 20%; color: #333; font-weight: 600;">ESTADO</th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: left; width: 25%; color: #333; font-weight: 600;">${isProfile ? '' : 'ESTUDIO'}</th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: left; width: 18%; color: #333; font-weight: 600;">RESULTADO</th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; width: 8%; color: #333; font-weight: 600;">UNIDADES</th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; width: 18%; color: #333; font-weight: 600;">VALORES DE REFERENCIA</th>
+                                <th style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; width: 10%; color: #333; font-weight: 600;">ESTADO</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -1425,8 +1504,26 @@
                             // Checkbox state (default true if undefined)
                             const showInReport = item.mostrar_en_reporte !== false;
 
-                            // Referencia formatting
+                            // Referencia formatting - Prefer age-based reference if available
                             let refText = item.rango_referencia || item.estudios_laboratorio?.rango_referencia || '';
+
+                            // Check for age-specific reference (async, will update later if found)
+                            const estId = item.estudios_laboratorio?.id;
+                            const edadDias = calcularEdadEnDias(c.fecha_nacimiento);
+                            const sexo = c.paciente_sexo?.toUpperCase().charAt(0) || null;
+                            if (estId && edadDias !== null) {
+                                obtenerReferenciaPorEdad(estId, edadDias, sexo).then(ageRef => {
+                                    if (ageRef) {
+                                        const refCell = document.querySelector(`[data-id="${item.id}"]`)?.closest('tr')?.querySelectorAll('td')[4];
+                                        if (refCell) {
+                                            refCell.innerHTML = `<span style="color: #0f766e; font-weight: 500;">${ageRef}</span>`;
+                                            // Also update the input's data-ref for validation
+                                            const input = document.querySelector(`[data-id="${item.id}"]`);
+                                            if (input) input.dataset.ref = ageRef;
+                                        }
+                                    }
+                                });
+                            }
 
                             row.innerHTML = `
                             <td style="border: 1px solid #c0c0c0; padding: 0; vertical-align: middle; text-align: center; background: #fff;">
@@ -1435,8 +1532,8 @@
                                     onchange="toggleReporte('${item.id}', this.checked)"
                                     style="cursor: pointer; width: 16px; height: 16px; accent-color: #0f766e;">
                             </td>
-                            <td style="border: 1px solid #c0c0c0; padding: 4px 8px; vertical-align: middle; opacity: ${showInReport ? '1' : '0.5'};">
-                                <div style="font-weight: 600; color: #000;">
+                            <td style="border: 1px solid #c0c0c0; padding: 3px 6px; vertical-align: middle; opacity: ${showInReport ? '1' : '0.5'};">
+                                <div style="font-weight: 600; color: #000; font-size: 0.8rem; line-height: 1.2;">
                                     ${item.estudios_laboratorio?.nombre || item.nombre} 
                                     ${isCalculated ? `
                                         <span title="Fórmula: ${item.estudios_laboratorio?.formula || item.formula || 'Automática'}" 
@@ -1459,38 +1556,78 @@
                             </td>
                             <td style="border: 1px solid #c0c0c0; padding: 0; vertical-align: middle; background: ${initialBg}; transition: background 0.3s;" id="cell-bg-${item.id}">
                                 <div style="display: flex; align-items: center; width: 100%; height: 100%;">
-                                    <input type="text" class="capture-input"
-                                        data-id="${item.id}"
-                                        data-code="${item.estudios_laboratorio?.codigo || item.codigo || ''}"
-                                        data-formula="${item.estudios_laboratorio?.formula || item.formula || ''}"
-                                        data-status="${item.estado_resultado}"
-                                        data-ref="${refText}"
-                                        value="${item.valor_resultado || ''}"
-                                        ${(isCalculated || item.estado_resultado === 'validado' || item.estado_resultado === 'entregado') ? 'readonly' : ''}
-                                        oninput="validateInputRange(this); calculateFormulas(); updateCellColor(this);"
-                                        onkeydown="
-                                            if(event.key==='Enter' || event.key==='ArrowDown'){
-                                                event.preventDefault(); 
-                                                const inputs=[...document.querySelectorAll('.capture-input')]; 
-                                                const idx=inputs.indexOf(this); 
-                                                if(inputs[idx+1]) inputs[idx+1].focus();
-                                            }
-                                            if(event.key==='ArrowUp'){
-                                                event.preventDefault(); 
-                                                const inputs=[...document.querySelectorAll('.capture-input')]; 
-                                                const idx=inputs.indexOf(this); 
-                                                if(inputs[idx-1]) inputs[idx-1].focus();
-                                            }
-                                        "
-                                        style="flex: 1; width: auto; height: 100%; border: none; padding: 6px 8px; font-family: inherit; font-size: inherit; font-weight: 400; color: #000; outline: none; background: transparent;"
-                                    >
+                                    ${(() => {
+                                    const nombre = (item.estudios_laboratorio?.nombre || item.nombre || '').toLowerCase();
+                                    const codigo = (item.estudios_laboratorio?.codigo || item.codigo || '').toLowerCase();
+                                    const isReadonly = isCalculated || item.estado_resultado === 'validado' || item.estado_resultado === 'entregado';
+                                    const currentVal = item.valor_resultado || '';
+
+                                    // Factor RH (verificar primero porque puede tener código con 'gs-')
+                                    if (nombre.includes('factor rh') || nombre.includes('rh factor') || nombre.includes('factor r.h') || (nombre.includes('rh') && !nombre.includes('grupo'))) {
+                                        const options = ['', 'Positivo', 'Negativo'];
+                                        return `<select class="capture-input" 
+                                                data-id="${item.id}"
+                                                data-code="${item.estudios_laboratorio?.codigo || item.codigo || ''}"
+                                                data-formula=""
+                                                data-status="${item.estado_resultado}"
+                                                data-ref="${refText}"
+                                                ${isReadonly ? 'disabled' : ''}
+                                                onchange="updateCellColor(this);"
+                                                style="flex: 1; width: 100%; height: 100%; border: none; padding: 4px 6px; font-family: inherit; font-size: 0.85rem; font-weight: 600; color: #000; outline: none; background: transparent; cursor: pointer;">
+                                                ${options.map(opt => `<option value="${opt}" ${currentVal === opt ? 'selected' : ''}>${opt || 'Seleccionar...'}</option>`).join('')}
+                                            </select>`;
+                                    }
+
+                                    // Grupo Sanguíneo
+                                    if (nombre.includes('grupo sangu') || nombre.includes('grupo sanguineo') || (codigo.includes('gs') && !nombre.includes('factor'))) {
+                                        const options = ['', 'A', 'B', 'AB', 'O'];
+                                        return `<select class="capture-input" 
+                                                data-id="${item.id}"
+                                                data-code="${item.estudios_laboratorio?.codigo || item.codigo || ''}"
+                                                data-formula=""
+                                                data-status="${item.estado_resultado}"
+                                                data-ref="${refText}"
+                                                ${isReadonly ? 'disabled' : ''}
+                                                onchange="updateCellColor(this);"
+                                                style="flex: 1; width: 100%; height: 100%; border: none; padding: 4px 6px; font-family: inherit; font-size: 0.85rem; font-weight: 600; color: #000; outline: none; background: transparent; cursor: pointer;">
+                                                ${options.map(opt => `<option value="${opt}" ${currentVal === opt ? 'selected' : ''}>${opt || 'Seleccionar...'}</option>`).join('')}
+                                            </select>`;
+                                    }
+
+                                    // Input normal para otros estudios
+                                    return `<input type="text" class="capture-input"
+                                            data-id="${item.id}"
+                                            data-code="${item.estudios_laboratorio?.codigo || item.codigo || ''}"
+                                            data-formula="${item.estudios_laboratorio?.formula || item.formula || ''}"
+                                            data-status="${item.estado_resultado}"
+                                            data-ref="${refText}"
+                                            value="${currentVal}"
+                                            ${isReadonly ? 'readonly' : ''}
+                                            oninput="validateInputRange(this); calculateFormulas(); updateCellColor(this);"
+                                            onkeydown="
+                                                if(event.key==='Enter' || event.key==='ArrowDown'){
+                                                    event.preventDefault(); 
+                                                    const inputs=[...document.querySelectorAll('.capture-input')]; 
+                                                    const idx=inputs.indexOf(this); 
+                                                    if(inputs[idx+1]) inputs[idx+1].focus();
+                                                }
+                                                if(event.key==='ArrowUp'){
+                                                    event.preventDefault(); 
+                                                    const inputs=[...document.querySelectorAll('.capture-input')]; 
+                                                    const idx=inputs.indexOf(this); 
+                                                    if(inputs[idx-1]) inputs[idx-1].focus();
+                                                }
+                                            "
+                                            style="flex: 1; width: auto; height: 100%; border: none; padding: 4px 6px; font-family: inherit; font-size: 0.85rem; font-weight: 400; color: #000; outline: none; background: transparent;"
+                                        >`;
+                                })()}
                                     <span class="range-indicator" style="padding: 0 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; min-width: 24px;"></span>
                                 </div>
                             </td>
-                            <td style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; vertical-align: middle; font-size: 0.85rem; color: #334155;">
+                            <td style="border: 1px solid #c0c0c0; padding: 3px 6px; text-align: center; vertical-align: middle; font-size: 0.75rem; color: #334155;">
                                 ${item.unidades || ''}
                             </td>
-                            <td style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; vertical-align: middle; font-size: 0.85rem; color: #334155;">
+                            <td style="border: 1px solid #c0c0c0; padding: 3px 6px; text-align: center; vertical-align: middle; font-size: 0.75rem; color: #0f766e; font-weight: 500;">
                                 ${refText || '---'}
                             </td>
                             <td style="border: 1px solid #c0c0c0; padding: 4px 8px; text-align: center; vertical-align: middle;">
@@ -1823,10 +1960,11 @@
             async function proceedValidation() {
                 document.getElementById('validationConfirmModal').style.display = 'none';
 
-                // Find eligible items
+                // Find eligible items (only those with mostrar_en_reporte = true)
                 const toValidate = [];
                 currentCaptureCita.citas_estudios.forEach(ce => {
-                    if (ce.estado_resultado === 'listo') {
+                    // Solo validar si está en estado 'listo' Y tiene la casilla de reporte marcada
+                    if (ce.estado_resultado === 'listo' && ce.mostrar_en_reporte !== false) {
                         toValidate.push(ce.id);
                     }
                 });

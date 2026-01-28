@@ -161,25 +161,25 @@ async function loadWorkList() {
                 }
 
                 row.innerHTML = `
-                    <td>
-                        <div style="font-size: 0.9rem; font-weight: 700; color: #1e293b; text-align: center; background: ${apt.estado === 'llamado' ? '#ffedd5' : '#f0fdfa'}; padding: 0.2rem 0.4rem; border-radius: 5px; font-family: 'Consolas', monospace;">
+                    <td style="padding: 4px 6px;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #1e293b; text-align: center; background: ${apt.estado === 'llamado' ? '#ffedd5' : '#f0fdfa'}; padding: 0.15rem 0.3rem; border-radius: 4px; font-family: 'Consolas', monospace;">
                             ${apt.folio_atencion || '--'}
                         </div>
                     </td>
-                    <td>
-                        <div style="font-weight: 600; color: #0f172a; font-size: 0.85rem; line-height: 1.2; display: flex; align-items: center; flex-wrap: wrap;">
+                    <td style="padding: 4px 6px;">
+                        <div style="font-weight: 600; color: #0f172a; font-size: 0.75rem; line-height: 1.2; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
                             ${apt.paciente_nombre}
                             ${(() => {
                         if (!apt.paciente_sexo) return '';
                         const s = apt.paciente_sexo.toLowerCase();
-                        if (s === 'masculino' || s === 'm') return `<span style="font-size: 0.7rem; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 6px; margin-left: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 2px;">♂ MASC</span>`;
-                        if (s === 'femenino' || s === 'f') return `<span style="font-size: 0.7rem; background: #fce7f3; color: #db2777; padding: 2px 6px; border-radius: 6px; margin-left: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 2px;">♀ FEM</span>`;
-                        return `<span style="font-size: 0.7rem; background: #f1f5f9; color: #64748b; padding: 2px 6px; border-radius: 6px; margin-left: 8px; font-weight: 600;">${apt.paciente_sexo}</span>`;
+                        if (s === 'masculino' || s === 'm') return `<span style="font-size: 0.55rem; background: #e0f2fe; color: #0369a1; padding: 1px 4px; border-radius: 3px; font-weight: 700;">M</span>`;
+                        if (s === 'femenino' || s === 'f') return `<span style="font-size: 0.55rem; background: #fce7f3; color: #db2777; padding: 1px 4px; border-radius: 3px; font-weight: 700;">F</span>`;
+                        return `<span style="font-size: 0.55rem; background: #f1f5f9; color: #64748b; padding: 1px 4px; border-radius: 3px;">${apt.paciente_sexo.charAt(0)}</span>`;
                     })()}
                         </div>
-                        <div style="font-size: 0.7rem; color: #64748b; margin-top: 4px; display: flex; align-items: center; gap: 10px;">
-                            <span style="display: inline-flex; align-items: center; gap: 3px;" title="Fecha de Nacimiento">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <div style="font-size: 0.6rem; color: #64748b; margin-top: 2px; display: flex; align-items: center; gap: 8px;">
+                            <span style="display: inline-flex; align-items: center; gap: 2px;" title="Fecha de Nacimiento">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                                 ${(() => {
                         const rawDate = apt.fecha_nacimiento || apt.paciente_fecha_nacimiento;
                         if (!rawDate) return 'N/A';
@@ -189,21 +189,21 @@ async function loadWorkList() {
                     })()} 
                                 <span style="color: var(--primary); font-weight: 600;">(${edadStr})</span>
                             </span>
-                            <span style="display: inline-flex; align-items: center; gap: 3px;" title="Teléfono">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span style="display: inline-flex; align-items: center; gap: 2px;" title="Teléfono">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                                 ${apt.paciente_telefono || '--'}
                             </span>
                         </div>
                     </td>
-                    <td>
-                        <div style="font-size: 0.75rem; color: #334155; line-height: 1.4;">
+                    <td style="padding: 4px 6px;">
+                        <div style="font-size: 0.65rem; color: #334155; line-height: 1.3; max-width: 280px;">
                              ${apt.estudios && apt.estudios.length > 0
                         ? apt.estudios.map(e => e.nombre).join(', ')
                         : '<span style="color: #94a3b8; font-style: italic;">Sin estudios</span>'}
                         </div>
                     </td>
-                    <td>${badge}</td>
-                    <td>
+                    <td style="padding: 4px 6px;">${badge}</td>
+                    <td style="padding: 4px 6px;">
                         ${buttonHtml}
                     </td>
                 `;

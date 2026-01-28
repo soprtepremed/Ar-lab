@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Ar Lab - Nueva Cita</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Roboto:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="css/performance.css">
     <script src="navbar.js" defer></script>
     <style>
         :root {
@@ -23,6 +27,16 @@
             --text-dark: #1e293b;
             --text-light: #64748b;
             --border: #e2e8f0;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         * {
@@ -533,6 +547,247 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ========================================
+           NUEVO LAYOUT COMPACTO 2 COLUMNAS
+           ======================================== */
+
+        /* Full viewport layout - OCUPA TODO EL ESPACIO */
+        .compact-layout {
+            display: grid;
+            grid-template-columns: 70% 30%;
+            gap: 0;
+            height: calc(100vh - 70px);
+            padding: 0;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        /* Left Panel - Datos Compactos */
+        .panel-left {
+            background: white;
+            border-radius: 0;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .panel-left .form-section {
+            padding: 0.35rem 0.5rem;
+            margin-bottom: 0.35rem;
+            border-radius: 6px;
+        }
+
+        .panel-left .section-header {
+            font-size: 0.65rem;
+            margin-bottom: 0.35rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .panel-left .form-row {
+            gap: 0.35rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .panel-left .form-group {
+            margin-bottom: 0.25rem;
+        }
+
+        .panel-left .form-label {
+            font-size: 0.6rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .panel-left .form-input,
+        .panel-left .form-select {
+            padding: 0.3rem 0.4rem;
+            font-size: 0.75rem;
+        }
+
+        /* Payment compact */
+        .panel-left .payment-methods {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.35rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .panel-left .method-card {
+            padding: 0.35rem;
+            border-radius: 6px;
+        }
+
+        .panel-left .method-card svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .panel-left .method-card span {
+            font-size: 0.55rem;
+        }
+
+        /* Total and Submit Fixed */
+        .panel-left-footer {
+            margin-top: auto;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #e2e8f0;
+        }
+
+        .total-display {
+            text-align: center;
+            padding: 0.5rem;
+            background: #f0fdfa;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .total-display .total-label {
+            font-size: 0.6rem;
+            color: #0f766e;
+            font-weight: 600;
+        }
+
+        .total-display .total-amount {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #0f766e;
+        }
+
+        .btn-submit-compact {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+            border-radius: 8px;
+        }
+
+        /* Right Panel - Estudios */
+        .panel-right {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #f8fafc;
+        }
+
+        .panel-right-header {
+            background: white;
+            padding: 0.6rem 1rem;
+            border-radius: 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .panel-right-catalog {
+            flex: 1;
+            background: #f8fafc;
+            border-radius: 0;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
+
+        .panel-right-selected {
+            background: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0;
+            margin-top: 0;
+            max-height: 80px;
+            overflow-y: auto;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Selected tags compact */
+        .selected-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: #ccfbf1;
+            border: 1px solid #0d9488;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #0f766e;
+            margin: 0.15rem;
+        }
+
+        .selected-tag .remove-btn {
+            cursor: pointer;
+            color: #ef4444;
+            font-weight: bold;
+            margin-left: 0.25rem;
+        }
+
+        /* Estudios grid compact */
+        .studies-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.35rem;
+        }
+
+        .estudio-item-compact {
+            padding: 0.35rem 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.1s;
+        }
+
+        .estudio-item-compact:hover {
+            background: #f0fdfa;
+            border-color: var(--primary);
+        }
+
+        .estudio-item-compact.selected {
+            background: #ccfbf1;
+            border-color: var(--primary);
+        }
+
+        .estudio-item-compact .nombre {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1e293b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .estudio-item-compact .precio {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        /* Category header compact */
+        .category-title-compact {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            margin: 0.5rem 0 0.25rem 0;
+            padding-bottom: 0.15rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Hide original layout when compact is active */
+        .compact-mode .main-container {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .compact-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+                overflow: auto;
+            }
+
+            .panel-left,
+            .panel-right {
+                height: auto;
+                max-height: none;
+            }
+        }
     </style>
 </head>
 
@@ -542,8 +797,309 @@
     <!-- Avatar Container -->
     <div id="navbar-container"></div>
 
-    <!-- Main Content -->
-    <main class="main-container">
+    <!-- ========================================
+         NUEVO LAYOUT COMPACTO 2 COLUMNAS
+         ======================================== -->
+    <form id="appointmentFormCompact" class="compact-layout" onsubmit="saveAppointment(event)"
+        style="position: fixed; top: 70px; left: 0; right: 0; bottom: 0;">
+
+        <!-- PANEL IZQUIERDO - Datos Compactos -->
+        <div class="panel-left">
+
+            <!-- GRID 2 COLUMNAS INTERNAS -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; flex: 1;">
+
+                <!-- COLUMNA IZQUIERDA: Paciente + Detalles -->
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+
+                    <!-- DATOS DEL PACIENTE -->
+                    <div class="form-section form-section-teal" style="padding: 0.5rem; margin-bottom: 0;">
+                        <h4 class="section-header"
+                            style="color: #0f766e; font-size: 0.75rem; margin-bottom: 0.4rem; padding-bottom: 0.25rem; font-family: Consolas, monospace; font-weight: 800;">
+                            DATOS DEL PACIENTE
+                        </h4>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label
+                                style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Expediente:</label>
+                            <input type="text" id="expedienteCompact" placeholder=""
+                                oninput="syncField('expedienteNumero', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">F/N
+                                *:</label>
+                            <input type="date" id="fechaNacimientoCompact" required
+                                onchange="syncField('fechaNacimiento', this.value); validarFechaNacimiento(this)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">1er Nombre
+                                *:</label>
+                            <input type="text" id="primerNombreCompact" required placeholder=""
+                                oninput="normalizeInput(this); syncField('primerNombre', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">2do
+                                Nombre:</label>
+                            <input type="text" id="segundoNombreCompact" placeholder=""
+                                oninput="normalizeInput(this); syncField('segundoNombre', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">1er Apellido
+                                *:</label>
+                            <input type="text" id="primerApellidoCompact" required placeholder=""
+                                oninput="normalizeInput(this); syncField('primerApellido', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">2do
+                                Apellido:</label>
+                            <input type="text" id="segundoApellidoCompact" placeholder=""
+                                oninput="normalizeInput(this); syncField('segundoApellido', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Sexo
+                                *:</label>
+                            <select id="pacienteSexoCompact" required onchange="syncField('pacienteSexo', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                                <option value="">...</option>
+                                <option value="Masculino">M</option>
+                                <option value="Femenino">F</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Teléfono
+                                *:</label>
+                            <input type="tel" id="patientPhoneCompact" required placeholder=""
+                                oninput="syncField('patientPhone', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                    </div>
+
+                    <!-- DETALLES -->
+                    <div class="form-section form-section-teal" style="padding: 0.5rem; margin-bottom: 0;">
+                        <h4 class="section-header"
+                            style="color: #0f766e; font-size: 0.75rem; margin-bottom: 0.4rem; padding-bottom: 0.25rem; font-family: Consolas, monospace; font-weight: 800;">
+                            DETALLES
+                        </h4>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label
+                                style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Diagnóstico:</label>
+                            <input type="text" id="diagnosticoCompact" placeholder=""
+                                oninput="syncField('diagnostico', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label
+                                style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Procedencia:</label>
+                            <select id="procedenciaCompact" onchange="syncField('procedencia', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                                <option value="">Seleccionar...</option>
+                            </select>
+                            <button type="button" onclick="agregarNuevaProcedencia()"
+                                style="margin-left: 0.25rem; padding: 0.15rem 0.35rem; background: #0d9488; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold;"
+                                title="Agregar nueva procedencia">+</button>
+                        </div>
+
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Piso:</label>
+                            <input type="text" id="pisoCompact" placeholder=""
+                                oninput="syncField('pisoHospital', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Cama:</label>
+                            <input type="text" id="camaCompact" placeholder=""
+                                oninput="syncField('camaHabitacion', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <label
+                                style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Servicio:</label>
+                            <select id="servicioHospitalCompact" onchange="syncField('servicioHospital', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                                <option value="Laboratorio">Laboratorio</option>
+                                <option value="Urgencias">Urgencias</option>
+                                <option value="Hospitalización">Hospitalización</option>
+                                <option value="Consulta Externa">Consulta Ext.</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMNA DERECHA: Cita + Médico -->
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+
+                    <!-- CITA -->
+                    <div class="form-section form-section-teal" style="padding: 0.5rem; margin-bottom: 0;">
+                        <h4 class="section-header"
+                            style="color: #0f766e; font-size: 0.75rem; margin-bottom: 0.4rem; padding-bottom: 0.25rem; font-family: Consolas, monospace; font-weight: 800;">
+                            CITA
+                        </h4>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.2rem;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Fecha
+                                *:</label>
+                            <input type="date" id="appointmentDateCompact" required
+                                onchange="syncField('appointmentDate', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <label style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Hora
+                                *:</label>
+                            <input type="time" id="appointmentTimeCompact" required value="08:00"
+                                onchange="syncField('appointmentTime', this.value)"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none;">
+                        </div>
+                    </div>
+
+                    <!-- MÉDICO -->
+                    <div class="form-section form-section-teal" style="padding: 0.5rem; margin-bottom: 0;">
+                        <h4 class="section-header"
+                            style="color: #0f766e; font-size: 0.75rem; margin-bottom: 0.4rem; padding-bottom: 0.25rem; font-family: Consolas, monospace; font-weight: 800;">
+                            MÉDICO
+                        </h4>
+                        <div style="display: flex; align-items: center; margin-bottom: 0.3rem;">
+                            <label
+                                style="font-size: 0.7rem; color: #475569; width: 80px; flex-shrink: 0;">Referente:</label>
+                            <input type="text" id="medicoReferenteCompact" placeholder="A quien corresponda" readonly
+                                onclick="openDoctorSelectorModal()"
+                                style="flex: 1; border: none; border-bottom: 1px solid #99f6e4; padding: 0.2rem 0; font-size: 0.8rem; background: transparent; outline: none; cursor: pointer;">
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="nuevoMedico()"
+                            style="width: 100%; padding: 0.25rem; font-size: 0.65rem;">
+                            + Nuevo Médico
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN GRID 2 COLUMNAS -->
+
+            <!-- PAGO - ANCHO COMPLETO ABAJO -->
+            <div class="form-section"
+                style="padding: 0.5rem; margin-top: 0.4rem; background: #f0fdfa; border: 1px solid #99f6e4;">
+                <h4 class="section-header"
+                    style="color: #0d9488; font-size: 0.8rem; margin-bottom: 0.4rem; padding-bottom: 0.25rem; border-color: #99f6e4; display: flex; align-items: center; gap: 0.4rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <rect x="2" y="6" width="20" height="12" rx="2" />
+                        <circle cx="12" cy="12" r="3" />
+                        <line x1="6" y1="12" x2="6" y2="12.01" />
+                        <line x1="18" y1="12" x2="18" y2="12.01" />
+                    </svg>
+                    PAGO
+                </h4>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <div class="payment-methods" style="display: flex; gap: 0.5rem; flex: 1;">
+                        <div class="method-card active" onclick="selectPaymentMethod('efectivo', this)"
+                            style="padding: 0.4rem 0.8rem; flex: 1; text-align: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="6" width="20" height="12" rx="2" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                            <span style="font-size: 0.7rem; display: block;">Efectivo</span>
+                        </div>
+                        <div class="method-card" onclick="selectPaymentMethod('tarjeta', this)"
+                            style="padding: 0.4rem 0.8rem; flex: 1; text-align: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="5" width="20" height="14" rx="2" />
+                                <line x1="2" y1="10" x2="22" y2="10" />
+                            </svg>
+                            <span style="font-size: 0.7rem; display: block;">Tarjeta</span>
+                        </div>
+                        <div class="method-card" onclick="selectPaymentMethod('transferencia', this)"
+                            style="padding: 0.4rem 0.8rem; flex: 1; text-align: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8v12M17 20l-4-4M17 20l4-4" />
+                            </svg>
+                            <span style="font-size: 0.7rem; display: block;">Transfer</span>
+                        </div>
+                    </div>
+                    <div id="montoRecibidoGroupCompact" style="display: flex; align-items: center; gap: 0.3rem;">
+                        <label style="font-size: 0.75rem; color: #0d9488; font-weight: 600;">Monto:</label>
+                        <input type="number" id="montoPagadoCompact" placeholder="0.00" step="0.50"
+                            oninput="calcularCambio(); syncField('montoPagado', this.value)"
+                            style="width: 100px; border: 2px solid #99f6e4; border-radius: 6px; padding: 0.4rem; font-size: 0.9rem; font-weight: 700; text-align: right;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer: Total + Submit -->
+            <div class="panel-left-footer">
+                <div class="total-display">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.65rem; color: #64748b;">
+                        <span>Subtotal:</span>
+                        <span>$<span id="subtotalCompact">0.00</span></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.65rem; color: #64748b;">
+                        <span>IVA (16%):</span>
+                        <span>$<span id="ivaCompact">0.00</span></span>
+                    </div>
+                    <div style="border-top: 1px dashed #cbd5e1; margin: 0.25rem 0; padding-top: 0.25rem;">
+                        <div class="total-label">TOTAL A PAGAR</div>
+                        <div class="total-amount">$<span id="totalVentaCompact">0.00</span></div>
+                    </div>
+                    <div style="font-size: 0.7rem; color: #64748b; margin-top: 0.25rem;">
+                        Cambio: $<span id="cambioVentaCompact">0.00</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-submit-compact">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                    Registrar Cita
+                </button>
+            </div>
+        </div>
+
+        <!-- PANEL DERECHO - Estudios -->
+        <div class="panel-right">
+            <!-- Header con búsqueda -->
+            <div class="panel-right-header" style="padding: 0.5rem;">
+                <input type="text" class="form-input" id="buscarEstudioCompact" oninput="applyFiltersCompact()"
+                    placeholder="🔍 Buscar..."
+                    style="width: 100%; padding: 0.4rem; font-size: 0.75rem; margin-bottom: 0.35rem;">
+                <div style="display: flex; gap: 0.25rem; align-items: center;">
+                    <select class="form-select" id="filtroCategoriaCompact"
+                        style="flex: 1; padding: 0.35rem; font-size: 0.7rem;" onchange="applyFiltersCompact()">
+                        <option value="">Todas</option>
+                    </select>
+                    <button type="button" id="btnFavoritos" onclick="toggleFiltroFavoritos()" title="Ver solo favoritos"
+                        style="padding: 0.35rem 0.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                        ⭐
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="abrirModalEstudioManual()"
+                        style="padding: 0.35rem 0.5rem; font-size: 0.7rem;">
+                        +
+                    </button>
+                </div>
+            </div>
+
+            <!-- Catálogo de estudios -->
+            <div class="panel-right-catalog" id="listaEstudiosCompact">
+                <div style="text-align: center; padding: 2rem; color: #64748b;">Cargando estudios...</div>
+            </div>
+
+            <!-- Estudios seleccionados -->
+            <div class="panel-right-selected">
+                <div style="font-size: 0.7rem; font-weight: 700; color: #475569; margin-bottom: 0.35rem;">
+                    SELECCIONADOS (<span id="cantidadEstudiosCompact">0</span>)
+                </div>
+                <div id="estudiosSeleccionadosCompact">
+                    <span style="color: #94a3b8; font-size: 0.7rem;">Ningún estudio seleccionado</span>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Main Content Original (OCULTO) -->
+    <main class="main-container" style="display: none;">
         <header class="top-bar"
             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <h1 id="pageTitle" class="page-title"
@@ -1056,12 +1612,320 @@
             await loadLabConfig();
             loadEstudios();
             loadMedicos();
+            loadProcedencias();
             setupEstudioSearch();
+
+            // INICIALIZAR LAYOUT COMPACTO
+            initCompactLayout();
 
             // Animation init
             resize();
             animate();
         });
+
+        // ========================================
+        // FUNCIONES LAYOUT COMPACTO
+        // ========================================
+
+        function initCompactLayout() {
+            // Sincronizar fecha y hora al layout compacto
+            const localDate = new Date().toLocaleDateString('es-MX', {
+                year: 'numeric', month: '2-digit', day: '2-digit'
+            }).split('/').reverse().join('-');
+
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            const dateCompact = document.getElementById('appointmentDateCompact');
+            const timeCompact = document.getElementById('appointmentTimeCompact');
+            if (dateCompact) dateCompact.value = localDate;
+            if (timeCompact) timeCompact.value = `${hours}:${minutes}`;
+
+            // También sincronizar con el form original oculto
+            syncField('appointmentDate', localDate);
+            syncField('appointmentTime', `${hours}:${minutes}`);
+
+            // Establecer max date en F. Nacimiento para no aceptar fechas futuras
+            const fechaNacCompact = document.getElementById('fechaNacimientoCompact');
+            const fechaNacOrig = document.getElementById('fechaNacimiento');
+            const today = new Date().toISOString().split('T')[0];
+            if (fechaNacCompact) fechaNacCompact.max = today;
+            if (fechaNacOrig) fechaNacOrig.max = today;
+        }
+
+        function validarFechaNacimiento(input) {
+            const today = new Date();
+            const selectedDate = new Date(input.value);
+
+            if (selectedDate > today) {
+                mostrarAlerta('La fecha de nacimiento no puede ser una fecha futura.', 'Fecha inválida', 'warning');
+                input.value = '';
+                return false;
+            }
+            return true;
+        }
+
+        function syncField(fieldId, value) {
+            const el = document.getElementById(fieldId);
+            if (el) el.value = value;
+        }
+
+        function applyFiltersCompact() {
+            const searchTerm = document.getElementById('buscarEstudioCompact').value.toLowerCase();
+            const categoria = document.getElementById('filtroCategoriaCompact').value;
+
+            // También sincronizar con los filtros originales
+            const buscarOrig = document.getElementById('buscarEstudio');
+            const catOrig = document.getElementById('filtroCategoria');
+            if (buscarOrig) buscarOrig.value = searchTerm;
+            if (catOrig) catOrig.value = categoria;
+
+            // Llamar al filtro original que ya existe
+            applyFilters();
+
+            // Renderizar en el catálogo compacto
+            renderStudiesCompact(searchTerm, categoria);
+        }
+
+        // Colores por categoría
+        const COLORES_CATEGORIA = {
+            'PERFILES': { bg: '#fef3c7', border: '#f59e0b', text: '#92400e' },
+            'QUÍMICA CLÍNICA': { bg: '#fff7ed', border: '#ea580c', text: '#9a3412' },
+            'INMUNOLOGÍA': { bg: '#dbeafe', border: '#3b82f6', text: '#1e40af' },
+            'HEMATOLOGÍA': { bg: '#fce7f3', border: '#ec4899', text: '#9d174d' },
+            'COPROLOGÍA': { bg: '#d1fae5', border: '#10b981', text: '#065f46' },
+            'URIANÁLISIS': { bg: '#e0e7ff', border: '#6366f1', text: '#3730a3' },
+            'SEROLOGÍA': { bg: '#fef9c3', border: '#eab308', text: '#854d0e' },
+            'HORMONAS': { bg: '#ede9fe', border: '#8b5cf6', text: '#5b21b6' },
+            'OTROS': { bg: '#f1f5f9', border: '#94a3b8', text: '#475569' }
+        };
+
+        // Sistema de favoritos (guardado en localStorage)
+        let estudiosFavoritos = JSON.parse(localStorage.getItem('arlab_estudios_favoritos') || '[]');
+        let mostrarSoloFavoritos = false;
+
+        function toggleFavorito(estudioId, event) {
+            event.stopPropagation();
+            const idx = estudiosFavoritos.indexOf(estudioId);
+            if (idx > -1) {
+                estudiosFavoritos.splice(idx, 1);
+            } else {
+                estudiosFavoritos.push(estudioId);
+            }
+            localStorage.setItem('arlab_estudios_favoritos', JSON.stringify(estudiosFavoritos));
+            applyFiltersCompact();
+        }
+
+        function toggleFiltroFavoritos() {
+            mostrarSoloFavoritos = !mostrarSoloFavoritos;
+            const btn = document.getElementById('btnFavoritos');
+            if (btn) {
+                btn.style.background = mostrarSoloFavoritos ? '#fef3c7' : '#f8fafc';
+                btn.style.borderColor = mostrarSoloFavoritos ? '#f59e0b' : '#e2e8f0';
+            }
+            applyFiltersCompact();
+        }
+
+        function esFavorito(estudioId) {
+            return estudiosFavoritos.includes(estudioId);
+        }
+
+        // Normalizar categoría (unificar duplicados) - PERFILES tienen prioridad
+        function normalizarCategoria(cat, esPerfil = false) {
+            if (esPerfil) return 'PERFILES';
+            if (!cat) return 'OTROS';
+            const upper = cat.toUpperCase().trim();
+            if (upper.includes('INMUNO')) return 'INMUNOLOGÍA';
+            if (upper.includes('QUÍMICA') || upper.includes('QUIMICA')) return 'QUÍMICA CLÍNICA';
+            if (upper.includes('HEMATO')) return 'HEMATOLOGÍA';
+            if (upper.includes('COPRO')) return 'COPROLOGÍA';
+            if (upper.includes('URIN') || upper.includes('ORIN')) return 'URIANÁLISIS';
+            if (upper.includes('SERO')) return 'SEROLOGÍA';
+            if (upper.includes('HORMON')) return 'HORMONAS';
+            return upper;
+        }
+
+        function getColorCategoria(cat) {
+            const normalized = cat === 'PERFILES' ? 'PERFILES' : normalizarCategoria(cat);
+            return COLORES_CATEGORIA[normalized] || COLORES_CATEGORIA['OTROS'];
+        }
+
+        function renderStudiesCompact(searchTerm = '', categoria = '') {
+            const container = document.getElementById('listaEstudiosCompact');
+            if (!container || !todosEstudios || todosEstudios.length === 0) return;
+
+            // Filtrar estudios
+            let estudios = todosEstudios.filter(e => {
+                if (e.es_perfil === false && parseFloat(e.precio) === 0) return false;
+
+                // Filtro de favoritos
+                if (mostrarSoloFavoritos && !esFavorito(e.id)) return false;
+
+                const matchSearch = !searchTerm ||
+                    e.nombre.toLowerCase().includes(searchTerm) ||
+                    (e.codigo && e.codigo.toLowerCase().includes(searchTerm));
+
+                // Categoría - PERFILES se consideran por separado
+                const esPerfil = e.es_perfil === true;
+                const normalizedCat = normalizarCategoria(e.categoria, esPerfil);
+                const matchCat = !categoria || normalizedCat === categoria || e.categoria === categoria;
+
+                return matchSearch && matchCat;
+            });
+
+            // Agrupar por categoría normalizada - PERFILES van primero
+            const grupos = {};
+            estudios.forEach(e => {
+                const esPerfil = e.es_perfil === true;
+                const cat = esPerfil ? 'PERFILES' : normalizarCategoria(e.categoria);
+                if (!grupos[cat]) grupos[cat] = [];
+                grupos[cat].push(e);
+            });
+
+            // Orden deseado de categorías - PERFILES SIEMPRE PRIMERO
+            const ordenCategorias = ['PERFILES', 'QUÍMICA CLÍNICA', 'HEMATOLOGÍA', 'INMUNOLOGÍA', 'URIANÁLISIS', 'COPROLOGÍA', 'SEROLOGÍA', 'HORMONAS', 'OTROS'];
+            const categoriasOrdenadas = Object.keys(grupos).sort((a, b) => {
+                const idxA = ordenCategorias.indexOf(a);
+                const idxB = ordenCategorias.indexOf(b);
+                return (idxA === -1 ? 999 : idxA) - (idxB === -1 ? 999 : idxB);
+            });
+
+            // Renderizar en UNA SOLA COLUMNA
+            let html = '';
+            categoriasOrdenadas.forEach(cat => {
+                const colors = getColorCategoria(cat);
+                html += `<div style="background: ${colors.bg}; border-left: 4px solid ${colors.border}; padding: 0.35rem 0.5rem; margin-bottom: 0.15rem; border-radius: 4px;">
+                    <div style="font-size: 0.65rem; font-weight: 800; color: ${colors.text}; font-family: Consolas, monospace; margin-bottom: 0.2rem;">${cat}</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.1rem;">`;
+
+                grupos[cat].forEach(e => {
+                    const isSelected = estudiosSeleccionados.some(s => s.id === e.id);
+                    const isFav = esFavorito(e.id);
+                    const starColor = isFav ? '#f59e0b' : '#cbd5e1';
+                    const starFill = isFav ? '#f59e0b' : 'none';
+                    html += `
+                        <div class="estudio-row" data-estudio-id="${e.id}" 
+                            style="display: flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.4rem; 
+                               border-radius: 4px; font-size: 0.7rem; color: #1e293b;
+                               background: ${isSelected ? '#dcfce7' : 'white'}; 
+                               border: 1px solid ${isSelected ? '#22c55e' : '#e2e8f0'}; cursor: pointer;">
+                            <svg class="fav-star" data-fav-id="${e.id}" width="14" height="14" viewBox="0 0 24 24" 
+                                fill="${starFill}" stroke="${starColor}" stroke-width="2"
+                                style="cursor: pointer; flex-shrink: 0;"
+                                title="${isFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                            <input type="checkbox" ${isSelected ? 'checked' : ''} 
+                                style="width: 14px; height: 14px; accent-color: #22c55e; pointer-events: none; flex-shrink: 0;">
+                            <span style="flex: 1; font-weight: ${isSelected ? '600' : '400'}; font-size: 0.7rem;">${e.nombre}</span>
+                            <span style="font-weight: 700; color: #0f766e; font-size: 0.65rem; flex-shrink: 0;">$${parseFloat(e.precio || 0).toFixed(0)}</span>
+                        </div>
+                    `;
+                });
+                html += '</div></div>';
+            });
+
+            container.innerHTML = html || '<div style="text-align:center; padding:2rem; color:#94a3b8;">No hay estudios disponibles</div>';
+
+            // Event Delegation para clicks
+            container.querySelectorAll('.estudio-row').forEach(row => {
+                row.addEventListener('click', function (e) {
+                    // Si clickeó en la estrella de favoritos, no hacer toggle del estudio
+                    if (e.target.closest('.fav-star')) {
+                        return;
+                    }
+                    const id = this.dataset.estudioId; // UUID string, sin parseInt
+                    toggleStudyCompact(id);
+                });
+            });
+
+            container.querySelectorAll('.fav-star').forEach(star => {
+                star.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const id = this.dataset.favId; // UUID string, sin parseInt
+                    toggleFavorito(id, e);
+                });
+            });
+        }
+
+        function toggleStudyCompact(id) {
+            // Buscar el estudio por ID
+            const estudio = todosEstudios.find(e => e.id === id);
+            if (!estudio) {
+                console.error('Estudio no encontrado:', id);
+                return;
+            }
+
+            // Toggle: agregar o quitar del array de seleccionados
+            const index = estudiosSeleccionados.findIndex(s => s.id === id);
+            if (index > -1) {
+                estudiosSeleccionados.splice(index, 1);
+            } else {
+                estudiosSeleccionados.push(estudio);
+            }
+
+            // Recalcular total
+            totalVenta = estudiosSeleccionados.reduce((sum, item) => sum + parseFloat(item.precio || 0), 0);
+
+            // Actualizar UI compacta
+            updateCompactSelectedUI();
+            renderStudiesCompact(
+                document.getElementById('buscarEstudioCompact')?.value?.toLowerCase() || '',
+                document.getElementById('filtroCategoriaCompact')?.value || ''
+            );
+        }
+
+        function updateCompactSelectedUI() {
+            const container = document.getElementById('estudiosSeleccionadosCompact');
+            const countEl = document.getElementById('cantidadEstudiosCompact');
+            const totalEl = document.getElementById('totalVentaCompact');
+            const cambioEl = document.getElementById('cambioVentaCompact');
+            const subtotalEl = document.getElementById('subtotalCompact');
+            const ivaEl = document.getElementById('ivaCompact');
+
+            if (countEl) countEl.textContent = estudiosSeleccionados.length;
+
+            // Calcular IVA: El total ya incluye IVA, desglosar
+            // Total = Subtotal + IVA = Subtotal * 1.16
+            // Subtotal = Total / 1.16
+            const subtotal = totalVenta / 1.16;
+            const iva = totalVenta - subtotal;
+
+            if (subtotalEl) subtotalEl.textContent = subtotal.toFixed(2);
+            if (ivaEl) ivaEl.textContent = iva.toFixed(2);
+            if (totalEl) totalEl.textContent = totalVenta.toFixed(2);
+
+            // Calcular cambio
+            const montoPagado = parseFloat(document.getElementById('montoPagadoCompact')?.value) || 0;
+            const cambio = Math.max(0, montoPagado - totalVenta);
+            if (cambioEl) cambioEl.textContent = cambio.toFixed(2);
+
+            // Renderizar tags
+            if (container) {
+                if (estudiosSeleccionados.length === 0) {
+                    container.innerHTML = '<span style="color: #94a3b8; font-size: 0.7rem;">Ningún estudio seleccionado</span>';
+                } else {
+                    container.innerHTML = estudiosSeleccionados.map(e => `
+                        <span class="selected-tag">
+                            ${e.nombre.substring(0, 20)}${e.nombre.length > 20 ? '...' : ''} 
+                            <span class="remove-btn" onclick="toggleStudyCompact('${e.id}')">×</span>
+                        </span>
+                    `).join('');
+                }
+            }
+        }
+
+        // Override updateTotal para también actualizar el compacto
+        const originalUpdateTotal = typeof updateTotal === 'function' ? updateTotal : null;
+        function updateTotalHook() {
+            if (originalUpdateTotal) originalUpdateTotal();
+            updateCompactSelectedUI();
+        }
+
+        // Hook into estudios loading
+        const originalLoadEstudios = typeof loadEstudios === 'function' ? loadEstudios : null;
+
 
         // Normalizar nombres (Tipo Oración: Juan Carlos)
         function normalizeInput(input) {
@@ -1338,9 +2202,48 @@
                 renderEstudiosList();
                 loadCategorias();
 
+                // NUEVO: Renderizar en layout compacto
+                renderStudiesCompact();
+                loadCategoriasCompact();
+
                 // Verificar si viene de una cotización pendiente
                 checkPendingQuotation();
             } catch (err) { console.error(err); }
+        }
+
+        function loadCategoriasCompact() {
+            const select = document.getElementById('filtroCategoriaCompact');
+            if (!select || !todosEstudios) return;
+
+            // Verificar si hay perfiles en los estudios
+            const hayPerfiles = todosEstudios.some(e => e.es_perfil === true);
+
+            // Usar categorías normalizadas y ordenadas - PERFILES primero
+            const ordenCategorias = ['PERFILES', 'QUÍMICA CLÍNICA', 'HEMATOLOGÍA', 'INMUNOLOGÍA', 'URIANÁLISIS', 'COPROLOGÍA', 'SEROLOGÍA', 'HORMONAS'];
+
+            // Obtener categorías normalizadas incluyendo PERFILES
+            const categoriasEncontradas = new Set();
+            todosEstudios.forEach(e => {
+                if (e.es_perfil === true) {
+                    categoriasEncontradas.add('PERFILES');
+                } else {
+                    categoriasEncontradas.add(normalizarCategoria(e.categoria));
+                }
+            });
+
+            // Ordenar según el orden definido
+            const categoriasOrdenadas = [...categoriasEncontradas].sort((a, b) => {
+                const idxA = ordenCategorias.indexOf(a);
+                const idxB = ordenCategorias.indexOf(b);
+                return (idxA === -1 ? 999 : idxA) - (idxB === -1 ? 999 : idxB);
+            });
+
+            let html = '<option value="">Todas</option>';
+            categoriasOrdenadas.forEach(cat => {
+                const colors = getColorCategoria(cat);
+                html += `<option value="${cat}" style="background: ${colors.bg};">${cat}</option>`;
+            });
+            select.innerHTML = html;
         }
 
         // Función para precargar datos de cotización
@@ -1431,6 +2334,96 @@
             } catch (err) { console.error(err); }
         }
 
+        // ========== Procedencias ==========
+        let todasProcedencias = [];
+
+        async function loadProcedencias() {
+            try {
+                // Obtener procedencias únicas de la tabla citas
+                const { data, error } = await supabaseClient
+                    .from('citas')
+                    .select('procedencia')
+                    .not('procedencia', 'is', null)
+                    .order('procedencia', { ascending: true });
+
+                if (error) throw error;
+
+                // Extraer valores únicos
+                const uniqueProcedencias = [...new Set((data || []).map(c => c.procedencia).filter(Boolean))];
+
+                // Valores predeterminados si no hay en BD
+                const defaultProcedencias = ['CONSULTA EXTERNA', 'HOSPITALIZACIÓN', 'URGENCIAS', 'LABORATORIO'];
+                todasProcedencias = [...new Set([...defaultProcedencias, ...uniqueProcedencias])].sort();
+
+                renderProcedenciasSelect();
+            } catch (err) {
+                console.error('Error cargando procedencias:', err);
+                // Usar solo valores por defecto en caso de error
+                todasProcedencias = ['CONSULTA EXTERNA', 'HOSPITALIZACIÓN', 'URGENCIAS', 'LABORATORIO'];
+                renderProcedenciasSelect();
+            }
+        }
+
+        function renderProcedenciasSelect() {
+            const select = document.getElementById('procedenciaCompact');
+            if (!select) return;
+
+            let html = '<option value="">Seleccionar...</option>';
+            todasProcedencias.forEach(proc => {
+                html += `<option value="${proc}">${proc}</option>`;
+            });
+            select.innerHTML = html;
+        }
+
+        function agregarNuevaProcedencia() {
+            document.getElementById('procedenciaModal').classList.add('active');
+            document.getElementById('nuevaProcedenciaInput').value = '';
+            setTimeout(() => {
+                document.getElementById('nuevaProcedenciaInput').focus();
+            }, 100);
+        }
+
+        function cerrarProcedenciaModal() {
+            document.getElementById('procedenciaModal').classList.remove('active');
+            document.getElementById('nuevaProcedenciaInput').value = '';
+        }
+
+        function guardarNuevaProcedencia() {
+            const input = document.getElementById('nuevaProcedenciaInput');
+            const value = input.value;
+
+            if (value && value.trim()) {
+                const nuevaProcedencia = value.trim().toUpperCase();
+
+                // Verificar si ya existe
+                if (todasProcedencias.includes(nuevaProcedencia)) {
+                    input.style.borderColor = '#ef4444';
+                    input.placeholder = '¡Ya existe esta procedencia!';
+                    input.value = '';
+                    setTimeout(() => {
+                        input.style.borderColor = '';
+                        input.placeholder = 'Ej: EMERGENCIAS';
+                    }, 2000);
+                    return;
+                }
+
+                // Agregar a la lista local
+                todasProcedencias.push(nuevaProcedencia);
+                todasProcedencias.sort();
+                renderProcedenciasSelect();
+
+                // Seleccionar automáticamente la nueva procedencia
+                const select = document.getElementById('procedenciaCompact');
+                if (select) {
+                    select.value = nuevaProcedencia;
+                    syncField('procedencia', nuevaProcedencia);
+                }
+
+                cerrarProcedenciaModal();
+            }
+        }
+
+
         function loadCategorias() {
             const categorias = [...new Set(todosEstudios.map(e => e.categoria))].sort();
             const select = document.getElementById('filtroCategoria');
@@ -1458,7 +2451,7 @@
 
                 // Nuevo filtro: Ocultar precio 0 si no está marcado el checkbox
                 const mostrarOcultos = document.getElementById('verComponentesOcultos')?.checked || false;
-                const matchPrecio = mostrarOcultos || parseFloat(e.precio) > 0 || e.es_perfil; // Siempre mostrar perfiles aunque sean $0 (raro pero posible)
+                const matchPrecio = mostrarOcultos || parseFloat(e.precio) > 0 || e.es_perfil;
 
                 return matchNombre && matchCategoria && matchPrecio;
             });
@@ -1474,7 +2467,7 @@
             // Agregar grupo de favoritos si aplica
             const frecuentes = estudiosFiltrados.filter(e => e.es_frecuente);
             if (frecuentes.length > 0 && !filtro && !categoria) {
-                grupos['⭐ MÁS SOLICITADOS'] = frecuentes;
+                grupos['⭐ FRECUENTES'] = frecuentes;
             }
 
             estudiosFiltrados.forEach(e => {
@@ -1486,43 +2479,36 @@
 
             // Ordenar categorías, poniendo favoritos primero
             const catKeys = Object.keys(grupos).sort((a, b) => {
-                if (a === '⭐ MÁS SOLICITADOS') return -1;
-                if (b === '⭐ MÁS SOLICITADOS') return 1;
+                if (a === '⭐ FRECUENTES') return -1;
+                if (b === '⭐ FRECUENTES') return 1;
                 return a.localeCompare(b);
             });
 
             catKeys.forEach(cat => {
                 html += `
-                    <div class="category-group">
-                        <div class="category-title">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
-                            </svg>
+                    <div class="category-group" style="margin-bottom: 0.5rem;">
+                        <div class="category-title" style="font-size: 0.7rem; font-weight: 700; color: #475569; padding: 0.25rem 0; border-bottom: 1px solid #e2e8f0; margin-bottom: 0.3rem;">
                             ${cat}
                         </div>
-                        <div class="studies-grid">
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.2rem;">
                 `;
 
                 grupos[cat].forEach(est => {
                     const isSelected = estudiosSeleccionados.some(s => s.id === est.id);
-                    const precio = parseFloat(est.precio || 0).toFixed(2);
-
                     html += `
-                        <div class="estudio-item ${isSelected ? 'selected' : ''}" onclick="toggleEstudio('${est.id}')" title="${est.indicaciones || 'Sin indicaciones'}">
-                            <div style="flex: 1; overflow: hidden;">
-                                <div style="display: flex; align-items: center; gap: 4px;">
-                                    <span class="estudio-nombre">${est.nombre}</span>
-                                    ${est.es_perfil ? '<span style="font-size: 0.55rem; background: #e0f2fe; color: #0369a1; padding: 0 4px; border-radius: 4px; font-weight: bold;">PERFIL</span>' : ''}
-                                </div>
-                                <div class="estudio-indicaciones-tooltip">
-                                    ${est.indicaciones || 'Sin indicaciones'}
-                                </div>
-                            </div>
-                            <div style="text-align: right; margin-left: 0.5rem; flex-shrink: 0;">
-                                <div style="font-size: 0.5rem; color: #94a3b8; font-family: monospace; line-height: 1;">${est.codigo || ''}</div>
-                                <div class="estudio-precio">$${precio}</div>
-                            </div>
-                        </div>
+                        <label class="estudio-checkbox-item" 
+                            onclick="toggleEstudio('${est.id}')" 
+                            style="display: flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.4rem; cursor: pointer; 
+                                   border-radius: 4px; font-size: 0.7rem; color: #1e293b;
+                                   background: ${isSelected ? '#dcfce7' : '#f8fafc'}; 
+                                   border: 1px solid ${isSelected ? '#22c55e' : '#e2e8f0'};
+                                   transition: all 0.15s ease;"
+                            onmouseover="this.style.background='${isSelected ? '#bbf7d0' : '#f1f5f9'}'"
+                            onmouseout="this.style.background='${isSelected ? '#dcfce7' : '#f8fafc'}'">
+                            <input type="checkbox" ${isSelected ? 'checked' : ''} 
+                                style="width: 14px; height: 14px; accent-color: #22c55e; pointer-events: none; cursor: pointer;">
+                            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; font-weight: ${isSelected ? '600' : '400'};">${est.nombre}</span>
+                        </label>
                     `;
                 });
 
@@ -1661,6 +2647,9 @@
         function selectDoctor(nombre, id) {
             document.getElementById('medicoReferente').value = nombre;
             document.getElementById('medicoReferenteId').value = id || '';
+            // También actualizar el campo compact de Venta Directa
+            const medicoCompact = document.getElementById('medicoReferenteCompact');
+            if (medicoCompact) medicoCompact.value = nombre;
             closeDoctorSelectorModal();
         }
 
@@ -1687,36 +2676,266 @@
             document.querySelectorAll('.method-card').forEach(c => c.classList.remove('active'));
             element.classList.add('active');
 
-            // Show/Hide Comprobante
+            // Show/Hide Comprobante section (form original)
             const section = document.getElementById('comprobanteSection');
             const montoGroup = document.getElementById('montoRecibidoGroup');
+            const montoGroupCompact = document.getElementById('montoRecibidoGroupCompact');
             const montoInput = document.getElementById('montoPagado');
+            const montoCompact = document.getElementById('montoPagadoCompact');
 
             if (method === 'tarjeta' || method === 'transferencia') {
-                section.style.display = 'block';
-                montoGroup.style.display = 'none';
-                // En tarjeta/transferencia el monto pagado suele ser el total exacto
-                montoInput.value = totalVenta.toFixed(2);
+                // En tarjeta/transferencia el monto pagado es el total exacto
+                if (section) section.style.display = 'block';
+                if (montoGroup) montoGroup.style.display = 'none';
+                if (montoGroupCompact) montoGroupCompact.style.display = 'none';
+                if (montoInput) montoInput.value = totalVenta.toFixed(2);
+                if (montoCompact) montoCompact.value = totalVenta.toFixed(2);
                 montoPagado = totalVenta;
+                // Abrir modal de comprobante para subir captura
+                abrirModalComprobante();
             } else {
-                section.style.display = 'none';
-                montoGroup.style.display = 'block';
-                // No limpiamos el monto por si ya lo escribió, o lo dejamos en 0
+                // EFECTIVO - mostrar campo de monto y auto-rellenar con el total
+                if (section) section.style.display = 'none';
+                if (montoGroup) montoGroup.style.display = 'block';
+                if (montoGroupCompact) montoGroupCompact.style.display = 'flex';
+                if (montoInput) montoInput.value = totalVenta.toFixed(2);
+                if (montoCompact) montoCompact.value = totalVenta.toFixed(2);
+                montoPagado = totalVenta;
             }
 
             calcularCambio();
+            updateCompactSelectedUI();
+        }
+
+        // ====== Modal de Alerta Personalizado ======
+        function mostrarAlerta(mensaje, titulo = 'Atención', tipo = 'warning') {
+            const modal = document.getElementById('customAlertModal');
+            const icono = document.getElementById('customAlertIcon');
+            const tituloEl = document.getElementById('customAlertTitle');
+            const mensajeEl = document.getElementById('customAlertMessage');
+
+            // Configurar estilos según el tipo
+            const estilos = {
+                warning: { bg: '#fef3c7', color: '#f59e0b', icono: 'alert' },
+                error: { bg: '#fee2e2', color: '#ef4444', icono: 'error' },
+                success: { bg: '#dcfce7', color: '#22c55e', icono: 'check' },
+                info: { bg: '#dbeafe', color: '#3b82f6', icono: 'info' }
+            };
+
+            const estilo = estilos[tipo] || estilos.warning;
+            icono.style.background = estilo.bg;
+            icono.style.color = estilo.color;
+
+            tituloEl.textContent = titulo;
+            mensajeEl.textContent = mensaje;
+
+            modal.classList.add('active');
+        }
+
+        function cerrarCustomAlert() {
+            document.getElementById('customAlertModal').classList.remove('active');
+        }
+
+        // ====== Modal para subir comprobante de transferencia/depósito ======
+        let comprobanteImagenUrl = null;
+
+        function abrirModalComprobante() {
+            document.getElementById('modalComprobante').classList.add('active');
+        }
+
+        function cerrarModalComprobante() {
+            document.getElementById('modalComprobante').classList.remove('active');
+        }
+
+        async function subirComprobante() {
+            const fileInput = document.getElementById('comprobanteFile');
+            if (!fileInput.files || fileInput.files.length === 0) {
+                mostrarAlerta('Por favor selecciona una imagen del comprobante');
+                return;
+            }
+
+            const file = fileInput.files[0];
+
+            // Obtener nombre del paciente
+            const nombrePaciente = document.getElementById('pacienteNombreCompact')?.value ||
+                document.getElementById('pacienteNombre')?.value ||
+                'SIN_NOMBRE';
+
+            // Sanitizar nombre del paciente (quitar acentos, espacios y caracteres especiales)
+            const nombreSanitizado = nombrePaciente
+                .toUpperCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '') // Quitar acentos
+                .replace(/\s+/g, '_') // Espacios a guiones bajos
+                .replace(/[^A-Z0-9_]/g, ''); // Solo letras, números y _
+
+            // Obtener fecha y hora actual
+            const ahora = new Date();
+            const fecha = `${ahora.getFullYear()}${String(ahora.getMonth() + 1).padStart(2, '0')}${String(ahora.getDate()).padStart(2, '0')}`;
+            const hora = `${String(ahora.getHours()).padStart(2, '0')}${String(ahora.getMinutes()).padStart(2, '0')}${String(ahora.getSeconds()).padStart(2, '0')}`;
+
+            // Obtener extensión del archivo original
+            const extension = file.name.split('.').pop().toLowerCase();
+
+            // Crear nombre final: comprobante_NOMBRECLIENTE_20260125_131234.jpg
+            const fileName = `comprobante_${nombreSanitizado}_${fecha}_${hora}.${extension}`;
+            console.log('Nombre generado:', fileName);
+
+            // Mostrar loading
+            const btnSubir = document.querySelector('#modalComprobante .btn-confirm');
+            const previewModal = document.getElementById('comprobantePreviewModal');
+            const originalBtnText = btnSubir.textContent;
+            btnSubir.disabled = true;
+            btnSubir.innerHTML = '<span style="display: inline-flex; align-items: center; gap: 6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-opacity="1"/></svg> Subiendo...</span>';
+            previewModal.innerHTML = '<div style="text-align: center; color: #0d9488; font-size: 0.8rem; padding: 1rem;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite; margin: 0 auto;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-opacity="1"/></svg><br>Subiendo archivo...</div>';
+
+            try {
+                // Primero intentar subir a Supabase Storage - bucket: comprobantes
+                const { data, error } = await supabaseClient.storage
+                    .from('comprobantes')
+                    .upload(fileName, file, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+
+                if (error) {
+                    // Si el bucket no existe o hay error, guardar como base64
+                    console.warn('Storage error, guardando como base64:', error.message);
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        comprobanteImagenUrl = e.target.result; // base64
+
+                        previewModal.innerHTML = `
+                            <div style="background: white; padding: 0.75rem; border-radius: 8px; border: 2px solid #22c55e;">
+                                <img src="${comprobanteImagenUrl}" alt="Comprobante" style="max-width: 100%; max-height: 120px; border-radius: 6px; margin-bottom: 0.5rem;">
+                                <div style="color: #22c55e; font-size: 0.75rem;">✓ Comprobante guardado</div>
+                            </div>
+                        `;
+                        btnSubir.disabled = false;
+                        btnSubir.textContent = originalBtnText;
+                        setTimeout(cerrarModalComprobante, 1000);
+                    };
+                    reader.readAsDataURL(file);
+                    return;
+                }
+
+                // Obtener URL pública
+                const { data: urlData } = supabaseClient.storage
+                    .from('comprobantes')
+                    .getPublicUrl(fileName);
+
+                comprobanteImagenUrl = urlData.publicUrl;
+
+                // Mostrar preview exitoso
+                previewModal.innerHTML = `
+                    <div style="background: white; padding: 0.75rem; border-radius: 8px; border: 2px solid #22c55e;">
+                        <img src="${comprobanteImagenUrl}" alt="Comprobante" style="max-width: 100%; max-height: 120px; border-radius: 6px; margin-bottom: 0.5rem;">
+                        <div style="color: #22c55e; font-size: 0.75rem;">✓ Subido a la nube</div>
+                    </div>
+                `;
+
+                btnSubir.disabled = false;
+                btnSubir.textContent = originalBtnText;
+                setTimeout(cerrarModalComprobante, 1000);
+            } catch (err) {
+                console.error('Error subiendo comprobante:', err);
+                // Fallback a base64
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    comprobanteImagenUrl = e.target.result;
+                    previewModal.innerHTML = `
+                        <div style="background: white; padding: 0.75rem; border-radius: 8px; border: 2px solid #f59e0b;">
+                            <img src="${comprobanteImagenUrl}" alt="Comprobante" style="max-width: 100%; max-height: 120px; border-radius: 6px; margin-bottom: 0.5rem;">
+                            <div style="color: #f59e0b; font-size: 0.75rem;">✓ Guardado localmente</div>
+                        </div>
+                    `;
+                    btnSubir.disabled = false;
+                    btnSubir.textContent = originalBtnText;
+                    setTimeout(cerrarModalComprobante, 1000);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewComprobante(input) {
+            console.log('previewComprobante llamado', input);
+            const uploadArea = document.getElementById('uploadArea');
+            const previewDiv = document.getElementById('comprobantePreviewModal');
+
+            if (!uploadArea) {
+                console.error('uploadArea NO encontrado');
+                return;
+            }
+            if (!previewDiv) {
+                console.error('comprobantePreviewModal NO encontrado');
+                return;
+            }
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const fileName = file.name;
+                const fileSize = (file.size / 1024).toFixed(1); // KB
+
+                // Cambiar estilo del área de upload
+                uploadArea.style.borderColor = '#22c55e';
+                uploadArea.style.background = '#f0fdf4';
+
+                // Mostrar loading temporal
+                previewDiv.innerHTML = `
+                    <div style="color: #0d9488; font-size: 0.8rem;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite; margin: 0 auto; display: block;">
+                            <circle cx="12" cy="12" r="10" stroke-opacity="0.25"/>
+                            <path d="M12 2a10 10 0 0 1 10 10" stroke-opacity="1"/>
+                        </svg>
+                        Cargando preview...
+                    </div>
+                `;
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    console.log('Archivo cargado exitosamente, mostrando preview');
+                    previewDiv.innerHTML = `
+                        <div style="background: white; padding: 0.75rem; border-radius: 8px; border: 2px solid #22c55e;">
+                            <img src="${e.target.result}" alt="Preview" style="max-width: 100%; max-height: 150px; border-radius: 6px; margin-bottom: 0.5rem; display: block; margin-left: auto; margin-right: auto;">
+                            <div style="text-align: left; font-size: 0.7rem;">
+                                <div style="color: #22c55e; font-weight: 600; margin-bottom: 0.25rem;">✓ Archivo listo para subir</div>
+                                <div style="color: #64748b; font-size: 0.65rem;">📄 ${fileName}</div>
+                                <div style="color: #94a3b8; font-size: 0.65rem;">📊 ${fileSize} KB</div>
+                            </div>
+                        </div>
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
         function calcularCambio() {
+            // Obtener el monto de cualquiera de los dos inputs (compact o original)
             const montoInput = document.getElementById('montoPagado');
-            montoPagado = parseFloat(montoInput.value) || 0;
+            const montoInputCompact = document.getElementById('montoPagadoCompact');
+
+            // Usar el que tenga valor
+            const montoValueOrig = parseFloat(montoInput?.value) || 0;
+            const montoValueCompact = parseFloat(montoInputCompact?.value) || 0;
+            montoPagado = montoValueCompact || montoValueOrig;
+
             cambioVenta = montoPagado - totalVenta;
 
+            // Actualizar el cambio en ambos elementos
             const cambioEl = document.getElementById('cambioVenta');
-            cambioEl.textContent = cambioVenta.toFixed(2);
+            const cambioElCompact = document.getElementById('cambioVentaCompact');
 
-            if (cambioVenta < 0) cambioEl.style.color = '#ef4444';
-            else cambioEl.style.color = '#0f766e';
+            if (cambioEl) {
+                cambioEl.textContent = cambioVenta.toFixed(2);
+                if (cambioVenta < 0) cambioEl.style.color = '#ef4444';
+                else cambioEl.style.color = '#0f766e';
+            }
+
+            if (cambioElCompact) {
+                cambioElCompact.textContent = cambioVenta.toFixed(2);
+                if (cambioVenta < 0) cambioElCompact.style.color = '#ef4444';
+                else cambioElCompact.style.color = '#0f766e';
+            }
         }
 
         // --- Manual Study Functions ---
@@ -1775,8 +2994,9 @@
                     <td style="text-align: right;">$${parseFloat(est.precio).toFixed(2)}</td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="font-size: 11px; color: #000; padding-bottom: 8px; line-height: 1.2;">
-                        <strong>Indicaciones:</strong> ${est.indicaciones || 'Sin indicaciones especiales.'}
+                    <td colspan="2" style="font-size: 13px; color: #000; padding: 6px 8px; line-height: 1.4; background: #f5f5f5; border-left: 3px solid #d97706; margin-bottom: 8px;">
+                        <strong style="font-size: 14px;">⚠️ Indicaciones:</strong><br>
+                        <strong style="font-size: 13px;">${est.indicaciones || 'Sin indicaciones especiales.'}</strong>
                     </td>
                 </tr>
             `).join('');
@@ -1981,6 +3201,7 @@
                 const servicio = document.getElementById('servicioHospital').value;
                 const piso = document.getElementById('pisoHospital').value;
                 const cama = document.getElementById('camaHabitacion').value;
+                const procedencia = document.getElementById('procedenciaCompact')?.value || 'CONSULTA EXTERNA';
 
                 const appointmentData = {
                     paciente_nombre: nombreCompleto,
@@ -1997,24 +3218,25 @@
                     paciente_sexo: document.getElementById('pacienteSexo').value,
                     diagnostico: document.getElementById('diagnostico').value || null,
                     total: totalVenta,
-                    subtotal: totalVenta,
+                    subtotal: (totalVenta / 1.16).toFixed(2), // Subtotal sin IVA
                     pagado: montoPagado,
                     metodo_pago: metodoPagoActual,
                     folio_venta: folioVenta,
                     medico_referente_nombre: medicoActual,
                     medico_nombre: medicoActual, // También guardamos en la nueva columna
-                    comprobante_notas: document.getElementById('comprobanteNotas').value || null,
-                    comprobante_comentarios: document.getElementById('comprobanteComentarios').value || null,
                     operador_pago: currentUser ? (currentUser.nombre || currentUser.email) : 'S/I',
                     creado_por: currentUser ? currentUser.id : null,
                     expediente_numero: expedienteNumero || null,
-                    // Map UI 'Servicio/Area' dropdown to DB 'procedencia' as it contains values like Urgencias, Consulta Externa
-                    procedencia: servicio || 'CONSULTA EXTERNA',
+                    // Usar el valor del dropdown de procedencia
+                    procedencia: procedencia || 'CONSULTA EXTERNA',
                     // Default servicio to Laboratorio since we don't have a specific input, or user can update later
                     servicio: 'LABORATORIO',
                     cama: cama || null, // Now saving to own column
                     piso: piso || null
                 };
+
+                // Nota: Los campos de comprobante se guardan por separado si es necesario
+                // (comprobante_notas, comprobante_comentarios, comprobante_url no existen en tabla citas)
 
                 try {
                     const { data, error } = await supabaseClient
@@ -2087,6 +3309,15 @@
                     });
                 }
             };
+
+            // Para tarjeta y transferencia, el monto siempre es el total (pago completo asumido)
+            if (metodoPagoActual === 'tarjeta' || metodoPagoActual === 'transferencia') {
+                montoPagado = totalVenta;
+                const montoInput = document.getElementById('montoPagado');
+                const montoCompact = document.getElementById('montoPagadoCompact');
+                if (montoInput) montoInput.value = totalVenta.toFixed(2);
+                if (montoCompact) montoCompact.value = totalVenta.toFixed(2);
+            }
 
             if (montoPagado < totalVenta) {
                 showCustomModal({
@@ -2261,6 +3492,144 @@
             </form>
         </div>
     </div>
+
+    <!-- Procedencia Modal -->
+    <div id="procedenciaModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-icon" style="background: #f0fdfa; color: var(--primary);">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 5v14M5 12h14" />
+                </svg>
+            </div>
+            <h3 class="modal-title">Nueva Procedencia</h3>
+            <p style="color: #64748b; margin-bottom: 1.5rem;">Ingrese el nombre de la nueva procedencia:</p>
+
+            <input type="text" id="nuevaProcedenciaInput" class="form-input" placeholder="Ej: EMERGENCIAS"
+                style="margin-bottom: 1.5rem; text-transform: uppercase;"
+                onkeypress="if(event.key==='Enter'){guardarNuevaProcedencia();}">
+
+            <div class="modal-actions">
+                <button type="button" class="btn-modal btn-cancel" onclick="cerrarProcedenciaModal()">Cancelar</button>
+                <button type="button" class="btn-modal btn-confirm" onclick="guardarNuevaProcedencia()">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Comprobante de Transferencia/Depósito -->
+    <div id="modalComprobante" class="modal-overlay">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-icon" style="background: #fef3c7; color: #f59e0b;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                </svg>
+            </div>
+            <h3 class="modal-title">Subir Comprobante</h3>
+            <p style="color: #64748b; margin-bottom: 1rem; font-size: 0.85rem;">
+                Sube la captura o foto del comprobante de transferencia/depósito
+            </p>
+
+            <div id="uploadArea"
+                style="border: 2px dashed #cbd5e1; border-radius: 12px; padding: 2rem; text-align: center; margin-bottom: 1rem; background: #f8fafc; transition: all 0.3s;">
+                <input type="file" id="comprobanteFile" accept="image/*" style="display: none;">
+                <label for="comprobanteFile" style="cursor: pointer; display: block;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"
+                        style="margin: 0 auto 0.5rem;">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    <span style="color: #64748b; font-size: 0.85rem;">
+                        Clic para seleccionar imagen<br>
+                        <small style="color: #94a3b8;">JPG, PNG, WEBP</small>
+                    </span>
+                </label>
+                <div id="comprobantePreviewModal" style="margin-top: 1rem;"></div>
+            </div>
+
+            <!-- Botón alternativo para seleccionar archivo -->
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <button type="button" onclick="document.getElementById('comprobanteFile').click()"
+                    style="background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 4px rgba(13,148,136,0.3); transition: all 0.3s;">
+                    📁 Seleccionar Archivo
+                </button>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-modal btn-cancel" onclick="cerrarModalComprobante()">Omitir</button>
+                <button type="button" class="btn-modal btn-confirm" onclick="subirComprobante()">Subir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Alerta Personalizado -->
+    <div id="customAlertModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 400px;">
+            <div id="customAlertIcon" class="modal-icon" style="background: #fee2e2; color: #ef4444;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+            </div>
+            <h3 id="customAlertTitle" class="modal-title" style="font-size: 1.1rem;">Atención</h3>
+            <p id="customAlertMessage"
+                style="color: #64748b; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.5;"></p>
+            <div class="modal-actions" style="justify-content: center;">
+                <button type="button" class="btn-modal btn-confirm" onclick="cerrarCustomAlert()"
+                    style="min-width: 120px;">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Registrar event listeners al cargar el DOM
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOM cargado, registrando listeners');
+
+            // Listener para comprobante
+            const comprobanteInput = document.getElementById('comprobanteFile');
+            if (comprobanteInput) {
+                console.log('comprobanteFile encontrado, agregando listener');
+                comprobanteInput.addEventListener('change', function (event) {
+                    console.log('Change event disparado en comprobanteFile');
+                    previewComprobante(this);
+                });
+            } else {
+                console.error('comprobanteFile NO encontrado en el DOM');
+            }
+
+            // Interceptar submit del formulario para validar fecha de nacimiento
+            const form = document.getElementById('appointmentFormCompact');
+            if (form) {
+                form.addEventListener('submit', function (event) {
+                    // Validar fecha de nacimiento no sea futura
+                    const fechaNacInputs = [
+                        document.getElementById('fechaNacimientoCompact'),
+                        document.getElementById('fechaNacimiento')
+                    ];
+
+                    for (const input of fechaNacInputs) {
+                        if (input && input.value) {
+                            const fechaNac = new Date(input.value);
+                            const hoy = new Date();
+                            hoy.setHours(0, 0, 0, 0);
+
+                            if (fechaNac > hoy) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                mostrarAlerta('La fecha de nacimiento no puede ser una fecha futura.', 'Fecha inválida', 'warning');
+                                input.value = '';
+                                input.focus();
+                                return false;
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

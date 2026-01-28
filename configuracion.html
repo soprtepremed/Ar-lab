@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración - Ar Lab</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="css/performance.css">
     <script src="navbar.js" defer></script>
     <style>
         :root {
@@ -550,10 +552,13 @@
         </div>
     </div>
 
-    <!-- Modal Estudio -->
     <div id="estudioModal" class="modal">
         <div class="modal-content-lg">
-            <h2 id="modalTitle" style="margin-bottom: 1.5rem; font-family: 'Outfit';">Editar Estudio</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 id="modalTitle" style="margin: 0; font-family: 'Outfit';">Editar Estudio</h2>
+                <button type="button" class="btn-icon" onclick="closeEstudioModal()" title="Cerrar"
+                    style="font-size: 1.5rem; border: none; background: none; cursor: pointer;">&times;</button>
+            </div>
             <form id="estudioForm" onsubmit="saveEstudio(event)">
                 <input type="hidden" id="estId">
                 <div class="form-row">
@@ -701,6 +706,39 @@ Alto: > 240"></textarea>
                                 <label style="font-size: 0.75rem; color: #64748b;">Máximo</label>
                                 <input type="number" id="estRefMax" class="form-input" step="0.01" placeholder="100.0">
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Referencias por Edad -->
+                    <div id="refsPorEdadSection" style="display: none; margin-top: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d9488"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 6v6l4 2"></path>
+                            </svg>
+                            <span style="font-size: 0.85rem; font-weight: 600; color: #0d9488;">Referencias por
+                                Edad</span>
+                        </div>
+                        <div id="refsPorEdadTable"
+                            style="max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+                            <table style="width: 100%; font-size: 0.8rem; border-collapse: collapse;">
+                                <thead style="background: #f1f5f9; position: sticky; top: 0;">
+                                    <tr>
+                                        <th
+                                            style="padding: 0.5rem; text-align: left; border-bottom: 1px solid #e2e8f0;">
+                                            Descripción</th>
+                                        <th
+                                            style="padding: 0.5rem; text-align: center; border-bottom: 1px solid #e2e8f0;">
+                                            Rango</th>
+                                        <th
+                                            style="padding: 0.5rem; text-align: center; border-bottom: 1px solid #e2e8f0;">
+                                            Sexo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="refsPorEdadBody">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -1179,6 +1217,9 @@ Alto: > 240"></textarea>
                         document.getElementById('estFormula').value = est.formula;
                         toggleFormulaSection(true);
                     }
+
+                    // Cargar referencias por edad
+                    await loadRefsPorEdad(id);
                 }
             }
 
@@ -1335,6 +1376,42 @@ Alto: > 240"></textarea>
                 hint.style.display = 'none';
                 // Clear code if no profile selected (optional: user may want to keep it)
                 // codigoInput.value = '';
+            }
+        }
+
+        // Cargar referencias por edad desde valores_referencia
+        async function loadRefsPorEdad(estudioId) {
+            const section = document.getElementById('refsPorEdadSection');
+            const tbody = document.getElementById('refsPorEdadBody');
+            tbody.innerHTML = '';
+            section.style.display = 'none';
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('valores_referencia')
+                    .select('*')
+                    .eq('estudio_id', estudioId)
+                    .order('orden');
+
+                if (error) throw error;
+                if (!data || data.length === 0) return;
+
+                section.style.display = 'block';
+                data.forEach(ref => {
+                    const rango = ref.valor_min !== null && ref.valor_max !== null
+                        ? `${ref.valor_min} - ${ref.valor_max}`
+                        : (ref.valor_texto || '-');
+                    const sexo = ref.sexo === 'M' ? '♂️' : (ref.sexo === 'F' ? '♀️' : '⚥');
+                    tbody.innerHTML += `
+                        <tr>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">${ref.descripcion || '-'}</td>
+                            <td style="padding: 0.5rem; text-align: center; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #0d9488;">${rango}</td>
+                            <td style="padding: 0.5rem; text-align: center; border-bottom: 1px solid #e2e8f0;">${sexo}</td>
+                        </tr>
+                    `;
+                });
+            } catch (e) {
+                console.log('No age refs:', e.message);
             }
         }
 
